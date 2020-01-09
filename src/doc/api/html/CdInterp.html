@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdInterp: colord Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="CdInterpLinear.html" title="CdInterpLinear">
+<link rel="next" href="colord-cd-it8-utils.html" title="cd-it8-utils">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#CdInterp.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#CdInterp.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#CdInterp.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="CdInterpLinear.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-it8-utils.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="CdInterp"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdInterp.top_of_page"></a>CdInterp</span></h2>
+<p>CdInterp — Interpolate 2D data using a variety of methods</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="CdInterp.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-error-quark" title="cd_interp_error_quark ()">cd_interp_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdInterp.html#CdInterpKind" title="enum CdInterpKind"><span class="returnvalue">CdInterpKind</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-get-kind" title="cd_interp_get_kind ()">cd_interp_get_kind</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-get-x" title="cd_interp_get_x ()">cd_interp_get_x</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-get-y" title="cd_interp_get_y ()">cd_interp_get_y</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-get-size" title="cd_interp_get_size ()">cd_interp_get_size</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-insert" title="cd_interp_insert ()">cd_interp_insert</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-prepare" title="cd_interp_prepare ()">cd_interp_prepare</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-eval" title="cd_interp_eval ()">cd_interp_eval</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdInterp.html#cd-interp-kind-to-string" title="cd_interp_kind_to_string ()">cd_interp_kind_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdInterp.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody><tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdInterp.html#CdInterp--kind" title="The “kind” property">kind</a></td>
+<td class="property_flags">Read / Write</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdInterp.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CD-INTERP-ERROR:CAPS" title="CD_INTERP_ERROR">CD_INTERP_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CD-INTERP-TYPE-ERROR:CAPS" title="CD_INTERP_TYPE_ERROR">CD_INTERP_TYPE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CD-TYPE-INTERP:CAPS" title="CD_TYPE_INTERP">CD_TYPE_INTERP</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CdInterpClass" title="struct CdInterpClass">CdInterpClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CdInterpError" title="enum CdInterpError">CdInterpError</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="CdInterp.html#CdInterpKind" title="enum CdInterpKind">CdInterpKind</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="CdInterp.html#CdInterp-struct" title="CdInterp">CdInterp</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdInterp.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="/usr/share/gtk-doc/html/gobjectgobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> CdInterp
+        <span class="lineart">├──</span> <a class="link" href="CdInterpAkima.html" title="CdInterpAkima">CdInterpAkima</a>
+        <span class="lineart">╰──</span> <a class="link" href="CdInterpLinear.html" title="CdInterpLinear">CdInterpLinear</a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdInterp.description"></a><h2>Description</h2>
+<p>This object is a superclass of different interpolation methods.</p>
+</div>
+<div class="refsect1">
+<a name="CdInterp.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-interp-error-quark"></a><h3>cd_interp_error_quark ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+cd_interp_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="refsect3">
+<a name="cd-interp-error-quark.returns"></a><h4>Returns</h4>
+<p> An error quark.</p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-kind"></a><h3>cd_interp_get_kind ()</h3>
+<pre class="programlisting"><a class="link" href="CdInterp.html#CdInterpKind" title="enum CdInterpKind"><span class="returnvalue">CdInterpKind</span></a>
+cd_interp_get_kind (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>);</pre>
+<p>Gets the kind of INTERP file.</p>
+<div class="refsect3">
+<a name="cd-interp-get-kind.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-get-kind.returns"></a><h4>Returns</h4>
+<p> a <a class="link" href="CdInterp.html#CdInterpKind" title="enum CdInterpKind"><span class="type">CdInterpKind</span></a>, e.g <a class="link" href="CdInterp.html#CD-INTERP-KIND-AKIMA:CAPS"><code class="literal">CD_INTERP_KIND_AKIMA</code></a>.</p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-x"></a><h3>cd_interp_get_x ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+cd_interp_get_x (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>);</pre>
+<p>Gets the X data used the interpolation.</p>
+<p>NOTE: this is only guaranteed to return the data inserted by
+<a class="link" href="CdInterp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> *BEFORE* calling <a class="link" href="CdInterp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a>.</p>
+<p>After prepating the <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> this data should be considered an
+implementation detail.</p>
+<div class="refsect3">
+<a name="cd-interp-get-x.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-get-x.returns"></a><h4>Returns</h4>
+<p> The X co-ordinate data. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span></p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-y"></a><h3>cd_interp_get_y ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+cd_interp_get_y (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>);</pre>
+<p>Gets the Y data used the interpolation.</p>
+<p>NOTE: this is only guaranteed to return the data inserted by
+<a class="link" href="CdInterp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> *BEFORE* calling <a class="link" href="CdInterp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a>.</p>
+<p>After prepating the <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> this data should be considered an
+implementation detail.</p>
+<div class="refsect3">
+<a name="cd-interp-get-y.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-get-y.returns"></a><h4>Returns</h4>
+<p> The Y co-ordinate data. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span></p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-size"></a><h3>cd_interp_get_size ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+cd_interp_get_size (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>);</pre>
+<p>Gets the number of items of data added with <a class="link" href="CdInterp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a>.</p>
+<p>NOTE: This method has to be called after <a class="link" href="CdInterp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a> and it returns
+the number of items originally in the array.
+If you need the updated private size then just use <a class="link" href="CdInterp.html#cd-interp-get-x" title="cd_interp_get_x ()"><code class="function">cd_interp_get_x()</code></a> and
+read the size from that.</p>
+<div class="refsect3">
+<a name="cd-interp-get-size.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-get-size.returns"></a><h4>Returns</h4>
+<p> The original array size</p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-insert"></a><h3>cd_interp_insert ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_interp_insert (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>,
+                  <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> x</code></em>,
+                  <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> y</code></em>);</pre>
+<p>Inserts data to be interpolated.</p>
+<div class="refsect3">
+<a name="cd-interp-insert.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>x</p></td>
+<td class="parameter_description"><p>X data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>y</p></td>
+<td class="parameter_description"><p>Y data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-prepare"></a><h3>cd_interp_prepare ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_interp_prepare (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Prepares the data set so that <a class="link" href="CdInterp.html#cd-interp-eval" title="cd_interp_eval ()"><code class="function">cd_interp_eval()</code></a> can be used.</p>
+<div class="refsect3">
+<a name="cd-interp-prepare.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-prepare.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-eval"></a><h3>cd_interp_eval ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_interp_eval (<em class="parameter"><code><a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> *interp</code></em>,
+                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Evaluate the interpolation function at a specific point.
+You must have called <a class="link" href="CdInterp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> and <a class="link" href="CdInterp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a> before
+calling this method.</p>
+<div class="refsect3">
+<a name="cd-interp-eval.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>interp</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdInterp.html" title="CdInterp"><span class="type">CdInterp</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>The X co-ordinate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-interp-eval.returns"></a><h4>Returns</h4>
+<p> The Y co-ordinate, or -1 for error</p>
+</div>
+<p class="since">Since: 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-kind-to-string"></a><h3>cd_interp_kind_to_string ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_interp_kind_to_string (<em class="parameter"><code><a class="link" href="CdInterp.html#CdInterpKind" title="enum CdInterpKind"><span class="type">CdInterpKind</span></a> kind</code></em>);</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdInterp.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="CD-INTERP-ERROR:CAPS"></a><h3>CD_INTERP_ERROR</h3>
+<pre class="programlisting">#define CD_INTERP_ERROR		(cd_interp_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-INTERP-TYPE-ERROR:CAPS"></a><h3>CD_INTERP_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_INTERP_TYPE_ERROR (cd_interp_error_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TYPE-INTERP:CAPS"></a><h3>CD_TYPE_INTERP</h3>
+<pre class="programlisting">#define CD_TYPE_INTERP (cd_interp_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterpClass"></a><h3>struct CdInterpClass</h3>
+<pre class="programlisting">struct CdInterpClass {
+	GObjectClass		 parent_class;
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterpError"></a><h3>enum CdInterpError</h3>
+<p>Errors that can be thrown</p>
+<div class="refsect3">
+<a name="CdInterpError.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody><tr>
+<td class="enum_member_name"><p><a name="CD-INTERP-ERROR-FAILED:CAPS"></a>CD_INTERP_ERROR_FAILED</p></td>
+<td class="enum_member_description">
+<p>the method failed for an unknown reason</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterpKind"></a><h3>enum CdInterpKind</h3>
+<p>The kind of interpolation.</p>
+<div class="refsect3">
+<a name="CdInterpKind.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="CD-INTERP-KIND-LINEAR:CAPS"></a>CD_INTERP_KIND_LINEAR</p></td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="CD-INTERP-KIND-AKIMA:CAPS"></a>CD_INTERP_KIND_AKIMA</p></td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterp-struct"></a><h3>CdInterp</h3>
+<pre class="programlisting">typedef struct _CdInterp CdInterp;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdInterp.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="CdInterp--kind"></a><h3>The <code class="literal">“kind”</code> property</h3>
+<pre class="programlisting">  “kind”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The kind of interpolation.</p>
+<p>Flags: Read / Write</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.20</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.25</div>
+</body>
+</html>

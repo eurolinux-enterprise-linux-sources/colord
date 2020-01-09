@@ -24,8 +24,6 @@
 #include <gudev/gudev.h>
 #include <glib.h>
 
-#include "cd-cleanup.h"
-
 struct CdPluginPrivate {
 	GUdevClient		*udev_client;
 	gboolean		 scan_in_progress;
@@ -75,7 +73,7 @@ cd_plugin_config_enabled_sane_devices(CdPluginPrivate *priv)
 {
 	const gchar *argv[] = {COLORD_SANE_BINARY, NULL};
 	GPid colord_sane_pid;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	if (priv->scan_in_progress)
 		return;

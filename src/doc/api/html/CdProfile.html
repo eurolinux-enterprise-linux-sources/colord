@@ -1,0 +1,1647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdProfile: colord Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolord.html" title="libcolord">
+<link rel="prev" href="colord-cd-profile-sync.html" title="cd-profile-sync">
+<link rel="next" href="colord-cd-sensor-sync.html" title="cd-sensor-sync">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#CdProfile.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#CdProfile.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#CdProfile.properties" class="shortcut">Properties</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#CdProfile.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolord.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-profile-sync.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-sensor-sync.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="CdProfile"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdProfile.top_of_page"></a>CdProfile</span></h2>
+<p>CdProfile — Client object for accessing information about colord profiles</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="CdProfile.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-error-quark" title="cd_profile_error_quark ()">cd_profile_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-new" title="cd_profile_new ()">cd_profile_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-new-with-object-path" title="cd_profile_new_with_object_path ()">cd_profile_new_with_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-connect" title="cd_profile_connect ()">cd_profile_connect</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-connect-finish" title="cd_profile_connect_finish ()">cd_profile_connect_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-set-property" title="cd_profile_set_property ()">cd_profile_set_property</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-set-property-finish" title="cd_profile_set_property_finish ()">cd_profile_set_property_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-install-system-wide" title="cd_profile_install_system_wide ()">cd_profile_install_system_wide</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-install-system-wide-finish" title="cd_profile_install_system_wide_finish ()">cd_profile_install_system_wide_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-id" title="cd_profile_get_id ()">cd_profile_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-filename" title="cd_profile_get_filename ()">cd_profile_get_filename</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-qualifier" title="cd_profile_get_qualifier ()">cd_profile_get_qualifier</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-format" title="cd_profile_get_format ()">cd_profile_get_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-title" title="cd_profile_get_title ()">cd_profile_get_title</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-object-path" title="cd_profile_get_object_path ()">cd_profile_get_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdProfileKind</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-kind" title="cd_profile_get_kind ()">cd_profile_get_kind</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdColorspace</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-colorspace" title="cd_profile_get_colorspace ()">cd_profile_get_colorspace</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdObjectScope</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-scope" title="cd_profile_get_scope ()">cd_profile_get_scope</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-owner" title="cd_profile_get_owner ()">cd_profile_get_owner</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-warnings" title="cd_profile_get_warnings ()">cd_profile_get_warnings</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-created" title="cd_profile_get_created ()">cd_profile_get_created</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-age" title="cd_profile_get_age ()">cd_profile_get_age</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-has-vcgt" title="cd_profile_get_has_vcgt ()">cd_profile_get_has_vcgt</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-is-system-wide" title="cd_profile_get_is_system_wide ()">cd_profile_get_is_system_wide</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-metadata" title="cd_profile_get_metadata ()">cd_profile_get_metadata</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-metadata-item" title="cd_profile_get_metadata_item ()">cd_profile_get_metadata_item</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-set-object-path" title="cd_profile_set_object_path ()">cd_profile_set_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-get-connected" title="cd_profile_get_connected ()">cd_profile_get_connected</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-to-string" title="cd_profile_to_string ()">cd_profile_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-equal" title="cd_profile_equal ()">cd_profile_equal</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-has-access" title="cd_profile_has_access ()">cd_profile_has_access</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdProfile.html#cd-profile-load-icc" title="cd_profile_load_icc ()">cd_profile_load_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--colorspace" title="The “colorspace” property">colorspace</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--connected" title="The “connected” property">connected</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="type">gint64</span></a></td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--created" title="The “created” property">created</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--filename" title="The “filename” property">filename</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--format" title="The “format” property">format</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--has-vcgt" title="The “has-vcgt” property">has-vcgt</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--id" title="The “id” property">id</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--is-system-wide" title="The “is-system-wide” property">is-system-wide</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--kind" title="The “kind” property">kind</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--object-path" title="The “object-path” property">object-path</a></td>
+<td class="property_flags">Read / Write / Construct</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--owner" title="The “owner” property">owner</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--qualifier" title="The “qualifier” property">qualifier</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--scope" title="The “scope” property">scope</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--title" title="The “title” property">title</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-String-Utility-Functions.html#GStrv"><span class="type">GStrv</span></a></td>
+<td class="property_name"><a class="link" href="CdProfile.html#CdProfile--warnings" title="The “warnings” property">warnings</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signals_return">
+<col width="300px" class="signals_name">
+<col width="200px" class="signals_flags">
+</colgroup>
+<tbody><tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="CdProfile.html#CdProfile-changed" title="The “changed” signal">changed</a></td>
+<td class="signal_flags"><a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdProfile.html#CD-PROFILE-ERROR:CAPS" title="CD_PROFILE_ERROR">CD_PROFILE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdProfile.html#CD-PROFILE-TYPE-ERROR:CAPS" title="CD_PROFILE_TYPE_ERROR">CD_PROFILE_TYPE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdProfile.html#CD-TYPE-PROFILE:CAPS" title="CD_TYPE_PROFILE">CD_TYPE_PROFILE</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="CdProfile.html#CdProfileClass" title="struct CdProfileClass">CdProfileClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="CdProfile.html#CdProfile-struct" title="CdProfile">CdProfile</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="/usr/share/gtk-doc/html/gobjectgobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> CdProfile
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdProfile.description"></a><h2>Description</h2>
+<p>A helper GObject to use for accessing colord profiles, and to be notified
+when it is changed.</p>
+<p>See also: <a class="link" href="CdClient.html" title="CdClient"><span class="type">CdClient</span></a></p>
+</div>
+<div class="refsect1">
+<a name="CdProfile.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-profile-error-quark"></a><h3>cd_profile_error_quark ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+cd_profile_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="refsect3">
+<a name="cd-profile-error-quark.returns"></a><h4>Returns</h4>
+<p> An error quark.</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-new"></a><h3>cd_profile_new ()</h3>
+<pre class="programlisting"><a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+cd_profile_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> object.</p>
+<div class="refsect3">
+<a name="cd-profile-new.returns"></a><h4>Returns</h4>
+<p> a new CdProfile object.</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-new-with-object-path"></a><h3>cd_profile_new_with_object_path ()</h3>
+<pre class="programlisting"><a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+cd_profile_new_with_object_path (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Creates a new <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> object with a known object path.</p>
+<div class="refsect3">
+<a name="cd-profile-new-with-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-new-with-object-path.returns"></a><h4>Returns</h4>
+<p> a new profile object.</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-connect"></a><h3>cd_profile_connect ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_profile_connect (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                    <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                    <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                    <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Connects to the object and fills up initial properties.</p>
+<div class="refsect3">
+<a name="cd-profile-connect.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-connect-finish"></a><h3>cd_profile_connect_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_connect_finish (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                           <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                           <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-profile-connect-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-connect-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-set-property"></a><h3>cd_profile_set_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_profile_set_property (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>,
+                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Deletes a color device.</p>
+<div class="refsect3">
+<a name="cd-profile-set-property.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a key name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>a key value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-set-property-finish"></a><h3>cd_profile_set_property_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_set_property_finish (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-profile-set-property-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-set-property-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-install-system-wide"></a><h3>cd_profile_install_system_wide ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_profile_install_system_wide (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Sets the profile system wide.</p>
+<div class="refsect3">
+<a name="cd-profile-install-system-wide.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-install-system-wide-finish"></a><h3>cd_profile_install_system_wide_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_install_system_wide_finish (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-profile-install-system-wide-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-install-system-wide-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-id"></a><h3>cd_profile_get_id ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_id (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile ID.</p>
+<div class="refsect3">
+<a name="cd-profile-get-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-id.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-filename"></a><h3>cd_profile_get_filename ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_filename (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile filename.</p>
+<div class="refsect3">
+<a name="cd-profile-get-filename.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-filename.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-qualifier"></a><h3>cd_profile_get_qualifier ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_qualifier (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile qualifier.</p>
+<div class="refsect3">
+<a name="cd-profile-get-qualifier.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-qualifier.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-format"></a><h3>cd_profile_get_format ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_format (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile format.</p>
+<div class="refsect3">
+<a name="cd-profile-get-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-format.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-title"></a><h3>cd_profile_get_title ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_title (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile title.</p>
+<div class="refsect3">
+<a name="cd-profile-get-title.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-title.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-object-path"></a><h3>cd_profile_get_object_path ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_object_path (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the object path for the profile.</p>
+<div class="refsect3">
+<a name="cd-profile-get-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-object-path.returns"></a><h4>Returns</h4>
+<p> the object path, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-kind"></a><h3>cd_profile_get_kind ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdProfileKind</span>
+cd_profile_get_kind (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile kind.</p>
+<div class="refsect3">
+<a name="cd-profile-get-kind.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-kind.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdProfileKind</span>, e.g. <code class="literal">CD_PROFILE_KIND_DISPLAY_DEVICE</code></p>
+</div>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-colorspace"></a><h3>cd_profile_get_colorspace ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdColorspace</span>
+cd_profile_get_colorspace (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile colorspace.</p>
+<div class="refsect3">
+<a name="cd-profile-get-colorspace.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-colorspace.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdColorspace</span>, e.g. <code class="literal">CD_COLORSPACE_RGB</code></p>
+</div>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-scope"></a><h3>cd_profile_get_scope ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdObjectScope</span>
+cd_profile_get_scope (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile scope.</p>
+<div class="refsect3">
+<a name="cd-profile-get-scope.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-scope.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdObjectScope</span>, e.g. <code class="literal">CD_OBJECT_SCOPE_UNKNOWN</code></p>
+</div>
+<p class="since">Since: 0.1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-owner"></a><h3>cd_profile_get_owner ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+cd_profile_get_owner (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile owner.</p>
+<div class="refsect3">
+<a name="cd-profile-get-owner.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-owner.returns"></a><h4>Returns</h4>
+<p> The UID of the user that created the device</p>
+</div>
+<p class="since">Since: 0.1.13</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-warnings"></a><h3>cd_profile_get_warnings ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+cd_profile_get_warnings (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile warnings as a string array.</p>
+<div class="refsect3">
+<a name="cd-profile-get-warnings.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-warnings.returns"></a><h4>Returns</h4>
+<p> Any profile warnings, e.g. "vcgt-non-monotonic". </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.25</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-created"></a><h3>cd_profile_get_created ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>
+cd_profile_get_created (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile created date and time.</p>
+<div class="refsect3">
+<a name="cd-profile-get-created.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-created.returns"></a><h4>Returns</h4>
+<p> A UNIX time, or 0 if the profile has no creation date</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-age"></a><h3>cd_profile_get_age ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>
+cd_profile_get_age (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets the profile age in seconds relative to the current time.</p>
+<div class="refsect3">
+<a name="cd-profile-get-age.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-age.returns"></a><h4>Returns</h4>
+<p> A UNIX time, or 0 if the profile has no creation date</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-has-vcgt"></a><h3>cd_profile_get_has_vcgt ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_get_has_vcgt (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Returns if the profile has a VCGT table.</p>
+<div class="refsect3">
+<a name="cd-profile-get-has-vcgt.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-has-vcgt.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if VCGT is valid.</p>
+</div>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-is-system-wide"></a><h3>cd_profile_get_is_system_wide ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_get_is_system_wide (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Returns if the profile is installed system wide and available for all
+users.</p>
+<div class="refsect3">
+<a name="cd-profile-get-is-system-wide.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-is-system-wide.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if system wide.</p>
+</div>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-metadata"></a><h3>cd_profile_get_metadata ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+cd_profile_get_metadata (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Returns the profile metadata.</p>
+<div class="refsect3">
+<a name="cd-profile-get-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-metadata.returns"></a><h4>Returns</h4>
+<p> a
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 utf8]</span></p>
+</div>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-metadata-item"></a><h3>cd_profile_get_metadata_item ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_get_metadata_item (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                              <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>Returns the profile metadata for a specific key.</p>
+<div class="refsect3">
+<a name="cd-profile-get-metadata-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a key for the metadata dictionary</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-metadata-item.returns"></a><h4>Returns</h4>
+<p> the metadata value, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if not set.</p>
+</div>
+<p class="since">Since: 0.1.5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-set-object-path"></a><h3>cd_profile_set_object_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_profile_set_object_path (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                            <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Sets the object path of the profile.</p>
+<div class="refsect3">
+<a name="cd-profile-set-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-get-connected"></a><h3>cd_profile_get_connected ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_get_connected (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets if the profile has been connected.</p>
+<div class="refsect3">
+<a name="cd-profile-get-connected.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-get-connected.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if properties are valid</p>
+</div>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-to-string"></a><h3>cd_profile_to_string ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_profile_to_string (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Converts the profile to a string description.</p>
+<div class="refsect3">
+<a name="cd-profile-to-string.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-to-string.returns"></a><h4>Returns</h4>
+<p> text representation of <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-equal"></a><h3>cd_profile_equal ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_equal (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile1</code></em>,
+                  <em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile2</code></em>);</pre>
+<p>Tests two profiles for equality.</p>
+<div class="refsect3">
+<a name="cd-profile-equal.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile1</p></td>
+<td class="parameter_description"><p>one <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>profile2</p></td>
+<td class="parameter_description"><p>another <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-equal.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the profiles are the same device</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-has-access"></a><h3>cd_profile_has_access ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_profile_has_access (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>);</pre>
+<p>Gets if the current user has access permissions to the profile.</p>
+<div class="refsect3">
+<a name="cd-profile-has-access.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-has-access.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.13</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-profile-load-icc"></a><h3>cd_profile_load_icc ()</h3>
+<pre class="programlisting"><a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+cd_profile_load_icc (<em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                     <em class="parameter"><code><a class="link" href="CdIcc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                     <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                     <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Loads a local ICC object from the abstract profile.</p>
+<div class="refsect3">
+<a name="cd-profile-load-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>flags</p></td>
+<td class="parameter_description"><p>options for loading the profile</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-profile-load-icc.returns"></a><h4>Returns</h4>
+<p> A new <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> object, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for error. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.32</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="CD-PROFILE-ERROR:CAPS"></a><h3>CD_PROFILE_ERROR</h3>
+<pre class="programlisting">#define CD_PROFILE_ERROR (cd_profile_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-PROFILE-TYPE-ERROR:CAPS"></a><h3>CD_PROFILE_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_PROFILE_TYPE_ERROR (cd_profile_error_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TYPE-PROFILE:CAPS"></a><h3>CD_TYPE_PROFILE</h3>
+<pre class="programlisting">#define CD_TYPE_PROFILE (cd_profile_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfileClass"></a><h3>struct CdProfileClass</h3>
+<pre class="programlisting">struct CdProfileClass {
+	GObjectClass		 parent_class;
+	void			(*changed)		(CdProfile		*profile);
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile-struct"></a><h3>CdProfile</h3>
+<pre class="programlisting">typedef struct _CdProfile CdProfile;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="CdProfile--colorspace"></a><h3>The <code class="literal">“colorspace”</code> property</h3>
+<pre class="programlisting">  “colorspace”               <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile colorspace.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--connected"></a><h3>The <code class="literal">“connected”</code> property</h3>
+<pre class="programlisting">  “connected”                <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The if the object path has been connected as is valid for use.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--created"></a><h3>The <code class="literal">“created”</code> property</h3>
+<pre class="programlisting">  “created”                  <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gint64"><span class="type">gint64</span></a></pre>
+<p>When the profile was created.</p>
+<p>Flags: Read</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--filename"></a><h3>The <code class="literal">“filename”</code> property</h3>
+<pre class="programlisting">  “filename”                 <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile filename.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--format"></a><h3>The <code class="literal">“format”</code> property</h3>
+<pre class="programlisting">  “format”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile format.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--has-vcgt"></a><h3>The <code class="literal">“has-vcgt”</code> property</h3>
+<pre class="programlisting">  “has-vcgt”                 <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the profile has a VCGT table.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--id"></a><h3>The <code class="literal">“id”</code> property</h3>
+<pre class="programlisting">  “id”                       <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile ID.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--is-system-wide"></a><h3>The <code class="literal">“is-system-wide”</code> property</h3>
+<pre class="programlisting">  “is-system-wide”           <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the profile is installed system wide for all users.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--kind"></a><h3>The <code class="literal">“kind”</code> property</h3>
+<pre class="programlisting">  “kind”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile kind.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--object-path"></a><h3>The <code class="literal">“object-path”</code> property</h3>
+<pre class="programlisting">  “object-path”              <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The object path of the remote object</p>
+<p>Flags: Read / Write / Construct</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--owner"></a><h3>The <code class="literal">“owner”</code> property</h3>
+<pre class="programlisting">  “owner”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The profile owner, e.g. <code class="literal">500</code>.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.13</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--qualifier"></a><h3>The <code class="literal">“qualifier”</code> property</h3>
+<pre class="programlisting">  “qualifier”                <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile qualifier.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--scope"></a><h3>The <code class="literal">“scope”</code> property</h3>
+<pre class="programlisting">  “scope”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The profile scope, e.g. <code class="literal">CD_OBJECT_SCOPE_TEMP</code>.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--title"></a><h3>The <code class="literal">“title”</code> property</h3>
+<pre class="programlisting">  “title”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The profile title.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdProfile--warnings"></a><h3>The <code class="literal">“warnings”</code> property</h3>
+<pre class="programlisting">  “warnings”                 <a href="/usr/share/gtk-doc/html/glibglib-String-Utility-Functions.html#GStrv"><span class="type">GStrv</span></a></pre>
+<p>The profile warnings, e.g. "vcgt-non-monotonic".</p>
+<p>Flags: Read</p>
+<p class="since">Since: 0.1.25</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdProfile.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="CdProfile-changed"></a><h3>The <code class="literal">“changed”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile,
+               <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)</pre>
+<p>The ::changed signal is emitted when the profile data has changed.</p>
+<div class="refsect3">
+<a name="CdProfile-changed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>the <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance that emitted the signal</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: 0.1.0</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.25</div>
+</body>
+</html>

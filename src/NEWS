@@ -1,3 +1,142 @@
+Version 1.3.4
+~~~~~~~~~~~~~
+Released: 2016-11-21
+
+New Features:
+ - colord: Add cd_color_rgb_from_wavelength() (Richard Hughes)
+ - colord: Add cd_spectrum_resample_to_size() (Richard Hughes)
+ - colorhug: Add commands for getting the device calibration spectra (Richard Hughes)
+ - colorhug: Increase the size of the EP0 transfer (Richard Hughes)
+ - colorhug: Support enabling the illuminants on the ColorHug+ (Richard Hughes)
+
+Bugfixes:
+ - Fix a possible NULL dereference when talking to Spark devices (Richard Hughes)
+ - Fix compile with -Wformat-signedness (Richard Hughes)
+ - Fix possible division by zero if parsing /proc/cpuinfo fails (Richard Hughes)
+ - Install the libcolordcompat.so in the main -libs package (Richard Hughes)
+
+Version 1.3.3
+~~~~~~~~~~~~~
+Released: 2016-07-27
+
+Bugfixes:
+ - Check polkit version before defining g_autoptr macros (Emmanuele Bassi)
+ - Fix an assert failure when connecting to sensors (Richard Hughes)
+ - Fix gtk-doc build when srcdir != builddir (Ting-Wei Lan)
+ - Increase timeout to 60s for argyll spotread sampling (Kjell Irgens)
+ - Use the USB path to match the ArgyllCMS port (Richard Hughes)
+
+Version 1.3.2
+~~~~~~~~~~~~~
+Released: 2016-03-21
+
+New Features:
+ - Make building the daemon optional (Richard Hughes)
+ - Make the session helper optional (Richard Hughes)
+ - libcolorhug: Add initial support for the v2 protocol used by ColorHug+ (Richard Hughes)
+
+Bugfixes:
+ - libcolord: Fix a hard-to-reproduce bug when cancelling async operations (Richard Hughes)
+ - libcolorhug: Fix a crash when submitting lots of commands at the same time (Richard Hughes)
+ - Replace '/' with '-' on the basename to fix calibration crash (Canek Peláez Valdés)
+
+Version 1.3.1
+~~~~~~~~~~~~~
+Released: 2015-11-27
+
+New Features:
+ - Add a sensor error for missing dark calibration (Richard Hughes)
+ - Add g_autoptr() defines for cd_color* (Richard Hughes)
+ - Add get-spectral-reading command to colormgr (Richard Hughes)
+ - Add the GetSpectrum() sensor D-Bus method (Richard Hughes)
+ - Allow returning spectral readings from the Spark sensor (Richard Hughes)
+ - libcolord: Add an error enum for missing irradiance calibration (Richard Hughes)
+ - libcolord: Add a spectral sensor capability (Richard Hughes)
+ - libcolord: Add cd_sensor_get_spectrum() (Richard Hughes)
+ - libcolord: Add cd_spectrum_get_value_max() (Richard Hughes)
+ - libcolord: Add cd_spectrum_limit_min() (Richard Hughes)
+ - libcolord: Add cd_spectrum_planckian_new_full() (Richard Hughes)
+ - libcolord: Add cd_spectrum_resample() (Richard Hughes)
+ - libcolord: Add cd_spectrum_set_wavelength_cal() (Richard Hughes)
+ - libcolord: Add cd_spectrum_subtract() (Richard Hughes)
+ - libcolord: Add cd_spectrum_to_string() (Richard Hughes)
+
+Bugfixes:
+ - Add a systemd user service corresponding to the D-Bus session service (Simon McVittie)
+ - Add a tmpfiles.d snippet to fix stateless systems (Tobias Hunger)
+ - data: Build Rec709 correctly (Richard Hughes)
+ - Ignore the ColorHug+ in DFU mode (Richard Hughes)
+ - Install the tmpfiles.d snippet in the right place (Richard Hughes)
+ - Reset the sensor back to idle after each action (Richard Hughes)
+ - libcolord: Fix a tiny memory leak in cd_icc_get_tag_data() (Richard Hughes)
+ - libcolord: Fix saving non-normalized spectra (Richard Hughes)
+ - libcolord: Make cd_spectrum_free() NULL-safe (Richard Hughes)
+ - libcolord: Return an error when we fail to estimate the gamma value (Richard Hughes)
+
+Version 1.2.12
+~~~~~~~~~~~~~~
+Released: 2015-08-19
+
+New Features:
+ - Add a new private library libospark for future use (Richard Hughes)
+
+Bugfixes:
+ - Allow creating devices with the same device ID from different users (Richard Hughes)
+ - Check for, and prefer, libsystemd over libsystemd-login (Christopher James Halse Rogers)
+ - ColorHug: Add ch_device_queue_read_firmware() (Richard Hughes)
+ - ColorHug: When converting HEX to BIN pad out the entire size (Richard Hughes)
+
+Version 1.2.11
+~~~~~~~~~~~~~~
+Released: 2015-06-08
+
+New Features:
+ - Add defines and artwork for the Spyder5 device (Richard Hughes)
+ - Add defines for the OceanOptics Spark sensor (Richard Hughes)
+ - libcolorhug: Add ch_device_close (Benjamin Tissoires)
+ - libcolorhug: Handle low-level commands when in Sensor HID mode (Richard Hughes)
+
+Bugfixes:
+ - libcolord: Fix leak in cd_context_lcms_free (Roman Lebedev)
+ - libcolord: Fix leak previously in cd_client_connect_cb (Roman Lebedev)
+ - Only return devices created by the calling user when doing GetDevices (Richard Hughes)
+
+Version 1.2.10
+~~~~~~~~~~~~~~
+Released: 2015-04-08
+
+New Features:
+ - colorhug: Add GUIDs for each device (Richard Hughes)
+
+Bugfixes:
+ - Add a vendor quirk for Google (Richard Hughes)
+ - Fix session-helper failing to find argyll tool (Tim Waugh)
+
+Version 1.2.9
+~~~~~~~~~~~~~
+Released: 2015-02-20
+
+New Features:
+ - colorhug: Add support for the ColorHug ALS device (Richard Hughes)
+ - colorhug: Return the exact address on verification failure (Richard Hughes)
+
+Bugfixes:
+ - Fix cd-test-private linking (Christopher James Halse Rogers)
+ - Fix reporting of logind errors (Christopher James Halse Rogers)
+
+Version 1.2.8
+~~~~~~~~~~~~~
+Released: 2015-01-15
+
+Notes:
+ - The required libgusb library version has been bumped to 0.2.2
+
+Bugfixes:
+ - Check for dbus when enabling sane (Niels Ole Salscheider)
+ - Do not use the deprecated GUsbDeviceList (Richard Hughes)
+ - Fix build without gobject-introspection (Niels Ole Salscheider)
+ - Fix possible critical warning when using g_dbus_watch_name() (Richard Hughes)
+
 Version 1.2.7
 ~~~~~~~~~~~~~
 Released: 2014-12-02

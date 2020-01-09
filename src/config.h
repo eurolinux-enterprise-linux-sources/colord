@@ -44,7 +44,7 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if libsystemd-login is available */
+/* Define to 1 if systemd login is available */
 #define HAVE_LIBSYSTEMD_LOGIN 1
 
 /* Define to 1 if you have the <memory.h> header file. */
@@ -83,8 +83,7 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
 /* Name of package */
@@ -97,7 +96,7 @@
 #define PACKAGE_NAME "colord"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "colord 1.2.7"
+#define PACKAGE_STRING "colord 1.3.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "colord"
@@ -106,7 +105,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.2.7"
+#define PACKAGE_VERSION "1.3.4"
+
+/* if PolKit has autoptr macros */
+/* #undef POLKIT_HAS_AUTOPTR_MACROS */
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -118,4 +120,4 @@
 #define USE_POLKIT 1
 
 /* Version number of package */
-#define VERSION "1.2.7"
+#define VERSION "1.3.4"

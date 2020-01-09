@@ -65,7 +65,7 @@ typedef struct {
 static void
 cd_parse_beagle_process_entry_huey (CdParseEntry *entry)
 {
-	gchar **tok;
+	g_auto(GStrv) tok = NULL;
 	guint j;
 	guint8 cmd;
 	guint8 instruction = 0;
@@ -120,7 +120,6 @@ cd_parse_beagle_process_entry_huey (CdParseEntry *entry)
 out:
 	if (output != NULL)
 		entry->summary_pretty = g_string_free (output, FALSE);
-	g_strfreev (tok);
 }
 
 /**
@@ -129,7 +128,7 @@ out:
 static void
 cd_parse_beagle_process_entry_colormunki (CdParseEntry *entry)
 {
-	gchar **tok;
+	g_auto(GStrv) tok = NULL;
 	guint j;
 	guint8 cmd;
 	guint tok_len;
@@ -194,7 +193,6 @@ cd_parse_beagle_process_entry_colormunki (CdParseEntry *entry)
 out:
 	if (output != NULL)
 		entry->summary_pretty = g_string_free (output, FALSE);
-	g_strfreev (tok);
 }
 
 /**
@@ -271,16 +269,16 @@ gint
 main (gint argc, gchar *argv[])
 {
 	gboolean ret;
-	gchar *data = NULL;
-	gchar **split = NULL;
 	gchar **sections = NULL;
-	GString *output = NULL;
-	GError *error = NULL;
 	guint i;
 	CdParseEntry entry;
 	gchar *part;
 	gint retval = 1;
 	CdSensorKind kind;
+	g_autofree gchar *data = NULL;
+	g_auto(GStrv) split = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GString) output = NULL;
 
 	if (argc != 4) {
 		g_print ("need to specify [huey|colormunki] input output\n");
@@ -298,7 +296,6 @@ main (gint argc, gchar *argv[])
 	ret = g_file_get_contents (argv[2], &data, NULL, &error);
 	if (!ret) {
 		g_print ("failed to read: %s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -314,7 +311,7 @@ main (gint argc, gchar *argv[])
 		    split[i][0] == '\0')
 			continue;
 
-		g_print ("@@%i:%s\n", i, split[i]);
+		g_print ("@@%u:%s\n", i, split[i]);
 
 		/* populate a CdParseEntry */
 		sections = g_strsplit (split[i], ",", -1);
@@ -338,17 +335,12 @@ main (gint argc, gchar *argv[])
 	ret = g_file_set_contents (argv[3], output->str, -1, &error);
 	if (!ret) {
 		g_print ("failed to read: %s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
 	g_print ("done!\n");
 	retval = 0;
 out:
-	if (output != NULL)
-		g_string_free (output, TRUE);
-	g_free (data);
-	g_strfreev (split);
 	return retval;
 }
 

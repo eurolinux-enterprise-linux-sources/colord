@@ -25,8 +25,6 @@
 #include <gudev/gudev.h>
 #include <cd-device.h>
 
-#include "cd-cleanup.h"
-
 struct CdPluginPrivate {
 	GUdevClient		*udev_client;
 	GHashTable		*devices;
@@ -89,10 +87,10 @@ cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 {
 	const gchar *devclass;
 	const gchar *seat;
-	_cleanup_free_ gchar *id = NULL;
-	_cleanup_free_ gchar *model = NULL;
-	_cleanup_free_ gchar *vendor = NULL;
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autofree gchar *id = NULL;
+	g_autofree gchar *model = NULL;
+	g_autofree gchar *vendor = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	/* is a scanner? */
 	if (!g_udev_device_has_property (udev_device, "libsane_matched"))

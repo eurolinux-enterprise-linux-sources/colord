@@ -59,7 +59,6 @@ libcolordbase_include_HEADERS =					\
 	cd-version.h
 
 libcolordprivate_la_SOURCES =					\
-	cd-cleanup.h						\
 	cd-context-lcms.c					\
 	cd-context-lcms.h					\
 	cd-buffer.c						\
@@ -93,7 +92,7 @@ libcolordprivate_la_LDFLAGS =					\
 	-export-symbols-regex '^cd_.*'
 libcolordprivate_la_CFLAGS =					\
 	$(PIE_CFLAGS)						\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 libcolord_la_SOURCES =						\
 	cd-client.c						\
@@ -116,7 +115,7 @@ libcolord_la_LDFLAGS =						\
 	-export-symbols-regex '^cd_.*'
 libcolord_la_CFLAGS =						\
 	$(PIE_CFLAGS)						\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = colord.pc
@@ -143,7 +142,7 @@ cd_test_daemon_LDADD =						\
 	$(GLIB_UNIX_LIBS)					\
 	$(lib_LTLIBRARIES)
 
-cd_test_daemon_CFLAGS = $(WARNINGFLAGS_C)
+cd_test_daemon_CFLAGS = $(WARN_CFLAGS)
 
 cd_test_private_SOURCES =					\
 	cd-test-shared.h					\
@@ -154,9 +153,10 @@ cd_test_private_LDADD =						\
 	$(GLIB_LIBS)						\
 	$(GLIB_UNIX_LIBS)					\
 	$(UDEV_LIBS)						\
+	$(LCMS_LIBS)						\
 	$(lib_LTLIBRARIES)
 
-cd_test_private_CFLAGS = $(WARNINGFLAGS_C)
+cd_test_private_CFLAGS = $(WARN_CFLAGS)
 
 if BUILDOPT_INSTALL_TESTS
 insttestdir = $(libexecdir)/installed-tests/$(PACKAGE)

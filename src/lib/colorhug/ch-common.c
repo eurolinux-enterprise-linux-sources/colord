@@ -141,6 +141,9 @@ ch_strerror (ChError error_enum)
 	case CH_ERROR_I2C_SLAVE_CONFIG:
 		str = "I2C set slave config failed";
 		break;
+	case CH_ERROR_SELF_TEST_EEPROM:
+		str = "Self test failed: EEPROM";
+		break;
 	default:
 		str = "Unknown error, please report";
 		break;
@@ -212,7 +215,7 @@ ch_multiplier_to_string (ChFreqScale multiplier)
  * Since: 0.1.29
  **/
 const gchar *
-ch_command_to_string (guint8 cmd)
+ch_command_to_string (ChCmd cmd)
 {
 	const char *str = NULL;
 	switch (cmd) {
@@ -342,6 +345,39 @@ ch_command_to_string (guint8 cmd)
 	case CH_CMD_GET_TEMPERATURE:
 		str = "get-temperature";
 		break;
+	case CH_CMD_GET_ERROR:
+		str = "get-error";
+		break;
+	case CH_CMD_CLEAR_ERROR:
+		str = "clear-error";
+		break;
+	case CH_CMD_TAKE_READING_SPECTRAL:
+		str = "take-reading-spectral";
+		break;
+	case CH_CMD_GET_ADC_CALIBRATION_POS:
+		str = "get-adc-calibration-pos";
+		break;
+	case CH_CMD_GET_ADC_CALIBRATION_NEG:
+		str = "get-adc-calibration-neg";
+		break;
+	case CH_CMD_GET_CCD_CALIBRATION:
+		str = "get-ccd-calibration";
+		break;
+	case CH_CMD_SET_CCD_CALIBRATION:
+		str = "set-ccd-calibration";
+		break;
+	case CH_CMD_GET_ILLUMINANTS:
+		str = "get-illuminants";
+		break;
+	case CH_CMD_SET_ILLUMINANTS:
+		str = "set-illuminants";
+		break;
+	case CH_CMD_LOAD_SRAM:
+		str = "load-sram";
+		break;
+	case CH_CMD_SAVE_SRAM:
+		str = "save-sram";
+		break;
 	default:
 		str = "unknown-command";
 		break;
@@ -434,6 +470,8 @@ ch_device_mode_from_firmware (const guint8 *data, gsize data_len)
 			return CH_DEVICE_MODE_FIRMWARE2;
 		if (memcmp (data + i, CH_FIRMWARE_ID_TOKEN_PLUS, 8) == 0)
 			return CH_DEVICE_MODE_FIRMWARE_PLUS;
+		if (memcmp (data + i, CH_FIRMWARE_ID_TOKEN_ALS, 8) == 0)
+			return CH_DEVICE_MODE_FIRMWARE_ALS;
 	}
 	return CH_DEVICE_MODE_UNKNOWN;
 }

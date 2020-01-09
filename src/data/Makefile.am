@@ -8,7 +8,7 @@ SUBDIRS = 						\
 	tests						\
 	ti1
 
-if HAVE_UNIX
+if HAVE_DAEMON
 dbusdir = $(sysconfdir)/dbus-1/system.d
 dist_dbus_DATA = org.freedesktop.ColorManager.conf
 
@@ -20,6 +20,9 @@ $(dbusservicemain_DATA): $(dbusservicemain_in_files) Makefile
 	sed -e "s|\@daemon_user\@|$(daemon_user)|" > $@
 
 systemdservicemain_in_files = colord.service.in
+
+dist_tmpfiles_DATA = colord.conf
+
 endif
 
 if HAVE_SYSTEMD

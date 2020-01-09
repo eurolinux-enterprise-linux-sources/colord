@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdTransform: colord Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-icc-utils.html" title="cd-icc-utils">
+<link rel="next" href="CdInterpAkima.html" title="CdInterpAkima">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#CdTransform.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#CdTransform.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#CdTransform.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-icc-utils.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="CdInterpAkima.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="CdTransform"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdTransform.top_of_page"></a>CdTransform</span></h2>
+<p>CdTransform — An ICC transform</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="CdTransform.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-error-quark" title="cd_transform_error_quark ()">cd_transform_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdTransform.html" title="CdTransform"><span class="returnvalue">CdTransform</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-new" title="cd_transform_new ()">cd_transform_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-input-icc" title="cd_transform_set_input_icc ()">cd_transform_set_input_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-input-pixel-format" title="cd_transform_set_input_pixel_format ()">cd_transform_set_input_pixel_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-input-icc" title="cd_transform_get_input_icc ()">cd_transform_get_input_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdPixelFormat</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-input-pixel-format" title="cd_transform_get_input_pixel_format ()">cd_transform_get_input_pixel_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-output-icc" title="cd_transform_set_output_icc ()">cd_transform_set_output_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-output-pixel-format" title="cd_transform_set_output_pixel_format ()">cd_transform_set_output_pixel_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-output-icc" title="cd_transform_get_output_icc ()">cd_transform_get_output_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdPixelFormat</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-output-pixel-format" title="cd_transform_get_output_pixel_format ()">cd_transform_get_output_pixel_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-abstract-icc" title="cd_transform_set_abstract_icc ()">cd_transform_set_abstract_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-abstract-icc" title="cd_transform_get_abstract_icc ()">cd_transform_get_abstract_icc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-rendering-intent" title="cd_transform_set_rendering_intent ()">cd_transform_set_rendering_intent</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdRenderingIntent</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-rendering-intent" title="cd_transform_get_rendering_intent ()">cd_transform_get_rendering_intent</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-bpc" title="cd_transform_set_bpc ()">cd_transform_set_bpc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-bpc" title="cd_transform_get_bpc ()">cd_transform_get_bpc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-set-max-threads" title="cd_transform_set_max_threads ()">cd_transform_set_max_threads</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-get-max-threads" title="cd_transform_get_max_threads ()">cd_transform_get_max_threads</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdTransform.html#cd-transform-process" title="cd_transform_process ()">cd_transform_process</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdTransform.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--abstract-icc" title="The “abstract-icc” property">abstract-icc</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--bpc" title="The “bpc” property">bpc</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--input-icc" title="The “input-icc” property">input-icc</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--input-pixel-format" title="The “input-pixel-format” property">input-pixel-format</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type">
+<a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--output-icc" title="The “output-icc” property">output-icc</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--output-pixel-format" title="The “output-pixel-format” property">output-pixel-format</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdTransform.html#CdTransform--rendering-intent" title="The “rendering-intent” property">rendering-intent</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdTransform.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdTransform.html#CD-TRANSFORM-ERROR:CAPS" title="CD_TRANSFORM_ERROR">CD_TRANSFORM_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdTransform.html#CD-TRANSFORM-TYPE-ERROR:CAPS" title="CD_TRANSFORM_TYPE_ERROR">CD_TRANSFORM_TYPE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdTransform.html#CD-TYPE-TRANSFORM:CAPS" title="CD_TYPE_TRANSFORM">CD_TYPE_TRANSFORM</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="CdTransform.html#CdTransformError" title="enum CdTransformError">CdTransformError</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="CdTransform.html#CdTransformClass" title="struct CdTransformClass">CdTransformClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="CdTransform.html#CdTransform-struct" title="CdTransform">CdTransform</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdTransform.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="/usr/share/gtk-doc/html/gobjectgobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> CdTransform
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdTransform.description"></a><h2>Description</h2>
+<p>This object is a simple ICC transform that allows mapping of simple RGB
+spaces to other simple RGB spaces using one, two or three ICC profiles.</p>
+<p>This object is not supposed to re-implement LCMS, and if you need anything more
+complicated then you are better off using lcms2 directly.</p>
+</div>
+<div class="refsect1">
+<a name="CdTransform.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-transform-error-quark"></a><h3>cd_transform_error_quark ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+cd_transform_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="refsect3">
+<a name="cd-transform-error-quark.returns"></a><h4>Returns</h4>
+<p> An error quark.</p>
+</div>
+<p class="since">Since: 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-new"></a><h3>cd_transform_new ()</h3>
+<pre class="programlisting"><a class="link" href="CdTransform.html" title="CdTransform"><span class="returnvalue">CdTransform</span></a> *
+cd_transform_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> object.</p>
+<div class="refsect3">
+<a name="cd-transform-new.returns"></a><h4>Returns</h4>
+<p> a new CdTransform object.</p>
+</div>
+<p class="since">Since: 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-input-icc"></a><h3>cd_transform_set_input_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_input_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                            <em class="parameter"><code><a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *icc</code></em>);</pre>
+<p>Sets the input profile to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-input-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>icc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> instance or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-input-pixel-format"></a><h3>cd_transform_set_input_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_input_pixel_format (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                                     <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);</pre>
+<p>Sets the pixel format to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-input-pixel-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>pixel_format</p></td>
+<td class="parameter_description"><p>The pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-input-icc"></a><h3>cd_transform_get_input_icc ()</h3>
+<pre class="programlisting"><a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+cd_transform_get_input_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the input profile to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-input-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-input-icc.returns"></a><h4>Returns</h4>
+<p> The input profile. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-input-pixel-format"></a><h3>cd_transform_get_input_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdPixelFormat</span>
+cd_transform_get_input_pixel_format (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the pixel format to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-input-pixel-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-input-pixel-format.returns"></a><h4>Returns</h4>
+<p> the pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-output-icc"></a><h3>cd_transform_set_output_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_output_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                             <em class="parameter"><code><a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *icc</code></em>);</pre>
+<p>Sets the output profile to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-output-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>icc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> instance or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-output-pixel-format"></a><h3>cd_transform_set_output_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_output_pixel_format (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                                      <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);</pre>
+<p>Sets the pixel format to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-output-pixel-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>pixel_format</p></td>
+<td class="parameter_description"><p>The pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-output-icc"></a><h3>cd_transform_get_output_icc ()</h3>
+<pre class="programlisting"><a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+cd_transform_get_output_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the input profile to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-output-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-output-icc.returns"></a><h4>Returns</h4>
+<p> The output profile. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-output-pixel-format"></a><h3>cd_transform_get_output_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdPixelFormat</span>
+cd_transform_get_output_pixel_format (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the pixel format to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-output-pixel-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-output-pixel-format.returns"></a><h4>Returns</h4>
+<p> the pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-abstract-icc"></a><h3>cd_transform_set_abstract_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_abstract_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                               <em class="parameter"><code><a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *icc</code></em>);</pre>
+<p>Sets the abstract profile to use for the transform.
+This is typically only needed for soft-proofing.</p>
+<div class="refsect3">
+<a name="cd-transform-set-abstract-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>icc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> instance or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-abstract-icc"></a><h3>cd_transform_get_abstract_icc ()</h3>
+<pre class="programlisting"><a class="link" href="CdIcc.html" title="CdIcc"><span class="returnvalue">CdIcc</span></a> *
+cd_transform_get_abstract_icc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the abstract profile to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-abstract-icc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-abstract-icc.returns"></a><h4>Returns</h4>
+<p> The abstract profile. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-rendering-intent"></a><h3>cd_transform_set_rendering_intent ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_rendering_intent (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                                   <em class="parameter"><code><span class="type">CdRenderingIntent</span> rendering_intent</code></em>);</pre>
+<p>Sets the rendering intent to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-rendering-intent.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>rendering_intent</p></td>
+<td class="parameter_description"><p>the rendering intent, e.g. <code class="literal">CD_RENDERING_INTENT_PERCEPTUAL</code></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-rendering-intent"></a><h3>cd_transform_get_rendering_intent ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdRenderingIntent</span>
+cd_transform_get_rendering_intent (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the rendering intent to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-rendering-intent.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-rendering-intent.returns"></a><h4>Returns</h4>
+<p> The rendering intent, e.g. <code class="literal">CD_RENDERING_INTENT_PERCEPTUAL</code></p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-bpc"></a><h3>cd_transform_set_bpc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_bpc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> bpc</code></em>);</pre>
+<p>Sets if black point compensation should be used for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-bpc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>bpc</p></td>
+<td class="parameter_description"><p>black point compensation</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-bpc"></a><h3>cd_transform_get_bpc ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_transform_get_bpc (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the rendering bpc to use for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-bpc.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-bpc.returns"></a><h4>Returns</h4>
+<p> If black point compensation should be used for the transform.</p>
+</div>
+<p class="since">Since: 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-max-threads"></a><h3>cd_transform_set_max_threads ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_transform_set_max_threads (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a> max_threads</code></em>);</pre>
+<p>Sets the maximum number of threads to be used for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-set-max-threads.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>max_threads</p></td>
+<td class="parameter_description"><p>number of threads, or 0 for the number of cores on the CPU</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-max-threads"></a><h3>cd_transform_get_max_threads ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+cd_transform_get_max_threads (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>);</pre>
+<p>Gets the maximum number of threads to be used for the transform.</p>
+<div class="refsect3">
+<a name="cd-transform-get-max-threads.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-get-max-threads.returns"></a><h4>Returns</h4>
+<p> number of threads</p>
+</div>
+<p class="since">Since: 1.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-process"></a><h3>cd_transform_process ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_transform_process (<em class="parameter"><code><a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> *transform</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_in</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_out</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a> width</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a> rowstride</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Processes a block of data through the transform.
+Once the transform has been setup it is cached and only re-created if any
+of the formats, input, output or abstract profiles are changed.</p>
+<div class="refsect3">
+<a name="cd-transform-process.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>transform</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdTransform.html" title="CdTransform"><span class="type">CdTransform</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>data_in</p></td>
+<td class="parameter_description"><p>the data buffer to convert</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>data_out</p></td>
+<td class="parameter_description"><p>the data buffer to return, which can be the same as <em class="parameter"><code>data_in</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>width</p></td>
+<td class="parameter_description"><p>the width of <em class="parameter"><code>data_in</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>height</p></td>
+<td class="parameter_description"><p>the height of <em class="parameter"><code>data_in</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>rowstride</p></td>
+<td class="parameter_description"><p>the rowstride of <em class="parameter"><code>data_in</code></em>
+, typically the same as <em class="parameter"><code>width</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><code class="literal">GError</code></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><code class="literal">GCancellable</code></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-transform-process.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the pixels were successfully transformed.</p>
+</div>
+<p class="since">Since: 0.1.34</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdTransform.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="CD-TRANSFORM-ERROR:CAPS"></a><h3>CD_TRANSFORM_ERROR</h3>
+<pre class="programlisting">#define CD_TRANSFORM_ERROR		(cd_transform_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TRANSFORM-TYPE-ERROR:CAPS"></a><h3>CD_TRANSFORM_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_TRANSFORM_TYPE_ERROR		(cd_transform_error_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TYPE-TRANSFORM:CAPS"></a><h3>CD_TYPE_TRANSFORM</h3>
+<pre class="programlisting">#define CD_TYPE_TRANSFORM (cd_transform_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransformError"></a><h3>enum CdTransformError</h3>
+<p>The transform error code.</p>
+<div class="refsect3">
+<a name="CdTransformError.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="CD-TRANSFORM-ERROR-FAILED-TO-SETUP-TRANSFORM:CAPS"></a>CD_TRANSFORM_ERROR_FAILED_TO_SETUP_TRANSFORM</p></td>
+<td class="enum_member_description">
+<p>Failed to setup transform</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="CD-TRANSFORM-ERROR-INVALID-COLORSPACE:CAPS"></a>CD_TRANSFORM_ERROR_INVALID_COLORSPACE</p></td>
+<td class="enum_member_description">
+<p>Invalid colorspace</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="CD-TRANSFORM-ERROR-LAST:CAPS"></a>CD_TRANSFORM_ERROR_LAST</p></td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransformClass"></a><h3>struct CdTransformClass</h3>
+<pre class="programlisting">struct CdTransformClass {
+	GObjectClass		 parent_class;
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform-struct"></a><h3>CdTransform</h3>
+<pre class="programlisting">typedef struct _CdTransform CdTransform;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdTransform.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="CdTransform--abstract-icc"></a><h3>The <code class="literal">“abstract-icc”</code> property</h3>
+<pre class="programlisting">  “abstract-icc”             <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</pre>
+<p>Flags: Read / Write</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--bpc"></a><h3>The <code class="literal">“bpc”</code> property</h3>
+<pre class="programlisting">  “bpc”                      <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>Flags: Read / Write</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--input-icc"></a><h3>The <code class="literal">“input-icc”</code> property</h3>
+<pre class="programlisting">  “input-icc”                <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</pre>
+<p>Flags: Read / Write</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--input-pixel-format"></a><h3>The <code class="literal">“input-pixel-format”</code> property</h3>
+<pre class="programlisting">  “input-pixel-format”       <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>Flags: Read / Write</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--output-icc"></a><h3>The <code class="literal">“output-icc”</code> property</h3>
+<pre class="programlisting">  “output-icc”               <a class="link" href="CdIcc.html" title="CdIcc"><span class="type">CdIcc</span></a> *</pre>
+<p>Flags: Read / Write</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--output-pixel-format"></a><h3>The <code class="literal">“output-pixel-format”</code> property</h3>
+<pre class="programlisting">  “output-pixel-format”      <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>Flags: Read / Write</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransform--rendering-intent"></a><h3>The <code class="literal">“rendering-intent”</code> property</h3>
+<pre class="programlisting">  “rendering-intent”         <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>Flags: Read / Write</p>
+<p>Default value: 0</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.25</div>
+</body>
+</html>

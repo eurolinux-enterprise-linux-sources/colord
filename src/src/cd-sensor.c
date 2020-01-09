@@ -27,13 +27,12 @@
 #include <gmodule.h>
 #include <colord-private.h>
 
-#include "cd-cleanup.h"
 #include "cd-common.h"
 #include "cd-sensor.h"
 
 static void cd_sensor_finalize			 (GObject *object);
 
-#define CD_SENSOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CD_TYPE_SENSOR, CdSensorPrivate))
+#define GET_PRIVATE(o) (cd_sensor_get_instance_private (o))
 
 /**
  * CdSensorIface:
@@ -45,6 +44,14 @@ typedef struct {
 						 GAsyncReadyCallback	 callback,
 						 gpointer		 user_data);
 	CdColorXYZ	*(*get_sample_finish)	(CdSensor		*sensor,
+						 GAsyncResult		*res,
+						 GError			**error);
+	void		 (*get_spectrum_async)	(CdSensor		*sensor,
+						 CdSensorCap		 cap,
+						 GCancellable		*cancellable,
+						 GAsyncReadyCallback	 callback,
+						 gpointer		 user_data);
+	CdSpectrum	*(*get_spectrum_finish)	(CdSensor		*sensor,
 						 GAsyncResult		*res,
 						 GError			**error);
 	gboolean	 (*coldplug)		(CdSensor		*sensor,
@@ -81,7 +88,7 @@ typedef struct {
  *
  * Private #CdSensor data
  **/
-struct _CdSensorPrivate
+typedef struct
 {
 	gchar				*id;
 	CdSensorKind			 kind;
@@ -98,17 +105,18 @@ struct _CdSensorPrivate
 	gboolean			 locked;
 	guint64				 caps;
 	gchar				*object_path;
+	gchar				*usb_path;
 	guint				 watcher_id;
 	GDBusConnection			*connection;
 	guint				 registration_id;
+	guint				 set_state_id;
 	CdSensorIface			*desc;
 	GHashTable			*options;
 	GHashTable			*metadata;
 #ifdef HAVE_GUSB
 	GUsbContext			*usb_ctx;
-	GUsbDeviceList			*device_list;
 #endif
-};
+} CdSensorPrivate;
 
 enum {
 	PROP_0,
@@ -126,7 +134,7 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE (CdSensor, cd_sensor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (CdSensor, cd_sensor, G_TYPE_OBJECT)
 
 /**
  * cd_sensor_error_quark:
@@ -153,8 +161,9 @@ cd_sensor_error_quark (void)
 const gchar *
 cd_sensor_get_object_path (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return sensor->priv->object_path;
+	return priv->object_path;
 }
 
 /**
@@ -163,8 +172,9 @@ cd_sensor_get_object_path (CdSensor *sensor)
 const gchar *
 cd_sensor_get_id (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return sensor->priv->id;
+	return priv->id;
 }
 
 /**
@@ -173,18 +183,19 @@ cd_sensor_get_id (CdSensor *sensor)
 static void
 cd_sensor_set_id (CdSensor *sensor, const gchar *id)
 {
-	_cleanup_free_ gchar *id_tmp = NULL;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	g_autofree gchar *id_tmp = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
-	g_free (sensor->priv->id);
+	g_free (priv->id);
 
 	/* make sure object path is sane */
 	id_tmp = cd_main_ensure_dbus_path (id);
-	sensor->priv->object_path = g_build_filename (COLORD_DBUS_PATH,
+	priv->object_path = g_build_filename (COLORD_DBUS_PATH,
 						      "sensors",
 						      id_tmp,
 						      NULL);
-	sensor->priv->id = g_strdup (id);
+	priv->id = g_strdup (id);
 }
 
 /**
@@ -195,11 +206,12 @@ cd_sensor_dbus_emit_property_changed (CdSensor *sensor,
 				      const gchar *property_name,
 				      GVariant *property_value)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GVariantBuilder builder;
 	GVariantBuilder invalidated_builder;
 
 	/* not yet connected */
-	if (sensor->priv->connection == NULL)
+	if (priv->connection == NULL)
 		return;
 
 	/* build the dict */
@@ -210,9 +222,9 @@ cd_sensor_dbus_emit_property_changed (CdSensor *sensor,
 			       property_name,
 			       property_value);
 	g_debug ("CdSensor: emit PropertiesChanged(%s)", property_name);
-	g_dbus_connection_emit_signal (sensor->priv->connection,
+	g_dbus_connection_emit_signal (priv->connection,
 				       NULL,
-				       sensor->priv->object_path,
+				       priv->object_path,
 				       "org.freedesktop.DBus.Properties",
 				       "PropertiesChanged",
 				       g_variant_new ("(sa{sv}as)",
@@ -232,16 +244,18 @@ cd_sensor_dbus_emit_property_changed (CdSensor *sensor,
 void
 cd_sensor_button_pressed (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+
 	/* not yet connected */
-	if (sensor->priv->connection == NULL)
+	if (priv->connection == NULL)
 		return;
 
 	/* emit signal */
 	g_debug ("CdSensor: emit ButtonPressed on %s",
-		 sensor->priv->object_path);
-	g_dbus_connection_emit_signal (sensor->priv->connection,
+		 priv->object_path);
+	g_dbus_connection_emit_signal (priv->connection,
 				       NULL,
-				       sensor->priv->object_path,
+				       priv->object_path,
 				       COLORD_DBUS_INTERFACE_SENSOR,
 				       "ButtonPressed",
 				       NULL,
@@ -259,8 +273,9 @@ cd_sensor_button_pressed (CdSensor *sensor)
 void
 cd_sensor_set_serial (CdSensor *sensor, const gchar *serial)
 {
-	g_free (sensor->priv->serial);
-	sensor->priv->serial = g_strdup (serial);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	g_free (priv->serial);
+	priv->serial = g_strdup (serial);
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "Serial",
 					      g_variant_new_string (serial));
@@ -276,7 +291,8 @@ cd_sensor_set_serial (CdSensor *sensor, const gchar *serial)
 void
 cd_sensor_set_kind (CdSensor *sensor, CdSensorKind kind)
 {
-	sensor->priv->kind = kind;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	priv->kind = kind;
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "Kind",
 					      g_variant_new_uint32 (kind));
@@ -288,7 +304,8 @@ cd_sensor_set_kind (CdSensor *sensor, CdSensorKind kind)
 CdSensorKind
 cd_sensor_get_kind (CdSensor *sensor)
 {
-	return sensor->priv->kind;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	return priv->kind;
 }
 
 /**
@@ -301,25 +318,26 @@ cd_sensor_get_kind (CdSensor *sensor)
 gboolean
 cd_sensor_load (CdSensor *sensor, GError **error)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	CdSensorIface *desc;
 	GModule *handle;
 	const gchar *module_name;
-	_cleanup_free_ gchar *backend_name = NULL;
-	_cleanup_free_ gchar *path_fallback = NULL;
-	_cleanup_free_ gchar *path = NULL;
+	g_autofree gchar *backend_name = NULL;
+	g_autofree gchar *path_fallback = NULL;
+	g_autofree gchar *path = NULL;
 
 	/* no module */
-	if (sensor->priv->kind == CD_SENSOR_KIND_UNKNOWN)
+	if (priv->kind == CD_SENSOR_KIND_UNKNOWN)
 		return TRUE;
 
 	/* some modules are shared */
-	switch (sensor->priv->kind) {
+	switch (priv->kind) {
 	case CD_SENSOR_KIND_COLORHUG:
 	case CD_SENSOR_KIND_COLORHUG2:
 		module_name = "colorhug";
 		break;
 	default:
-		module_name = cd_sensor_kind_to_string (sensor->priv->kind);
+		module_name = cd_sensor_kind_to_string (priv->kind);
 		break;
 	}
 
@@ -347,11 +365,13 @@ cd_sensor_load (CdSensor *sensor, GError **error)
 	}
 
 	/* dlload module if it exists */
-	desc = sensor->priv->desc = g_new0 (CdSensorIface, 1);
+	desc = priv->desc = g_new0 (CdSensorIface, 1);
 
 	/* connect up exported methods */
 	g_module_symbol (handle, "cd_sensor_get_sample_async", (gpointer *)&desc->get_sample_async);
 	g_module_symbol (handle, "cd_sensor_get_sample_finish", (gpointer *)&desc->get_sample_finish);
+	g_module_symbol (handle, "cd_sensor_get_spectrum_async", (gpointer *)&desc->get_spectrum_async);
+	g_module_symbol (handle, "cd_sensor_get_spectrum_finish", (gpointer *)&desc->get_spectrum_finish);
 	g_module_symbol (handle, "cd_sensor_set_options_async", (gpointer *)&desc->set_options_async);
 	g_module_symbol (handle, "cd_sensor_set_options_finish", (gpointer *)&desc->set_options_finish);
 	g_module_symbol (handle, "cd_sensor_coldplug", (gpointer *)&desc->coldplug);
@@ -373,7 +393,8 @@ cd_sensor_load (CdSensor *sensor, GError **error)
 static void
 cd_sensor_set_locked (CdSensor *sensor, gboolean locked)
 {
-	sensor->priv->locked = locked;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	priv->locked = locked;
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "Locked",
 					      g_variant_new_boolean (locked));
@@ -391,12 +412,14 @@ _cd_sensor_lock_async (CdSensor *sensor,
 		       GAsyncReadyCallback callback,
 		       gpointer user_data)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+
 	g_return_if_fail (CD_IS_SENSOR (sensor));
-	g_return_if_fail (sensor->priv->desc != NULL);
+	g_return_if_fail (priv->desc != NULL);
 
 	/* proxy up */
-	if (sensor->priv->desc->lock_async) {
-		sensor->priv->desc->lock_async (sensor,
+	if (priv->desc->lock_async) {
+		priv->desc->lock_async (sensor,
 						cancellable,
 						callback,
 						user_data);
@@ -414,14 +437,15 @@ _cd_sensor_lock_finish (CdSensor *sensor,
 			GAsyncResult *res,
 			GError **error)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	gboolean ret = TRUE;
 
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (sensor->priv->desc != NULL, FALSE);
+	g_return_val_if_fail (priv->desc != NULL, FALSE);
 
 	/* proxy up */
-	if (sensor->priv->desc->lock_finish) {
-		ret = sensor->priv->desc->lock_finish (sensor,
+	if (priv->desc->lock_finish) {
+		ret = priv->desc->lock_finish (sensor,
 						       res,
 						       error);
 	}
@@ -439,10 +463,62 @@ _cd_sensor_lock_finish (CdSensor *sensor,
 void
 cd_sensor_set_state (CdSensor *sensor, CdSensorState state)
 {
-	sensor->priv->state = state;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+
+	/* invalidate */
+	if (priv->set_state_id > 0) {
+		g_source_remove (priv->set_state_id);
+		priv->set_state_id = 0;
+	}
+
+	priv->state = state;
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "State",
 					      g_variant_new_string (cd_sensor_state_to_string (state)));
+}
+
+typedef struct {
+	CdSensor	*sensor;
+	CdSensorState	 state;
+} CdSensorIdleHelper;
+
+/**
+ * cd_sensor_set_state_in_idle_cb:
+ **/
+static gboolean
+cd_sensor_set_state_in_idle_cb (gpointer user_data)
+{
+	CdSensorIdleHelper *helper = (CdSensorIdleHelper *) user_data;
+	CdSensorPrivate *priv = GET_PRIVATE (helper->sensor);
+
+	/* this is us */
+	priv->set_state_id = 0;
+
+	/* set state now */
+	cd_sensor_set_state (helper->sensor, helper->state);
+	g_object_unref (helper->sensor);
+	g_free (helper);
+	return G_SOURCE_REMOVE;
+}
+
+/**
+ * cd_sensor_set_state_in_idle:
+ * @sensor: a valid #CdSensor instance
+ * @state: the sensor state, e.g %CD_SENSOR_STATE_IDLE
+ *
+ * Sets the device state.
+ **/
+void
+cd_sensor_set_state_in_idle (CdSensor *sensor, CdSensorState state)
+{
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	CdSensorIdleHelper *helper = g_new0 (CdSensorIdleHelper, 1);
+	helper->sensor = g_object_ref (sensor);
+	helper->state = state;
+	if (priv->set_state_id > 0)
+		g_source_remove (priv->set_state_id);
+	priv->set_state_id =
+		g_idle_add (cd_sensor_set_state_in_idle_cb, helper);
 }
 
 /**
@@ -451,7 +527,8 @@ cd_sensor_set_state (CdSensor *sensor, CdSensorState state)
 void
 cd_sensor_set_mode (CdSensor *sensor, CdSensorCap mode)
 {
-	sensor->priv->mode = mode;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	priv->mode = mode;
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "Mode",
 					      g_variant_new_string (cd_sensor_cap_to_string (mode)));
@@ -463,7 +540,8 @@ cd_sensor_set_mode (CdSensor *sensor, CdSensorCap mode)
 CdSensorCap
 cd_sensor_get_mode (CdSensor *sensor)
 {
-	return sensor->priv->mode;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	return priv->mode;
 }
 
 /**
@@ -479,7 +557,7 @@ cd_sensor_get_mode (CdSensor *sensor)
 gboolean
 cd_sensor_dump (CdSensor *sensor, GString *data, GError **error)
 {
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	/* write common sensor details */
 	g_string_append (data, "// AUTOMATICALLY GENERATED -- DO NOT EDIT\n");
@@ -490,7 +568,7 @@ cd_sensor_dump (CdSensor *sensor, GString *data, GError **error)
 	g_string_append_printf (data, "serial-number:%s\n", priv->serial);
 
 	/* no type */
-	if (sensor->priv->desc == NULL) {
+	if (priv->desc == NULL) {
 		g_set_error_literal (error,
 				     CD_SENSOR_ERROR,
 				     CD_SENSOR_ERROR_INTERNAL,
@@ -499,7 +577,7 @@ cd_sensor_dump (CdSensor *sensor, GString *data, GError **error)
 	}
 
 	/* dump sensor */
-	if (sensor->priv->desc->dump_device == NULL) {
+	if (priv->desc->dump_device == NULL) {
 		g_set_error_literal (error,
 				     CD_SENSOR_ERROR,
 				     CD_SENSOR_ERROR_INTERNAL,
@@ -508,7 +586,7 @@ cd_sensor_dump (CdSensor *sensor, GString *data, GError **error)
 	}
 
 	/* proxy */
-	return sensor->priv->desc->dump_device (sensor, data, error);
+	return priv->desc->dump_device (sensor, data, error);
 }
 
 /**
@@ -520,32 +598,72 @@ cd_sensor_get_sample_cb (GObject *source_object,
 			 gpointer user_data)
 {
 	GVariant *result = NULL;
-	CdColorXYZ *sample;
+	g_autoptr(CdColorXYZ) sample = NULL;
 	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GDBusMethodInvocation *invocation = (GDBusMethodInvocation *) user_data;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
+
+	/* set here to avoid every sensor doing this */
+	cd_sensor_set_state (sensor, CD_SENSOR_STATE_IDLE);
 
 	/* get the result */
-	sample = sensor->priv->desc->get_sample_finish (sensor, res, &error);
+	sample = priv->desc->get_sample_finish (sensor, res, &error);
 	if (sample == NULL) {
 		g_dbus_method_invocation_return_gerror (invocation, error);
-		g_error_free (error);
-		goto out;
+		return;
 	}
 
 	/* return value */
-	g_debug ("returning value %f, %f, %f",
-		 sample->X,
-		 sample->Y,
-		 sample->Z);
-	result = g_variant_new ("(ddd)",
-				sample->X,
-				sample->Y,
-				sample->Z);
+	g_debug ("returning value %f, %f, %f", sample->X, sample->Y, sample->Z);
+	result = g_variant_new ("(ddd)", sample->X, sample->Y, sample->Z);
 	g_dbus_method_invocation_return_value (invocation, result);
-out:
-	if (sample != NULL)
-		cd_color_xyz_free (sample);
+}
+
+/**
+ * cd_sensor_get_spectrum_cb:
+ **/
+static void
+cd_sensor_get_spectrum_cb (GObject *source_object,
+			   GAsyncResult *res,
+			   gpointer user_data)
+{
+	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GDBusMethodInvocation *invocation = (GDBusMethodInvocation *) user_data;
+	GVariant *result = NULL;
+	GVariantBuilder data;
+	guint i;
+	g_autoptr(CdSpectrum) sp = NULL;
+	g_autoptr(GError) error = NULL;
+
+	/* set here to avoid every sensor doing this */
+	cd_sensor_set_state (sensor, CD_SENSOR_STATE_IDLE);
+
+	/* get the result */
+	sp = priv->desc->get_spectrum_finish (sensor, res, &error);
+	if (sp == NULL) {
+		g_dbus_method_invocation_return_gerror (invocation, error);
+		return;
+	}
+
+	/* build data array */
+	g_variant_builder_init (&data, G_VARIANT_TYPE ("ad"));
+	for (i = 0; i < cd_spectrum_get_size (sp); i++) {
+		g_variant_builder_add (&data, "d",
+				       cd_spectrum_get_value (sp, i));
+	}
+
+	/* return value */
+	g_debug ("returning value %f, %f, [%u]",
+		 cd_spectrum_get_start (sp),
+		 cd_spectrum_get_end (sp),
+		 cd_spectrum_get_size (sp));
+	result = g_variant_new ("(ddad)",
+				cd_spectrum_get_start (sp),
+				cd_spectrum_get_end (sp),
+				&data);
+	g_dbus_method_invocation_return_value (invocation, result);
 }
 
 /**
@@ -558,11 +676,12 @@ cd_sensor_set_options_cb (GObject *source_object,
 {
 	gboolean ret;
 	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GDBusMethodInvocation *invocation = (GDBusMethodInvocation *) user_data;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	/* get the result */
-	ret = sensor->priv->desc->set_options_finish (sensor, res, &error);
+	ret = priv->desc->set_options_finish (sensor, res, &error);
 	if (!ret) {
 		g_dbus_method_invocation_return_gerror (invocation, error);
 		return;
@@ -579,12 +698,16 @@ cd_sensor_lock_cb (GObject *source_object,
 		   gpointer user_data)
 {
 	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GDBusMethodInvocation *invocation = (GDBusMethodInvocation *) user_data;
 	gboolean ret;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
+
+	/* set here to avoid every sensor doing this */
+	cd_sensor_set_state (sensor, CD_SENSOR_STATE_IDLE);
 
 	/* get the result */
-	ret = sensor->priv->desc->lock_finish (sensor, res, &error);
+	ret = priv->desc->lock_finish (sensor, res, &error);
 	if (!ret) {
 		g_dbus_method_invocation_return_error (invocation,
 						       CD_SENSOR_ERROR,
@@ -606,14 +729,18 @@ cd_sensor_unlock_cb (GObject *source_object,
 		     gpointer user_data)
 {
 	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GDBusMethodInvocation *invocation = (GDBusMethodInvocation *) user_data;
 	gboolean ret;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
+
+	/* set here to avoid every sensor doing this */
+	cd_sensor_set_state (sensor, CD_SENSOR_STATE_IDLE);
 
 	/* get the result */
-	if (sensor->priv->desc != NULL &&
-	    sensor->priv->desc->unlock_finish != NULL) {
-		ret = sensor->priv->desc->unlock_finish (sensor, res, &error);
+	if (priv->desc != NULL &&
+	    priv->desc->unlock_finish != NULL) {
+		ret = priv->desc->unlock_finish (sensor, res, &error);
 		if (!ret) {
 			g_dbus_method_invocation_return_error (invocation,
 							       CD_SENSOR_ERROR,
@@ -636,13 +763,17 @@ cd_sensor_unlock_quietly_cb (GObject *source_object,
 			     gpointer user_data)
 {
 	CdSensor *sensor = CD_SENSOR (source_object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	gboolean ret;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
+
+	/* set here to avoid every sensor doing this */
+	cd_sensor_set_state (sensor, CD_SENSOR_STATE_IDLE);
 
 	/* get the result */
-	if (sensor->priv->desc != NULL &&
-	    sensor->priv->desc->unlock_finish != NULL) {
-		ret = sensor->priv->desc->unlock_finish (sensor, res, &error);
+	if (priv->desc != NULL &&
+	    priv->desc->unlock_finish != NULL) {
+		ret = priv->desc->unlock_finish (sensor, res, &error);
 		if (!ret) {
 			g_warning ("failed to unlock: %s",
 				   error->message);
@@ -661,22 +792,23 @@ cd_sensor_name_vanished_cb (GDBusConnection *connection,
 			     gpointer user_data)
 {
 	CdSensor *sensor = CD_SENSOR (user_data);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	/* dummy */
 	g_debug ("locked sender has vanished without doing Unlock()!");
-	if (sensor->priv->desc == NULL ||
-	    sensor->priv->desc->unlock_async == NULL) {
+	if (priv->desc == NULL ||
+	    priv->desc->unlock_async == NULL) {
 		cd_sensor_set_locked (sensor, FALSE);
 		goto out;
 	}
 
 	/* no longer valid */
-	sensor->priv->desc->unlock_async (sensor,
-					  NULL,
-					  cd_sensor_unlock_quietly_cb,
-					  NULL);
+	priv->desc->unlock_async (sensor,
+				  NULL,
+				  cd_sensor_unlock_quietly_cb,
+				  NULL);
 out:
-	sensor->priv->watcher_id = 0;
+	priv->watcher_id = 0;
 }
 
 /**
@@ -690,13 +822,13 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 {
 	CdSensorCap cap;
 	CdSensor *sensor = CD_SENSOR (user_data);
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GVariantIter iter;
 	GVariant *value;
 	const gchar *cap_tmp = NULL;
 	gboolean ret;
 	gchar *key;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	/* return '' */
 	if (g_strcmp0 (method_name, "Lock") == 0) {
@@ -735,18 +867,18 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 						     NULL);
 
 		/* no support */
-		if (sensor->priv->desc == NULL ||
-		    sensor->priv->desc->lock_async == NULL) {
+		if (priv->desc == NULL ||
+		    priv->desc->lock_async == NULL) {
 			cd_sensor_set_locked (sensor, TRUE);
 			g_dbus_method_invocation_return_value (invocation, NULL);
 			return;
 		}
 
 		/* proxy */
-		sensor->priv->desc->lock_async (sensor,
-						NULL,
-						cd_sensor_lock_cb,
-						invocation);
+		priv->desc->lock_async (sensor,
+					NULL,
+					cd_sensor_lock_cb,
+					invocation);
 		return;
 	}
 
@@ -783,18 +915,18 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 		}
 
 		/* no support */
-		if (sensor->priv->desc == NULL ||
-		    sensor->priv->desc->unlock_async == NULL) {
+		if (priv->desc == NULL ||
+		    priv->desc->unlock_async == NULL) {
 			cd_sensor_set_locked (sensor, FALSE);
 			g_dbus_method_invocation_return_value (invocation, NULL);
 			return;
 		}
 
 		/* proxy */
-		sensor->priv->desc->unlock_async (sensor,
-				     NULL,
-				     cd_sensor_unlock_cb,
-				     invocation);
+		priv->desc->unlock_async (sensor,
+					  NULL,
+					  cd_sensor_unlock_cb,
+					  invocation);
 		return;
 	}
 
@@ -823,8 +955,8 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 		}
 
 		/* no support */
-		if (sensor->priv->desc == NULL ||
-		    sensor->priv->desc->get_sample_async == NULL) {
+		if (priv->desc == NULL ||
+		    priv->desc->get_sample_async == NULL) {
 			g_dbus_method_invocation_return_error (invocation,
 							       CD_SENSOR_ERROR,
 							       CD_SENSOR_ERROR_NO_SUPPORT,
@@ -844,20 +976,96 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 			return;
 		}
 
+		/* check type */
+		if (cap == CD_SENSOR_CAP_SPECTRAL) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_INTERNAL,
+							       "cannot return spectral");
+			return;
+		}
+
 		/* proxy */
-		sensor->priv->desc->get_sample_async (sensor,
-						      cap,
-						      NULL,
-						      cd_sensor_get_sample_cb,
-						      invocation);
+		priv->desc->get_sample_async (sensor,
+					      cap,
+					      NULL,
+					      cd_sensor_get_sample_cb,
+					      invocation);
+		return;
+	}
+
+	/* return 'ddad' */
+	if (g_strcmp0 (method_name, "GetSpectrum") == 0) {
+
+		g_debug ("CdSensor %s:GetSpectrum()", sender);
+
+		/* check locked */
+		if (!priv->locked) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_NOT_LOCKED,
+							       "sensor is not yet locked");
+			return;
+		}
+
+		/*  check idle */
+		if (priv->state != CD_SENSOR_STATE_IDLE) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_IN_USE,
+							       "sensor not idle: %s",
+							       cd_sensor_state_to_string (priv->state));
+			return;
+		}
+
+		/* no support */
+		if (priv->desc == NULL ||
+		    priv->desc->get_spectrum_async == NULL) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_NO_SUPPORT,
+							       "no sensor->get_sample");
+			return;
+		}
+
+		/* get the type */
+		g_variant_get (parameters, "(&s)", &cap_tmp);
+		cap = cd_sensor_cap_from_string (cap_tmp);
+		if (cap == CD_SENSOR_CAP_UNKNOWN) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_INTERNAL,
+							       "cap '%s' unknown",
+							       cap_tmp);
+			return;
+		}
+
+		/* check type */
+		if (cap != CD_SENSOR_CAP_SPECTRAL &&
+		    cap != CD_SENSOR_CAP_CALIBRATION_DARK &&
+		    cap != CD_SENSOR_CAP_CALIBRATION_IRRADIANCE) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_SENSOR_ERROR,
+							       CD_SENSOR_ERROR_INTERNAL,
+							       "invalid cap, only spectral "
+							       "or calibration type supported");
+			return;
+		}
+
+		/* proxy */
+		priv->desc->get_spectrum_async (sensor,
+						cap,
+						NULL,
+						cd_sensor_get_spectrum_cb,
+						invocation);
 		return;
 	}
 
 	/* return '' */
 	if (g_strcmp0 (method_name, "SetOptions") == 0) {
 
-		_cleanup_hashtable_unref_ GHashTable *options = NULL;
-		_cleanup_variant_unref_ GVariant *result = NULL;
+		g_autoptr(GHashTable) options = NULL;
+		g_autoptr(GVariant) result = NULL;
 
 		g_debug ("CdSensor %s:SetOptions()", sender);
 
@@ -881,8 +1089,8 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 		}
 
 		/* no support */
-		if (sensor->priv->desc == NULL ||
-		    sensor->priv->desc->set_options_async == NULL) {
+		if (priv->desc == NULL ||
+		    priv->desc->set_options_async == NULL) {
 			g_dbus_method_invocation_return_error (invocation,
 							       CD_SENSOR_ERROR,
 							       CD_SENSOR_ERROR_NO_SUPPORT,
@@ -899,7 +1107,7 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 			g_hash_table_insert (options, key, value);
 
 		/* proxy */
-		sensor->priv->desc->set_options_async (sensor,
+		priv->desc->set_options_async (sensor,
 						       options,
 						       NULL,
 						       cd_sensor_set_options_cb,
@@ -917,22 +1125,23 @@ cd_sensor_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 static GVariant *
 cd_sensor_get_options_as_variant (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GList *l;
 	GVariantBuilder builder;
-	_cleanup_list_free_ GList *list = NULL;
+	g_autoptr(GList) list = NULL;
 
 	/* do not try to build an empty array */
-	if (g_hash_table_size (sensor->priv->options) == 0)
+	if (g_hash_table_size (priv->options) == 0)
 		return g_variant_new_array (G_VARIANT_TYPE ("{sv}"), NULL, 0);
 
 	/* add all the keys in the dictionary to the variant builder */
-	list = g_hash_table_get_keys (sensor->priv->options);
+	list = g_hash_table_get_keys (priv->options);
 	g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
 	for (l = list; l != NULL; l = l->next) {
 		g_variant_builder_add (&builder,
 				       "{sv}",
 				       l->data,
-				       g_hash_table_lookup (sensor->priv->options,
+				       g_hash_table_lookup (priv->options,
 							    l->data));
 	}
 	return g_variant_builder_end (&builder);
@@ -944,22 +1153,23 @@ cd_sensor_get_options_as_variant (CdSensor *sensor)
 static GVariant *
 cd_sensor_get_metadata_as_variant (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GList *l;
 	GVariantBuilder builder;
-	_cleanup_list_free_ GList *list = NULL;
+	g_autoptr(GList) list = NULL;
 
 	/* we always must have at least one bit of metadata */
-	if (g_hash_table_size (sensor->priv->metadata) == 0)
+	if (g_hash_table_size (priv->metadata) == 0)
 		return g_variant_new_array (G_VARIANT_TYPE ("{sv}"), NULL, 0);
 
 	/* add all the keys in the dictionary to the variant builder */
-	list = g_hash_table_get_keys (sensor->priv->metadata);
+	list = g_hash_table_get_keys (priv->metadata);
 	g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
 	for (l = list; l != NULL; l = l->next) {
 		g_variant_builder_add (&builder,
 				       "{ss}",
 				       l->data,
-				       g_hash_table_lookup (sensor->priv->metadata,
+				       g_hash_table_lookup (priv->metadata,
 							    l->data));
 	}
 	return g_variant_builder_end (&builder);
@@ -1005,7 +1215,7 @@ cd_sensor_dbus_get_property (GDBusConnection *connection_, const gchar *sender,
 			     gpointer user_data)
 {
 	CdSensor *sensor = CD_SENSOR (user_data);
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_ID) == 0)
 		return g_variant_new_string (priv->id);
@@ -1052,7 +1262,8 @@ cd_sensor_register_object (CdSensor *sensor,
 			   GDBusInterfaceInfo *info,
 			   GError **error)
 {
-	_cleanup_error_free_ GError *error_local = NULL;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	g_autoptr(GError) error_local = NULL;
 
 	static const GDBusInterfaceVTable interface_vtable = {
 		cd_sensor_dbus_method_call,
@@ -1060,16 +1271,16 @@ cd_sensor_register_object (CdSensor *sensor,
 		NULL
 	};
 
-	sensor->priv->connection = connection;
-	sensor->priv->registration_id = g_dbus_connection_register_object (
+	priv->connection = connection;
+	priv->registration_id = g_dbus_connection_register_object (
 		connection,
-		sensor->priv->object_path,
+		priv->object_path,
 		info,
 		&interface_vtable,
 		sensor,  /* user_data */
 		NULL,  /* user_data_free_func */
 		&error_local); /* GError** */
-	if (sensor->priv->registration_id == 0) {
+	if (priv->registration_id == 0) {
 		g_set_error (error,
 			     CD_SENSOR_ERROR,
 			     CD_SENSOR_ERROR_INTERNAL,
@@ -1077,9 +1288,9 @@ cd_sensor_register_object (CdSensor *sensor,
 			     error_local->message);
 		return FALSE;
 	}
-	g_debug ("CdSensor: Register interface %i on %s",
-		 sensor->priv->registration_id,
-		 sensor->priv->object_path);
+	g_debug ("CdSensor: Register interface %u on %s",
+		 priv->registration_id,
+		 priv->object_path);
 	return TRUE;
 }
 
@@ -1090,10 +1301,21 @@ const gchar *
 cd_sensor_get_device_path (CdSensor *sensor)
 {
 #ifdef HAVE_UDEV
-	return g_udev_device_get_sysfs_path (sensor->priv->device);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	return g_udev_device_get_sysfs_path (priv->device);
 #else
 	return NULL;
 #endif
+}
+
+/**
+ * cd_sensor_get_usb_path:
+ **/
+const gchar *
+cd_sensor_get_usb_path (CdSensor *sensor)
+{
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	return priv->usb_path;
 }
 
 #ifdef HAVE_GUSB
@@ -1107,16 +1329,16 @@ cd_sensor_open_usb_device (CdSensor *sensor,
 			   GError **error)
 {
 #ifdef HAVE_UDEV
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	guint8 busnum;
 	guint8 devnum;
-	_cleanup_object_unref_ GUsbDevice *device = NULL;
+	g_autoptr(GUsbDevice) device = NULL;
 
 	/* convert from GUdevDevice to GUsbDevice */
 	busnum = g_udev_device_get_sysfs_attr_as_int (priv->device, "busnum");
 	devnum = g_udev_device_get_sysfs_attr_as_int (priv->device, "devnum");
-	device = g_usb_device_list_find_by_bus_address (priv->device_list,
-							busnum, devnum, error);
+	device = g_usb_context_find_by_bus_address (priv->usb_ctx,
+						    busnum, devnum, error);
 	if (device == NULL)
 		return NULL;
 
@@ -1144,10 +1366,11 @@ cd_sensor_open_usb_device (CdSensor *sensor,
 void
 cd_sensor_add_cap (CdSensor *sensor, CdSensorCap cap)
 {
-	cd_bitfield_add (sensor->priv->caps, cap);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	cd_bitfield_add (priv->caps, cap);
 	cd_sensor_dbus_emit_property_changed (sensor,
 					      "Capabilities",
-					      cd_sensor_get_variant_for_caps (sensor->priv->caps));
+					      cd_sensor_get_variant_for_caps (priv->caps));
 
 }
 
@@ -1158,7 +1381,8 @@ cd_sensor_add_cap (CdSensor *sensor, CdSensorCap cap)
 GUdevDevice *
 cd_sensor_get_device (CdSensor *sensor)
 {
-	return sensor->priv->device;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	return priv->device;
 }
 
 /**
@@ -1168,9 +1392,10 @@ static void
 cd_sensor_set_model (CdSensor *sensor,
 		     const gchar *model)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	if (g_strcmp0 (model, "colormunki") == 0)
 		model = "ColorMunki";
-	sensor->priv->model = g_strdup (model);
+	priv->model = g_strdup (model);
 }
 
 /**
@@ -1182,7 +1407,7 @@ cd_sensor_set_from_device (CdSensor *sensor,
 			   GError **error)
 {
 	CdSensorCap cap;
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	const gchar *images[] = { "attach", "calibrate", "screen", NULL };
 	const gchar *images_md[] = { CD_SENSOR_METADATA_IMAGE_ATTACH,
 				     CD_SENSOR_METADATA_IMAGE_CALIBRATE,
@@ -1195,6 +1420,8 @@ cd_sensor_set_from_device (CdSensor *sensor,
 	gboolean use_database;
 	gchar *tmp;
 	guint i;
+	guint8 busnum;
+	guint8 devnum;
 
 	/* only use the database if we found both the VID and the PID */
 	use_database = g_udev_device_has_property (device, "ID_VENDOR_FROM_DATABASE") &&
@@ -1276,6 +1503,12 @@ cd_sensor_set_from_device (CdSensor *sensor,
 	 * device changes as this is only a snapshot */
 	priv->device = g_object_ref (device);
 
+	/* create USB path */
+	busnum = g_udev_device_get_sysfs_attr_as_int (priv->device, "busnum");
+	devnum = g_udev_device_get_sysfs_attr_as_int (priv->device, "devnum");
+	priv->usb_path = g_strdup_printf ("/dev/bus/usb/%03i/%03i",
+					  busnum, devnum);
+
 	/* success */
 	return TRUE;
 }
@@ -1288,9 +1521,10 @@ void
 cd_sensor_set_index (CdSensor *sensor,
 		     guint idx)
 {
-	_cleanup_free_ gchar *id = NULL;
-	id = g_strdup_printf ("%s-%02i",
-			      cd_sensor_kind_to_string (sensor->priv->kind),
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	g_autofree gchar *id = NULL;
+	id = g_strdup_printf ("%s-%02u",
+			      cd_sensor_kind_to_string (priv->kind),
 			      idx);
 	cd_sensor_set_id (sensor, id);
 }
@@ -1303,8 +1537,9 @@ cd_sensor_add_option (CdSensor *sensor,
 		      const gchar *key,
 		      GVariant *value)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GVariant *options;
-	g_hash_table_insert (sensor->priv->options,
+	g_hash_table_insert (priv->options,
 			     g_strdup (key),
 			     g_variant_ref_sink (value));
 
@@ -1346,7 +1581,7 @@ static void
 cd_sensor_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
 	CdSensor *sensor = CD_SENSOR (object);
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	switch (prop_id) {
 	case PROP_OBJECT_PATH:
@@ -1365,7 +1600,7 @@ static void
 cd_sensor_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
 	CdSensor *sensor = CD_SENSOR (object);
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	switch (prop_id) {
 	case PROP_OBJECT_PATH:
@@ -1493,8 +1728,6 @@ cd_sensor_class_init (CdSensorClass *klass)
 				      FALSE,
 				      G_PARAM_READWRITE);
 	g_object_class_install_property (object_class, PROP_LOCKED, pspec);
-
-	g_type_class_add_private (klass, sizeof (CdSensorPrivate));
 }
 
 /**
@@ -1503,21 +1736,20 @@ cd_sensor_class_init (CdSensorClass *klass)
 static void
 cd_sensor_init (CdSensor *sensor)
 {
-	sensor->priv = CD_SENSOR_GET_PRIVATE (sensor);
-	sensor->priv->state = CD_SENSOR_STATE_IDLE;
-	sensor->priv->mode = CD_SENSOR_CAP_UNKNOWN;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	priv->state = CD_SENSOR_STATE_IDLE;
+	priv->mode = CD_SENSOR_CAP_UNKNOWN;
 #ifdef HAVE_GUSB
-	sensor->priv->usb_ctx = g_usb_context_new (NULL);
-	sensor->priv->device_list = g_usb_device_list_new (sensor->priv->usb_ctx);
+	priv->usb_ctx = g_usb_context_new (NULL);
 #endif
-	sensor->priv->options = g_hash_table_new_full (g_str_hash,
-						       g_str_equal,
-						       (GDestroyNotify) g_free,
-						       (GDestroyNotify) g_variant_unref);
-	sensor->priv->metadata = g_hash_table_new_full (g_str_hash,
-							g_str_equal,
-							g_free,
-							g_free);
+	priv->options = g_hash_table_new_full (g_str_hash,
+					       g_str_equal,
+					       (GDestroyNotify) g_free,
+					       (GDestroyNotify) g_variant_unref);
+	priv->metadata = g_hash_table_new_full (g_str_hash,
+						g_str_equal,
+						g_free,
+						g_free);
 }
 
 /**
@@ -1527,10 +1759,10 @@ static void
 cd_sensor_finalize (GObject *object)
 {
 	CdSensor *sensor = CD_SENSOR (object);
-	CdSensorPrivate *priv = sensor->priv;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	if (priv->registration_id > 0) {
-		g_debug ("CdSensor: Unregister interface %i on %s",
+		g_debug ("CdSensor: Unregister interface %u on %s",
 			  priv->registration_id,
 			  priv->object_path);
 		g_dbus_connection_unregister_object (priv->connection,
@@ -1538,16 +1770,18 @@ cd_sensor_finalize (GObject *object)
 	}
 	if (priv->watcher_id != 0)
 		g_bus_unwatch_name (priv->watcher_id);
+	if (priv->set_state_id > 0)
+		g_source_remove (priv->set_state_id);
 	g_free (priv->model);
 	g_free (priv->vendor);
 	g_free (priv->serial);
 	g_free (priv->id);
 	g_free (priv->object_path);
+	g_free (priv->usb_path);
 	g_hash_table_unref (priv->options);
 	g_hash_table_unref (priv->metadata);
 #ifdef HAVE_GUSB
 	g_object_unref (priv->usb_ctx);
-	g_object_unref (priv->device_list);
 #endif
 #ifdef HAVE_UDEV
 	if (priv->device != NULL)

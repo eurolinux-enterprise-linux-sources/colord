@@ -32,7 +32,6 @@
 #include <math.h>
 #include <lcms2.h>
 
-#include "cd-cleanup.h"
 #include "cd-color.h"
 #include "cd-it8-utils.h"
 #include "cd-math.h"
@@ -194,7 +193,7 @@ cd_it8_utils_calculate_ccmx (CdIt8 *it8_reference,
 	gdouble m_lumi = 0.0f;
 	gdouble n_lumi = 0.0f;
 	guint i;
-	_cleanup_free_ gchar *tmp = NULL;
+	g_autofree gchar *tmp = NULL;
 
 	/* read reference matrix */
 	if (!ch_it8_utils_4color_decompose (it8_reference, &n_rgb, &n_lumi, error))
@@ -228,7 +227,7 @@ cd_it8_utils_calculate_ccmx (CdIt8 *it8_reference,
 	for (i = 0; i < 9; i++) {
 		if (fpclassify (data[i]) != FP_NORMAL) {
 			g_set_error (error, 1, 0,
-				     "Matrix value %i non-normal: %f", i, data[i]);
+				     "Matrix value %u non-normal: %f", i, data[i]);
 			return FALSE;
 		}
 	}
@@ -345,7 +344,6 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 	CdColorXYZ reference_illuminant_xyz;
 	CdColorXYZ sample_xyz;
 	CdColorYxy yxy;
-	CdSpectrum *reference_illuminant = NULL;
 	CdSpectrum *sample;
 	CdSpectrum *unity;
 	GPtrArray *samples;
@@ -354,6 +352,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 	gdouble ri_sum = 0.f;
 	gdouble val;
 	guint i;
+	g_autoptr(CdSpectrum) reference_illuminant = NULL;
 
 	/* get the illuminant CCT */
 	unity = cd_spectrum_new ();
@@ -364,7 +363,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 						   resolution,
 						   error);
 	if (!ret)
-		goto out;
+		return FALSE;
 	cct = cd_color_xyz_to_cct (&illuminant_xyz);
 	cd_color_xyz_normalize (&illuminant_xyz, 1.0, &illuminant_xyz);
 
@@ -372,12 +371,11 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 	if (cct < 5000) {
 		reference_illuminant = cd_spectrum_planckian_new (cct);
 	} else {
-		ret = FALSE;
 		g_set_error_literal (error,
 				     CD_IT8_ERROR,
 				     CD_IT8_ERROR_FAILED,
 				     "need to use CIE standard illuminant D");
-		goto out;
+		return FALSE;
 	}
 	cd_spectrum_normalize (reference_illuminant, 560, 1.0);
 	ret = cd_it8_utils_calculate_xyz_from_cmf (cmf,
@@ -387,7 +385,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 						   resolution,
 						   error);
 	if (!ret)
-		goto out;
+		return FALSE;
 
 	/* check the source is white enough */
 	cd_color_uvw_set_planckian_locus (&d1, cct);
@@ -395,12 +393,11 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 	cd_color_yxy_to_uvw (&yxy, &d2);
 	val = cd_color_uvw_get_chroma_difference (&d1, &d2);
 	if (val > 5.4e-3) {
-		ret = FALSE;
 		g_set_error (error,
 			     CD_IT8_ERROR,
 			     CD_IT8_ERROR_FAILED,
 			     "result not meaningful, DC=%f", val);
-		goto out;
+		return FALSE;
 	}
 
 	/* get the XYZ for each color sample under the reference illuminant */
@@ -414,7 +411,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 							   1.f,
 							   error);
 		if (!ret)
-			goto out;
+			return FALSE;
 		cd_color_xyz_to_uvw (&sample_xyz,
 				     &illuminant_xyz,
 				     &reference_uvw[i]);
@@ -431,7 +428,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 							   resolution,
 							   error);
 		if (!ret)
-			goto out;
+			return FALSE;
 		cd_color_xyz_to_uvw (&sample_xyz,
 				     &illuminant_xyz,
 				     &unknown_uvw[i]);
@@ -444,10 +441,7 @@ cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
 		ri_sum += 100 - (4.6 * val);
 	}
 	*value = ri_sum / 8;
-out:
-	if (reference_illuminant != NULL)
-		cd_spectrum_free (reference_illuminant);
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -493,7 +487,8 @@ cd_it8_utils_calculate_gamma (CdIt8 *it8, gdouble *gamma_y, GError **error)
 	gdouble max = 0.f;
 	guint cnt = 0;
 	guint i;
-	_cleanup_free_ cmsFloat32Number *data_y = NULL;
+	gdouble gamma_tmp = 0.f;
+	g_autofree cmsFloat32Number *data_y = NULL;
 
 	/* find the grey gamma ramp */
 	len = cd_it8_get_data_size (it8);
@@ -534,8 +529,21 @@ cd_it8_utils_calculate_gamma (CdIt8 *it8, gdouble *gamma_y, GError **error)
 
 	/* use lcms2 to calculate the gamma */
 	curve = cmsBuildTabulatedToneCurveFloat (NULL, cnt, data_y);
+	gamma_tmp = cmsEstimateGamma (curve, 0.1);
+	if (gamma_tmp < 0) {
+		g_autoptr(GString) str = NULL;
+		str = g_string_new ("Unable to calculate gamma from: ");
+		for (i = 0; i < cnt; i++)
+			g_string_append_printf (str, "%f, ", data_y[i]);
+		g_string_truncate (str, str->len - 2);
+		g_set_error_literal (error,
+				     CD_IT8_ERROR,
+				     CD_IT8_ERROR_FAILED,
+				     str->str);
+		return FALSE;
+	}
 	if (gamma_y != NULL)
-		*gamma_y = cmsEstimateGamma (curve, 0.1);
+		*gamma_y = gamma_tmp;
 	cmsFreeToneCurve (curve);
 	return TRUE;
 }

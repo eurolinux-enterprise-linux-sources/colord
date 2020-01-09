@@ -1,6 +1,2075 @@
+commit b4329ab9e5dfe87ac46db9df82bc014d658ee26a
+Author: Richard Hughes <richard@hughsie.com>
+Date:   2016-11-21
+
+    Release colord 1.3.4
+
+M	NEWS
+M	doc/website/download.html
+
+commit a3903c8d5424938cde5dd53ed10d4c6040ff1592
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-21
+
+    trivial: Don't check for the vendor name as some distros use the
+    old data
+
+    In this case, the old data is 'IBM Brazil'...
+
+M	lib/colord/cd-test-private.c
+
+commit 30ff632c24bd5a89b16c64cf1a79181a941f480a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-21
+
+    trivial: Allow manually setting the thread count to 'automatic
+
+M	lib/colord/cd-transform.c
+
+commit 4040e7825b3b0bf162360826031542a177377564
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-21
+
+    Install the libcolordcompat.so in the main -libs package
+
+    This is dlopen'd by argyllcms and was previously incorrectly installed
+    in the
+    -devel package. Be explicit about files to avoid this kind of problem
+    in the
+    future.
+
+M	contrib/colord.spec.in
+
+commit be58445e9e2eb17d82710b5c8131afdc1099f512
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-09
+
+    Fix a possible NULL dereference when talking to Spark devices
+
+    This requires a malicious or corrupted USB response from the device.
+
+    Found by Coverity.
+
+M	lib/ospark/osp-device.c
+
+commit 5cb72104199cf7745afdb1e5fd941d9072a867d8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-09
+
+    Fix possible division by zero if parsing /proc/cpuinfo fails
+
+    Found using Coverity.
+
+M	lib/colord/cd-transform.c
+
+commit 19e40190d114255fbb4a977a6eb00d3716904ceb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-09
+
+    trivial: Remove some dead code
+
+M	client/cd-it8.c
+
+commit 2c11f97ac63be92701272788fa9b0007c962be7b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-09
+
+    trivial: Fix two missing break statements
+
+    Found by Coverity.
+
+M	src/cd-debug.c
+
+commit 004a665ed0b1ec429eaa732e605f9d3479b1460a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-11-08
+
+    ospark: Fix a few trivial compile warnings on ARM
+
+M	lib/ospark/osp-device.c
+
+commit e437db346e57593775d6f2f9d618c87bccfddb89
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-16
+
+    colorhug: Fix loading and saving spectra
+
+M	lib/colorhug/ch-device.c
+
+commit 88e0916d79b9b25de1ed1353f4110b8497e822d6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-06
+
+    colorhug: Add commands for getting and setting each device calibration
+    spectrum
+
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 4e8e5ccf11e7c0750d5ddbe24ebb0f1cdbbc2738
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-06
+
+    colorhug: Add v2 commands for reading and writing the SRAM
+
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 9a706edfc9daef5ac42c46a010c25774cb352764
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-05
+
+    colorhug: Add support for loading and saving the SRAM
+
+M	lib/colorhug/ch-common.c
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 3d8891426ec7a2a8d35f22b77e971487ee97518a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-05
+
+    colord: Add cd_spectrum_resample_to_size()
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit 862d0e95e45d37e0565147c79b239dbb0d5f3756
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-03
+
+    trivial: Fix the CCD spectral resolution value
+
+M	lib/colorhug/ch-common.h
+
+commit f5bc663152d35a9a026b62db171eb8d457648657
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-02
+
+    colorhug: Re-number a command
+
+    I have no idea... maybe 0x50 is cursed.
+
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+
+commit 448972cb23e7df309e2253deaef5eb4efda9eb9b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-02
+
+    colorhug: Add ch_device_get_adc_calibration_pos()
+
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 2198524b489f934ce357e9f7c39767adc67bab14
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-02
+
+    colorhug: Increase the size of the EP0 transfer
+
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+
+commit c0c2a42ec2142de4f84dfc0649fd49610fdd4ed3
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-10-02
+
+    Add cd_color_rgb_from_wavelength()
+
+M	lib/colord/cd-color.c
+M	lib/colord/cd-color.h
+
+commit e6e2e4dc124e4f39070a0ab35b17fdcd01924d94
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-09-30
+
+    trivial: Use the latest CH+ element data size
+
+    We've moved to just sending the raw data for speed.
+
+M	lib/colorhug/ch-device.c
+
+commit 06fa21c98c0c13fd4d93404bdef8314ab8c00d92
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-09-30
+
+    trivial: Don't apply the CCD cal when getting the spectrum
+
+M	lib/colorhug/ch-device.c
+
+commit 766babb5a9bcb6ec414565c9166d7533f6816b7c
+Merge: f8e19db 004b8ac
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-09-19
+
+    Merge pull request #32 from piotrdrag/po-cleanup
+
+    Clean up PO files
+
+commit 004b8ac2823fdfa065e6d118f1032077a4715ca8
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2016-09-19
+
+    Clean up PO files
+
+D	po/it_IT.po
+D	po/nb_NO.po
+M	po/pt.po
+D	po/pt_PT.po
+
+commit f8e19db7d805cac8e7cc37fca30fbc477586e9af
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-09-18
+
+    colorhug: Support enabling the illuminants on the ColorHug+
+
+M	lib/colorhug/ch-common.c
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 2b0f49c86f98f9ea0400d74528bfac542b25043f
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-27
+
+    Fix compile with -Wformat-signedness
+
+M	client/Makefile.am
+M	client/cd-fix-profile.c
+M	client/cd-iccdump.c
+M	client/cd-util.c
+M	configure.ac
+M	contrib/colord-sane/Makefile.am
+M	contrib/session-helper/Makefile.am
+M	contrib/session-helper/cd-example.c
+M	contrib/session-helper/cd-main.c
+M	contrib/session-helper/cd-state.c
+M	examples/Makefile.am
+M	lib/colord/Makefile.am
+M	lib/colord/cd-device.c
+M	lib/colord/cd-icc.c
+M	lib/colord/cd-it8-utils.c
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-test-daemon.c
+M	lib/colord/cd-test-private.c
+M	lib/colorhug/Makefile.am
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-self-test.c
+M	lib/compat/Makefile.am
+M	lib/dtp94/Makefile.am
+M	lib/huey/Makefile.am
+M	lib/huey/huey-ctx.c
+M	lib/huey/huey-device.c
+M	lib/munki/Makefile.am
+M	lib/ospark/Makefile.am
+M	lib/ospark/osp-device.c
+A	m4/gnome-compiler-flags.m4
+M	src/Makefile.am
+M	src/cd-device.c
+M	src/cd-main.c
+M	src/cd-profile.c
+M	src/cd-sensor.c
+M	src/plugins/Makefile.am
+M	src/sensors/Makefile.am
+M	src/sensors/cd-parse-beagle.c
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-spark.c
+M	src/sensors/cd-spawn.c
+
+commit 4fc7521dc871da9929ae85ff93129428e3388ea0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-27
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 7437d21fe5c9cf2825c77f4c1f9493ab4d3318e4
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-27
+
+    Release colord 1.3.3
+
+M	NEWS
+M	doc/website/download.html
+M	po/de.po
+M	po/hu.po
+M	po/id.po
+C079	po/id.po	po/is.po
+M	po/ko.po
+C079	po/id.po	po/lt.po
+C079	po/id.po	po/oc.po
+M	po/tr.po
+
+commit 4c20ac1bd802947721be0c15a0ac465b7c1873a4
+Merge: 2f9b089 259a87c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-20
+
+    Merge pull request #31 from lantw44/master
+
+    build: Fix gtk-doc build when srcdir != builddir
+
+commit 259a87c560407b91595ee1ca4fe8d16d67f618c1
+Author: Ting-Wei Lan <lantw@src.gnome.org>
+Date:	2016-06-14
+
+    build: Fix gtk-doc build when srcdir != builddir
+
+    https://bugs.freedesktop.org/show_bug.cgi?id=96520
+
+M	doc/api/Makefile.am
+
+commit 2f9b0890fad22cc686b3f1293c961493d01e923b
+Merge: 760e79c b5dae81
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-06
+
+    Merge pull request #30 from ebassi/polkit-autoptr
+
+    Check polkit version before defining g_autoptr macros
+
+commit b5dae8163e715980f476cde4ea5e2ee8ee897d44
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:	2016-07-06
+
+    Check polkit version before defining g_autoptr macros
+
+    We cannot check on the internal name created by G_DECLARE_AUTO* macros
+    because it's not a pre-processor symbol.
+
+    Instead, we should check whether we're being built against a
+    version of
+    PolKit that has those symbols, and only define them ourselves for
+    previous versions.
+
+    This commit fixes a build failure in GNOME Continuous.
+
+M	configure.ac
+M	src/cd-common.c
+
+commit 760e79ccafc97bc7973e4e2d11bb6ca5d6eed1e0
+Merge: 003e401 48f5176
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-07-05
+
+    Merge pull request #29 from Hextremist/master
+
+    Increase timeout to 60s for argyll spotread sampling
+
+commit 48f5176e35b3ab69e5df650f1971dec295fc2b18
+Author: Kjell Irgens <hextremist@gmail.com>
+Date:	2016-07-05
+
+    Increase timeout to 60s for argyll spotread sampling
+
+    There was a 10s timeout for spotread to finish sampling.  This works
+    fine for light colors, in which case it may finish in as little as 3
+    seconds.  But the darker the color is, the longer it takes to finish.
+    When measuring black, it takes around 25-30 seconds for my Spyder 3
+    Express.
+
+    The timeout caused Gnome Control Panel to fail when attempting to
+    calibrate.
+
+M	src/sensors/cd-sensor-argyll.c
+
+commit 003e401b6b76bc8ae445b0c152f7ff41d1eaab5e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-04-18
+
+    Use the USB path to match the ArgyllCMS port
+
+    Fixes https://github.com/hughsie/colord/issues/24
+
+M	src/cd-sensor.c
+M	src/cd-sensor.h
+M	src/sensors/cd-sensor-argyll.c
+
+commit 5256a11638c797809c183f2e468475f6a5fb7a52
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-04-18
+
+    libcolord: Fix an assert failure when connecting to sensors
+
+    Do not manually disconnect this as g_signal_connect_object() does
+    this already.
+
+    Hopefully fixes https://github.com/hughsie/colord/issues/23
+
+M	lib/colord/cd-device.c
+M	lib/colord/cd-profile.c
+M	lib/colord/cd-sensor.c
+
+commit 8a5eaac276ffe16e81c58994989ec7319ef00bf2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-03-21
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 06aec25df06c7f9115d1d2a38fd9d2fb58a65d61
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-03-21
+
+    Release colord 1.3.2
+
+M	NEWS
+M	RELEASE
+M	doc/website/download.html
+M	po/ca.po
+M	po/id.po
+M	po/pt_BR.po
+M	po/sr.po
+
+commit 6949c2a1a62cd44e7e6c25e6db4a5a88d6ab5efd
+Merge: d9c9255 8e27af8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-03-21
+
+    Merge pull request #22 from canek-pelaez/master
+
+    session-helper: Replace '/' with '-' on the basename so creating
+    the profile file doesn't fail.
+
+commit 8e27af8feeea71ed79c06c46a28b0e445cef46cb
+Author: Canek Peláez Valdés <canek@ciencias.unam.mx>
+Date:	2016-03-20
+
+    session-helper: Replace '/' with '-' on the basename so creating the
+    profile file doesn't fail.
+
+M	contrib/session-helper/cd-main.c
+
+commit d9c92556523a5732c70da1bfa16435916916fecd
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-03-16
+
+    libcolord: Fix a hard-to-reproduce bug when cancelling async
+    operations
+
+M	lib/colord/cd-client.c
+M	lib/colord/cd-device.c
+M	lib/colord/cd-profile.c
+M	lib/colord/cd-sensor.c
+
+commit 1297fa7bac138867a19f615d6cef0e485ec91bd1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-03-03
+
+    trivial: Fix FALSE/NULL confusion spotted with GCC6
+
+M	contrib/session-helper/cd-main.c
+M	lib/colord/cd-client.c
+M	lib/colord/cd-device.c
+M	lib/colord/cd-icc.c
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-sensor.c
+M	lib/colorhug/ch-device.c
+M	lib/huey/huey-ctx.c
+M	lib/ospark/osp-device.c
+M	src/cd-main.c
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-colorhug.c
+M	src/sensors/cd-sensor-dtp94.c
+M	src/sensors/cd-sensor-dummy.c
+M	src/sensors/cd-sensor-huey.c
+M	src/sensors/cd-sensor-munki.c
+M	src/sensors/cd-sensor-spark.c
+
+commit 7078cc21da3cc8f1217bb6099e95bb4ad4edd113
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-11-27
+
+    libcolorhug: Add initial support for the v2 protocol used by ColorHug+
+
+M	lib/colorhug/ch-common.c
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit 004e5a14f6a3f0dcd2d2f1626eadddd5532a7791
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-02-17
+
+    Make building the daemon optional
+
+M	Makefile.am
+M	client/Makefile.am
+M	configure.ac
+M	data/Makefile.am
+
+commit 8610050eb1993a5172014975937dfa2acfa596ff
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-02-17
+
+    trivial: Fix compile with --disable-polkit
+
+M	src/cd-common.c
+
+commit b51ef5c91e59370aa91b0b60f951d7fd20b0abfb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-02-17
+
+    Make the session helper optional
+
+M	configure.ac
+M	contrib/Makefile.am
+
+commit 91c432ad8891dbe730251825193f8ded995a0fa3
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-01-06
+
+    trivial: Fix trivial whitespace issue
+
+M	lib/colorhug/ch-device.c
+
+commit 1bd54ee3d6c8e7c3c7213749adc18a55e8fd370b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-01-06
+
+    trivial: Fix tiny gtk-doc issue
+
+M	lib/colord/cd-spectrum.h
+
+commit fbd01a0a5c0e6522494772d9828e542eb5549013
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-01-04
+
+    libcolorhug: Fix a crash when submitting lots of commands at the
+    same time
+
+    This is some sort of race; leaving the data objects in memory
+    until the
+    ChDeviceQueue is unref'd is only a tiny amount of space and so
+    much better
+    than a crash.
+
+M	lib/colorhug/ch-device-queue.c
+
+commit 6fee10f3dc701f3f0625fdf21e3e5756e1c5d4b5
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2016-01-04
+
+    trivial: Remove an assert that triggers a valgrind warning
+
+M	lib/colord/cd-sensor.c
+
+commit 9749dbc2032c0ac04c64915bd1f583efba15fc7a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-11-27
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit f25cb7b0ef73b20810dc34f6741890c3f61b030d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-11-27
+
+    Release colord 1.3.1
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+M	doc/website/download.html
+M	po/cs.po
+M	po/da.po
+M	po/de.po
+M	po/el.po
+M	po/en_GB.po
+M	po/es.po
+M	po/eu.po
+M	po/fi.po
+M	po/fr.po
+M	po/gl.po
+M	po/he.po
+M	po/hu.po
+M	po/id.po
+M	po/it.po
+M	po/ja.po
+M	po/ko.po
+M	po/lv.po
+M	po/nb.po
+C096	po/nb.po	po/nb_NO.po
+M	po/nl.po
+M	po/pl.po
+M	po/pt_BR.po
+M	po/pt_PT.po
+M	po/ro.po
+M	po/ru.po
+M	po/sk.po
+M	po/sl.po
+M	po/sr.po
+M	po/sv.po
+M	po/tr.po
+M	po/uk.po
+M	po/zh_CN.po
+M	po/zh_TW.po
+
+commit e58bdfef1328eecdd95256b37cb0a7f720dd9f64
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-11-16
+
+    Ignore the ColorHug+ in DFU mode
+
+M	rules/69-cd-sensors.rules.in
+
+commit aaf920170220c2b1f3208b7c8fa3d26a07fc021b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-29
+
+    ospark: Do a 10us dark reading before the main reading
+
+    The spark device does not adjust the VRef- of the ADC for dark
+    current, and so
+    we have to do this manually in software.
+
+M	lib/ospark/osp-device.c
+M	src/sensors/cd-sensor-spark.c
+
+commit af360010b39e27dae203df55908b9afb5b63c6a1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-28
+
+    trivial: Add some more gtk-doc to libospark
+
+M	lib/ospark/osp-device.c
+
+commit 7ba666dd87419603cb6cf3d8a2a01b42b95d249c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-27
+
+    trivial: Fix a crash when we read from a ColorHug with no calibration
+
+M	lib/colorhug/ch-device-queue.c
+M	src/sensors/cd-sensor-colorhug.c
+
+commit cb05574d94135c7b99527eaaed633d8898717d78
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-27
+
+    libcolord: Add two new sensor capability enum values for calibration
+
+    This is so we can avoid playing tricks in sensors that support more
+    than one
+    kind of calibration, for instance the Spark sensor.
+
+M	client/cd-util.c
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+M	src/cd-sensor.c
+M	src/sensors/cd-sensor-spark.c
+
+commit a81cc2c66376de784af8d32167bb39ce3d71b944
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    data: Build Rec709 correctly
+
+    Fixes https://github.com/hughsie/colord/issues/17
+
+M	data/profiles/Makefile.am
+
+commit 35937d18cfa1a172ecd74d70d96626f4d02ae9e2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libospark: Support irradiance calibration on the Spark device
+
+M	lib/ospark/osp-device.c
+M	src/sensors/cd-sensor-spark.c
+
+commit c6b75def8ce9d51368d12412d2a722a02ae8a9f3
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libospark: Measure the sensor response time
+
+    This allows us to check the device integration time.
+
+M	lib/ospark/osp-device.c
+
+commit 0d33f1c83f72516ae1ee746fbba993adfec8f601
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libospark: Only show protocol debugging with an env var
+
+M	lib/ospark/osp-device.c
+
+commit 1563dbc3088e5cbacdb3919bc27c738232fd82af
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libcolord: Add an error enum for missing irradiance calibration
+
+M	client/cd-util.c
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+
+commit 2378c8a3b0c007c0767572dfe79bb64a567bf449
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libcolord: Modify cd_spectrum_subtract() to include a resolution value
+
+    This allows us to resample the spectra in case they have differing
+    start, end,
+    or source resolutions.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+M	src/sensors/cd-sensor-spark.c
+
+commit 965408aa8ed6721b883ffad0f4ca8b23825b86fc
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    libcolord: Add cd_spectrum_planckian_new_full()
+
+    This allows you to include start, end and resolution values.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+
+commit d23289f740e2ef2625c0e0dc930abbf7e312b760
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    Use the correct console size when using get-spectral-reading
+
+M	client/cd-util.c
+
+commit d49b89f32422759b6cf182417ccb05146d0662cf
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-24
+
+    libospark: Add methods for getting the nonlinearity and irradiance
+    calibrations
+
+    Although, disappointingly, there appears to be no stored data on
+    the device.
+
+M	lib/ospark/osp-device.c
+M	lib/ospark/osp-device.h
+M	lib/ospark/osp-self-test.c
+
+commit 1bb5be35f41e5dbe1b6be87862525c3604ced5cf
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-26
+
+    colorhug: Fix a crash in the conversion to GTask
+
+M	lib/colorhug/ch-device-queue.c
+
+commit d55ea848606838ee6eb79c7b479e70d73859673f
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-16
+
+    Add cd_spectrum_resample()
+
+    This resamples a spectrum to a linear data scale.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+M	src/sensors/cd-sensor-spark.c
+
+commit 8ac504885925b9613649ff7408579feec17aa59d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-16
+
+    libospark: Use pixel to wavelength calibration
+
+    This device does not have a linear relationship between pixel
+    position and
+    wavelength.
+
+M	lib/ospark/osp-device.c
+M	lib/ospark/osp-device.h
+M	lib/ospark/osp-self-test.c
+
+commit 6c3a8185bb09d5cab4a1821be43c26a5a42cffe5
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-16
+
+    libcolord: Add cd_spectrum_set_wavelength_cal()
+
+    This allows us to have a non-linear relationship between pixel
+    index and
+    wavelength value.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit ea20f28db7b672793012b398a219d907b3da02d9
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-16
+
+    libcolord: Do not limit values when subtracting spectra
+
+    Also, fix a few bugs when checking for spectra validity.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-test-private.c
+M	src/sensors/cd-sensor-spark.c
+
+commit c1c8a65544904a3bf6aef8af4d61eafef2f4778c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-16
+
+    libcolord: Add cd_spectrum_limit_min()
+
+    This allows us to enforce a ceil() or floor() for the spectrum.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit 070e1584ead7b339b1d36e3e6221a0fa0ac08ae1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    Allow returning spectral readings from the Spark sensor
+
+M	src/sensors/cd-sensor-spark.c
+
+commit b06424f93356e5f8a847afd2987eb72326ccaecc
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    libcolord: Fix saving non-normalized spectra
+
+    The conditional was the wrong way around, so add some self tests to
+    catch this.
+
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-test-private.c
+M	lib/colord/cd-test-shared.c
+M	lib/colord/cd-test-shared.h
+
+commit ed02a5536667b9baff98872d923aeaf1a987b1ed
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    libospark: Ensure we get maximum precision from the spectral sensor
+
+    The device is limited to return values of 0x3fff per pixel, so aim
+    for exactly
+    half of that after the initial test measurement.
+
+M	lib/ospark/osp-device.c
+
+commit 0ab58b405cfb0addc885f1d17e602451d8a39e1e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    Add get-spectral-reading command to colormgr
+
+    This displays a bar graph on the console of the spectrum.
+
+M	client/cd-util.c
+
+commit 93e1798bef9e31d9fd9210a30ca1414a858a5b1c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    libcolord: Add cd_sensor_get_spectrum()
+
+M	lib/colord/cd-sensor-sync.c
+M	lib/colord/cd-sensor-sync.h
+M	lib/colord/cd-sensor.c
+M	lib/colord/cd-sensor.h
+
+commit d2479cf23bdd50a23030290256bbd3624bdc283c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    Add the GetSpectrum() sensor D-Bus method
+
+    This allows clients to query a spectrum from a locked sensor.
+
+M	src/cd-sensor.c
+M	src/cd-sensor.h
+M	src/org.freedesktop.ColorManager.Sensor.xml
+
+commit 86952ef1f351b1a65eca750a74294fdcb8f72715
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    libcolord: Add a spectral sensor capability
+
+    The idea here is to use this for sensors that can return a full
+    spectrum rather
+    than just a XYZ value.
+
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+M	src/sensors/cd-sensor-spark.c
+
+commit 06587781dd6fc7a20fe79f24df1cfa23776debbe
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-15
+
+    libcolord: Add cd_spectrum_to_string()
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit 78ca84c488d96caa9634c1cfe201f4a6ee15b3ef
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    Save the Spark dark calibration to a file
+
+M	src/sensors/cd-sensor-spark.c
+
+commit 3005658a8667f029890a4e02db05938602593f0a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libospark: Add osp_device_take_spectrum_full() and add autoscaling
+
+    This allows us to return the most accurate reading possible.
+
+M	lib/ospark/osp-device.c
+M	lib/ospark/osp-device.h
+
+commit b149c14bde4761e71c7438e372b53f83f1d02c84
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libospark: Correctly set the normalization when returning
+
+    This was uncovered when trying to subtract a normalized dark
+    calibration.
+
+M	lib/ospark/osp-device.c
+
+commit 2dd52eacb5bd19ff5262f4dccf76acd4b325fc72
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    trivial: Fill the screen when doing the spark sensor debug
+
+M	src/sensors/cd-sensor-spark.c
+
+commit 3b8d845416cd1fa6297f95bf71aefe849d5287e8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    trivial: Use the normalised value when subtracting spectra
+
+M	lib/colord/cd-spectrum.c
+
+commit bdb8f32b0de4a42f9f9e11e527a8e2409c8938e2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libcolord: Add cd_spectrum_get_value_max()
+
+    This is useful for auto-normalizing results.
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit b8fa671e213306906c9d0ca352d9db697390637c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libcolorhug: Port to GTask
+
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-device.c
+
+commit 4bf389ae3d9881d4d54866c710b07d4de10456ec
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libcolord: Port to GTask
+
+M	configure.ac
+M	lib/colord/cd-client.c
+M	lib/colord/cd-device.c
+M	lib/colord/cd-profile.c
+M	lib/colord/cd-sensor.c
+
+commit 188bd64a23a3b3f440916b2923aeaf5b89ae25b7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libcolord: Actually connect to the daemon during the tests
+
+    I have no idea how this actually worked before...
+
+M	lib/colord/cd-test-daemon.c
+
+commit fd7f80cc81bd6e0f3c66c1a69356dfa04ca6fed8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libcolord: Fix a tiny memory leak in cd_icc_get_tag_data()
+
+M	lib/colord/cd-icc.c
+
+commit f0f1e666716135c7ce9f54c634c55043c938b554
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Port all the sensor plugins to GTask
+
+M	src/sensors/Makefile.am
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-colorhug.c
+M	src/sensors/cd-sensor-dtp94.c
+M	src/sensors/cd-sensor-dummy.c
+M	src/sensors/cd-sensor-huey.c
+M	src/sensors/cd-sensor-munki.c
+M	src/sensors/cd-sensor-spark.c
+
+commit d0be37876f751048aaa72dbff01971d54e498c42
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Use a D65 illuminant for the spark XYZ conversion
+
+M	src/sensors/cd-sensor-spark.c
+
+commit 0142968a33bcb8efcef95d090ea87189ac9cb083
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    Reset the sensor back to idle after each action
+
+    This means the sensor drivers no longer have to do this.
+
+M	src/cd-sensor.c
+
+commit 859404ae80c504db4d6a1c5991e29f0f27fecf44
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    Add cd_sensor_set_state_in_idle() which is threadsafe
+
+M	src/cd-sensor.c
+M	src/cd-sensor.h
+
+commit 3df1968e6d9ea253a443a0b96fe5bda1337c9db1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    trivial: Use g_autoptr() in more places
+
+M	src/sensors/cd-parse-beagle.c
+
+commit 9cf5929cd5a7aa75ad4a80c49e3ba5f0ec8a9e63
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-14
+
+    libospark: Don't assume the seral number buffer is NUL terminated
+
+M	lib/ospark/osp-device.c
+
+commit deda671ec979571fee329caf2148554a40d6acd7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    trivial: Remove the *unused* sensor headers
+
+M	src/sensors/Makefile.am
+D	src/sensors/cd-sensor-argyll.h
+D	src/sensors/cd-sensor-colorhug.h
+D	src/sensors/cd-sensor-dtp94.h
+D	src/sensors/cd-sensor-dummy.h
+D	src/sensors/cd-sensor-huey.h
+
+commit 307cc591f8a42b0468a1ac898a307a8f2080d108
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Install the tmpfiles.d snippet in the right place
+
+M	configure.ac
+M	data/Makefile.am
+
+commit 07c265ef6cf8fe6604472a15987040938433f129
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Use g_autoptr() in more places
+
+M	client/cd-it8.c
+M	contrib/session-helper/cd-example.c
+M	lib/colord/cd-it8-utils.c
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-daemon.c
+M	lib/colord/cd-test-private.c
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-self-test.c
+M	lib/ospark/osp-self-test.c
+M	src/cd-main.c
+M	src/cd-sensor-client.c
+M	src/cd-sensor.c
+M	src/sensors/cd-parse-beagle.c
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-dump.c
+M	src/sensors/cd-sensor-huey.c
+M	src/sensors/cd-sensor-munki.c
+M	src/sensors/cd-sensor-spark.c
+
+commit d1c8abfd482310fdb3bdbb7464216f7f61e221b7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Add g_autoptr() defines for cd_color*
+
+M	client/cd-util.c
+M	contrib/session-helper/cd-main.c
+M	lib/colord/cd-color.h
+M	lib/colord/cd-test-private.c
+M	src/cd-sensor.c
+
+commit 67ba1c8ec83cbc8f9776cbbf6f0dc7c50897e565
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Use G_DECLARE_DERIVABLE_TYPE in libcolord
+
+    This gives us the g_autoptr() macros for free.
+
+M	client/cd-create-profile.c
+M	client/cd-fix-profile.c
+M	client/cd-iccdump.c
+M	client/cd-it8.c
+M	client/cd-util.c
+M	configure.ac
+M	contrib/colord-sane/cd-main.c
+M	contrib/session-helper/cd-main.c
+M	contrib/session-helper/cd-state.c
+M	lib/colord/Makefile.am
+D	lib/colord/cd-cleanup.h
+M	lib/colord/cd-client.c
+M	lib/colord/cd-client.h
+M	lib/colord/cd-device.c
+M	lib/colord/cd-device.h
+M	lib/colord/cd-dom.c
+M	lib/colord/cd-dom.h
+M	lib/colord/cd-edid.c
+M	lib/colord/cd-edid.h
+M	lib/colord/cd-icc-store.c
+M	lib/colord/cd-icc-store.h
+M	lib/colord/cd-icc-utils.c
+M	lib/colord/cd-icc.c
+M	lib/colord/cd-icc.h
+M	lib/colord/cd-interp-akima.c
+M	lib/colord/cd-interp-akima.h
+M	lib/colord/cd-interp-linear.h
+M	lib/colord/cd-interp.c
+M	lib/colord/cd-interp.h
+M	lib/colord/cd-it8-utils.c
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-it8.h
+M	lib/colord/cd-profile.c
+M	lib/colord/cd-profile.h
+M	lib/colord/cd-sensor.c
+M	lib/colord/cd-sensor.h
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-test-daemon.c
+M	lib/colord/cd-test-private.c
+M	lib/colord/cd-test-shared.c
+M	lib/colord/cd-transform.c
+M	lib/colord/cd-transform.h
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-device-queue.h
+M	lib/colorhug/ch-inhx32.c
+M	lib/compat/cd-compat-edid.c
+M	lib/huey/huey-ctx.c
+M	lib/huey/huey-ctx.h
+M	lib/ospark/osp-device.c
+M	lib/ospark/osp-self-test.c
+M	src/cd-common.c
+M	src/cd-device-array.c
+M	src/cd-device-array.h
+M	src/cd-device-db.c
+M	src/cd-device-db.h
+M	src/cd-device.c
+M	src/cd-device.h
+M	src/cd-inhibit.c
+M	src/cd-inhibit.h
+M	src/cd-main.c
+M	src/cd-mapping-db.c
+M	src/cd-mapping-db.h
+M	src/cd-profile-array.c
+M	src/cd-profile-array.h
+M	src/cd-profile-db.c
+M	src/cd-profile-db.h
+M	src/cd-profile.c
+M	src/cd-profile.h
+M	src/cd-sensor-client.c
+M	src/cd-sensor-client.h
+M	src/cd-sensor.c
+M	src/cd-sensor.h
+M	src/plugins/cd-plugin-camera.c
+M	src/plugins/cd-plugin-sane.c
+M	src/plugins/cd-plugin-scanner.c
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-colorhug.c
+M	src/sensors/cd-sensor-dtp94.c
+M	src/sensors/cd-sensor-dummy.c
+M	src/sensors/cd-sensor-huey.c
+M	src/sensors/cd-sensor-spark.c
+M	src/sensors/cd-spawn.c
+
+commit 7999005038cbeaa35221bc7053b74c6cd1daca1b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Port to g_autoptr()
+
+M	client/cd-create-profile.c
+M	client/cd-fix-profile.c
+M	client/cd-iccdump.c
+M	client/cd-it8.c
+M	client/cd-util.c
+M	contrib/colord-sane/cd-main.c
+M	contrib/session-helper/cd-main.c
+M	contrib/session-helper/cd-state.c
+M	lib/colord/cd-cleanup.h
+M	lib/colord/cd-client.c
+M	lib/colord/cd-device.c
+M	lib/colord/cd-dom.c
+M	lib/colord/cd-edid.c
+M	lib/colord/cd-icc-store.c
+M	lib/colord/cd-icc-utils.c
+M	lib/colord/cd-icc.c
+M	lib/colord/cd-interp-akima.c
+M	lib/colord/cd-it8-utils.c
+M	lib/colord/cd-it8.c
+M	lib/colord/cd-profile.c
+M	lib/colord/cd-sensor.c
+M	lib/colord/cd-test-daemon.c
+M	lib/colord/cd-test-shared.c
+M	lib/colord/cd-transform.c
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-inhx32.c
+M	lib/compat/cd-compat-edid.c
+M	lib/ospark/osp-device.c
+M	lib/ospark/osp-self-test.c
+M	src/cd-common.c
+M	src/cd-device-db.c
+M	src/cd-device.c
+M	src/cd-inhibit.c
+M	src/cd-main.c
+M	src/cd-mapping-db.c
+M	src/cd-profile-db.c
+M	src/cd-profile.c
+M	src/cd-sensor.c
+M	src/plugins/cd-plugin-camera.c
+M	src/plugins/cd-plugin-sane.c
+M	src/plugins/cd-plugin-scanner.c
+M	src/sensors/cd-sensor-argyll.c
+M	src/sensors/cd-sensor-colorhug.c
+M	src/sensors/cd-sensor-dtp94.c
+M	src/sensors/cd-sensor-dummy.c
+M	src/sensors/cd-sensor-huey.c
+M	src/sensors/cd-sensor-spark.c
+M	src/sensors/cd-spawn.c
+
+commit 0b7f570b5de671f8d1f7855bb01c0f991ba33752
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Add the start of a Spark sensor driver
+
+M	src/sensors/Makefile.am
+A	src/sensors/cd-sensor-spark.c
+
+commit 43f5e453a1a9e8c333155db780659396b09dc160
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    libcolord: Add cd_spectrum_subtract()
+
+M	lib/colord/cd-spectrum.c
+M	lib/colord/cd-spectrum.h
+M	lib/colord/cd-test-private.c
+
+commit 3e5a5b0decacc5146d9baafc6bba2ad91591afa8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    trivial: Add a missing file in a header for internal use only
+
+M	lib/colord/colord-private.h
+
+commit c6d4239217fffffac72c81047af24b3aa0a10122
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Add a sensor error for missing dark calibration
+
+M	client/cd-util.c
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+
+commit 21eb54857e942ab8bccecd9914e19083dd57288b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    libcolord: Make cd_spectrum_free() NULL-safe
+
+M	lib/colord/cd-spectrum.c
+
+commit 2b2c59792551cbadb8eacca50d8751e44c76d413
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    Post branch version bump
+
+M	configure.ac
+
+commit 458e7779b41c4f58164dcdb52b7bd1ff3e9e210e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-10-13
+
+    libcolord: Return an error when we fail to estimate the gamma value
+
+M	lib/colord/cd-it8-utils.c
+
+commit ce88ff07ebf1b6500c542f82fe07b36554be6ca3
+Author: Tobias Hunger <tobias.hunger@gmail.com>
+Date:	2015-10-01
+
+    Add a tmpfiles.d snippet to fix stateless systems
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	contrib/colord.spec.in
+M	data/Makefile.am
+A	data/colord.conf
+
+commit a47a96de5e80acc75409bb3696a309bb92ab6430
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:	2015-09-24
+
+    Add a systemd user service corresponding to the D-Bus session service
+
+    This ensures that it ends up in its own cgroup under systemd user
+    sessions where dbus-daemon uses systemd activation, rather than
+    being treated as part of dbus.service.
+
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=92165
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	contrib/colord.spec.in
+M	contrib/session-helper/Makefile.am
+A	contrib/session-helper/colord-session.service.in
+M	contrib/session-helper/org.freedesktop.ColorHelper.service.in
+
+commit dfe3d0c32e686f40d8c4ec831a100eb944bde5d0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-08-19
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 168025b9530e877ee25c707944f95e0f60859eb7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-08-19
+
+    Release colord 1.2.12
+
+M	NEWS
+M	doc/website/download.html
+M	po/fr.po
+M	po/hu.po
+
+commit 5e60749423a6437506c463d94335e889a5654f42
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-07-29
+
+    trivial: Fix 'make distcheck'
+
+M	lib/ospark/Makefile.am
+
+commit eeac836f256fe07004d67e13c3c89532982af9bd
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-07-20
+
+    Allow creating devices with the same device ID from different users
+
+M	src/cd-device-array.c
+M	src/cd-device-array.h
+M	src/cd-main.c
+M	src/cd-self-test.c
+
+commit 3a309fd52572a1b1f11878c7fbca8705149d6313
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-04
+
+    Add a new private library libospark for future use
+
+M	configure.ac
+M	lib/Makefile.am
+M	lib/colord/cd-buffer.c
+A	lib/ospark/Makefile.am
+A	lib/ospark/lsusb.txt
+A	lib/ospark/osp-device.c
+A	lib/ospark/osp-device.h
+A	lib/ospark/osp-enum.c
+A	lib/ospark/osp-enum.h
+A	lib/ospark/osp-self-test.c
+A	lib/ospark/ospark.h
+A	lib/ospark/protocol-dump.csv
+
+commit 2801cba5ac52436d6cc5c8d6877eb661375e26ca
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-26
+
+    ColorHug: When converting HEX to BIN pad out the entire size
+
+    This allows us to get a SHA1 hash that we can verify from the device.
+
+M	lib/colorhug/ch-inhx32.c
+
+commit 2b26b510bab62ec9505c6edce09d6615b55396e3
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-25
+
+    ColorHug: Add ch_device_queue_read_firmware()
+
+    This allows us to dump a firmware for validation.
+
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-device-queue.h
+
+commit c706874746f6eff28a871903d32ee9f698802ce9
+Merge: 7c7e1a8 326801d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-15
+
+    Merge pull request #15 from RAOF/use-libsystemd
+
+    Check for, and prefer, libsystemd over libsystemd-login.
+
+commit 326801df70a832232022c76e95dfd9e2cfa15fd3
+Author: Christopher James Halse Rogers <raof@ubuntu.com>
+Date:	2015-06-15
+
+    Check for, and prefer, libsystemd over libsystemd-login.
+
+    Systemd 209 merged all the sundry libsystemd-* libraries into a
+    single libsystemd
+    library. Update the systemd-login check to first test for libsystemd,
+    then
+    libsystemd-login if the first check fails.
+
+M	configure.ac
+
+commit 7c7e1a856a7df1be1dc8905c8373fabea58db1d6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-08
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 017133ea94d5d1a0310349b765fa065d00b78f1e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-08
+
+    Release colord 1.2.11
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+M	doc/website/download.html
+M	po/da.po
+M	po/el.po
+
+commit 1ed4c6727d7b34b3ec41aae5f4ba96f82cc82e84
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-04
+
+    Add defines for the OceanOptics Spark sensor
+
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+M	rules/69-cd-sensors.rules.in
+
+commit 17bf0f8d72e5b2d5c997dbc26d9565b5270fc29a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-06-03
+
+    Only return devices created by root and the calling user when doing
+    GetDevices
+
+    We don't want to show display devices created by GDM when logged in
+    the local
+    console otherwise we show two display devices, one of which we
+    can't alter.
+
+    When using the root user, return all devices from all users.
+
+M	src/cd-main.c
+
+commit 07e12a1b3c90668f6ddaf9ae27f541140723630e
+Author: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Date:	2015-05-28
+
+    colorhug: Add ch_device_close
+
+    This closes the device and rebinds any suitable kernel driver.
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+M	lib/colorhug/ch-self-test.c
+
+commit eb14cf6ee090ba953b819d28bb2def6f86130555
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-27
+
+    colorhug: Handle low-level commands when in Sensor HID mode
+
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-self-test.c
+M	rules/69-cd-sensors.rules.in
+
+commit 8a9cd0cfbcfe80623a258fd8d0fea7d788d395bb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-27
+
+    trivial: Ensure the device is properly closed when running self tests
+
+M	lib/colorhug/ch-self-test.c
+
+commit 039aa5afc85e5e3606055b92bf4e6627e9229034
+Merge: 121e06d 91a63a4
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-26
+
+    Merge pull request #14 from
+    LebedevRI/cd_client_connect_cb-do-not-leak-strings
+
+    cd_client_connect_cb(): do not leak strings
+
+commit 91a63a452c597dea27b3c819c959bd0a75b1e34e
+Author: Roman Lebedev <lebedev.ri@gmail.com>
+Date:	2015-05-26
+
+    cd_client_connect_cb(): do not leak previously g_variant_dup_string()
+    strings.
+
+    The reason is: client->priv is re-used several times, and
+    cd_client_finalize()
+    is called only once at the end, so if cd_client_connect_cb() is
+    called more
+    than once, it will re-duplicate those 3 strings, and the memory
+    allocated
+    previously will leak.
+
+    Fixes several following LeakSanitizer-detected leaks like:
+    Direct leak of 23 byte(s) in 1 object(s) allocated from:
+	0 0x7f647ff0474f in malloc
+	(/usr/lib/x86_64-linux-gnu/libasan.so.1+0x5474f)
+	1 0x7f647d29f799 in g_malloc
+	(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4f799)
+	2 0x7f647d2b812e in g_strdup
+	(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x6812e)
+
+	3 0x7f6478cce792 in cd_client_connect_cb
+	/home/lebedevri/src/colord/lib/colord/cd-client.c:382
+    or
+	3 0x7f6478cce822 in cd_client_connect_cb
+	/home/lebedevri/src/colord/lib/colord/cd-client.c:388
+    or
+	3 0x7f6478cce8b9 in cd_client_connect_cb
+	/home/lebedevri/src/colord/lib/colord/cd-client.c:392
+
+	4 0x7f647d82cdf6 in g_simple_async_result_complete
+	(/usr/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x74df6)
+	5 0x7f647d82ce58
+	(/usr/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x74e58)
+	6 0x7f647d299b4c in g_main_context_dispatch
+	(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x49b4c)
+	7 0x7f647d299f1f (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x49f1f)
+	8 0x7f647d29a241 in g_main_loop_run
+	(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4a241)
+	9 0x7f647f043bf4 in gtk_main
+	(/usr/lib/x86_64-linux-gnu/libgtk-3.so.0+0x1ebbf4)
+	10 0x7f647fa17eab in dt_gui_gtk_run
+	/home/lebedevri/darktable/src/gui/gtk.c:964
+	11 0x400cd3 in main /home/lebedevri/darktable/src/main.c:25
+	12 0x7f6477ff9b44 in __libc_start_main
+	(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+	13 0x400bb8 (/usr/local/bin/darktable+0x400bb8)
+
+M	lib/colord/cd-client.c
+
+commit 121e06d1aafd07118ee5e900623eca5e39cf5d40
+Merge: 62fd1cb 2a696f2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-26
+
+    Merge pull request #13 from LebedevRI/cd-context-fix-error-ctx-leak
+
+    Do not leak GError when using the LCMS context
+
+commit 2a696f26a939f4cbc7ed5044da14d089820f9801
+Author: Roman Lebedev <lebedev.ri@gmail.com>
+Date:	2015-05-26
+
+    cd_context_lcms_free(): free GError** that we stored in
+    cmsGetContextUserData()
+
+    We have manually allocated it in cd_context_lcms_new(), and
+    g_clear_error() does not free it, only it's content, if any.
+
+    Fixes following LeakSanitizer-detected leak:
+    Direct leak of 8 byte(s) in 1 object(s) allocated from:
+	0 0x7f98f9924895 in calloc
+	(/usr/lib/x86_64-linux-gnu/libasan.so.1+0x54895)
+	1 0x7f98f93af7f1 in g_malloc0
+	(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4f7f1)
+	2 0x7f98f8306d19 in cd_context_lcms_new
+	/home/lebedevri/src/colord/lib/colord/cd-context-lcms.c:154
+	3 0x7f98f8314dd8 in cd_icc_init
+	/home/lebedevri/src/colord/lib/colord/cd-icc.c:4012
+	4 0x7f98f7d41f98 in g_type_create_instance
+	(/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x31f98)
+	5 0x7f98f7d25866
+	(/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x15866)
+	6 0x7f98f7d2725c in g_object_newv
+	(/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x1725c)
+	7 0x7f98f7d279f3 in g_object_new
+	(/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x179f3)
+	8 0x7f98f831ef90 in cd_icc_new
+	/home/lebedevri/src/colord/lib/colord/cd-icc.c:4068
+	9 0x7f98f85a0981 in cd_profile_load_icc
+	(/usr/local/lib/libcolord.so.2+0x38981)
+	10 0x4022c8 in main
+	/home/lebedevri/darktable/src/cmstest/main.c:236
+	11 0x7f98f7539b44 in __libc_start_main
+	(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+	12 0x4018c8 (/usr/local/bin/darktable-cmstest+0x4018c8)
+
+M	lib/colord/cd-context-lcms.c
+
+commit 62fd1cb484908f3a8bc6c4fa6ee4ae6a3e35d386
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-06
+
+    trivial: Fix the cable position for the Spyder5 figure
+
+M	data/figures/spyder5-attach.svg
+
+commit 50ea6156b42d77bdd160080870dc0fe6d2edb295
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-01
+
+    trivial: Remove da_DK translation - it has the wrong language code
+
+D	po/da_DK.po
+
+commit 32829f32dc680ee410807b048f5e9accfeedb7cb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-01
+
+    trivial: Add udev rules for the spyder5 device
+
+M	rules/69-cd-sensors.rules.in
+
+commit dd5d5071b232eceabb65451e7a0e4440e6b27954
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-05-01
+
+    Add defines and artwork for the Spyder5 device
+
+M	data/figures/Makefile.am
+A	data/figures/spyder5-attach.svg
+M	lib/colord/cd-enum.c
+M	lib/colord/cd-enum.h
+M	src/sensors/cd-sensor-argyll.c
+
+commit 9606ecf4a88d47a430f4c12052d67bb40418ece9
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-04-08
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit f4c0fb3012ddaffa8ea42db4188ecc962f89b70e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-04-08
+
+    Release colord 1.2.10
+
+M	NEWS
+M	RELEASE
+M	doc/website/download.html
+M	po/cs.po
+M	po/da_DK.po
+M	po/de.po
+M	po/el.po
+M	po/en_GB.po
+M	po/es.po
+M	po/eu.po
+M	po/fi.po
+M	po/fr.po
+M	po/gl.po
+M	po/he.po
+M	po/hu.po
+M	po/id.po
+M	po/it.po
+M	po/ja.po
+M	po/ko.po
+M	po/lv.po
+M	po/nb.po
+M	po/nl.po
+M	po/pl.po
+M	po/pt_BR.po
+M	po/pt_PT.po
+M	po/ro.po
+M	po/ru.po
+M	po/sk.po
+M	po/sl.po
+M	po/sr.po
+M	po/sv.po
+M	po/tr.po
+M	po/uk.po
+M	po/zh_CN.po
+M	po/zh_TW.po
+
+commit 059f0af0716e9b893e937af015387e98b11626f2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-03-25
+
+    Add a vendor quirk for Google
+
+M	lib/colord/cd-quirk.c
+
+commit 41ea4fb7ad0a36165971772c428ca2691e6300a0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-03-22
+
+    trivial: Fix a typo spotted by Pedro Massieu, many thanks
+
+M	doc/website/faq.html
+M	man/cd-create-profile.sgml
+M	man/cd-fix-profile.sgml
+
+commit 3e866bea5aa1b014a3b11777f79e6bb28daea6c6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-03-16
+
+    trivial: Remove translations with no actual strings
+
+D	po/bg.po
+D	po/bg_BG.po
+D	po/fa.po
+D	po/ga.po
+D	po/hr.po
+D	po/ia.po
+D	po/ka.po
+D	po/lt.po
+D	po/ms.po
+D	po/nn.po
+D	po/sq.po
+D	po/te.po
+D	po/zh_HK.po
+
+commit 474d3440581ee272a3b01914ba2efe22465904a0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-03-16
+
+    trivial: Fix the version checking header to have actual values
+
+M	lib/colorhug/ch-version.h.in
+
+commit 7fba4c4968beb228f9f5bbb9fbf13e0d0b7d4b82
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-03-03
+
+    colorhug: Add GUIDs for each device
+
+    This is required to write fwupd-compatible update descriptions.
+
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+
+commit ac67f811f0b55b8adf4e35b822be91b8f72a64a4
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-27
+
+    trivial: ColorHugALS just became simpler
+
+M	lib/colorhug/ch-common.h
+
+commit dc79e9f87752554ec2114b1844d0da70c2313536
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-25
+
+    trivial: Add the hardware version return codes for ColorHugALS
+
+M	lib/colorhug/ch-common.h
+
+commit 089e8ac1626259293252e6cd020fc02638d389f4
+Merge: fc55182 301f24d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-23
+
+    Merge pull request #12 from twaugh/fix-bad-free
+
+    Fix session-helper failing to find argyll tool.
+
+commit 301f24d02158f1e12a2e7ccdf9970d02ecddd534
+Author: Tim Waugh <twaugh@redhat.com>
+Date:	2015-02-23
+
+    Fix session-helper failing to find argyll tool.
+
+    We don't want to free the thing we're trying to return. This fixes the
+    bug introduced in commit b6f7c4d117a06f059a6e852e2dce8c13a3bb1f2c.
+
+    See:
+      https://bugzilla.redhat.com/show_bug.cgi?id=1190720
+
+M	contrib/session-helper/cd-main.c
+
+commit fc55182bd3e642a788b49c188ee54de35c8ea50f
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-20
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit dbca12584d38ae28aa04fc238136d86d367e37db
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-20
+
+    Release colord 1.2.9
+
+M	NEWS
+M	doc/website/download.html
+
+commit 8a2ebf256c830c7fee3aeed4fe4b0dfef88894ed
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-20
+
+    trivial: Update the GtkDoc markup for the ColorHugALS support
+
+M	lib/colorhug/ch-common.h
+
+commit 47295896713aeb42584d20ae0edd7a6075636c30
+Author: Christopher James Halse Rogers <raof@ubuntu.com>
+Date:	2015-02-19
+
+    Fix reporting of logind errors.
+
+    The sd_* functions follow the kernel style of returning the negation
+    of the relevant
+    errno value on error. We therefore need to negate the return value
+    before passing
+    it to strerror().
+
+M	src/cd-main.c
+
+commit d4c31cc698c1085fd5f9a83b614772ea0119a8c2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-16
+
+    colorhug: Return the exact address on verification failure
+
+M	lib/colorhug/ch-device-queue.c
+
+commit d8bc0e74f608753f84c89ff0d8d5e6babc1a1b62
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-09
+
+    colorhug: Add CH_ERROR_SELF_TEST_EEPROM error code
+
+M	lib/colorhug/ch-common.c
+M	lib/colorhug/ch-common.h
+
+commit ef72e9006e06c0bd315435a64b1157d5d71e8ae6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-09
+
+    trivial: Hide the _LAST enum from the gtk-doc scanner
+
+M	lib/colorhug/ch-common.h
+
+commit 2e3bfe11115873d408a58769a7f5ccfd43054a7d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-02-05
+
+    colorhug: Add support for the ColorHug ALS device
+
+M	lib/colorhug/ch-common.c
+M	lib/colorhug/ch-common.h
+M	lib/colorhug/ch-device-queue.c
+M	lib/colorhug/ch-device.c
+M	lib/colorhug/ch-device.h
+M	lib/colorhug/ch-inhx32.c
+M	lib/colorhug/ch-inhx32.h
+M	rules/69-cd-sensors.rules.in
+
+commit 98204831008414576eba2907277842c62e5a4aee
+Author: Christopher James Halse Rogers <raof@ubuntu.com>
+Date:	2015-02-13
+
+    Fix cd-test-private linking.
+
+    cd-test-private directly uses symbols from lcms2, so it's not
+    incorrect for it
+    to explicitly link to LCMS_LIBS.
+
+    I'm not entirely sure why libtool isn't adding that link
+    automatically, though.
+
+M	lib/colord/Makefile.am
+
+commit 8360abdc60975853cef7286983cc9eb19404ef5d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-15
+
+    trivial: Endpoints are uint8 in size
+
+M	lib/colorhug/ch-common.h
+
+commit c5a77d70d1d4935a4ccec5f1a0ffab2972c02a21
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-15
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 3d1bbfe7b35326009d4e6c734ab57443fac303ff
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-15
+
+    Release colord 1.2.8
+
+M	NEWS
+M	RELEASE
+M	contrib/colord.spec.in
+M	doc/website/download.html
+M	po/nb.po
+
+commit 42b8d182cd3ce2272ed04e1ac8a552fbd7fd320a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-11-25
+
+    trivial: Do not use the deprecated GUsbDeviceList
+
+M	configure.ac
+M	lib/colorhug/ch-self-test.c
+M	src/cd-sensor.c
+
+commit de998742bc94b30bf61f74ade98aa433d4581b38
+Merge: 5ce26cb ee8410a
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-13
+
+    Merge pull request #9 from olesalscheider/master
+
+    Fix build without gobject-introspection
+
+commit ee8410a9fcafab6a06526885baa412b2d9e27934
+Author: Niels Ole Salscheider <niels_ole@salscheider-online.de>
+Date:	2015-01-13
+
+    Fix build without gobject-introspection
+
+    Only call GOBJECT_INTROSPECTION_CHECK if it is available.
+
+M	configure.ac
+
+commit 5ce26cb948a7f6b1f2c579dbd24d0777cedbc85d
+Merge: 296c68c 26b46cf
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-13
+
+    Merge pull request #8 from olesalscheider/master
+
+    Check for dbus when enabling sane
+
+commit 26b46cf8ba0170881b204da14c4b7c10b3245d9b
+Author: Niels Ole Salscheider <niels_ole@salscheider-online.de>
+Date:	2015-01-13
+
+    Check for dbus when enabling sane
+
+    Otherwise the build will fail when sane is enabled and the examples
+    are
+    disabled.
+
+M	configure.ac
+
+commit 296c68c4906a523097b9a81dc2ff66338ec4532f
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2015-01-06
+
+    trivial: Sync with Transifex
+
+M	po/hu.po
+R099	po/nb_NO.po	po/nb.po
+R099	po/nn_NO.po	po/nn.po
+M	po/tr.po
+
+commit 2ecb53d07d30efb13408013a7d343e743343bd0f
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-12-19
+
+    Do not use the helper version of the sender when using
+    g_dbus_watch_name()
+
+    This could be the fix for
+    https://bugzilla.redhat.com/show_bug.cgi?id=1175704
+
+M	src/cd-inhibit.c
+
+commit 21888d5b4799ba0ee9f504b162914230a8b77ff9
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-12-02
+
+    trivial: post release version bump
+
+M	RELEASE
+M	configure.ac
+
 commit 12944d5c2640fb1f80f79b472dec47f42623189a
 Author: Richard Hughes <richard@hughsie.com>
-Date:   2014-12-02
+Date:	2014-12-02
 
     Release colord 1.2.7
 

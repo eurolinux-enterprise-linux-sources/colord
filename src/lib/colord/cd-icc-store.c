@@ -29,20 +29,19 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 
-#include "cd-cleanup.h"
 #include "cd-icc-store.h"
 
 static void	cd_icc_store_finalize	(GObject	*object);
 
-#define CD_ICC_STORE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CD_TYPE_ICC_STORE, CdIccStorePrivate))
+#define GET_PRIVATE(o) (cd_icc_store_get_instance_private (o))
 
-struct _CdIccStorePrivate
+typedef struct
 {
 	CdIccLoadFlags		 load_flags;
 	GPtrArray		*directory_array;
 	GPtrArray		*icc_array;
 	GResource		*cache;
-};
+} CdIccStorePrivate;
 
 enum {
 	SIGNAL_ADDED,
@@ -52,7 +51,7 @@ enum {
 
 static guint signals[SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE (CdIccStore, cd_icc_store, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (CdIccStore, cd_icc_store, G_TYPE_OBJECT)
 
 #define CD_ICC_STORE_MAX_RECURSION_LEVELS	  2
 
@@ -101,9 +100,10 @@ cd_icc_store_helper_free (CdIccStoreDirHelper *helper)
 CdIcc *
 cd_icc_store_find_by_filename (CdIccStore *store, const gchar *filename)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIcc *tmp;
 	guint i;
-	GPtrArray *array = store->priv->icc_array;
+	GPtrArray *array = priv->icc_array;
 
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), NULL);
 	g_return_val_if_fail (filename != NULL, NULL);
@@ -130,9 +130,10 @@ cd_icc_store_find_by_filename (CdIccStore *store, const gchar *filename)
 CdIcc *
 cd_icc_store_find_by_checksum (CdIccStore *store, const gchar *checksum)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIcc *tmp;
 	guint i;
-	GPtrArray *array = store->priv->icc_array;
+	GPtrArray *array = priv->icc_array;
 
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), NULL);
 	g_return_val_if_fail (checksum != NULL, NULL);
@@ -151,9 +152,10 @@ cd_icc_store_find_by_checksum (CdIccStore *store, const gchar *checksum)
 static CdIccStoreDirHelper *
 cd_icc_store_find_by_directory (CdIccStore *store, const gchar *path)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIccStoreDirHelper *tmp;
 	guint i;
-	GPtrArray *array = store->priv->directory_array;
+	GPtrArray *array = priv->directory_array;
 
 	for (i = 0; i < array->len; i++) {
 		tmp = g_ptr_array_index (array, i);
@@ -169,7 +171,8 @@ cd_icc_store_find_by_directory (CdIccStore *store, const gchar *path)
 static gboolean
 cd_icc_store_remove_icc (CdIccStore *store, const gchar *filename)
 {
-	_cleanup_object_unref_ CdIcc *icc = NULL;
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
+	g_autoptr(CdIcc) icc = NULL;
 
 	/* find exact pointer */
 	icc = cd_icc_store_find_by_filename (store, filename);
@@ -177,7 +180,7 @@ cd_icc_store_remove_icc (CdIccStore *store, const gchar *filename)
 		return FALSE;
 
 	/* we have a ref so we can emit the signal */
-	if (!g_ptr_array_remove (store->priv->icc_array, icc)) {
+	if (!g_ptr_array_remove (priv->icc_array, icc)) {
 		g_warning ("failed to remove %s", filename);
 		return FALSE;
 	}
@@ -193,23 +196,23 @@ cd_icc_store_remove_icc (CdIccStore *store, const gchar *filename)
 static gboolean
 cd_icc_store_add_icc (CdIccStore *store, GFile *file, GError **error)
 {
-	CdIccStorePrivate *priv = store->priv;
-	_cleanup_bytes_unref_ GBytes *data = NULL;
-	_cleanup_free_ gchar *filename = NULL;
-	_cleanup_object_unref_ CdIcc *icc = NULL;
-	_cleanup_object_unref_ CdIcc *icc_tmp = NULL;
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
+	g_autoptr(GBytes) data = NULL;
+	g_autofree gchar *filename = NULL;
+	g_autoptr(CdIcc) icc = NULL;
+	g_autoptr(CdIcc) icc_tmp = NULL;
 
 	/* use the GResource cache if available */
 	icc = cd_icc_new ();
 	filename = g_file_get_path (file);
-	if (store->priv->cache != NULL) {
+	if (priv->cache != NULL) {
 		if (g_str_has_prefix (filename, "/usr/share/color/icc/colord/")) {
-			_cleanup_free_ gchar *cache_key = NULL;
+			g_autofree gchar *cache_key = NULL;
 			cache_key = g_build_filename ("/org/freedesktop/colord",
 						      "profiles",
 						      filename + 28,
 						      NULL);
-			data = g_resource_lookup_data (store->priv->cache,
+			data = g_resource_lookup_data (priv->cache,
 						       cache_key,
 						       G_RESOURCE_LOOKUP_FLAGS_NONE,
 						       NULL);
@@ -218,7 +221,7 @@ cd_icc_store_add_icc (CdIccStore *store, GFile *file, GError **error)
 
 	/* parse new icc object */
 	if (data != NULL) {
-		_cleanup_free_ gchar *basename = NULL;
+		g_autofree gchar *basename = NULL;
 		basename = g_path_get_basename (filename);
 		g_debug ("Using built-in %s", basename);
 		cd_icc_set_filename (icc, filename);
@@ -232,7 +235,7 @@ cd_icc_store_add_icc (CdIccStore *store, GFile *file, GError **error)
 	} else {
 		if (!cd_icc_load_file (icc,
 					file,
-					store->priv->load_flags,
+					priv->load_flags,
 					NULL,
 					error)) {
 			return FALSE;
@@ -269,10 +272,10 @@ cd_icc_store_created_query_info_cb (GObject *source_object,
 	CdIccStore *store = CD_ICC_STORE (user_data);
 	GFile *file = G_FILE (source_object);
 	gboolean ret;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_free_ gchar *path = NULL;
-	_cleanup_object_unref_ GFileInfo *info = NULL;
-	_cleanup_object_unref_ GFile *parent = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autofree gchar *path = NULL;
+	g_autoptr(GFileInfo) info = NULL;
+	g_autoptr(GFile) parent = NULL;
 
 	info = g_file_query_info_finish (file, res, NULL);
 	if (info == NULL)
@@ -291,7 +294,7 @@ cd_icc_store_created_query_info_cb (GObject *source_object,
 static void
 cd_icc_store_remove_from_prefix (CdIccStore *store, const gchar *prefix)
 {
-	CdIccStorePrivate *priv = store->priv;
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIcc *tmp;
 	const gchar *filename;
 	guint i;
@@ -316,9 +319,10 @@ cd_icc_store_file_monitor_changed_cb (GFileMonitor *monitor,
 				      GFileMonitorEvent event_type,
 				      CdIccStore *store)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIcc *tmp;
 	CdIccStoreDirHelper *helper;
-	_cleanup_free_ gchar *path = NULL;
+	g_autofree gchar *path = NULL;
 
 	/* icc was deleted */
 	if (event_type == G_FILE_MONITOR_EVENT_DELETED) {
@@ -338,7 +342,7 @@ cd_icc_store_file_monitor_changed_cb (GFileMonitor *monitor,
 		cd_icc_store_remove_from_prefix (store, path);
 		helper = cd_icc_store_find_by_directory (store, path);
 		if (helper != NULL) {
-			g_ptr_array_remove (store->priv->directory_array,
+			g_ptr_array_remove (priv->directory_array,
 					    helper);
 		}
 		return;
@@ -379,8 +383,8 @@ cd_icc_store_search_path_child (CdIccStore *store,
 {
 	const gchar *name;
 	const gchar *type;
-	_cleanup_free_ gchar *full_path = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autofree gchar *full_path = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	/* further down the worm-hole */
 	name = g_file_info_get_name (info);
@@ -421,12 +425,13 @@ cd_icc_store_search_path (CdIccStore *store,
 			  GCancellable *cancellable,
 			  GError **error)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	CdIccStoreDirHelper *helper;
 	GError *error_local = NULL;
 	gboolean ret = TRUE;
-	_cleanup_object_unref_ GFileEnumerator *enumerator = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
-	_cleanup_object_unref_ GFileInfo *info = NULL;
+	g_autoptr(GFileEnumerator) enumerator = NULL;
+	g_autoptr(GFile) file = NULL;
+	g_autoptr(GFileInfo) info = NULL;
 
 	/* check sanity */
 	if (depth > CD_ICC_STORE_MAX_RECURSION_LEVELS) {
@@ -457,7 +462,7 @@ cd_icc_store_search_path (CdIccStore *store,
 		g_signal_connect (helper->monitor, "changed",
 				  G_CALLBACK(cd_icc_store_file_monitor_changed_cb),
 				  store);
-		g_ptr_array_add (store->priv->directory_array, helper);
+		g_ptr_array_add (priv->directory_array, helper);
 	}
 
 	/* get contents of directory */
@@ -472,7 +477,7 @@ cd_icc_store_search_path (CdIccStore *store,
 		ret = FALSE;
 		helper = cd_icc_store_find_by_directory (store, path);
 		if (helper != NULL)
-			g_ptr_array_remove (store->priv->directory_array, helper);
+			g_ptr_array_remove (priv->directory_array, helper);
 		goto out;
 	}
 
@@ -518,8 +523,9 @@ out:
 void
 cd_icc_store_set_load_flags (CdIccStore *store, CdIccLoadFlags load_flags)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	g_return_if_fail (CD_IS_ICC_STORE (store));
-	store->priv->load_flags = load_flags | CD_ICC_LOAD_FLAGS_FALLBACK_MD5;
+	priv->load_flags = load_flags | CD_ICC_LOAD_FLAGS_FALLBACK_MD5;
 }
 
 /**
@@ -535,8 +541,9 @@ cd_icc_store_set_load_flags (CdIccStore *store, CdIccLoadFlags load_flags)
 CdIccLoadFlags
 cd_icc_store_get_load_flags (CdIccStore *store)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), 0);
-	return store->priv->load_flags;
+	return priv->load_flags;
 }
 
 /**
@@ -552,9 +559,10 @@ cd_icc_store_get_load_flags (CdIccStore *store)
 void
 cd_icc_store_set_cache (CdIccStore *store, GResource *cache)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	g_return_if_fail (CD_IS_ICC_STORE (store));
-	g_return_if_fail (store->priv->cache == NULL);
-	store->priv->cache = g_resource_ref (cache);
+	g_return_if_fail (priv->cache == NULL);
+	priv->cache = g_resource_ref (cache);
 }
 
 /**
@@ -570,8 +578,9 @@ cd_icc_store_set_cache (CdIccStore *store, GResource *cache)
 GPtrArray *
 cd_icc_store_get_all (CdIccStore *store)
 {
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), NULL);
-	return g_ptr_array_ref (store->priv->icc_array);
+	return g_ptr_array_ref (priv->icc_array);
 }
 
 /**
@@ -597,7 +606,7 @@ cd_icc_store_search_kind (CdIccStore *store,
 {
 	gchar *tmp;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *locations = NULL;
+	g_autoptr(GPtrArray) locations = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -661,7 +670,7 @@ cd_icc_store_search_location (CdIccStore *store,
 			      GCancellable *cancellable,
 			      GError **error)
 {
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC_STORE (store), FALSE);
 	g_return_val_if_fail (location != NULL, FALSE);
@@ -722,8 +731,6 @@ cd_icc_store_class_init (CdIccStoreClass *klass)
 			      G_STRUCT_OFFSET (CdIccStoreClass, removed),
 			      NULL, NULL, g_cclosure_marshal_generic,
 			      G_TYPE_NONE, 1, CD_TYPE_ICC);
-
-	g_type_class_add_private (klass, sizeof (CdIccStorePrivate));
 }
 
 /**
@@ -732,10 +739,10 @@ cd_icc_store_class_init (CdIccStoreClass *klass)
 static void
 cd_icc_store_init (CdIccStore *store)
 {
-	store->priv = CD_ICC_STORE_GET_PRIVATE (store);
-	store->priv->load_flags = CD_ICC_LOAD_FLAGS_FALLBACK_MD5;
-	store->priv->icc_array = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
-	store->priv->directory_array = g_ptr_array_new_with_free_func ((GDestroyNotify) cd_icc_store_helper_free);
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
+	priv->load_flags = CD_ICC_LOAD_FLAGS_FALLBACK_MD5;
+	priv->icc_array = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
+	priv->directory_array = g_ptr_array_new_with_free_func ((GDestroyNotify) cd_icc_store_helper_free);
 }
 
 /**
@@ -745,7 +752,7 @@ static void
 cd_icc_store_finalize (GObject *object)
 {
 	CdIccStore *store = CD_ICC_STORE (object);
-	CdIccStorePrivate *priv = store->priv;
+	CdIccStorePrivate *priv = GET_PRIVATE (store);
 
 	g_ptr_array_unref (priv->icc_array);
 	g_ptr_array_unref (priv->directory_array);

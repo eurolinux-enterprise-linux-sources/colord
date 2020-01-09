@@ -33,7 +33,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "cd-cleanup.h"
 #include "cd-context-lcms.h"
 #include "cd-icc.h"
 
@@ -42,7 +41,7 @@ static void	cd_icc_init		(CdIcc		*icc);
 static gboolean	cd_icc_load_named_colors (CdIcc		*icc, GError **error);
 static void	cd_icc_finalize		(GObject	*object);
 
-#define CD_ICC_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CD_TYPE_ICC, CdIccPrivate))
+#define GET_PRIVATE(o) (cd_icc_get_instance_private (o))
 
 typedef enum {
 	CD_MLUC_DESCRIPTION,
@@ -57,7 +56,7 @@ typedef enum {
  *
  * Private #CdIcc data
  **/
-struct _CdIccPrivate
+typedef struct
 {
 	CdColorspace		 colorspace;
 	CdProfileKind		 kind;
@@ -77,9 +76,9 @@ struct _CdIccPrivate
 	CdColorXYZ		 red;
 	CdColorXYZ		 green;
 	CdColorXYZ		 blue;
-};
+} CdIccPrivate;
 
-G_DEFINE_TYPE (CdIcc, cd_icc, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (CdIcc, cd_icc, G_TYPE_OBJECT)
 
 enum {
 	PROP_0,
@@ -163,7 +162,7 @@ cd_icc_uint32_to_str (guint32 id, gchar *str)
 static gpointer
 cd_icc_read_tag (CdIcc *icc, cmsTagSignature sig, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	gchar sig_string[5];
 	gpointer tmp;
 
@@ -194,7 +193,7 @@ cd_icc_read_tag (CdIcc *icc, cmsTagSignature sig, GError **error)
 static gboolean
 cd_icc_write_tag (CdIcc *icc, cmsTagSignature sig, gpointer data, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	gchar sig_string[5];
 
 	/* ensure context error is not present to aid debugging */
@@ -235,7 +234,7 @@ cd_icc_write_tag (CdIcc *icc, cmsTagSignature sig, gpointer data, GError **error
 gchar *
 cd_icc_to_string (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsInt32Number tag_size;
 	cmsTagSignature sig;
 	cmsTagSignature sig_link;
@@ -261,7 +260,7 @@ cd_icc_to_string (CdIcc *icc)
 	/* print size */
 	tmp = cd_icc_get_size (icc);
 	if (tmp > 0)
-		g_string_append_printf (str, "  Size\t\t= %i bytes\n", tmp);
+		g_string_append_printf (str, "  Size\t\t= %" G_GUINT32_FORMAT " bytes\n", tmp);
 
 	/* version */
 	g_string_append_printf (str, "  Version\t= %.1f\n",
@@ -292,7 +291,7 @@ cd_icc_to_string (CdIcc *icc)
 	/* date and time */
 	created = cd_icc_get_created (icc);
 	if (created != NULL) {
-		_cleanup_free_ gchar *created_str = NULL;
+		g_autofree gchar *created_str = NULL;
 		created_str = g_date_time_format (created, "%F, %T");
 		g_string_append_printf (str, "  Date, Time\t= %s\n", created_str);
 		g_date_time_unref (created);
@@ -361,8 +360,9 @@ cd_icc_to_string (CdIcc *icc)
 		cd_icc_uint32_to_str (GUINT32_FROM_BE (sig), tag_str);
 
 		/* print header */
-		g_string_append_printf (str, "tag %02i:\n", i);
-		g_string_append_printf (str, "  sig\t'%s' [0x%x]\n", tag_str, sig);
+		g_string_append_printf (str, "tag %02u:\n", (guint) i);
+		g_string_append_printf (str, "  sig\t'%s' [0x%x]\n",
+					tag_str, (guint) sig);
 
 		/* is this linked to another data area? */
 		sig_link = cmsTagLinkedTo (priv->lcms_profile, sig);
@@ -410,9 +410,9 @@ cd_icc_to_string (CdIcc *icc)
 				gchar country_code[3] = "\0\0\0";
 				gchar language_code[3] = "\0\0\0";
 				guint32 text_size;
-				_cleanup_free_ gchar *text_buffer = NULL;
-				_cleanup_free_ gunichar *wtext = NULL;
-				_cleanup_error_free_ GError *error = NULL;
+				g_autofree gchar *text_buffer = NULL;
+				g_autofree gunichar *wtext = NULL;
+				g_autoptr(GError) error = NULL;
 
 				ret = cmsMLUtranslationsCodes (mlu,
 							       j,
@@ -441,7 +441,7 @@ cd_icc_to_string (CdIcc *icc)
 								error->message);
 					continue;
 				}
-				g_string_append_printf (str, "  %s_%s:\t%s [%i bytes]\n",
+				g_string_append_printf (str, "  %s_%s:\t%s [%" G_GUINT32_FORMAT " bytes]\n",
 							language_code[0] != '\0' ? language_code : "**",
 							country_code[0] != '\0' ? country_code : "**",
 							text_buffer,
@@ -548,8 +548,8 @@ cd_icc_to_string (CdIcc *icc)
 			for (entry = cmsDictGetEntryList (dict);
 			     entry != NULL;
 			     entry = cmsDictNextEntry (entry)) {
-				_cleanup_free_ gchar *ascii_name = NULL;
-				_cleanup_free_ gchar *ascii_value = NULL;
+				g_autofree gchar *ascii_name = NULL;
+				g_autofree gchar *ascii_value = NULL;
 
 				/* convert from wchar_t to UTF-8 */
 				ascii_name = g_ucs4_to_utf8 ((gunichar *) entry->Name, -1,
@@ -574,7 +574,7 @@ cd_icc_to_string (CdIcc *icc)
 				break;
 			}
 			g_string_append_printf (str, "  channels\t = %i\n", 3);
-			g_string_append_printf (str, "  entries\t = %i\n",
+			g_string_append_printf (str, "  entries\t = %" G_GUINT32_FORMAT "\n",
 						cmsGetToneCurveEstimatedTableEntries (vcgt[0]));
 			break;
 		}
@@ -604,7 +604,7 @@ cd_icc_to_string (CdIcc *icc)
 				continue;
 			}
 			for (j = 0; j < tmp; j++) {
-				_cleanup_string_free_ GString *string = NULL;
+				g_autoptr(GString) string = NULL;
 
 				/* parse title */
 				string = g_string_new ("");
@@ -615,7 +615,7 @@ cd_icc_to_string (CdIcc *icc)
 							 (cmsUInt16Number *)&pcs,
 							 NULL);
 				if (!ret) {
-					g_string_append_printf (str, "  Info:\t\tFailed to get NC #%i", j);
+					g_string_append_printf (str, "  Info:\t\tFailed to get NC #%" G_GUINT32_FORMAT, j);
 					continue;
 				}
 				if (prefix[0] != '\0')
@@ -637,8 +637,8 @@ cd_icc_to_string (CdIcc *icc)
 
 				/* get color */
 				cmsLabEncoded2Float ((cmsCIELab *) &lab, pcs);
-				g_string_append_printf (str, "  %03i:\t %s\tL:%.2f a:%.3f b:%.3f\n",
-							j,
+				g_string_append_printf (str, "  %03u:\t %s\tL:%.2f a:%.3f b:%.3f\n",
+							(guint) j,
 							string->str,
 							lab.L, lab.a, lab.b);
 			}
@@ -673,7 +673,7 @@ cd_icc_to_string (CdIcc *icc)
 gchar **
 cd_icc_get_tags (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	GPtrArray *tags;
 	cmsTagSignature sig;
 	gchar *tmp;
@@ -721,7 +721,7 @@ cd_icc_str_to_tag (const gchar *tag)
 GBytes *
 cd_icc_get_tag_data (CdIcc *icc, const gchar *tag, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsInt32Number tag_size;
 	cmsTagSignature sig;
 	gchar *tmp;
@@ -747,7 +747,7 @@ cd_icc_get_tag_data (CdIcc *icc, const gchar *tag, GError **error)
 	/* return data */
 	tmp = g_new0 (gchar, tag_size);
 	cmsReadRawTag (priv->lcms_profile, sig, tmp, tag_size);
-	return g_bytes_new_with_free_func (tmp, tag_size, g_free, NULL);
+	return g_bytes_new_with_free_func (tmp, tag_size, g_free, tmp);
 }
 
 /**
@@ -765,7 +765,7 @@ cd_icc_get_tag_data (CdIcc *icc, const gchar *tag, GError **error)
 gboolean
 cd_icc_set_tag_data (CdIcc *icc, const gchar *tag, GBytes *data, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsTagSignature sig;
 	gboolean ret;
 
@@ -863,7 +863,7 @@ cd_icc_get_precooked_md5 (cmsHPROFILE lcms_profile)
 static gboolean
 cd_icc_calc_whitepoint (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsBool bpc[2] = { FALSE, FALSE };
 	cmsCIEXYZ whitepoint;
 	cmsFloat64Number adaption[2] = { 0, 0 };
@@ -922,7 +922,7 @@ out:
 static gboolean
 cd_icc_load_characterization_data (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsMLU *mlu;
 	gboolean ret = TRUE;
 	GError *error_local = NULL;
@@ -963,7 +963,7 @@ out:
 static gboolean
 cd_icc_load_primaries (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsCIEXYZ *cie_xyz;
 	cmsHPROFILE xyz_profile = NULL;
 	cmsHTRANSFORM transform = NULL;
@@ -1043,9 +1043,10 @@ cd_icc_load_metadata_item (CdIcc *icc,
 			   const gunichar *value,
 			   GError **error)
 {
-	_cleanup_error_free_ GError *error_local = NULL;
-	_cleanup_free_ gchar *ascii_name = NULL;
-	_cleanup_free_ gchar *ascii_value = NULL;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
+	g_autoptr(GError) error_local = NULL;
+	g_autofree gchar *ascii_name = NULL;
+	g_autofree gchar *ascii_value = NULL;
 
 	/* parse name */
 	ascii_name = g_ucs4_to_utf8 (name, -1, NULL, NULL, &error_local);
@@ -1070,7 +1071,7 @@ cd_icc_load_metadata_item (CdIcc *icc,
 	}
 
 	/* all okay */
-	g_hash_table_insert (icc->priv->metadata,
+	g_hash_table_insert (priv->metadata,
 			     g_strdup (ascii_name),
 			     g_strdup (ascii_value));
 	return TRUE;
@@ -1117,7 +1118,7 @@ cd_icc_load_metadata (CdIcc *icc, GError **error)
 static gboolean
 cd_icc_load (CdIcc *icc, CdIccLoadFlags flags, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsColorSpaceSignature colorspace;
 	cmsProfileClassSignature profile_class;
 	guint i;
@@ -1201,7 +1202,7 @@ cd_icc_load_data (CdIcc *icc,
 		  CdIccLoadFlags flags,
 		  GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
 	g_return_val_if_fail (data != NULL, FALSE);
@@ -1254,8 +1255,8 @@ cd_util_write_dict_entry (cmsHANDLE dict,
 			  GError **error)
 {
 	gboolean ret = FALSE;
-	_cleanup_free_ gunichar *mb_key = NULL;
-	_cleanup_free_ gunichar *mb_value = NULL;
+	g_autofree gunichar *mb_key = NULL;
+	g_autofree gunichar *mb_value = NULL;
 
 	mb_key = g_utf8_to_ucs4 (key, -1, NULL, NULL, error);
 	if (mb_key == NULL)
@@ -1307,8 +1308,8 @@ cd_util_mlu_object_parse (const gchar *locale,
 	CdMluObject *obj = NULL;
 	guint type;
 	gunichar *wtext;
-	_cleanup_free_ gchar *key = NULL;
-	_cleanup_strv_free_ gchar **split = NULL;
+	g_autofree gchar *key = NULL;
+	g_auto(GStrv) split = NULL;
 
 	/* untranslated version */
 	if (locale == NULL || locale[0] == '\0') {
@@ -1365,6 +1366,7 @@ cd_util_write_tag_ascii (CdIcc *icc,
 			 const gchar *value,
 			 GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsMLU *mlu = NULL;
 	gboolean ret = TRUE;
 
@@ -1375,7 +1377,7 @@ cd_util_write_tag_ascii (CdIcc *icc,
 	}
 
 	/* set value */
-	mlu = cmsMLUalloc (icc->priv->context_lcms, 1);
+	mlu = cmsMLUalloc (priv->context_lcms, 1);
 	ret = cmsMLUsetASCII (mlu, "en", "US", value);
 	if (!ret) {
 		g_set_error_literal (error,
@@ -1430,6 +1432,7 @@ cd_util_write_tag_localized (CdIcc *icc,
 			     GHashTable *hash,
 			     GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdMluObject *obj;
 	GError *error_local = NULL;
 	GList *l;
@@ -1438,8 +1441,8 @@ cd_util_write_tag_localized (CdIcc *icc,
 	const gchar *value;
 	gboolean ret = TRUE;
 	guint i;
-	_cleanup_list_free_ GList *keys = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GList) keys = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	/* convert all the hash entries into CdMluObject's */
 	keys = g_hash_table_get_keys (hash);
@@ -1469,7 +1472,7 @@ cd_util_write_tag_localized (CdIcc *icc,
 	g_ptr_array_sort (array, cd_util_sort_mlu_array_cb);
 
 	/* create MLU object to hold all the translations */
-	mlu = cmsMLUalloc (icc->priv->context_lcms, array->len);
+	mlu = cmsMLUalloc (priv->context_lcms, array->len);
 	for (i = 0; i < array->len; i++) {
 		obj = g_ptr_array_index (array, i);
 		if (obj->language_code == NULL &&
@@ -1513,7 +1516,7 @@ out:
 static gboolean
 cd_icc_save_file_mkdir_parents (GFile *file, GError **error)
 {
-	_cleanup_object_unref_ GFile *parent_dir = NULL;
+	g_autoptr(GFile) parent_dir = NULL;
 
 	/* get parent directory */
 	parent_dir = g_file_get_parent (file);
@@ -1539,10 +1542,10 @@ cd_icc_save_file_mkdir_parents (GFile *file, GError **error)
 static GBytes *
 cd_icc_serialize_profile (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsUInt32Number length = 0;
 	gboolean ret;
-	_cleanup_free_ gchar *data_tmp = NULL;
+	g_autofree gchar *data_tmp = NULL;
 
 	/* get size of profile */
 	ret = cmsSaveProfileToMem (priv->lcms_profile,
@@ -1599,7 +1602,7 @@ cd_icc_save_data (CdIcc *icc,
 		  CdIccSaveFlags flags,
 		  GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsHANDLE dict = NULL;
 	const gchar *key;
 	const gchar *value;
@@ -1607,9 +1610,9 @@ cd_icc_save_data (CdIcc *icc,
 	GBytes *data = NULL;
 	GList *l;
 	guint i;
-	_cleanup_list_free_ GList *md_keys = NULL;
+	g_autoptr(GList) md_keys = NULL;
 
-	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
+	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
 
 	/* convert profile kind */
 	for (i = 0; map_profile_kind[i].colord != CD_PROFILE_KIND_LAST; i++) {
@@ -1764,8 +1767,9 @@ out:
 const gchar *
 cd_icc_get_characterization_data (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return icc->priv->characterization_data;
+	return priv->characterization_data;
 }
 
 /**
@@ -1780,9 +1784,10 @@ cd_icc_get_characterization_data (CdIcc *icc)
 void
 cd_icc_set_characterization_data (CdIcc *icc, const gchar *data)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
-	g_free (icc->priv->characterization_data);
-	icc->priv->characterization_data = g_strdup (data);
+	g_free (priv->characterization_data);
+	priv->characterization_data = g_strdup (data);
 }
 
 /**
@@ -1807,8 +1812,8 @@ cd_icc_save_file (CdIcc *icc,
 		  GError **error)
 {
 	gboolean ret;
-	_cleanup_bytes_unref_ GBytes *data = NULL;
-	_cleanup_error_free_ GError *error_local = NULL;
+	g_autoptr(GBytes) data = NULL;
+	g_autoptr(GError) error_local = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
 	g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -1862,15 +1867,16 @@ cd_icc_save_default (CdIcc *icc,
 		     GCancellable *cancellable,
 		     GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	const gchar *root = "edid"; /* TODO: only for cd_icc_create_from_edid() */
-	_cleanup_free_ gchar *basename = NULL;
-	_cleanup_free_ gchar *filename = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autofree gchar *basename = NULL;
+	g_autofree gchar *filename = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
 
 	/* build a per-user filename */
-	basename = g_strdup_printf ("%s-%s.icc", root, icc->priv->checksum);
+	basename = g_strdup_printf ("%s-%s.icc", root, priv->checksum);
 	filename = g_build_filename (g_get_user_data_dir (), "icc", basename, NULL);
 	file = g_file_new_for_path (filename);
 	return cd_icc_save_file (icc, file, flags, cancellable, error);
@@ -1889,8 +1895,9 @@ cd_icc_save_default (CdIcc *icc,
 void
 cd_icc_set_filename (CdIcc *icc, const gchar *filename)
 {
-	g_free (icc->priv->filename);
-	icc->priv->filename = g_strdup (filename);
+	CdIccPrivate *priv = GET_PRIVATE (icc);
+	g_free (priv->filename);
+	priv->filename = g_strdup (filename);
 }
 
 /**
@@ -1912,12 +1919,12 @@ cd_icc_load_file (CdIcc *icc,
 		  GCancellable *cancellable,
 		  GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	gboolean ret = FALSE;
 	gsize length;
-	_cleanup_error_free_ GError *error_local = NULL;
-	_cleanup_free_ gchar *data = NULL;
-	_cleanup_object_unref_ GFileInfo *info = NULL;
+	g_autoptr(GError) error_local = NULL;
+	g_autofree gchar *data = NULL;
+	g_autoptr(GFileInfo) info = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
 	g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -1982,7 +1989,7 @@ cd_icc_load_fd (CdIcc *icc,
 		CdIccLoadFlags flags,
 		GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	FILE *stream = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
@@ -2025,8 +2032,9 @@ cd_icc_load_fd (CdIcc *icc,
 gpointer
 cd_icc_get_handle (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return icc->priv->lcms_profile;
+	return priv->lcms_profile;
 }
 
 /**
@@ -2043,8 +2051,9 @@ cd_icc_get_handle (CdIcc *icc)
 gpointer
 cd_icc_get_context (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return icc->priv->context_lcms;
+	return priv->context_lcms;
 }
 
 /**
@@ -2077,7 +2086,7 @@ cd_icc_load_handle (CdIcc *icc,
 		    CdIccLoadFlags flags,
 		    GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsContext context;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
@@ -2112,8 +2121,9 @@ cd_icc_load_handle (CdIcc *icc,
 guint32
 cd_icc_get_size (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), 0);
-	return icc->priv->size;
+	return priv->size;
 }
 
 /**
@@ -2129,7 +2139,7 @@ cd_icc_get_size (CdIcc *icc)
 const gchar *
 cd_icc_get_filename (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
 	return priv->filename;
 }
@@ -2147,8 +2157,9 @@ cd_icc_get_filename (CdIcc *icc)
 gdouble
 cd_icc_get_version (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), 0.0f);
-	return icc->priv->version;
+	return priv->version;
 }
 
 /**
@@ -2163,8 +2174,9 @@ cd_icc_get_version (CdIcc *icc)
 void
 cd_icc_set_version (CdIcc *icc, gdouble version)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
-	icc->priv->version = version;
+	priv->version = version;
 	g_object_notify (G_OBJECT (icc), "version");
 }
 
@@ -2181,8 +2193,9 @@ cd_icc_set_version (CdIcc *icc, gdouble version)
 CdProfileKind
 cd_icc_get_kind (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), CD_PROFILE_KIND_UNKNOWN);
-	return icc->priv->kind;
+	return priv->kind;
 }
 
 /**
@@ -2197,8 +2210,9 @@ cd_icc_get_kind (CdIcc *icc)
 void
 cd_icc_set_kind (CdIcc *icc, CdProfileKind kind)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
-	icc->priv->kind = kind;
+	priv->kind = kind;
 	g_object_notify (G_OBJECT (icc), "kind");
 }
 
@@ -2215,8 +2229,9 @@ cd_icc_set_kind (CdIcc *icc, CdProfileKind kind)
 CdColorspace
 cd_icc_get_colorspace (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), CD_COLORSPACE_UNKNOWN);
-	return icc->priv->colorspace;
+	return priv->colorspace;
 }
 
 /**
@@ -2231,8 +2246,9 @@ cd_icc_get_colorspace (CdIcc *icc)
 void
 cd_icc_set_colorspace (CdIcc *icc, CdColorspace colorspace)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
-	icc->priv->colorspace = colorspace;
+	priv->colorspace = colorspace;
 	g_object_notify (G_OBJECT (icc), "colorspace");
 }
 
@@ -2249,8 +2265,9 @@ cd_icc_set_colorspace (CdIcc *icc, CdColorspace colorspace)
 GHashTable *
 cd_icc_get_metadata (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return g_hash_table_ref (icc->priv->metadata);
+	return g_hash_table_ref (priv->metadata);
 }
 
 /**
@@ -2267,9 +2284,10 @@ cd_icc_get_metadata (CdIcc *icc)
 const gchar *
 cd_icc_get_metadata_item (CdIcc *icc, const gchar *key)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
 	g_return_val_if_fail (key != NULL, NULL);
-	return (const gchar *) g_hash_table_lookup (icc->priv->metadata, key);
+	return (const gchar *) g_hash_table_lookup (priv->metadata, key);
 }
 
 /**
@@ -2286,12 +2304,13 @@ cd_icc_get_metadata_item (CdIcc *icc, const gchar *key)
 void
 cd_icc_add_metadata (CdIcc *icc, const gchar *key, const gchar *value)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
 	g_return_if_fail (key != NULL);
 	g_return_if_fail (g_utf8_validate (key, -1, NULL));
 	g_return_if_fail (value != NULL);
 	g_return_if_fail (g_utf8_validate (value, -1, NULL));
-	g_hash_table_insert (icc->priv->metadata,
+	g_hash_table_insert (priv->metadata,
 			     g_strdup (key),
 			     g_strdup (value));
 }
@@ -2308,9 +2327,10 @@ cd_icc_add_metadata (CdIcc *icc, const gchar *key, const gchar *value)
 void
 cd_icc_remove_metadata (CdIcc *icc, const gchar *key)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (CD_IS_ICC (icc));
 	g_return_if_fail (key != NULL);
-	g_hash_table_remove (icc->priv->metadata, key);
+	g_hash_table_remove (priv->metadata, key);
 }
 
 /**
@@ -2319,6 +2339,7 @@ cd_icc_remove_metadata (CdIcc *icc, const gchar *key)
 static gboolean
 cd_icc_load_named_colors (CdIcc *icc, GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdColorLab lab;
 	CdColorSwatch *swatch;
 	cmsNAMEDCOLORLIST *nc2;
@@ -2377,7 +2398,7 @@ cd_icc_load_named_colors (CdIcc *icc, GError **error)
 			swatch = cd_color_swatch_new ();
 			cd_color_swatch_set_name (swatch, string->str);
 			cd_color_swatch_set_value (swatch, (const CdColorLab *) &lab);
-			g_ptr_array_add (icc->priv->named_colors, swatch);
+			g_ptr_array_add (priv->named_colors, swatch);
 		}
 		g_string_free (string, TRUE);
 	}
@@ -2399,8 +2420,9 @@ cd_icc_load_named_colors (CdIcc *icc, GError **error)
 GPtrArray *
 cd_icc_get_named_colors (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return g_ptr_array_ref (icc->priv->named_colors);
+	return g_ptr_array_ref (priv->named_colors);
 }
 
 /**
@@ -2418,8 +2440,9 @@ cd_icc_get_named_colors (CdIcc *icc)
 gboolean
 cd_icc_get_can_delete (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
-	return icc->priv->can_delete;
+	return priv->can_delete;
 }
 
 /**
@@ -2435,7 +2458,7 @@ cd_icc_get_can_delete (CdIcc *icc)
 GDateTime *
 cd_icc_get_created (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	struct tm created_tm;
 	time_t created_t;
 
@@ -2472,8 +2495,9 @@ cd_icc_get_created (CdIcc *icc)
 const gchar *
 cd_icc_get_checksum (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return icc->priv->checksum;
+	return priv->checksum;
 }
 
 /**
@@ -2502,7 +2526,7 @@ cd_icc_get_mluc_data (CdIcc *icc,
 		      cmsTagSignature *sigs,
 		      GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsMLU *mlu = NULL;
 	const gchar *country_code = "\0\0\0";
 	const gchar *language_code = "\0\0\0";
@@ -2510,9 +2534,9 @@ cd_icc_get_mluc_data (CdIcc *icc,
 	gchar *tmp;
 	guint32 text_size;
 	guint i;
-	_cleanup_free_ gchar *locale_key = NULL;
-	_cleanup_free_ gchar *text_buffer = NULL;
-	_cleanup_free_ gunichar *wtext = NULL;
+	g_autofree gchar *locale_key = NULL;
+	g_autofree gchar *text_buffer = NULL;
+	g_autofree gunichar *wtext = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
 
@@ -2723,7 +2747,7 @@ cd_icc_get_model (CdIcc *icc, const gchar *locale, GError **error)
 void
 cd_icc_set_description (CdIcc *icc, const gchar *locale, const gchar *value)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (value == NULL || g_utf8_validate (value, -1, NULL));
 	g_hash_table_insert (priv->mluc_data[CD_MLUC_DESCRIPTION],
 			     cd_icc_get_locale_key (locale),
@@ -2745,7 +2769,7 @@ cd_icc_set_description_items (CdIcc *icc, GHashTable *values)
 	GList *l;
 	const gchar *key;
 	const gchar *value;
-	_cleanup_list_free_ GList *keys = NULL;
+	g_autoptr(GList) keys = NULL;
 
 	g_return_if_fail (CD_IS_ICC (icc));
 
@@ -2771,7 +2795,7 @@ cd_icc_set_description_items (CdIcc *icc, GHashTable *values)
 void
 cd_icc_set_copyright (CdIcc *icc, const gchar *locale, const gchar *value)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (value == NULL || g_utf8_validate (value, -1, NULL));
 	g_hash_table_insert (priv->mluc_data[CD_MLUC_COPYRIGHT],
 			     cd_icc_get_locale_key (locale),
@@ -2793,7 +2817,7 @@ cd_icc_set_copyright_items (CdIcc *icc, GHashTable *values)
 	const gchar *key;
 	const gchar *value;
 	GList *l;
-	_cleanup_list_free_ GList *keys = NULL;
+	g_autoptr(GList) keys = NULL;
 
 	g_return_if_fail (CD_IS_ICC (icc));
 
@@ -2819,7 +2843,7 @@ cd_icc_set_copyright_items (CdIcc *icc, GHashTable *values)
 void
 cd_icc_set_manufacturer (CdIcc *icc, const gchar *locale, const gchar *value)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (value == NULL || g_utf8_validate (value, -1, NULL));
 	g_hash_table_insert (priv->mluc_data[CD_MLUC_MANUFACTURER],
 			     cd_icc_get_locale_key (locale),
@@ -2841,7 +2865,7 @@ cd_icc_set_manufacturer_items (CdIcc *icc, GHashTable *values)
 	const gchar *key;
 	const gchar *value;
 	GList *l;
-	_cleanup_list_free_ GList *keys = NULL;
+	g_autoptr(GList) keys = NULL;
 
 	g_return_if_fail (CD_IS_ICC (icc));
 
@@ -2867,7 +2891,7 @@ cd_icc_set_manufacturer_items (CdIcc *icc, GHashTable *values)
 void
 cd_icc_set_model (CdIcc *icc, const gchar *locale, const gchar *value)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_if_fail (value == NULL || g_utf8_validate (value, -1, NULL));
 	g_hash_table_insert (priv->mluc_data[CD_MLUC_MODEL],
 			     cd_icc_get_locale_key (locale),
@@ -2889,7 +2913,7 @@ cd_icc_set_model_items (CdIcc *icc, GHashTable *values)
 	const gchar *key;
 	const gchar *value;
 	GList *l;
-	_cleanup_list_free_ GList *keys = NULL;
+	g_autoptr(GList) keys = NULL;
 
 	g_return_if_fail (CD_IS_ICC (icc));
 
@@ -2917,8 +2941,9 @@ cd_icc_set_model_items (CdIcc *icc, GHashTable *values)
 guint
 cd_icc_get_temperature (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), 0);
-	return icc->priv->temperature;
+	return priv->temperature;
 }
 
 /**
@@ -2936,8 +2961,9 @@ cd_icc_get_temperature (CdIcc *icc)
 const CdColorXYZ *
 cd_icc_get_red (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return &icc->priv->red;
+	return &priv->red;
 }
 
 /**
@@ -2955,8 +2981,9 @@ cd_icc_get_red (CdIcc *icc)
 const CdColorXYZ *
 cd_icc_get_green (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return &icc->priv->green;
+	return &priv->green;
 }
 
 /**
@@ -2974,8 +3001,9 @@ cd_icc_get_green (CdIcc *icc)
 const CdColorXYZ *
 cd_icc_get_blue (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return &icc->priv->blue;
+	return &priv->blue;
 }
 
 /**
@@ -2993,8 +3021,9 @@ cd_icc_get_blue (CdIcc *icc)
 const CdColorXYZ *
 cd_icc_get_white (CdIcc *icc)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	return &icc->priv->white;
+	return &priv->white;
 }
 
 /**
@@ -3011,7 +3040,7 @@ cd_icc_get_white (CdIcc *icc)
 gboolean
 cd_icc_create_default (CdIcc *icc, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	gboolean ret = TRUE;
 
 	/* not loaded */
@@ -3066,7 +3095,7 @@ out:
 gboolean
 cd_icc_create_from_edid_data (CdIcc *icc, CdEdid *edid, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	const gchar *data;
 
 	/* not loaded */
@@ -3138,7 +3167,7 @@ cd_icc_create_from_edid (CdIcc *icc,
 			 const CdColorYxy *white,
 			 GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsCIExyYTRIPLE chroma;
 	cmsCIExyY white_point;
 	cmsToneCurve *transfer_curve[3] = { NULL, NULL, NULL };
@@ -3221,6 +3250,7 @@ out:
 GPtrArray *
 cd_icc_get_vcgt (CdIcc *icc, guint size, GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdColorRGB *tmp;
 	cmsFloat32Number in;
 	const cmsToneCurve **vcgt;
@@ -3228,10 +3258,10 @@ cd_icc_get_vcgt (CdIcc *icc, guint size, GError **error)
 	guint i;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), NULL);
-	g_return_val_if_fail (icc->priv->lcms_profile != NULL, NULL);
+	g_return_val_if_fail (priv->lcms_profile != NULL, NULL);
 
 	/* get tone curves from icc */
-	vcgt = cmsReadTag (icc->priv->lcms_profile, cmsSigVcgtType);
+	vcgt = cmsReadTag (priv->lcms_profile, cmsSigVcgtType);
 	if (vcgt == NULL || vcgt[0] == NULL) {
 		g_set_error_literal (error,
 				     CD_ICC_ERROR,
@@ -3270,7 +3300,7 @@ out:
 GPtrArray *
 cd_icc_get_response (CdIcc *icc, guint size, GError **error)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdColorRGB *data;
 	CdColorspace colorspace;
 	cmsHPROFILE srgb_profile = NULL;
@@ -3281,8 +3311,8 @@ cd_icc_get_response (CdIcc *icc, guint size, GError **error)
 	gfloat divamount;
 	GPtrArray *array = NULL;
 	guint i;
-	_cleanup_free_ gdouble *values_in = NULL;
-	_cleanup_free_ gdouble *values_out = NULL;
+	g_autofree gdouble *values_in = NULL;
+	g_autofree gdouble *values_out = NULL;
 
 	/* run through the icc */
 	colorspace = cd_icc_get_colorspace (icc);
@@ -3320,7 +3350,7 @@ cd_icc_get_response (CdIcc *icc, guint size, GError **error)
 	values_out = g_new0 (gdouble, size * 3 * component_width);
 	srgb_profile = cmsCreate_sRGBProfileTHR (priv->context_lcms);
 	transform = cmsCreateTransformTHR (priv->context_lcms,
-					   icc->priv->lcms_profile, TYPE_RGB_DBL,
+					   priv->lcms_profile, TYPE_RGB_DBL,
 					   srgb_profile, TYPE_RGB_DBL,
 					   INTENT_PERCEPTUAL, 0);
 	if (transform == NULL) {
@@ -3373,16 +3403,17 @@ out:
 gboolean
 cd_icc_set_vcgt (CdIcc *icc, GPtrArray *vcgt, GError **error)
 {
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdColorRGB *tmp;
 	cmsToneCurve *curve[3];
 	gboolean ret;
 	guint i;
-	_cleanup_free_ guint16 *blue = NULL;
-	_cleanup_free_ guint16 *green = NULL;
-	_cleanup_free_ guint16 *red = NULL;
+	g_autofree guint16 *blue = NULL;
+	g_autofree guint16 *green = NULL;
+	g_autofree guint16 *red = NULL;
 
 	g_return_val_if_fail (CD_IS_ICC (icc), FALSE);
-	g_return_val_if_fail (icc->priv->lcms_profile != NULL, FALSE);
+	g_return_val_if_fail (priv->lcms_profile != NULL, FALSE);
 
 	/* unwrap data */
 	red = g_new0 (guint16, vcgt->len);
@@ -3405,7 +3436,7 @@ cd_icc_set_vcgt (CdIcc *icc, GPtrArray *vcgt, GError **error)
 		cmsSmoothToneCurve (curve[i], 5);
 
 	/* write the tag */
-	ret = cmsWriteTag (icc->priv->lcms_profile, cmsSigVcgtType, curve);
+	ret = cmsWriteTag (priv->lcms_profile, cmsSigVcgtType, curve);
 	if (!ret) {
 		g_set_error_literal (error,
 				     CD_ICC_ERROR,
@@ -3425,7 +3456,8 @@ out:
 static CdProfileWarning
 cd_icc_check_whitepoint (CdIcc *icc)
 {
-	guint temp = icc->priv->temperature;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
+	guint temp = priv->temperature;
 
 	/* not set */
 	if (temp == 0)
@@ -3444,7 +3476,7 @@ cd_icc_check_whitepoint (CdIcc *icc)
 static CdProfileWarning
 cd_icc_check_vcgt (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsFloat32Number in;
 	cmsFloat32Number now[3];
 	cmsFloat32Number previous[3] = { -1, -1, -1};
@@ -3483,7 +3515,7 @@ cd_icc_check_vcgt (CdIcc *icc)
 static CdProfileWarning
 cd_profile_check_scum_dot (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdProfileWarning warning = CD_PROFILE_WARNING_NONE;
 	cmsCIELab white;
 	cmsHPROFILE profile_lab;
@@ -3523,7 +3555,7 @@ out:
 static CdProfileWarning
 cd_icc_check_primaries (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	cmsCIEXYZ *tmp;
 
 	/* The values used to check are based on the following ultra-wide
@@ -3570,7 +3602,7 @@ cd_icc_check_primaries (CdIcc *icc)
 static CdProfileWarning
 cd_icc_check_gray_axis (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdProfileWarning warning = CD_PROFILE_WARNING_NONE;
 	cmsCIELab gray[16];
 	cmsHPROFILE profile_lab = NULL;
@@ -3637,7 +3669,7 @@ out:
 static CdProfileWarning
 cd_icc_check_d50_whitepoint (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	CdProfileWarning warning = CD_PROFILE_WARNING_NONE;
 	cmsCIExyY tmp;
 	cmsCIEXYZ additive;
@@ -3748,7 +3780,7 @@ out:
 GArray *
 cd_icc_get_warnings (CdIcc *icc)
 {
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	GArray *flags;
 	gboolean ret;
 	gchar ascii_name[1024];
@@ -3820,7 +3852,7 @@ static void
 cd_icc_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
 	CdIcc *icc = CD_ICC (object);
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 
 	switch (prop_id) {
 	case PROP_SIZE:
@@ -3996,8 +4028,6 @@ cd_icc_class_init (CdIccClass *klass)
 				   0, G_MAXUINT, 0,
 				   G_PARAM_READABLE);
 	g_object_class_install_property (object_class, PROP_TEMPERATURE, pspec);
-
-	g_type_class_add_private (klass, sizeof (CdIccPrivate));
 }
 
 /**
@@ -4007,26 +4037,26 @@ static void
 cd_icc_init (CdIcc *icc)
 {
 	guint i;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 
-	icc->priv = CD_ICC_GET_PRIVATE (icc);
-	icc->priv->context_lcms = cd_context_lcms_new ();
-	icc->priv->kind = CD_PROFILE_KIND_UNKNOWN;
-	icc->priv->colorspace = CD_COLORSPACE_UNKNOWN;
-	icc->priv->named_colors = g_ptr_array_new_with_free_func ((GDestroyNotify) cd_color_swatch_free);
-	icc->priv->metadata = g_hash_table_new_full (g_str_hash,
+	priv->context_lcms = cd_context_lcms_new ();
+	priv->kind = CD_PROFILE_KIND_UNKNOWN;
+	priv->colorspace = CD_COLORSPACE_UNKNOWN;
+	priv->named_colors = g_ptr_array_new_with_free_func ((GDestroyNotify) cd_color_swatch_free);
+	priv->metadata = g_hash_table_new_full (g_str_hash,
 						     g_str_equal,
 						     g_free,
 						     g_free);
 	for (i = 0; i < CD_MLUC_LAST; i++) {
-		icc->priv->mluc_data[i] = g_hash_table_new_full (g_str_hash,
+		priv->mluc_data[i] = g_hash_table_new_full (g_str_hash,
 								 g_str_equal,
 								 g_free,
 								 g_free);
 	}
-	cd_color_xyz_clear (&icc->priv->white);
-	cd_color_xyz_clear (&icc->priv->red);
-	cd_color_xyz_clear (&icc->priv->green);
-	cd_color_xyz_clear (&icc->priv->blue);
+	cd_color_xyz_clear (&priv->white);
+	cd_color_xyz_clear (&priv->red);
+	cd_color_xyz_clear (&priv->green);
+	cd_color_xyz_clear (&priv->blue);
 }
 
 /**
@@ -4036,7 +4066,7 @@ static void
 cd_icc_finalize (GObject *object)
 {
 	CdIcc *icc = CD_ICC (object);
-	CdIccPrivate *priv = icc->priv;
+	CdIccPrivate *priv = GET_PRIVATE (icc);
 	guint i;
 
 	g_free (priv->filename);

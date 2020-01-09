@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2014 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2014-2015 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -31,7 +31,6 @@
 #include <math.h>
 #include <glib-object.h>
 
-#include "cd-cleanup.h"
 #include "cd-color.h"
 #include "cd-interp-linear.h"
 #include "cd-spectrum.h"
@@ -43,6 +42,7 @@ struct _CdSpectrum {
 	gdouble			 start;
 	gdouble			 end;
 	gdouble			 norm;
+	gdouble			 wavelength_cal[3];
 	GArray			*data;
 };
 
@@ -70,6 +70,8 @@ cd_spectrum_dup (const CdSpectrum *spectrum)
 		tmp = cd_spectrum_get_value_raw (spectrum, i);
 		cd_spectrum_add_value (dest, tmp);
 	}
+	for (i = 0; i < 3; i++)
+		dest->wavelength_cal[i] = spectrum->wavelength_cal[i];
 	return dest;
 }
 
@@ -107,6 +109,42 @@ cd_spectrum_get_value (const CdSpectrum *spectrum, guint idx)
 	g_return_val_if_fail (spectrum != NULL, -1.0f);
 	g_return_val_if_fail (idx < spectrum->data->len, -1.0f);
 	return g_array_index (spectrum->data, gdouble, idx) * spectrum->norm;
+}
+
+/**
+ * cd_spectrum_get_value_max:
+ * @spectrum: a #CdSpectrum instance.
+ *
+ * Gets the largest normalised value in the spectrum.
+ *
+ * Since: 1.3.1
+ **/
+gdouble
+cd_spectrum_get_value_max (const CdSpectrum *spectrum)
+{
+	gdouble max = 0.f;
+	guint i;
+	for (i = 0; i < cd_spectrum_get_size (spectrum); i++)
+		max = MAX (max, cd_spectrum_get_value (spectrum, i));
+	return max;
+}
+
+/**
+ * cd_spectrum_get_value_min:
+ * @spectrum: a #CdSpectrum instance.
+ *
+ * Gets the smallest normalised value in the spectrum.
+ *
+ * Since: 1.3.1
+ **/
+gdouble
+cd_spectrum_get_value_min (const CdSpectrum *spectrum)
+{
+	gdouble min = G_MAXDOUBLE;
+	guint i;
+	for (i = 0; i < cd_spectrum_get_size (spectrum); i++)
+		min = MIN (min, cd_spectrum_get_value (spectrum, i));
+	return min;
 }
 
 /**
@@ -161,20 +199,27 @@ cd_spectrum_get_value_raw (const CdSpectrum *spectrum, guint idx)
 gdouble
 cd_spectrum_get_wavelength (const CdSpectrum *spectrum, guint idx)
 {
-	gdouble step;
-	guint number_points;
-
 	g_return_val_if_fail (spectrum != NULL, -1.0f);
 
-	/* if we used cd_spectrum_size_new() and there is no data we can infer
-	 * the wavelenth based on the declared initial size */
-	if (spectrum->reserved_size > 0)
-		number_points = spectrum->reserved_size;
-	else
-		number_points = spectrum->data->len;
+	/* fall back to the old method */
+	if (spectrum->wavelength_cal[0] < 0) {
+		gdouble step;
+		guint number_points;
+		/* if we used cd_spectrum_size_new() and there is no data we can infer
+		 * the wavelenth based on the declared initial size */
+		if (spectrum->reserved_size > 0)
+			number_points = spectrum->reserved_size;
+		else
+			number_points = spectrum->data->len;
+		step = (spectrum->end - spectrum->start) / (number_points - 1);
+		return spectrum->start + (step * (gdouble) idx);
+	}
 
-	step = (spectrum->end - spectrum->start) / (number_points - 1);
-	return spectrum->start + (step * (gdouble) idx);
+	/* use wavelength_cal to work out wavelength */
+	return spectrum->start +
+		spectrum->wavelength_cal[0] * (gdouble) idx +
+		spectrum->wavelength_cal[1] * pow (idx, 2) +
+		spectrum->wavelength_cal[2] * pow (idx, 3);
 }
 
 /**
@@ -317,6 +362,7 @@ cd_spectrum_new (void)
 	spectrum = g_slice_new0 (CdSpectrum);
 	spectrum->norm = 1.f;
 	spectrum->data = g_array_new (FALSE, FALSE, sizeof (gdouble));
+	spectrum->wavelength_cal[0] = -1.f;
 	return spectrum;
 }
 
@@ -338,21 +384,28 @@ cd_spectrum_sized_new (guint reserved_size)
 	spectrum->norm = 1.f;
 	spectrum->reserved_size = reserved_size;
 	spectrum->data = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), reserved_size);
+	spectrum->wavelength_cal[0] = -1.f;
 	return spectrum;
 }
 
 /**
- * cd_spectrum_planckian_new:
+ * cd_spectrum_planckian_new_full:
  * @temperature: the temperature in Kelvin
+ * @start: the new spectrum start
+ * @end: the new spectrum end
+ * @resolution: the resolution to use when resampling
  *
  * Allocates a Planckian spectrum at a specific temperature.
  *
  * Return value: A newly allocated #CdSpectrum object
  *
- * Since: 1.1.6
+ * Since: 1.3.1
  **/
 CdSpectrum *
-cd_spectrum_planckian_new (gdouble temperature)
+cd_spectrum_planckian_new_full (gdouble temperature,
+				gdouble start,
+				gdouble end,
+				gdouble resolution)
 {
 	CdSpectrum *s = NULL;
 	const gdouble c1 = 3.74183e-16;	/* 2pi * h * c^2 */
@@ -369,8 +422,8 @@ cd_spectrum_planckian_new (gdouble temperature)
 	/* create spectrum with 1nm resolution */
 	s = cd_spectrum_sized_new (531);
 	s->id = g_strdup_printf ("Planckian@%.0fK", temperature);
-	cd_spectrum_set_start (s, 300);
-	cd_spectrum_set_end (s, 830);
+	cd_spectrum_set_start (s, start);
+	cd_spectrum_set_end (s, end);
 
 	/* see http://www.create.uwe.ac.uk/ardtalks/Schanda_paper.pdf, page 42 */
 	wl = 560 * 1e-9;
@@ -381,6 +434,22 @@ cd_spectrum_planckian_new (gdouble temperature)
 		cd_spectrum_add_value (s, tmp / norm);
 	}
 	return s;
+}
+
+/**
+ * cd_spectrum_planckian_new:
+ * @temperature: the temperature in Kelvin
+ *
+ * Allocates a Planckian spectrum at a specific temperature.
+ *
+ * Return value: A newly allocated #CdSpectrum object
+ *
+ * Since: 1.1.6
+ **/
+CdSpectrum *
+cd_spectrum_planckian_new (gdouble temperature)
+{
+	return cd_spectrum_planckian_new_full (temperature, 300, 830, 1);
 }
 
 /**
@@ -409,7 +478,8 @@ cd_spectrum_add_value (CdSpectrum *spectrum, gdouble data)
 void
 cd_spectrum_free (CdSpectrum *spectrum)
 {
-	g_return_if_fail (spectrum != NULL);
+	if (spectrum == NULL)
+		return;
 	g_free (spectrum->id);
 	g_array_unref (spectrum->data);
 	g_slice_free (CdSpectrum, spectrum);
@@ -474,12 +544,25 @@ cd_spectrum_set_start (CdSpectrum *spectrum, gdouble start)
  *
  * Set the end value of the spectal data in nm.
  *
+ * If there is already spectral data, the wavelength calibration will
+ * also be set automatically.
+ *
  * Since: 1.1.6
  **/
 void
 cd_spectrum_set_end (CdSpectrum *spectrum, gdouble end)
 {
 	g_return_if_fail (spectrum != NULL);
+
+	/* calculate the calibration co-efficients */
+	if (spectrum->data->len > 1) {
+		spectrum->wavelength_cal[0] = (end - spectrum->start) /
+						(spectrum->data->len - 1);
+		spectrum->wavelength_cal[1] = 0.f;
+		spectrum->wavelength_cal[2] = 0.f;
+	}
+
+	/* set this for later */
 	spectrum->end = end;
 }
 
@@ -516,7 +599,7 @@ cd_spectrum_get_value_for_nm (const CdSpectrum *spectrum, gdouble wavelength)
 {
 	guint i;
 	guint size;
-	_cleanup_object_unref_ CdInterp *interp = NULL;
+	g_autoptr(CdInterp) interp = NULL;
 
 	g_return_val_if_fail (spectrum != NULL, -1.f);
 
@@ -541,6 +624,50 @@ cd_spectrum_get_value_for_nm (const CdSpectrum *spectrum, gdouble wavelength)
 	if (!cd_interp_prepare (interp, NULL))
 		return -1.f;
 	return cd_interp_eval (interp, wavelength, NULL);
+}
+
+/**
+ * cd_spectrum_limit_min:
+ * @spectrum: a #CdSpectrum instance
+ * @value: the threshold value to limit the spectrum
+ *
+ * Ensures no values in the spectrum fall below a set limit. If they
+ * are found, set them to @value.
+ *
+ * Since: 1.3.1
+ **/
+void
+cd_spectrum_limit_min (CdSpectrum *spectrum, gdouble value)
+{
+	gdouble tmp;
+	guint i;
+	for (i = 0; i < spectrum->data->len; i++) {
+		tmp = cd_spectrum_get_value (spectrum, i);
+		if (tmp < value)
+			cd_spectrum_set_value (spectrum, i, value);
+	}
+}
+
+/**
+ * cd_spectrum_limit_max:
+ * @spectrum: a #CdSpectrum instance
+ * @value: the threshold value to limit the spectrum
+ *
+ * Ensures no values in the spectrum fall above a set limit. If they
+ * are found, set them to @value.
+ *
+ * Since: 1.3.1
+ **/
+void
+cd_spectrum_limit_max (CdSpectrum *spectrum, gdouble value)
+{
+	gdouble tmp;
+	guint i;
+	for (i = 0; i < spectrum->data->len; i++) {
+		tmp = cd_spectrum_get_value (spectrum, i);
+		if (tmp > value)
+			cd_spectrum_set_value (spectrum, i, value);
+	}
 }
 
 /**
@@ -613,4 +740,245 @@ cd_spectrum_multiply (CdSpectrum *s1, CdSpectrum *s2, gdouble resolution)
 					  cd_spectrum_get_value_for_nm (s2, i));
 	}
 	return s;
+}
+
+/**
+ * cd_spectrum_subtract:
+ * @s1: a #CdSpectrum instance, e.g. a sample
+ * @s2: a #CdSpectrum instance, e.g. a dark calibration
+ * @resolution: the resolution to use when resampling
+ *
+ * Subtracts one spectral plot from another. If the spectra have the same start,
+ * end and the same number of data points they are not resampled.
+ *
+ * Return value: a #CdSpectrum instance
+ *
+ * Since: 1.3.1
+ **/
+CdSpectrum *
+cd_spectrum_subtract (CdSpectrum *s1, CdSpectrum *s2, gdouble resolution)
+{
+	CdSpectrum *s;
+	gdouble max;
+	gdouble min;
+	gdouble nm;
+	guint i;
+
+	g_return_val_if_fail (s1 != NULL, NULL);
+	g_return_val_if_fail (s2 != NULL, NULL);
+
+	/* we can do this without resampling */
+	if (fabs (s1->start - s2->start) < 0.01f &&
+	    fabs (s1->end - s2->end) < 0.01f &&
+	    s1->data->len == s2->data->len) {
+		s = cd_spectrum_sized_new (s1->data->len);
+		s->id = g_strdup_printf ("%s-%s", s1->id, s2->id);
+		s->start = s1->start;
+		s->end = s1->end;
+		for (i = 0; i < 3; i++)
+			s->wavelength_cal[i] = s1->wavelength_cal[i];
+		for (i = 0; i < s1->data->len; i++) {
+			gdouble tmp;
+			tmp = cd_spectrum_get_value (s1, i) - cd_spectrum_get_value (s2, i);
+			cd_spectrum_add_value (s, tmp);
+		}
+		return s;
+	}
+
+	/* resample */
+	min = MIN (cd_spectrum_get_start (s1), cd_spectrum_get_start (s2));
+	max = MAX (cd_spectrum_get_end (s1), cd_spectrum_get_end (s2));
+	s = cd_spectrum_new ();
+	s->id = g_strdup_printf ("%s-%s", s1->id, s2->id);
+	s->start = min;
+	s->end = max;
+	for (nm = min; nm <= max; nm += resolution) {
+		gdouble tmp;
+		tmp = cd_spectrum_get_value_for_nm (s1, nm) -
+			cd_spectrum_get_value_for_nm (s2, nm);
+		cd_spectrum_add_value (s, tmp);
+	}
+	return s;
+}
+
+/**
+ * cd_spectrum_to_string:
+ * @spectrum: a #CdSpectrum instance
+ * @max_width: the terminal width
+ * @max_height: the terminal height
+ *
+ * Returns a graphical representation of the spectrum.
+ *
+ * Return value: a printable ASCII string
+ *
+ * Since: 1.3.1
+ **/
+gchar *
+cd_spectrum_to_string (CdSpectrum *spectrum, guint max_width, guint max_height)
+{
+	GString *str = g_string_new ("");
+	guint i, j;
+	gdouble val_max;
+	gdouble nm_scale;
+
+	/* make space for the axes */
+	max_width -= 9;
+	max_height -= 2;
+
+	/* find value maximum */
+	val_max = cd_spectrum_get_value_max (spectrum);
+	if (val_max < 0.001)
+		val_max = 0.001;
+	nm_scale = (cd_spectrum_get_end (spectrum) -
+		    cd_spectrum_get_start (spectrum)) / (gdouble) (max_width - 1);
+
+	/* draw grid */
+	for (i = 0; i < max_height; i++) {
+		gdouble val;
+		val = val_max / (gdouble) max_height * (max_height - i);
+		g_string_append_printf (str, "%7.3f |", val);
+		for (j = 0; j < max_width; j++) {
+			gdouble nm;
+			nm = ((gdouble) j * nm_scale) + cd_spectrum_get_start (spectrum);
+			if (cd_spectrum_get_value_for_nm (spectrum, nm) >= val)
+				g_string_append (str, "#");
+			else
+				g_string_append (str, "_");
+		}
+		g_string_append (str, "\n");
+	}
+
+	/* draw x axis */
+	g_string_append_printf (str, "%7.3f  ", 0.f);
+	for (j = 0; j < max_width; j++)
+		g_string_append (str, "-");
+	g_string_append (str, "\n");
+
+	/* draw X labels */
+	g_string_append_printf (str, "         %.0fnm",
+				cd_spectrum_get_start (spectrum));
+	for (j = 0; j < max_width - 10; j++)
+		g_string_append (str, " ");
+	g_string_append_printf (str, "%.0fnm",
+				cd_spectrum_get_end (spectrum));
+	g_string_append (str, "\n");
+
+	/* success */
+	return g_string_free (str, FALSE);
+}
+
+/**
+ * cd_spectrum_set_wavelength_cal:
+ * @spectrum: a #CdSpectrum instance
+ * @c1: the 1st coefficient
+ * @c2: the 2nd coefficient
+ * @c3: the 3rd coefficient
+ *
+ * Sets the calibration coefficients used to map pixel indexes to
+ * wavelengths.
+ *
+ * This function will set the 'end' wavelength automatically,
+ * potentially overwriting the value set by cd_spectrum_set_end().
+ *
+ * Since: 1.3.1
+ **/
+void
+cd_spectrum_set_wavelength_cal (CdSpectrum *spectrum,
+				gdouble c1, gdouble c2, gdouble c3)
+{
+	spectrum->wavelength_cal[0] = c1;
+	spectrum->wavelength_cal[1] = c2;
+	spectrum->wavelength_cal[2] = c3;
+
+	/* recalculate the end wavelength */
+	spectrum->end = cd_spectrum_get_wavelength (spectrum,
+						    cd_spectrum_get_size (spectrum) - 1);
+}
+
+/**
+ * cd_spectrum_get_wavelength_cal:
+ * @spectrum: a #CdSpectrum instance
+ * @c1: the 1st coefficient
+ * @c2: the 2nd coefficient
+ * @c3: the 3rd coefficient
+ *
+ * Gets the calibration coefficients used to map pixel indexes to
+ * wavelengths.
+ *
+ * Since: 1.3.1
+ **/
+void
+cd_spectrum_get_wavelength_cal (CdSpectrum *spectrum,
+				gdouble *c1, gdouble *c2, gdouble *c3)
+{
+	if (c1 != NULL)
+		*c1 = spectrum->wavelength_cal[0];
+	if (c2 != NULL)
+		*c2 = spectrum->wavelength_cal[1];
+	if (c3 != NULL)
+		*c3 = spectrum->wavelength_cal[2];
+}
+
+/**
+ * cd_spectrum_resample:
+ * @spectrum: a #CdSpectrum instance
+ * @start: the new spectrum start
+ * @end: the new spectrum end
+ * @resolution: the resolution to use when resampling
+ *
+ * Resample a new spectrum with linear index to wavelength coefficients.
+ *
+ * Return value: a #CdSpectrum instance
+ *
+ * Since: 1.3.1
+ **/
+CdSpectrum *
+cd_spectrum_resample (CdSpectrum *spectrum,
+		      gdouble start,
+		      gdouble end,
+		      gdouble resolution)
+{
+	gdouble nm;
+	CdSpectrum *sp;
+
+	sp = cd_spectrum_new ();
+	cd_spectrum_set_start (sp, start);
+	for (nm = start; nm <= end; nm += resolution) {
+		gdouble tmp;
+		tmp = cd_spectrum_get_value_for_nm (spectrum, nm);
+		cd_spectrum_add_value (sp, tmp);
+	}
+	cd_spectrum_set_end (sp, end);
+	return sp;
+}
+
+/**
+ * cd_spectrum_resample_to_size:
+ * @spectrum: a #CdSpectrum instance
+ * @size: the output spectrum size
+ *
+ * Resample a new spectrum with the desired number of points.
+ *
+ * Return value: a #CdSpectrum instance
+ *
+ * Since: 1.3.4
+ **/
+CdSpectrum *
+cd_spectrum_resample_to_size (CdSpectrum *spectrum, guint size)
+{
+	gdouble inc;
+	guint i;
+	CdSpectrum *sp;
+
+	sp = cd_spectrum_new ();
+	cd_spectrum_set_start (sp, spectrum->start);
+	cd_spectrum_set_end (sp, spectrum->end);
+
+	inc = (spectrum->end - spectrum->start) / (gdouble) (size - 1);
+	for (i = 0; i < size; i++) {
+		gdouble nm = spectrum->start + ((gdouble) i * inc);
+		gdouble tmp = cd_spectrum_get_value_for_nm (spectrum, nm);
+		cd_spectrum_add_value (sp, tmp);
+	}
+	return sp;
 }

@@ -1,0 +1,2488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdDevice: colord Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolord.html" title="libcolord">
+<link rel="prev" href="colord-cd-device-sync.html" title="cd-device-sync">
+<link rel="next" href="colord-cd-profile-sync.html" title="cd-profile-sync">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#CdDevice.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#CdDevice.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#CdDevice.properties" class="shortcut">Properties</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#CdDevice.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolord.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-device-sync.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-profile-sync.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="CdDevice"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdDevice.top_of_page"></a>CdDevice</span></h2>
+<p>CdDevice — Client object for accessing information about colord devices</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="CdDevice.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-error-quark" title="cd_device_error_quark ()">cd_device_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdDevice.html" title="CdDevice"><span class="returnvalue">CdDevice</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-new" title="cd_device_new ()">cd_device_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdDevice.html" title="CdDevice"><span class="returnvalue">CdDevice</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-new-with-object-path" title="cd_device_new_with_object_path ()">cd_device_new_with_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-connect" title="cd_device_connect ()">cd_device_connect</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-connect-finish" title="cd_device_connect_finish ()">cd_device_connect_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-set-property" title="cd_device_set_property ()">cd_device_set_property</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-set-property-finish" title="cd_device_set_property_finish ()">cd_device_set_property_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-add-profile" title="cd_device_add_profile ()">cd_device_add_profile</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-add-profile-finish" title="cd_device_add_profile_finish ()">cd_device_add_profile_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-remove-profile" title="cd_device_remove_profile ()">cd_device_remove_profile</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-remove-profile-finish" title="cd_device_remove_profile_finish ()">cd_device_remove_profile_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-make-profile-default" title="cd_device_make_profile_default ()">cd_device_make_profile_default</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-make-profile-default-finish" title="cd_device_make_profile_default_finish ()">cd_device_make_profile_default_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-profiling-inhibit" title="cd_device_profiling_inhibit ()">cd_device_profiling_inhibit</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-profiling-inhibit-finish" title="cd_device_profiling_inhibit_finish ()">cd_device_profiling_inhibit_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-set-enabled" title="cd_device_set_enabled ()">cd_device_set_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-set-enabled-finish" title="cd_device_set_enabled_finish ()">cd_device_set_enabled_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-profiling-uninhibit" title="cd_device_profiling_uninhibit ()">cd_device_profiling_uninhibit</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-profiling-uninhibit-finish" title="cd_device_profiling_uninhibit_finish ()">cd_device_profiling_uninhibit_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profile-for-qualifiers" title="cd_device_get_profile_for_qualifiers ()">cd_device_get_profile_for_qualifiers</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profile-for-qualifiers-finish" title="cd_device_get_profile_for_qualifiers_finish ()">cd_device_get_profile_for_qualifiers_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profile-relation" title="cd_device_get_profile_relation ()">cd_device_get_profile_relation</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdDeviceRelation</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profile-relation-finish" title="cd_device_get_profile_relation_finish ()">cd_device_get_profile_relation_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-id" title="cd_device_get_id ()">cd_device_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-model" title="cd_device_get_model ()">cd_device_get_model</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-vendor" title="cd_device_get_vendor ()">cd_device_get_vendor</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-serial" title="cd_device_get_serial ()">cd_device_get_serial</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-seat" title="cd_device_get_seat ()">cd_device_get_seat</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-format" title="cd_device_get_format ()">cd_device_get_format</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profiling-inhibitors" title="cd_device_get_profiling_inhibitors ()">cd_device_get_profiling_inhibitors</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-created" title="cd_device_get_created ()">cd_device_get_created</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-modified" title="cd_device_get_modified ()">cd_device_get_modified</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdDeviceKind</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-kind" title="cd_device_get_kind ()">cd_device_get_kind</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdColorspace</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-colorspace" title="cd_device_get_colorspace ()">cd_device_get_colorspace</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdDeviceMode</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-mode" title="cd_device_get_mode ()">cd_device_get_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-enabled" title="cd_device_get_enabled ()">cd_device_get_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-embedded" title="cd_device_get_embedded ()">cd_device_get_embedded</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdObjectScope</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-scope" title="cd_device_get_scope ()">cd_device_get_scope</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-owner" title="cd_device_get_owner ()">cd_device_get_owner</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-profiles" title="cd_device_get_profiles ()">cd_device_get_profiles</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-default-profile" title="cd_device_get_default_profile ()">cd_device_get_default_profile</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-object-path" title="cd_device_get_object_path ()">cd_device_get_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-metadata" title="cd_device_get_metadata ()">cd_device_get_metadata</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-metadata-item" title="cd_device_get_metadata_item ()">cd_device_get_metadata_item</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-set-object-path" title="cd_device_set_object_path ()">cd_device_set_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-get-connected" title="cd_device_get_connected ()">cd_device_get_connected</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-to-string" title="cd_device_to_string ()">cd_device_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdDevice.html#cd-device-equal" title="cd_device_equal ()">cd_device_equal</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--colorspace" title="The “colorspace” property">colorspace</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--connected" title="The “connected” property">connected</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="type">guint64</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--created" title="The “created” property">created</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--embedded" title="The “embedded” property">embedded</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--enabled" title="The “enabled” property">enabled</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--format" title="The “format” property">format</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--id" title="The “id” property">id</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--kind" title="The “kind” property">kind</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--mode" title="The “mode” property">mode</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--model" title="The “model” property">model</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="type">guint64</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--modified" title="The “modified” property">modified</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--object-path" title="The “object-path” property">object-path</a></td>
+<td class="property_flags">Read / Write / Construct</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--owner" title="The “owner” property">owner</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-String-Utility-Functions.html#GStrv"><span class="type">GStrv</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--profiling-inhibitors" title="The “profiling-inhibitors” property">profiling-inhibitors</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--scope" title="The “scope” property">scope</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--seat" title="The “seat” property">seat</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--serial" title="The “serial” property">serial</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdDevice.html#CdDevice--vendor" title="The “vendor” property">vendor</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signals_return">
+<col width="300px" class="signals_name">
+<col width="200px" class="signals_flags">
+</colgroup>
+<tbody><tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="CdDevice.html#CdDevice-changed" title="The “changed” signal">changed</a></td>
+<td class="signal_flags"><a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdDevice.html#CD-DEVICE-ERROR:CAPS" title="CD_DEVICE_ERROR">CD_DEVICE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdDevice.html#CD-DEVICE-TYPE-ERROR:CAPS" title="CD_DEVICE_TYPE_ERROR">CD_DEVICE_TYPE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdDevice.html#CD-TYPE-DEVICE:CAPS" title="CD_TYPE_DEVICE">CD_TYPE_DEVICE</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="CdDevice.html#CdDeviceClass" title="struct CdDeviceClass">CdDeviceClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="CdDevice.html#CdDevice-struct" title="CdDevice">CdDevice</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="/usr/share/gtk-doc/html/gobjectgobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> CdDevice
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdDevice.description"></a><h2>Description</h2>
+<p>A helper GObject to use for accessing colord devices, and to be notified
+when it is changed.</p>
+<p>See also: <a class="link" href="CdClient.html" title="CdClient"><span class="type">CdClient</span></a></p>
+</div>
+<div class="refsect1">
+<a name="CdDevice.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-device-error-quark"></a><h3>cd_device_error_quark ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+cd_device_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="refsect3">
+<a name="cd-device-error-quark.returns"></a><h4>Returns</h4>
+<p> An error quark.</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-new"></a><h3>cd_device_new ()</h3>
+<pre class="programlisting"><a class="link" href="CdDevice.html" title="CdDevice"><span class="returnvalue">CdDevice</span></a> *
+cd_device_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> object.</p>
+<div class="refsect3">
+<a name="cd-device-new.returns"></a><h4>Returns</h4>
+<p> a new CdDevice object.</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-new-with-object-path"></a><h3>cd_device_new_with_object_path ()</h3>
+<pre class="programlisting"><a class="link" href="CdDevice.html" title="CdDevice"><span class="returnvalue">CdDevice</span></a> *
+cd_device_new_with_object_path (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Creates a new <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> object with a known object path.</p>
+<div class="refsect3">
+<a name="cd-device-new-with-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-new-with-object-path.returns"></a><h4>Returns</h4>
+<p> a new device object.</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-connect"></a><h3>cd_device_connect ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_connect (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Connects to the object and fills up initial properties.</p>
+<div class="refsect3">
+<a name="cd-device-connect.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-connect-finish"></a><h3>cd_device_connect_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_connect_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-connect-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-connect-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-set-property"></a><h3>cd_device_set_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_set_property (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                        <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                        <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Sets a property on the device.</p>
+<div class="refsect3">
+<a name="cd-device-set-property.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a property key</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>a property key</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-set-property-finish"></a><h3>cd_device_set_property_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_set_property_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-set-property-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-set-property-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-add-profile"></a><h3>cd_device_add_profile ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_add_profile (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                       <em class="parameter"><code><span class="type">CdDeviceRelation</span> relation</code></em>,
+                       <em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Adds a profile to a device.</p>
+<div class="refsect3">
+<a name="cd-device-add-profile.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>relation</p></td>
+<td class="parameter_description"><p>a <span class="type">CdDeviceRelation</span>, e.g. <span class="type">CD_DEVICE_RELATION_HARD</span></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-add-profile-finish"></a><h3>cd_device_add_profile_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_add_profile_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-add-profile-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-add-profile-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-remove-profile"></a><h3>cd_device_remove_profile ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_remove_profile (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                          <em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Removes a profile from a device.</p>
+<div class="refsect3">
+<a name="cd-device-remove-profile.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-remove-profile-finish"></a><h3>cd_device_remove_profile_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_remove_profile_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                 <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                 <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-remove-profile-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-remove-profile-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-make-profile-default"></a><h3>cd_device_make_profile_default ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_make_profile_default (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                <em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Makes an already added profile default for a device.</p>
+<div class="refsect3">
+<a name="cd-device-make-profile-default.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-make-profile-default-finish"></a><h3>cd_device_make_profile_default_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_make_profile_default_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-make-profile-default-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-make-profile-default-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-profiling-inhibit"></a><h3>cd_device_profiling_inhibit ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_profiling_inhibit (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                             <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                             <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                             <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Sets up the device for profiling and causes no profiles to be
+returned if <a class="link" href="colord-cd-device-sync.html#cd-device-get-profile-for-qualifiers-sync" title="cd_device_get_profile_for_qualifiers_sync ()"><code class="function">cd_device_get_profile_for_qualifiers_sync()</code></a> is used.</p>
+<div class="refsect3">
+<a name="cd-device-profiling-inhibit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-profiling-inhibit-finish"></a><h3>cd_device_profiling_inhibit_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_profiling_inhibit_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                    <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                    <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-profiling-inhibit-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-profiling-inhibit-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-set-enabled"></a><h3>cd_device_set_enabled ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_set_enabled (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Enables or disables a device.</p>
+<div class="refsect3">
+<a name="cd-device-set-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>enabled</p></td>
+<td class="parameter_description"><p>the enabled state</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-set-enabled-finish"></a><h3>cd_device_set_enabled_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_set_enabled_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-set-enabled-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-set-enabled-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-profiling-uninhibit"></a><h3>cd_device_profiling_uninhibit ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_profiling_uninhibit (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Restores the device after profiling and causes normal profiles to be
+returned if <a class="link" href="colord-cd-device-sync.html#cd-device-get-profile-for-qualifiers-sync" title="cd_device_get_profile_for_qualifiers_sync ()"><code class="function">cd_device_get_profile_for_qualifiers_sync()</code></a> is used.</p>
+<div class="refsect3">
+<a name="cd-device-profiling-uninhibit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-profiling-uninhibit-finish"></a><h3>cd_device_profiling_uninhibit_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_profiling_uninhibit_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-profiling-uninhibit-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-profiling-uninhibit-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profile-for-qualifiers"></a><h3>cd_device_get_profile_for_qualifiers ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_get_profile_for_qualifiers (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                      <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **qualifiers</code></em>,
+                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Gets the prefered profile for some qualifiers.</p>
+<div class="refsect3">
+<a name="cd-device-get-profile-for-qualifiers.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>qualifiers</p></td>
+<td class="parameter_description"><p>a set of qualifiers that can included wildcards</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profile-for-qualifiers-finish"></a><h3>cd_device_get_profile_for_qualifiers_finish ()</h3>
+<pre class="programlisting"><a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+cd_device_get_profile_for_qualifiers_finish
+                               (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-get-profile-for-qualifiers-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-profile-for-qualifiers-finish.returns"></a><h4>Returns</h4>
+<p> a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profile-relation"></a><h3>cd_device_get_profile_relation ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_get_profile_relation (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                <em class="parameter"><code><a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> *profile</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Gets the property relationship to the device.</p>
+<div class="refsect3">
+<a name="cd-device-get-profile-relation.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>profile</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profile-relation-finish"></a><h3>cd_device_get_profile_relation_finish ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdDeviceRelation</span>
+cd_device_get_profile_relation_finish (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-device-get-profile-relation-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-profile-relation-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-id"></a><h3>cd_device_get_id ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_id (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device ID.</p>
+<div class="refsect3">
+<a name="cd-device-get-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-id.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-model"></a><h3>cd_device_get_model ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_model (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device model.</p>
+<div class="refsect3">
+<a name="cd-device-get-model.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-model.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-vendor"></a><h3>cd_device_get_vendor ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_vendor (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device vendor.</p>
+<div class="refsect3">
+<a name="cd-device-get-vendor.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-vendor.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-serial"></a><h3>cd_device_get_serial ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_serial (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device serial number.</p>
+<div class="refsect3">
+<a name="cd-device-get-serial.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-serial.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-seat"></a><h3>cd_device_get_seat ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_seat (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device seat identifier.</p>
+<div class="refsect3">
+<a name="cd-device-get-seat.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-seat.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.24</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-format"></a><h3>cd_device_get_format ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_format (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device format.</p>
+<div class="refsect3">
+<a name="cd-device-get-format.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-format.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profiling-inhibitors"></a><h3>cd_device_get_profiling_inhibitors ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+cd_device_get_profiling_inhibitors (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets any profiling inhibitors for the device.</p>
+<div class="refsect3">
+<a name="cd-device-get-profiling-inhibitors.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-profiling-inhibitors.returns"></a><h4>Returns</h4>
+<p> A strv, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.17</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-created"></a><h3>cd_device_get_created ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+cd_device_get_created (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device creation date.</p>
+<div class="refsect3">
+<a name="cd-device-get-created.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-created.returns"></a><h4>Returns</h4>
+<p> A value in microseconds, or 0 for invalid</p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-modified"></a><h3>cd_device_get_modified ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+cd_device_get_modified (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device modified date.</p>
+<div class="refsect3">
+<a name="cd-device-get-modified.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-modified.returns"></a><h4>Returns</h4>
+<p> A value in microseconds, or 0 for invalid</p>
+</div>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-kind"></a><h3>cd_device_get_kind ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdDeviceKind</span>
+cd_device_get_kind (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device kind.</p>
+<div class="refsect3">
+<a name="cd-device-get-kind.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-kind.returns"></a><h4>Returns</h4>
+<p> A device kind, e.g. <code class="literal">CD_DEVICE_KIND_DISPLAY</code></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-colorspace"></a><h3>cd_device_get_colorspace ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdColorspace</span>
+cd_device_get_colorspace (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device colorspace.</p>
+<div class="refsect3">
+<a name="cd-device-get-colorspace.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-colorspace.returns"></a><h4>Returns</h4>
+<p> A colorspace, e.g. <code class="literal">CD_COLORSPACE_RGB</code></p>
+</div>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-mode"></a><h3>cd_device_get_mode ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdDeviceMode</span>
+cd_device_get_mode (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device mode.</p>
+<div class="refsect3">
+<a name="cd-device-get-mode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-mode.returns"></a><h4>Returns</h4>
+<p> A colorspace, e.g. <code class="literal">CD_DEVICE_MODE_VIRTUAL</code></p>
+</div>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-enabled"></a><h3>cd_device_get_enabled ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_get_enabled (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device enabled state.</p>
+<div class="refsect3">
+<a name="cd-device-get-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-enabled.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the device is enabled</p>
+</div>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-embedded"></a><h3>cd_device_get_embedded ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_get_embedded (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Returns if the device is embedded in the computer and cannot be
+removed.</p>
+<div class="refsect3">
+<a name="cd-device-get-embedded.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-embedded.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if embedded.</p>
+</div>
+<p class="since">Since: 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-scope"></a><h3>cd_device_get_scope ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdObjectScope</span>
+cd_device_get_scope (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device scope.</p>
+<div class="refsect3">
+<a name="cd-device-get-scope.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-scope.returns"></a><h4>Returns</h4>
+<p> An object scope, e.g. <code class="literal">CD_OBJECT_SCOPE_TEMP</code></p>
+</div>
+<p class="since">Since: 0.1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-owner"></a><h3>cd_device_get_owner ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+cd_device_get_owner (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device owner.</p>
+<div class="refsect3">
+<a name="cd-device-get-owner.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-owner.returns"></a><h4>Returns</h4>
+<p> The UID of the user that created the device</p>
+</div>
+<p class="since">Since: 0.1.13</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-profiles"></a><h3>cd_device_get_profiles ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+cd_device_get_profiles (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the device profiles.</p>
+<div class="refsect3">
+<a name="cd-device-get-profiles.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-profiles.returns"></a><h4>Returns</h4>
+<p> An array of <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a>'s. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdProfile][<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-default-profile"></a><h3>cd_device_get_default_profile ()</h3>
+<pre class="programlisting"><a class="link" href="CdProfile.html" title="CdProfile"><span class="returnvalue">CdProfile</span></a> *
+cd_device_get_default_profile (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the default device profile. A profile will not be returned
+if the device is being profiled or is disabled.</p>
+<div class="refsect3">
+<a name="cd-device-get-default-profile.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-default-profile.returns"></a><h4>Returns</h4>
+<p> A <a class="link" href="CdProfile.html" title="CdProfile"><span class="type">CdProfile</span></a>'s or NULL. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-object-path"></a><h3>cd_device_get_object_path ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_object_path (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets the object path for the device.</p>
+<div class="refsect3">
+<a name="cd-device-get-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-object-path.returns"></a><h4>Returns</h4>
+<p> the object path, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-metadata"></a><h3>cd_device_get_metadata ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+cd_device_get_metadata (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Returns the device metadata.</p>
+<div class="refsect3">
+<a name="cd-device-get-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-metadata.returns"></a><h4>Returns</h4>
+<p> a
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 utf8]</span></p>
+</div>
+<p class="since">Since: 0.1.5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-metadata-item"></a><h3>cd_device_get_metadata_item ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_get_metadata_item (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                             <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>Returns the device metadata for a specific key.</p>
+<div class="refsect3">
+<a name="cd-device-get-metadata-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a key for the metadata dictionary</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-metadata-item.returns"></a><h4>Returns</h4>
+<p> the metadata value, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if not set.</p>
+</div>
+<p class="since">Since: 0.1.5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-set-object-path"></a><h3>cd_device_set_object_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_device_set_object_path (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>,
+                           <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Sets the object path of the device.</p>
+<div class="refsect3">
+<a name="cd-device-set-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-get-connected"></a><h3>cd_device_get_connected ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_get_connected (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Gets if the device has been connected.</p>
+<div class="refsect3">
+<a name="cd-device-get-connected.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-get-connected.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if properties are valid</p>
+</div>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-to-string"></a><h3>cd_device_to_string ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_device_to_string (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device</code></em>);</pre>
+<p>Converts the device to a string description.</p>
+<div class="refsect3">
+<a name="cd-device-to-string.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-to-string.returns"></a><h4>Returns</h4>
+<p> text representation of <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a></p>
+</div>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-device-equal"></a><h3>cd_device_equal ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_device_equal (<em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device1</code></em>,
+                 <em class="parameter"><code><a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device2</code></em>);</pre>
+<p>Tests two devices for equality.</p>
+<div class="refsect3">
+<a name="cd-device-equal.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device1</p></td>
+<td class="parameter_description"><p>one <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>device2</p></td>
+<td class="parameter_description"><p>another <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-device-equal.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the devices are the same device</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="CD-DEVICE-ERROR:CAPS"></a><h3>CD_DEVICE_ERROR</h3>
+<pre class="programlisting">#define CD_DEVICE_ERROR		(cd_device_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-DEVICE-TYPE-ERROR:CAPS"></a><h3>CD_DEVICE_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_DEVICE_TYPE_ERROR (cd_device_error_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TYPE-DEVICE:CAPS"></a><h3>CD_TYPE_DEVICE</h3>
+<pre class="programlisting">#define CD_TYPE_DEVICE (cd_device_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDeviceClass"></a><h3>struct CdDeviceClass</h3>
+<pre class="programlisting">struct CdDeviceClass {
+	GObjectClass		 parent_class;
+	void			(*changed)		(CdDevice		*device);
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice-struct"></a><h3>CdDevice</h3>
+<pre class="programlisting">typedef struct _CdDevice CdDevice;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="CdDevice--colorspace"></a><h3>The <code class="literal">“colorspace”</code> property</h3>
+<pre class="programlisting">  “colorspace”               <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The device colorspace, e.g. <code class="literal">CD_COLORSPACE_RGB</code>.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--connected"></a><h3>The <code class="literal">“connected”</code> property</h3>
+<pre class="programlisting">  “connected”                <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The if the object path has been connected as is valid for use.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--created"></a><h3>The <code class="literal">“created”</code> property</h3>
+<pre class="programlisting">  “created”                  <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="type">guint64</span></a></pre>
+<p>The time the device was created.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--embedded"></a><h3>The <code class="literal">“embedded”</code> property</h3>
+<pre class="programlisting">  “embedded”                 <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the device is embedded in the device and cannot be removed.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--enabled"></a><h3>The <code class="literal">“enabled”</code> property</h3>
+<pre class="programlisting">  “enabled”                  <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>The device enabled state.</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--format"></a><h3>The <code class="literal">“format”</code> property</h3>
+<pre class="programlisting">  “format”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device format.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--id"></a><h3>The <code class="literal">“id”</code> property</h3>
+<pre class="programlisting">  “id”                       <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device ID.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--kind"></a><h3>The <code class="literal">“kind”</code> property</h3>
+<pre class="programlisting">  “kind”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The device kind, e.g. <code class="literal">CD_DEVICE_KIND_DISPLAY</code>.</p>
+<p>Flags: Read</p>
+<p>Allowed values: &lt;= 6</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--mode"></a><h3>The <code class="literal">“mode”</code> property</h3>
+<pre class="programlisting">  “mode”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The device colorspace, e.g. <code class="literal">CD_DEVICE_MODE_VIRTUAL</code>.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--model"></a><h3>The <code class="literal">“model”</code> property</h3>
+<pre class="programlisting">  “model”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device model.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--modified"></a><h3>The <code class="literal">“modified”</code> property</h3>
+<pre class="programlisting">  “modified”                 <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="type">guint64</span></a></pre>
+<p>The last time the device was modified.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--object-path"></a><h3>The <code class="literal">“object-path”</code> property</h3>
+<pre class="programlisting">  “object-path”              <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The object path of the remote object</p>
+<p>Flags: Read / Write / Construct</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--owner"></a><h3>The <code class="literal">“owner”</code> property</h3>
+<pre class="programlisting">  “owner”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The device owner, e.g. 500.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.13</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--profiling-inhibitors"></a><h3>The <code class="literal">“profiling-inhibitors”</code> property</h3>
+<pre class="programlisting">  “profiling-inhibitors”     <a href="/usr/share/gtk-doc/html/glibglib-String-Utility-Functions.html#GStrv"><span class="type">GStrv</span></a></pre>
+<p>Flags: Read</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--scope"></a><h3>The <code class="literal">“scope”</code> property</h3>
+<pre class="programlisting">  “scope”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The device scope, e.g. <code class="literal">CD_OBJECT_SCOPE_TEMP</code>.</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+<p class="since">Since: 0.1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--seat"></a><h3>The <code class="literal">“seat”</code> property</h3>
+<pre class="programlisting">  “seat”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device seat identifier.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.24</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--serial"></a><h3>The <code class="literal">“serial”</code> property</h3>
+<pre class="programlisting">  “serial”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device serial number.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdDevice--vendor"></a><h3>The <code class="literal">“vendor”</code> property</h3>
+<pre class="programlisting">  “vendor”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The device vendor.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.1</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdDevice.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="CdDevice-changed"></a><h3>The <code class="literal">“changed”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> *device,
+               <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)</pre>
+<p>The ::changed signal is emitted when the device data has changed.</p>
+<div class="refsect3">
+<a name="CdDevice-changed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>the <a class="link" href="CdDevice.html" title="CdDevice"><span class="type">CdDevice</span></a> instance that emitted the signal</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: 0.1.0</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.25</div>
+</body>
+</html>

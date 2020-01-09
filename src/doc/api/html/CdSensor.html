@@ -1,0 +1,1819 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdSensor: colord Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolord.html" title="libcolord">
+<link rel="prev" href="colord-cd-sensor-sync.html" title="cd-sensor-sync">
+<link rel="next" href="ix01.html" title="Index">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#CdSensor.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#CdSensor.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#CdSensor.properties" class="shortcut">Properties</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#CdSensor.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolord.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-sensor-sync.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="ix01.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="CdSensor"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdSensor.top_of_page"></a>CdSensor</span></h2>
+<p>CdSensor — Client object for accessing information about colord sensors</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="CdSensor.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-error-quark" title="cd_sensor_error_quark ()">cd_sensor_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdSensor.html" title="CdSensor"><span class="returnvalue">CdSensor</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-new" title="cd_sensor_new ()">cd_sensor_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="CdSensor.html" title="CdSensor"><span class="returnvalue">CdSensor</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-new-with-object-path" title="cd_sensor_new_with_object_path ()">cd_sensor_new_with_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-connect" title="cd_sensor_connect ()">cd_sensor_connect</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-connect-finish" title="cd_sensor_connect_finish ()">cd_sensor_connect_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-lock" title="cd_sensor_lock ()">cd_sensor_lock</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-lock-finish" title="cd_sensor_lock_finish ()">cd_sensor_lock_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-unlock" title="cd_sensor_unlock ()">cd_sensor_unlock</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-unlock-finish" title="cd_sensor_unlock_finish ()">cd_sensor_unlock_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-set-options" title="cd_sensor_set_options ()">cd_sensor_set_options</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-set-options-finish" title="cd_sensor_set_options_finish ()">cd_sensor_set_options_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-sample" title="cd_sensor_get_sample ()">cd_sensor_get_sample</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-sample-finish" title="cd_sensor_get_sample_finish ()">cd_sensor_get_sample_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-spectrum" title="cd_sensor_get_spectrum ()">cd_sensor_get_spectrum</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-spectrum-finish" title="cd_sensor_get_spectrum_finish ()">cd_sensor_get_spectrum_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-object-path" title="cd_sensor_get_object_path ()">cd_sensor_get_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-id" title="cd_sensor_get_id ()">cd_sensor_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-connected" title="cd_sensor_get_connected ()">cd_sensor_get_connected</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdSensorKind</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-kind" title="cd_sensor_get_kind ()">cd_sensor_get_kind</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdSensorState</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-state" title="cd_sensor_get_state ()">cd_sensor_get_state</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">CdSensorCap</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-mode" title="cd_sensor_get_mode ()">cd_sensor_get_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-serial" title="cd_sensor_get_serial ()">cd_sensor_get_serial</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-model" title="cd_sensor_get_model ()">cd_sensor_get_model</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-vendor" title="cd_sensor_get_vendor ()">cd_sensor_get_vendor</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-native" title="cd_sensor_get_native ()">cd_sensor_get_native</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-embedded" title="cd_sensor_get_embedded ()">cd_sensor_get_embedded</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-locked" title="cd_sensor_get_locked ()">cd_sensor_get_locked</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-caps" title="cd_sensor_get_caps ()">cd_sensor_get_caps</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-has-cap" title="cd_sensor_has_cap ()">cd_sensor_has_cap</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-options" title="cd_sensor_get_options ()">cd_sensor_get_options</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-option" title="cd_sensor_get_option ()">cd_sensor_get_option</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-metadata" title="cd_sensor_get_metadata ()">cd_sensor_get_metadata</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-get-metadata-item" title="cd_sensor_get_metadata_item ()">cd_sensor_get_metadata_item</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-set-object-path" title="cd_sensor_set_object_path ()">cd_sensor_set_object_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-equal" title="cd_sensor_equal ()">cd_sensor_equal</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="CdSensor.html#cd-sensor-to-string" title="cd_sensor_to_string ()">cd_sensor_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--connected" title="The “connected” property">connected</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--embedded" title="The “embedded” property">embedded</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--id" title="The “id” property">id</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--kind" title="The “kind” property">kind</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--locked" title="The “locked” property">locked</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--mode" title="The “mode” property">mode</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--model" title="The “model” property">model</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--native" title="The “native” property">native</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--object-path" title="The “object-path” property">object-path</a></td>
+<td class="property_flags">Read / Write / Construct</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--serial" title="The “serial” property">serial</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--state" title="The “state” property">state</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="CdSensor.html#CdSensor--vendor" title="The “vendor” property">vendor</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signals_return">
+<col width="300px" class="signals_name">
+<col width="200px" class="signals_flags">
+</colgroup>
+<tbody><tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="CdSensor.html#CdSensor-button-pressed" title="The “button-pressed” signal">button-pressed</a></td>
+<td class="signal_flags"><a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdSensor.html#CD-SENSOR-ERROR:CAPS" title="CD_SENSOR_ERROR">CD_SENSOR_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdSensor.html#CD-SENSOR-TYPE-ERROR:CAPS" title="CD_SENSOR_TYPE_ERROR">CD_SENSOR_TYPE_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="CdSensor.html#CD-TYPE-SENSOR:CAPS" title="CD_TYPE_SENSOR">CD_TYPE_SENSOR</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="CdSensor.html#CdSensorClass" title="struct CdSensorClass">CdSensorClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="CdSensor.html#CdSensor-struct" title="CdSensor">CdSensor</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="/usr/share/gtk-doc/html/gobjectgobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> CdSensor
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdSensor.description"></a><h2>Description</h2>
+<p>A helper GObject to use for accessing colord sensors, and to be notified
+when it is changed.</p>
+<p>See also: <a class="link" href="CdClient.html" title="CdClient"><span class="type">CdClient</span></a></p>
+</div>
+<div class="refsect1">
+<a name="CdSensor.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-sensor-error-quark"></a><h3>cd_sensor_error_quark ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+cd_sensor_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="refsect3">
+<a name="cd-sensor-error-quark.returns"></a><h4>Returns</h4>
+<p> An error quark.</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-new"></a><h3>cd_sensor_new ()</h3>
+<pre class="programlisting"><a class="link" href="CdSensor.html" title="CdSensor"><span class="returnvalue">CdSensor</span></a> *
+cd_sensor_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> object.</p>
+<div class="refsect3">
+<a name="cd-sensor-new.returns"></a><h4>Returns</h4>
+<p> a new CdSensor object.</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-new-with-object-path"></a><h3>cd_sensor_new_with_object_path ()</h3>
+<pre class="programlisting"><a class="link" href="CdSensor.html" title="CdSensor"><span class="returnvalue">CdSensor</span></a> *
+cd_sensor_new_with_object_path (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Creates a new <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> object with a known object path.</p>
+<div class="refsect3">
+<a name="cd-sensor-new-with-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-new-with-object-path.returns"></a><h4>Returns</h4>
+<p> a new sensor object.</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-connect"></a><h3>cd_sensor_connect ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_connect (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                   <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Connects to the sensor.</p>
+<div class="refsect3">
+<a name="cd-sensor-connect.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-connect-finish"></a><h3>cd_sensor_connect_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_connect_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-connect-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-connect-finish.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if we could connect to to the sensor</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-lock"></a><h3>cd_sensor_lock ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_lock (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Locks the device so we can use it.</p>
+<div class="refsect3">
+<a name="cd-sensor-lock.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-lock-finish"></a><h3>cd_sensor_lock_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_lock_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-lock-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-lock-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-unlock"></a><h3>cd_sensor_unlock ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_unlock (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                  <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                  <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                  <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Unlocks the sensor for use by other programs.</p>
+<div class="refsect3">
+<a name="cd-sensor-unlock.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-unlock-finish"></a><h3>cd_sensor_unlock_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_unlock_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-unlock-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-unlock-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-set-options"></a><h3>cd_sensor_set_options ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_set_options (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                       <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Sets options on the sensor device.</p>
+<div class="refsect3">
+<a name="cd-sensor-set-options.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>values</p></td>
+<td class="parameter_description"><p> the options. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 GVariant]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-set-options-finish"></a><h3>cd_sensor_set_options_finish ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_set_options_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                              <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-set-options-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-set-options-finish.returns"></a><h4>Returns</h4>
+<p> success</p>
+</div>
+<p class="since">Since: 0.1.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-sample"></a><h3>cd_sensor_get_sample ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_get_sample (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                      <em class="parameter"><code><span class="type">CdSensorCap</span> cap</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Gets a color sample from a sensor</p>
+<div class="refsect3">
+<a name="cd-sensor-get-sample.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cap</p></td>
+<td class="parameter_description"><p>a <span class="type">CdSensorCap</span></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-sample-finish"></a><h3>cd_sensor_get_sample_finish ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *
+cd_sensor_get_sample_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                             <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                             <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-sample-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-sample-finish.returns"></a><h4>Returns</h4>
+<p> the XYZ reading, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-spectrum"></a><h3>cd_sensor_get_spectrum ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_get_spectrum (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                        <em class="parameter"><code><span class="type">CdSensorCap</span> cap</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Gets a color spectrum from a sensor</p>
+<div class="refsect3">
+<a name="cd-sensor-get-spectrum.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cap</p></td>
+<td class="parameter_description"><p>a <span class="type">CdSensorCap</span></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="/usr/share/gtk-doc/html/gioGCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a>, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>the function to run on completion</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to <em class="parameter"><code>callback</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 1.3.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-spectrum-finish"></a><h3>cd_sensor_get_spectrum_finish ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_sensor_get_spectrum_finish (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                               <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Gets the result from the asynchronous function.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-spectrum-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>res</p></td>
+<td class="parameter_description"><p>the <a href="/usr/share/gtk-doc/html/gioGAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/glibglib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-spectrum-finish.returns"></a><h4>Returns</h4>
+<p> the XYZ reading, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 1.3.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-object-path"></a><h3>cd_sensor_get_object_path ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_object_path (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the object path for the sensor.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-object-path.returns"></a><h4>Returns</h4>
+<p> the object path, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-id"></a><h3>cd_sensor_get_id ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_id (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the object ID for the sensor.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-id.returns"></a><h4>Returns</h4>
+<p> the object ID, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+</div>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-connected"></a><h3>cd_sensor_get_connected ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_get_connected (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets if the sensor has been connected.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-connected.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-connected.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if properties are valid</p>
+</div>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-kind"></a><h3>cd_sensor_get_kind ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdSensorKind</span>
+cd_sensor_get_kind (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor kind.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-kind.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-kind.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdSensorKind</span>, e.g. <code class="literal">CD_SENSOR_KIND_HUEY</code></p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-state"></a><h3>cd_sensor_get_state ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdSensorState</span>
+cd_sensor_get_state (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor state.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-state.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-state.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdSensorState</span>, e.g. <code class="literal">CD_SENSOR_STATE_IDLE</code></p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-mode"></a><h3>cd_sensor_get_mode ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdSensorCap</span>
+cd_sensor_get_mode (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor operating mode.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-mode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-mode.returns"></a><h4>Returns</h4>
+<p> A <span class="type">CdSensorCap</span>, e.g. <code class="literal">CD_SENSOR_CAP_AMBIENT</code></p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-serial"></a><h3>cd_sensor_get_serial ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_serial (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor serial number.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-serial.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-serial.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-model"></a><h3>cd_sensor_get_model ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_model (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor model.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-model.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-model.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-vendor"></a><h3>cd_sensor_get_vendor ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_vendor (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets the sensor vendor.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-vendor.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-vendor.returns"></a><h4>Returns</h4>
+<p> A string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for invalid</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-native"></a><h3>cd_sensor_get_native ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_get_native (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Returns if the sensor has a native driver.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-native.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-native.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if VCGT is valid.</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-embedded"></a><h3>cd_sensor_get_embedded ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_get_embedded (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Returns if the sensor is embedded into the computer.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-embedded.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-embedded.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if embedded.</p>
+</div>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-locked"></a><h3>cd_sensor_get_locked ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_get_locked (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Returns if the sensor is locked.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-locked.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-locked.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if VCGT is valid.</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-caps"></a><h3>cd_sensor_get_caps ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+cd_sensor_get_caps (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Returns the sensor metadata.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-caps.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-caps.returns"></a><h4>Returns</h4>
+<p> The sensor capability bitfield.</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-has-cap"></a><h3>cd_sensor_has_cap ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_has_cap (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                   <em class="parameter"><code><span class="type">CdSensorCap</span> cap</code></em>);</pre>
+<p>Returns the sensor metadata for a specific key.</p>
+<div class="refsect3">
+<a name="cd-sensor-has-cap.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cap</p></td>
+<td class="parameter_description"><p>a specified capability, e.g. <code class="literal">CD_SENSOR_CAP_LCD</code></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-has-cap.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the sensor has the specified capability</p>
+</div>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-options"></a><h3>cd_sensor_get_options ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+cd_sensor_get_options (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Gets any sensor options.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-options.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-options.returns"></a><h4>Returns</h4>
+<p> A
+refcounted <a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> of (string, GVariant). </p>
+<p><span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 GVariant]</span></p>
+</div>
+<p class="since">Since: 0.1.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-option"></a><h3>cd_sensor_get_option ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_option (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                      <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>Gets a specific sensor option.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-option.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a key to search for.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-option.returns"></a><h4>Returns</h4>
+<p> A const string, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> of not found.</p>
+</div>
+<p class="since">Since: 0.1.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-metadata"></a><h3>cd_sensor_get_metadata ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+cd_sensor_get_metadata (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+<p>Returns the sensor metadata.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-metadata.returns"></a><h4>Returns</h4>
+<p> a
+<a href="/usr/share/gtk-doc/html/glibglib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 utf8]</span></p>
+</div>
+<p class="since">Since: 0.1.28</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-get-metadata-item"></a><h3>cd_sensor_get_metadata_item ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_get_metadata_item (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                             <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>Returns the sensor metadata for a specific key.</p>
+<div class="refsect3">
+<a name="cd-sensor-get-metadata-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>key</p></td>
+<td class="parameter_description"><p>a key for the metadata dictionary</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-get-metadata-item.returns"></a><h4>Returns</h4>
+<p> the metadata value, or <a href="/usr/share/gtk-doc/html/liboilliboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if not set.</p>
+</div>
+<p class="since">Since: 0.1.28</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-set-object-path"></a><h3>cd_sensor_set_object_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_sensor_set_object_path (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>,
+                           <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
+<p>Sets the object path of the sensor.</p>
+<div class="refsect3">
+<a name="cd-sensor-set-object-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>a <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>The colord object path.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-equal"></a><h3>cd_sensor_equal ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_sensor_equal (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor1</code></em>,
+                 <em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor2</code></em>);</pre>
+<p>Tests two sensors for equality.</p>
+<div class="refsect3">
+<a name="cd-sensor-equal.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor1</p></td>
+<td class="parameter_description"><p>one <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>sensor2</p></td>
+<td class="parameter_description"><p>another <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="cd-sensor-equal.returns"></a><h4>Returns</h4>
+<p> <a href="/usr/share/gtk-doc/html/glibglib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the sensors are the same device</p>
+</div>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-sensor-to-string"></a><h3>cd_sensor_to_string ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_sensor_to_string (<em class="parameter"><code><a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor</code></em>);</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="CD-SENSOR-ERROR:CAPS"></a><h3>CD_SENSOR_ERROR</h3>
+<pre class="programlisting">#define CD_SENSOR_ERROR		(cd_sensor_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-SENSOR-TYPE-ERROR:CAPS"></a><h3>CD_SENSOR_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_SENSOR_TYPE_ERROR (cd_sensor_error_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TYPE-SENSOR:CAPS"></a><h3>CD_TYPE_SENSOR</h3>
+<pre class="programlisting">#define CD_TYPE_SENSOR (cd_sensor_get_type ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensorClass"></a><h3>struct CdSensorClass</h3>
+<pre class="programlisting">struct CdSensorClass {
+	GObjectClass		 parent_class;
+	void			(*button_pressed) (CdSensor *sensor);
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor-struct"></a><h3>CdSensor</h3>
+<pre class="programlisting">typedef struct _CdSensor CdSensor;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="CdSensor--connected"></a><h3>The <code class="literal">“connected”</code> property</h3>
+<pre class="programlisting">  “connected”                <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The if the object path has been connected as is valid for use.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.9</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--embedded"></a><h3>The <code class="literal">“embedded”</code> property</h3>
+<pre class="programlisting">  “embedded”                 <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the sensor has a native driver.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--id"></a><h3>The <code class="literal">“id”</code> property</h3>
+<pre class="programlisting">  “id”                       <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The object ID of the remote object</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--kind"></a><h3>The <code class="literal">“kind”</code> property</h3>
+<pre class="programlisting">  “kind”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor kind.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--locked"></a><h3>The <code class="literal">“locked”</code> property</h3>
+<pre class="programlisting">  “locked”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the sensor is locked.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--mode"></a><h3>The <code class="literal">“mode”</code> property</h3>
+<pre class="programlisting">  “mode”                     <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor mode.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--model"></a><h3>The <code class="literal">“model”</code> property</h3>
+<pre class="programlisting">  “model”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor model.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--native"></a><h3>The <code class="literal">“native”</code> property</h3>
+<pre class="programlisting">  “native”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>If the sensor has a native driver.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--object-path"></a><h3>The <code class="literal">“object-path”</code> property</h3>
+<pre class="programlisting">  “object-path”              <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The object path of the remote object</p>
+<p>Flags: Read / Write / Construct</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--serial"></a><h3>The <code class="literal">“serial”</code> property</h3>
+<pre class="programlisting">  “serial”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor ID.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--state"></a><h3>The <code class="literal">“state”</code> property</h3>
+<pre class="programlisting">  “state”                    <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor state.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdSensor--vendor"></a><h3>The <code class="literal">“vendor”</code> property</h3>
+<pre class="programlisting">  “vendor”                   <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The sensor vendor.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.1.6</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdSensor.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="CdSensor-button-pressed"></a><h3>The <code class="literal">“button-pressed”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> *sensor,
+               <a href="/usr/share/gtk-doc/html/glibglib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)</pre>
+<p>The ::button-pressed signal is emitted when the button has been pressed.</p>
+<div class="refsect3">
+<a name="CdSensor-button-pressed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>sensor</p></td>
+<td class="parameter_description"><p>the <a class="link" href="CdSensor.html" title="CdSensor"><span class="type">CdSensor</span></a> instance that emitted the signal</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="/usr/share/gtk-doc/html/gobjectgobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: 0.1.6</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.25</div>
+</body>
+</html>

@@ -29,8 +29,6 @@
 #include <math.h>
 #include <colord-private.h>
 
-#include "cd-cleanup.h"
-
 static gint lcms_error_code = 0;
 
 /**
@@ -41,7 +39,7 @@ cd_fix_profile_error_cb (cmsContext ContextID,
 			 cmsUInt32Number errorcode,
 			 const char *text)
 {
-	g_warning ("LCMS error %i: %s", errorcode, text);
+	g_warning ("LCMS error %" G_GUINT32_FORMAT ": %s", errorcode, text);
 
 	/* copy this sytemwide */
 	lcms_error_code = errorcode;
@@ -53,9 +51,9 @@ cd_fix_profile_error_cb (cmsContext ContextID,
 static gboolean
 cd_iccdump_print_file (const gchar *filename, GError **error)
 {
-	_cleanup_free_ gchar *str = NULL;
-	_cleanup_object_unref_ CdIcc *icc = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autofree gchar *str = NULL;
+	g_autoptr(CdIcc) icc = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	/* load the profile */
 	icc = cd_icc_new ();
@@ -79,7 +77,7 @@ main (int argc, char **argv)
 	GOptionContext *context;
 	gint i;
 	guint retval = EXIT_FAILURE;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	setlocale (LC_ALL, "");
 

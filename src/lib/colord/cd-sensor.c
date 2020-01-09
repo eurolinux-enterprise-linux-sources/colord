@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2012 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2015 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -36,14 +36,13 @@
 #include <glib.h>
 #include <string.h>
 
-#include "cd-cleanup.h"
 #include "cd-sensor.h"
 
 static void	cd_sensor_class_init	(CdSensorClass	*klass);
 static void	cd_sensor_init		(CdSensor	*sensor);
 static void	cd_sensor_finalize	(GObject	*object);
 
-#define CD_SENSOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CD_TYPE_SENSOR, CdSensorPrivate))
+#define GET_PRIVATE(o) (cd_sensor_get_instance_private (o))
 
 #define COLORD_DBUS_SERVICE		"org.freedesktop.ColorManager"
 #define COLORD_DBUS_INTERFACE_SENSOR	"org.freedesktop.ColorManager.Sensor"
@@ -53,7 +52,7 @@ static void	cd_sensor_finalize	(GObject	*object);
  *
  * Private #CdSensor data
  **/
-struct _CdSensorPrivate
+typedef struct
 {
 	gchar			*object_path;
 	gchar			*id;
@@ -70,7 +69,7 @@ struct _CdSensorPrivate
 	GHashTable		*options;
 	GHashTable		*metadata;
 	GDBusProxy		*proxy;
-};
+} CdSensorPrivate;
 
 enum {
 	PROP_0,
@@ -96,7 +95,7 @@ enum {
 
 static guint signals [SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE (CdSensor, cd_sensor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (CdSensor, cd_sensor, G_TYPE_OBJECT)
 
 /**
  * cd_sensor_error_quark:
@@ -126,9 +125,10 @@ cd_sensor_error_quark (void)
 void
 cd_sensor_set_object_path (CdSensor *sensor, const gchar *object_path)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_if_fail (CD_IS_SENSOR (sensor));
-	g_return_if_fail (sensor->priv->object_path == NULL);
-	sensor->priv->object_path = g_strdup (object_path);
+	g_return_if_fail (priv->object_path == NULL);
+	priv->object_path = g_strdup (object_path);
 }
 
 /**
@@ -144,9 +144,10 @@ cd_sensor_set_object_path (CdSensor *sensor, const gchar *object_path)
 CdSensorKind
 cd_sensor_get_kind (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), CD_SENSOR_KIND_UNKNOWN);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, CD_SENSOR_KIND_UNKNOWN);
-	return sensor->priv->kind;
+	g_return_val_if_fail (priv->proxy != NULL, CD_SENSOR_KIND_UNKNOWN);
+	return priv->kind;
 }
 
 /**
@@ -162,9 +163,10 @@ cd_sensor_get_kind (CdSensor *sensor)
 CdSensorState
 cd_sensor_get_state (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), CD_SENSOR_STATE_UNKNOWN);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, CD_SENSOR_STATE_UNKNOWN);
-	return sensor->priv->state;
+	g_return_val_if_fail (priv->proxy != NULL, CD_SENSOR_STATE_UNKNOWN);
+	return priv->state;
 }
 
 /**
@@ -180,9 +182,10 @@ cd_sensor_get_state (CdSensor *sensor)
 CdSensorCap
 cd_sensor_get_mode (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), CD_SENSOR_CAP_UNKNOWN);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, CD_SENSOR_CAP_UNKNOWN);
-	return sensor->priv->mode;
+	g_return_val_if_fail (priv->proxy != NULL, CD_SENSOR_CAP_UNKNOWN);
+	return priv->mode;
 }
 
 /**
@@ -198,9 +201,10 @@ cd_sensor_get_mode (CdSensor *sensor)
 const gchar *
 cd_sensor_get_serial (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, NULL);
-	return sensor->priv->serial;
+	g_return_val_if_fail (priv->proxy != NULL, NULL);
+	return priv->serial;
 }
 
 /**
@@ -216,9 +220,10 @@ cd_sensor_get_serial (CdSensor *sensor)
 const gchar *
 cd_sensor_get_model (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, NULL);
-	return sensor->priv->model;
+	g_return_val_if_fail (priv->proxy != NULL, NULL);
+	return priv->model;
 }
 
 /**
@@ -234,9 +239,10 @@ cd_sensor_get_model (CdSensor *sensor)
 const gchar *
 cd_sensor_get_vendor (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, NULL);
-	return sensor->priv->vendor;
+	g_return_val_if_fail (priv->proxy != NULL, NULL);
+	return priv->vendor;
 }
 
 /**
@@ -252,9 +258,10 @@ cd_sensor_get_vendor (CdSensor *sensor)
 gboolean
 cd_sensor_get_native (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, FALSE);
-	return sensor->priv->native;
+	g_return_val_if_fail (priv->proxy != NULL, FALSE);
+	return priv->native;
 }
 
 /**
@@ -270,9 +277,10 @@ cd_sensor_get_native (CdSensor *sensor)
 gboolean
 cd_sensor_get_embedded (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, FALSE);
-	return sensor->priv->embedded;
+	g_return_val_if_fail (priv->proxy != NULL, FALSE);
+	return priv->embedded;
 }
 
 /**
@@ -288,9 +296,10 @@ cd_sensor_get_embedded (CdSensor *sensor)
 gboolean
 cd_sensor_get_locked (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, FALSE);
-	return sensor->priv->locked;
+	g_return_val_if_fail (priv->proxy != NULL, FALSE);
+	return priv->locked;
 }
 
 /**
@@ -306,9 +315,10 @@ cd_sensor_get_locked (CdSensor *sensor)
 guint64
 cd_sensor_get_caps (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), 0);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, 0);
-	return sensor->priv->caps;
+	g_return_val_if_fail (priv->proxy != NULL, 0);
+	return priv->caps;
 }
 
 /**
@@ -325,9 +335,10 @@ cd_sensor_get_caps (CdSensor *sensor)
 gboolean
 cd_sensor_has_cap (CdSensor *sensor, CdSensorCap cap)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, FALSE);
-	return cd_bitfield_contain (sensor->priv->caps, cap);
+	g_return_val_if_fail (priv->proxy != NULL, FALSE);
+	return cd_bitfield_contain (priv->caps, cap);
 }
 
 /**
@@ -336,16 +347,17 @@ cd_sensor_has_cap (CdSensor *sensor, CdSensorCap cap)
 static void
 cd_sensor_set_caps_from_variant (CdSensor *sensor, GVariant *variant)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	const gchar **caps_tmp;
 	guint i;
 
 	/* remove old entries */
-	sensor->priv->caps = 0;
+	priv->caps = 0;
 
 	/* insert the new metadata */
 	caps_tmp = g_variant_get_strv (variant, NULL);
 	for (i = 0; caps_tmp[i] != NULL; i++) {
-		cd_bitfield_add (sensor->priv->caps,
+		cd_bitfield_add (priv->caps,
 				 cd_sensor_cap_from_string (caps_tmp[i]));
 	}
 	g_free (caps_tmp);
@@ -357,18 +369,19 @@ cd_sensor_set_caps_from_variant (CdSensor *sensor, GVariant *variant)
 static void
 cd_sensor_set_options_from_variant (CdSensor *sensor, GVariant *variant)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	const gchar *prop_key;
 	GVariantIter iter;
 	GVariant *prop_value;
 
 	/* remove old entries */
-	g_hash_table_remove_all (sensor->priv->options);
+	g_hash_table_remove_all (priv->options);
 
 	/* insert the new options */
 	g_variant_iter_init (&iter, variant);
 	while (g_variant_iter_loop (&iter, "{sv}",
 				    &prop_key, &prop_value)) {
-		g_hash_table_insert (sensor->priv->options,
+		g_hash_table_insert (priv->options,
 				     g_strdup (prop_key),
 				     g_variant_ref (prop_value));
 
@@ -381,18 +394,19 @@ cd_sensor_set_options_from_variant (CdSensor *sensor, GVariant *variant)
 static void
 cd_sensor_set_metadata_from_variant (CdSensor *sensor, GVariant *variant)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GVariantIter iter;
 	const gchar *prop_key;
 	const gchar *prop_value;
 
 	/* remove old entries */
-	g_hash_table_remove_all (sensor->priv->metadata);
+	g_hash_table_remove_all (priv->metadata);
 
 	/* insert the new metadata */
 	g_variant_iter_init (&iter, variant);
 	while (g_variant_iter_loop (&iter, "{ss}",
 				    &prop_key, &prop_value)) {
-		g_hash_table_insert (sensor->priv->metadata,
+		g_hash_table_insert (priv->metadata,
 				     g_strdup (prop_key),
 				     g_strdup (prop_value));
 
@@ -408,6 +422,7 @@ cd_sensor_dbus_properties_changed_cb (GDBusProxy *proxy,
 				      const gchar * const *invalidated_properties,
 				      CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	guint i;
 	guint len;
 	GVariantIter iter;
@@ -423,38 +438,38 @@ cd_sensor_dbus_properties_changed_cb (GDBusProxy *proxy,
 				     &property_name,
 				     &property_value);
 		if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_KIND) == 0) {
-			sensor->priv->kind = cd_sensor_kind_from_string (g_variant_get_string (property_value, NULL));
+			priv->kind = cd_sensor_kind_from_string (g_variant_get_string (property_value, NULL));
 			g_object_notify (G_OBJECT (sensor), "kind");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_STATE) == 0) {
-			sensor->priv->state = cd_sensor_state_from_string (g_variant_get_string (property_value, NULL));
+			priv->state = cd_sensor_state_from_string (g_variant_get_string (property_value, NULL));
 			g_object_notify (G_OBJECT (sensor), "state");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_MODE) == 0) {
-			sensor->priv->mode = cd_sensor_cap_from_string (g_variant_get_string (property_value, NULL));
+			priv->mode = cd_sensor_cap_from_string (g_variant_get_string (property_value, NULL));
 			g_object_notify (G_OBJECT (sensor), "mode");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_SERIAL) == 0) {
-			g_free (sensor->priv->serial);
-			sensor->priv->serial = g_variant_dup_string (property_value, NULL);
+			g_free (priv->serial);
+			priv->serial = g_variant_dup_string (property_value, NULL);
 			g_object_notify (G_OBJECT (sensor), "serial");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_MODEL) == 0) {
-			g_free (sensor->priv->model);
-			sensor->priv->model = g_variant_dup_string (property_value, NULL);
+			g_free (priv->model);
+			priv->model = g_variant_dup_string (property_value, NULL);
 			g_object_notify (G_OBJECT (sensor), "model");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_VENDOR) == 0) {
-			g_free (sensor->priv->vendor);
-			sensor->priv->vendor = g_variant_dup_string (property_value, NULL);
+			g_free (priv->vendor);
+			priv->vendor = g_variant_dup_string (property_value, NULL);
 			g_object_notify (G_OBJECT (sensor), "vendor");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_ID) == 0) {
-			g_free (sensor->priv->id);
-			sensor->priv->id = g_variant_dup_string (property_value, NULL);
+			g_free (priv->id);
+			priv->id = g_variant_dup_string (property_value, NULL);
 			g_object_notify (G_OBJECT (sensor), "id");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_NATIVE) == 0) {
-			sensor->priv->native = g_variant_get_boolean (property_value);
+			priv->native = g_variant_get_boolean (property_value);
 			g_object_notify (G_OBJECT (sensor), "native");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_EMBEDDED) == 0) {
-			sensor->priv->embedded = g_variant_get_boolean (property_value);
+			priv->embedded = g_variant_get_boolean (property_value);
 			g_object_notify (G_OBJECT (sensor), "embedded");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_LOCKED) == 0) {
-			sensor->priv->locked = g_variant_get_boolean (property_value);
+			priv->locked = g_variant_get_boolean (property_value);
 			g_object_notify (G_OBJECT (sensor), "locked");
 		} else if (g_strcmp0 (property_name, CD_SENSOR_PROPERTY_CAPABILITIES) == 0) {
 			cd_sensor_set_caps_from_variant (sensor, property_value);
@@ -499,121 +514,121 @@ cd_sensor_connect_cb (GObject *source_object,
 		      GAsyncResult *res,
 		      gpointer user_data)
 {
-	CdSensor *sensor = CD_SENSOR (g_async_result_get_source_object (G_ASYNC_RESULT (user_data)));
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GSimpleAsyncResult *res_source = G_SIMPLE_ASYNC_RESULT (user_data);
-	_cleanup_variant_unref_ GVariant *caps = NULL;
-	_cleanup_variant_unref_ GVariant *embedded = NULL;
-	_cleanup_variant_unref_ GVariant *id = NULL;
-	_cleanup_variant_unref_ GVariant *kind = NULL;
-	_cleanup_variant_unref_ GVariant *locked = NULL;
-	_cleanup_variant_unref_ GVariant *metadata = NULL;
-	_cleanup_variant_unref_ GVariant *model = NULL;
-	_cleanup_variant_unref_ GVariant *mode = NULL;
-	_cleanup_variant_unref_ GVariant *native = NULL;
-	_cleanup_variant_unref_ GVariant *serial = NULL;
-	_cleanup_variant_unref_ GVariant *state = NULL;
-	_cleanup_variant_unref_ GVariant *vendor = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) caps = NULL;
+	g_autoptr(GVariant) embedded = NULL;
+	g_autoptr(GVariant) id = NULL;
+	g_autoptr(GVariant) kind = NULL;
+	g_autoptr(GVariant) locked = NULL;
+	g_autoptr(GVariant) metadata = NULL;
+	g_autoptr(GVariant) model = NULL;
+	g_autoptr(GVariant) mode = NULL;
+	g_autoptr(GVariant) native = NULL;
+	g_autoptr(GVariant) serial = NULL;
+	g_autoptr(GVariant) state = NULL;
+	g_autoptr(GVariant) vendor = NULL;
+	CdSensor *sensor = CD_SENSOR (g_task_get_source_object (task));
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	/* get result */
-	sensor->priv->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
-	if (sensor->priv->proxy == NULL) {
-		g_simple_async_result_set_error (res_source,
-						 CD_SENSOR_ERROR,
-						 CD_SENSOR_ERROR_INTERNAL,
-						 "Failed to connect to sensor %s: %s",
-						 cd_sensor_get_object_path (sensor),
-						 error->message);
-		g_simple_async_result_complete (res_source);
+	priv->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+	if (priv->proxy == NULL) {
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_INTERNAL,
+					 "Failed to connect to sensor %s: %s",
+					 cd_sensor_get_object_path (sensor),
+					 error->message);
 		return;
 	}
 
 	/* get kind */
-	kind = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	kind = g_dbus_proxy_get_cached_property (priv->proxy,
 						 CD_SENSOR_PROPERTY_KIND);
 	if (kind != NULL)
-		sensor->priv->kind = cd_sensor_kind_from_string (g_variant_get_string (kind, NULL));
+		priv->kind = cd_sensor_kind_from_string (g_variant_get_string (kind, NULL));
 
 	/* get state */
-	state = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	state = g_dbus_proxy_get_cached_property (priv->proxy,
 						  CD_SENSOR_PROPERTY_STATE);
 	if (state != NULL)
-		sensor->priv->state = cd_colorspace_from_string (g_variant_get_string (state, NULL));
+		priv->state = cd_colorspace_from_string (g_variant_get_string (state, NULL));
 
 	/* get mode */
-	mode = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	mode = g_dbus_proxy_get_cached_property (priv->proxy,
 						 CD_SENSOR_PROPERTY_MODE);
 	if (mode != NULL)
-		sensor->priv->mode = cd_sensor_cap_from_string (g_variant_get_string (state, NULL));
+		priv->mode = cd_sensor_cap_from_string (g_variant_get_string (state, NULL));
 
 	/* get sensor serial */
-	serial = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	serial = g_dbus_proxy_get_cached_property (priv->proxy,
 						   CD_SENSOR_PROPERTY_SERIAL);
 	if (serial != NULL)
-		sensor->priv->serial = g_variant_dup_string (serial, NULL);
+		priv->serial = g_variant_dup_string (serial, NULL);
 
 	/* get vendor */
-	vendor = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	vendor = g_dbus_proxy_get_cached_property (priv->proxy,
 						   CD_SENSOR_PROPERTY_VENDOR);
 	if (vendor != NULL)
-		sensor->priv->vendor = g_variant_dup_string (vendor, NULL);
+		priv->vendor = g_variant_dup_string (vendor, NULL);
 
 	/* get model */
-	model = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	model = g_dbus_proxy_get_cached_property (priv->proxy,
 						  CD_SENSOR_PROPERTY_MODEL);
 	if (model != NULL)
-		sensor->priv->model = g_variant_dup_string (model, NULL);
+		priv->model = g_variant_dup_string (model, NULL);
 
 	/* get id */
-	id = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	id = g_dbus_proxy_get_cached_property (priv->proxy,
 					       CD_SENSOR_PROPERTY_ID);
 	if (id != NULL)
-		sensor->priv->id = g_variant_dup_string (id, NULL);
+		priv->id = g_variant_dup_string (id, NULL);
 
 	/* get native */
-	native = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	native = g_dbus_proxy_get_cached_property (priv->proxy,
 						   CD_SENSOR_PROPERTY_NATIVE);
 	if (native != NULL)
-		sensor->priv->native = g_variant_get_boolean (native);
+		priv->native = g_variant_get_boolean (native);
 
 	/* get embedded */
-	embedded = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	embedded = g_dbus_proxy_get_cached_property (priv->proxy,
 						   CD_SENSOR_PROPERTY_EMBEDDED);
 	if (embedded != NULL)
-		sensor->priv->embedded = g_variant_get_boolean (embedded);
+		priv->embedded = g_variant_get_boolean (embedded);
 
 	/* get locked */
-	locked = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	locked = g_dbus_proxy_get_cached_property (priv->proxy,
 						   CD_SENSOR_PROPERTY_LOCKED);
 	if (locked != NULL)
-		sensor->priv->locked = g_variant_get_boolean (locked);
+		priv->locked = g_variant_get_boolean (locked);
 
 	/* get if system wide */
-	caps = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	caps = g_dbus_proxy_get_cached_property (priv->proxy,
 						 CD_SENSOR_PROPERTY_CAPABILITIES);
 	if (caps != NULL)
 		cd_sensor_set_caps_from_variant (sensor, caps);
 
 	/* get metadata */
-	metadata = g_dbus_proxy_get_cached_property (sensor->priv->proxy,
+	metadata = g_dbus_proxy_get_cached_property (priv->proxy,
 						     CD_SENSOR_PROPERTY_METADATA);
 	if (metadata != NULL)
 		cd_sensor_set_metadata_from_variant (sensor, metadata);
 
 	/* get signals from DBus */
-	g_signal_connect (sensor->priv->proxy,
-			  "g-signal",
-			  G_CALLBACK (cd_sensor_dbus_signal_cb),
-			  sensor);
+	g_signal_connect_object (priv->proxy,
+				 "g-signal",
+				 G_CALLBACK (cd_sensor_dbus_signal_cb),
+				 sensor, 0);
 
 	/* watch if any remote properties change */
-	g_signal_connect (sensor->priv->proxy,
-			  "g-properties-changed",
-			  G_CALLBACK (cd_sensor_dbus_properties_changed_cb),
-			  sensor);
+	g_signal_connect_object (priv->proxy,
+				 "g-properties-changed",
+				 G_CALLBACK (cd_sensor_dbus_properties_changed_cb),
+				 sensor, 0);
 
 	/* we're done */
-	g_simple_async_result_complete (res_source);
+	g_task_return_boolean (task, TRUE);
 }
 
 /**
@@ -633,21 +648,18 @@ cd_sensor_connect (CdSensor *sensor,
 		   GAsyncReadyCallback callback,
 		   gpointer user_data)
 {
-	GSimpleAsyncResult *res;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GTask *task = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 	g_return_if_fail (callback != NULL);
 	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
 
-	res = g_simple_async_result_new (G_OBJECT (sensor),
-					 callback,
-					 user_data,
-					 cd_sensor_connect);
+	task = g_task_new (sensor, cancellable, callback, user_data);
 
 	/* already connected */
-	if (sensor->priv->proxy != NULL) {
-		g_simple_async_result_set_op_res_gboolean (res, TRUE);
-		g_simple_async_result_complete_in_idle (res);
+	if (priv->proxy != NULL) {
+		g_task_return_boolean (task, TRUE);
 		return;
 	}
 
@@ -656,11 +668,11 @@ cd_sensor_connect (CdSensor *sensor,
 				  G_DBUS_PROXY_FLAGS_NONE,
 				  NULL,
 				  COLORD_DBUS_SERVICE,
-				  sensor->priv->object_path,
+				  priv->object_path,
 				  COLORD_DBUS_INTERFACE_SENSOR,
 				  cancellable,
 				  cd_sensor_connect_cb,
-				  res);
+				  task);
 }
 
 /**
@@ -680,22 +692,8 @@ cd_sensor_connect_finish (CdSensor *sensor,
 			  GAsyncResult *res,
 			  GError **error)
 {
-	gpointer source_tag;
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	source_tag = g_simple_async_result_get_source_tag (simple);
-
-	g_return_val_if_fail (source_tag == cd_sensor_connect, FALSE);
-
-	if (g_simple_async_result_propagate_error (simple, error))
-		return FALSE;
-
-	return TRUE;
+	g_return_val_if_fail (g_task_is_valid (res, sensor), FALSE);
+	return g_task_propagate_boolean (G_TASK (res), error);
 }
 
 /**********************************************************************/
@@ -717,17 +715,8 @@ cd_sensor_lock_finish (CdSensor *sensor,
 				GAsyncResult *res,
 				GError **error)
 {
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	if (g_simple_async_result_propagate_error (simple, error))
-		return FALSE;
-
-	return g_simple_async_result_get_op_res_gboolean (simple);
+	g_return_val_if_fail (g_task_is_valid (res, sensor), FALSE);
+	return g_task_propagate_boolean (G_TASK (res), error);
 }
 
 /**
@@ -736,7 +725,7 @@ cd_sensor_lock_finish (CdSensor *sensor,
 static void
 cd_sensor_fixup_dbus_error (GError *error)
 {
-	_cleanup_free_ gchar *name = NULL;
+	g_autofree gchar *name = NULL;
 
 	g_return_if_fail (error != NULL);
 
@@ -756,23 +745,22 @@ cd_sensor_lock_cb (GObject *source_object,
 		   GAsyncResult *res,
 		   gpointer user_data)
 {
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GSimpleAsyncResult *res_source = G_SIMPLE_ASYNC_RESULT (user_data);
-	_cleanup_variant_unref_ GVariant *result = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) result = NULL;
 
 	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object),
 					   res,
 					   &error);
 	if (result == NULL) {
 		cd_sensor_fixup_dbus_error (error);
-		g_simple_async_result_set_from_error (res_source, error);
-		g_simple_async_result_complete_in_idle (res_source);
+		g_task_return_error (task, error);
+		error = NULL;
 		return;
 	}
 
 	/* success */
-	g_simple_async_result_set_op_res_gboolean (res_source, TRUE);
-	g_simple_async_result_complete_in_idle (res_source);
+	g_task_return_boolean (task, TRUE);
 }
 
 /**
@@ -792,24 +780,22 @@ cd_sensor_lock (CdSensor *sensor,
 		GAsyncReadyCallback callback,
 		gpointer user_data)
 {
-	GSimpleAsyncResult *res;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GTask *task = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
-	g_return_if_fail (sensor->priv->proxy != NULL);
+	g_return_if_fail (priv->proxy != NULL);
 
-	res = g_simple_async_result_new (G_OBJECT (sensor),
-					 callback,
-					 user_data,
-					 cd_sensor_lock);
-	g_dbus_proxy_call (sensor->priv->proxy,
+	task = g_task_new (sensor, cancellable, callback, user_data);
+	g_dbus_proxy_call (priv->proxy,
 			   "Lock",
 			   NULL,
 			   G_DBUS_CALL_FLAGS_NONE,
 			   -1,
 			   cancellable,
 			   cd_sensor_lock_cb,
-			   res);
+			   task);
 }
 
 /**********************************************************************/
@@ -831,17 +817,8 @@ cd_sensor_unlock_finish (CdSensor *sensor,
 			 GAsyncResult *res,
 			 GError **error)
 {
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	if (g_simple_async_result_propagate_error (simple, error))
-		return FALSE;
-
-	return g_simple_async_result_get_op_res_gboolean (simple);
+	g_return_val_if_fail (g_task_is_valid (res, sensor), FALSE);
+	return g_task_propagate_boolean (G_TASK (res), error);
 }
 
 static void
@@ -849,23 +826,22 @@ cd_sensor_unlock_cb (GObject *source_object,
 		     GAsyncResult *res,
 		     gpointer user_data)
 {
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GSimpleAsyncResult *res_source = G_SIMPLE_ASYNC_RESULT (user_data);
-	_cleanup_variant_unref_ GVariant *result = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) result = NULL;
 
 	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object),
 					   res,
 					   &error);
 	if (result == NULL) {
 		cd_sensor_fixup_dbus_error (error);
-		g_simple_async_result_set_from_error (res_source, error);
-		g_simple_async_result_complete_in_idle (res_source);
+		g_task_return_error (task, error);
+		error = NULL;
 		return;
 	}
 
 	/* success */
-	g_simple_async_result_set_op_res_gboolean (res_source, TRUE);
-	g_simple_async_result_complete_in_idle (res_source);
+	g_task_return_boolean (task, TRUE);
 }
 
 /**
@@ -885,24 +861,22 @@ cd_sensor_unlock (CdSensor *sensor,
 		  GAsyncReadyCallback callback,
 		  gpointer user_data)
 {
-	GSimpleAsyncResult *res;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GTask *task = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
-	g_return_if_fail (sensor->priv->proxy != NULL);
+	g_return_if_fail (priv->proxy != NULL);
 
-	res = g_simple_async_result_new (G_OBJECT (sensor),
-					 callback,
-					 user_data,
-					 cd_sensor_unlock);
-	g_dbus_proxy_call (sensor->priv->proxy,
+	task = g_task_new (sensor, cancellable, callback, user_data);
+	g_dbus_proxy_call (priv->proxy,
 			   "Unlock",
 			   NULL,
 			   G_DBUS_CALL_FLAGS_NONE,
 			   -1,
 			   cancellable,
 			   cd_sensor_unlock_cb,
-			   res);
+			   task);
 }
 
 /**********************************************************************/
@@ -924,17 +898,8 @@ cd_sensor_set_options_finish (CdSensor *sensor,
 			      GAsyncResult *res,
 			      GError **error)
 {
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	if (g_simple_async_result_propagate_error (simple, error))
-		return FALSE;
-
-	return g_simple_async_result_get_op_res_gboolean (simple);
+	g_return_val_if_fail (g_task_is_valid (res, sensor), FALSE);
+	return g_task_propagate_boolean (G_TASK (res), error);
 }
 
 static void
@@ -942,23 +907,22 @@ cd_sensor_set_options_cb (GObject *source_object,
 			  GAsyncResult *res,
 			  gpointer user_data)
 {
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GSimpleAsyncResult *res_source = G_SIMPLE_ASYNC_RESULT (user_data);
-	_cleanup_variant_unref_ GVariant *result = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) result = NULL;
 
 	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object),
 					   res,
 					   &error);
 	if (result == NULL) {
 		cd_sensor_fixup_dbus_error (error);
-		g_simple_async_result_set_from_error (res_source, error);
-		g_simple_async_result_complete_in_idle (res_source);
+		g_task_return_error (task, error);
+		error = NULL;
 		return;
 	}
 
 	/* success */
-	g_simple_async_result_set_op_res_gboolean (res_source, TRUE);
-	g_simple_async_result_complete_in_idle (res_source);
+	g_task_return_boolean (task, TRUE);
 }
 
 /**
@@ -980,18 +944,15 @@ cd_sensor_set_options (CdSensor *sensor,
 		       GAsyncReadyCallback callback,
 		       gpointer user_data)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	GList *list, *l;
-	GSimpleAsyncResult *res;
-	GVariantBuilder builder;
+	GTask *task = NULL;	GVariantBuilder builder;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
-	g_return_if_fail (sensor->priv->proxy != NULL);
+	g_return_if_fail (priv->proxy != NULL);
 
-	res = g_simple_async_result_new (G_OBJECT (sensor),
-					 callback,
-					 user_data,
-					 cd_sensor_set_options);
+	task = g_task_new (sensor, cancellable, callback, user_data);
 
 	/* convert the hash table to an array of {sv} */
 	g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
@@ -1005,7 +966,7 @@ cd_sensor_set_options (CdSensor *sensor,
 	}
 	g_list_free (list);
 
-	g_dbus_proxy_call (sensor->priv->proxy,
+	g_dbus_proxy_call (priv->proxy,
 			   "SetOptions",
 			   g_variant_new ("(a{sv})",
 					  &builder),
@@ -1013,7 +974,7 @@ cd_sensor_set_options (CdSensor *sensor,
 			   -1,
 			   cancellable,
 			   cd_sensor_set_options_cb,
-			   res);
+			   task);
 }
 
 /**********************************************************************/
@@ -1035,17 +996,8 @@ cd_sensor_get_sample_finish (CdSensor *sensor,
 			     GAsyncResult *res,
 			     GError **error)
 {
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), NULL);
-	g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	if (g_simple_async_result_propagate_error (simple, error))
-		return NULL;
-
-	return cd_color_xyz_dup (g_simple_async_result_get_op_res_gpointer (simple));
+	g_return_val_if_fail (g_task_is_valid (res, sensor), NULL);
+	return g_task_propagate_pointer (G_TASK (res), error);
 }
 
 static void
@@ -1054,17 +1006,17 @@ cd_sensor_get_sample_cb (GObject *source_object,
 			 gpointer user_data)
 {
 	CdColorXYZ *xyz;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GSimpleAsyncResult *res_source = G_SIMPLE_ASYNC_RESULT (user_data);
-	_cleanup_variant_unref_ GVariant *result = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) result = NULL;
 
 	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object),
 					   res,
 					   &error);
 	if (result == NULL) {
 		cd_sensor_fixup_dbus_error (error);
-		g_simple_async_result_set_from_error (res_source, error);
-		g_simple_async_result_complete_in_idle (res_source);
+		g_task_return_error (task, error);
+		error = NULL;
 		return;
 	}
 
@@ -1076,10 +1028,7 @@ cd_sensor_get_sample_cb (GObject *source_object,
 		       &xyz->Y,
 		       &xyz->Z);
 
-	g_simple_async_result_set_op_res_gpointer (res_source,
-						   xyz,
-						   (GDestroyNotify) cd_color_xyz_free);
-	g_simple_async_result_complete_in_idle (res_source);
+	g_task_return_pointer (task, xyz, (GDestroyNotify) cd_color_xyz_free);
 }
 
 /**
@@ -1101,17 +1050,15 @@ cd_sensor_get_sample (CdSensor *sensor,
 		      GAsyncReadyCallback callback,
 		      gpointer user_data)
 {
-	GSimpleAsyncResult *res;
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GTask *task = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
-	g_return_if_fail (sensor->priv->proxy != NULL);
+	g_return_if_fail (priv->proxy != NULL);
 
-	res = g_simple_async_result_new (G_OBJECT (sensor),
-					 callback,
-					 user_data,
-					 cd_sensor_get_sample);
-	g_dbus_proxy_call (sensor->priv->proxy,
+	task = g_task_new (sensor, cancellable, callback, user_data);
+	g_dbus_proxy_call (priv->proxy,
 			   "GetSample",
 			   g_variant_new ("(s)",
 			   		  cd_sensor_cap_to_string (cap)),
@@ -1119,7 +1066,108 @@ cd_sensor_get_sample (CdSensor *sensor,
 			   -1,
 			   cancellable,
 			   cd_sensor_get_sample_cb,
-			   res);
+			   task);
+}
+
+/**********************************************************************/
+
+/**
+ * cd_sensor_get_spectrum_finish:
+ * @sensor: a #CdSensor instance.
+ * @res: the #GAsyncResult
+ * @error: A #GError or %NULL
+ *
+ * Gets the result from the asynchronous function.
+ *
+ * Return value: the XYZ reading, or %NULL
+ *
+ * Since: 1.3.1
+ **/
+CdSpectrum *
+cd_sensor_get_spectrum_finish (CdSensor *sensor,
+			       GAsyncResult *res,
+			       GError **error)
+{
+	g_return_val_if_fail (g_task_is_valid (res, sensor), NULL);
+	return g_task_propagate_pointer (G_TASK (res), error);
+}
+
+static void
+cd_sensor_get_spectrum_cb (GObject *source_object,
+			   GAsyncResult *res,
+			   gpointer user_data)
+{
+	CdSpectrum *sp;
+	GVariantIter iter;
+	gdouble sp_start = 0.f;
+	gdouble sp_end = 0.f;
+	gdouble tmp;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GTask) task = G_TASK (user_data);
+	g_autoptr(GVariant) result = NULL;
+	g_autoptr(GVariant) data = NULL;
+
+	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object),
+					   res,
+					   &error);
+	if (result == NULL) {
+		cd_sensor_fixup_dbus_error (error);
+		g_task_return_error (task, error);
+		error = NULL;
+		return;
+	}
+
+	/* create object from data */
+	sp = cd_spectrum_new ();
+	g_variant_get_child (result, 0, "d", &sp_start);
+	g_variant_get_child (result, 1, "d", &sp_end);
+	cd_spectrum_set_start (sp, sp_start);
+	cd_spectrum_set_end (sp, sp_end);
+	data = g_variant_get_child_value (result, 2);
+	g_variant_iter_init (&iter, data);
+	while (g_variant_iter_loop (&iter, "d", &tmp))
+		cd_spectrum_add_value (sp, tmp);
+
+	/* success */
+	g_task_return_pointer (task, sp, (GDestroyNotify) cd_spectrum_free);
+}
+
+/**
+ * cd_sensor_get_spectrum:
+ * @sensor: a #CdSensor instance.
+ * @cap: a #CdSensorCap
+ * @cancellable: a #GCancellable, or %NULL
+ * @callback: the function to run on completion
+ * @user_data: the data to pass to @callback
+ *
+ * Gets a color spectrum from a sensor
+ *
+ * Since: 1.3.1
+ **/
+void
+cd_sensor_get_spectrum (CdSensor *sensor,
+			CdSensorCap cap,
+			GCancellable *cancellable,
+			GAsyncReadyCallback callback,
+			gpointer user_data)
+{
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	GTask *task = NULL;
+
+	g_return_if_fail (CD_IS_SENSOR (sensor));
+	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
+	g_return_if_fail (priv->proxy != NULL);
+
+	task = g_task_new (sensor, cancellable, callback, user_data);
+	g_dbus_proxy_call (priv->proxy,
+			   "GetSpectrum",
+			   g_variant_new ("(s)",
+					  cd_sensor_cap_to_string (cap)),
+			   G_DBUS_CALL_FLAGS_NONE,
+			   -1,
+			   cancellable,
+			   cd_sensor_get_spectrum_cb,
+			   task);
 }
 
 /**********************************************************************/
@@ -1137,8 +1185,9 @@ cd_sensor_get_sample (CdSensor *sensor,
 const gchar *
 cd_sensor_get_object_path (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return sensor->priv->object_path;
+	return priv->object_path;
 }
 
 /**
@@ -1154,8 +1203,9 @@ cd_sensor_get_object_path (CdSensor *sensor)
 const gchar *
 cd_sensor_get_id (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return sensor->priv->id;
+	return priv->id;
 }
 
 /**
@@ -1171,8 +1221,9 @@ cd_sensor_get_id (CdSensor *sensor)
 gboolean
 cd_sensor_get_connected (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), FALSE);
-	return sensor->priv->proxy != NULL;
+	return priv->proxy != NULL;
 }
 
 /**
@@ -1189,8 +1240,9 @@ cd_sensor_get_connected (CdSensor *sensor)
 GHashTable *
 cd_sensor_get_options (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return g_hash_table_ref (sensor->priv->options);
+	return g_hash_table_ref (priv->options);
 }
 
 /**
@@ -1207,8 +1259,9 @@ cd_sensor_get_options (CdSensor *sensor)
 const gchar *
 cd_sensor_get_option (CdSensor *sensor, const gchar *key)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	return g_hash_table_lookup (sensor->priv->options, key);
+	return g_hash_table_lookup (priv->options, key);
 }
 
 /**
@@ -1225,9 +1278,10 @@ cd_sensor_get_option (CdSensor *sensor, const gchar *key)
 GHashTable *
 cd_sensor_get_metadata (CdSensor *sensor)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, NULL);
-	return g_hash_table_ref (sensor->priv->metadata);
+	g_return_val_if_fail (priv->proxy != NULL, NULL);
+	return g_hash_table_ref (priv->metadata);
 }
 
 /**
@@ -1244,9 +1298,10 @@ cd_sensor_get_metadata (CdSensor *sensor)
 const gchar *
 cd_sensor_get_metadata_item (CdSensor *sensor, const gchar *key)
 {
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (sensor->priv->proxy != NULL, NULL);
-	return g_hash_table_lookup (sensor->priv->metadata, key);
+	g_return_val_if_fail (priv->proxy != NULL, NULL);
+	return g_hash_table_lookup (priv->metadata, key);
 }
 
 /**
@@ -1263,9 +1318,11 @@ cd_sensor_get_metadata_item (CdSensor *sensor, const gchar *key)
 gboolean
 cd_sensor_equal (CdSensor *sensor1, CdSensor *sensor2)
 {
+	CdSensorPrivate *priv1 = GET_PRIVATE (sensor1);
+	CdSensorPrivate *priv2 = GET_PRIVATE (sensor2);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor1), FALSE);
 	g_return_val_if_fail (CD_IS_SENSOR (sensor2), FALSE);
-	return g_strcmp0 (sensor1->priv->serial, sensor2->priv->serial) == 0;
+	return g_strcmp0 (priv1->serial, priv2->serial) == 0;
 }
 
 /*
@@ -1275,11 +1332,12 @@ static void
 cd_sensor_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
 	CdSensor *sensor = CD_SENSOR (object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	switch (prop_id) {
 	case PROP_OBJECT_PATH:
-		g_free (sensor->priv->object_path);
-		sensor->priv->object_path = g_value_dup_string (value);
+		g_free (priv->object_path);
+		priv->object_path = g_value_dup_string (value);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1294,43 +1352,44 @@ static void
 cd_sensor_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
 	CdSensor *sensor = CD_SENSOR (object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	switch (prop_id) {
 	case PROP_OBJECT_PATH:
-		g_value_set_string (value, sensor->priv->object_path);
+		g_value_set_string (value, priv->object_path);
 		break;
 	case PROP_ID:
-		g_value_set_string (value, sensor->priv->id);
+		g_value_set_string (value, priv->id);
 		break;
 	case PROP_CONNECTED:
-		g_value_set_boolean (value, sensor->priv->proxy != NULL);
+		g_value_set_boolean (value, priv->proxy != NULL);
 		break;
 	case PROP_KIND:
-		g_value_set_uint (value, sensor->priv->kind);
+		g_value_set_uint (value, priv->kind);
 		break;
 	case PROP_STATE:
-		g_value_set_uint (value, sensor->priv->state);
+		g_value_set_uint (value, priv->state);
 		break;
 	case PROP_MODE:
-		g_value_set_uint (value, sensor->priv->mode);
+		g_value_set_uint (value, priv->mode);
 		break;
 	case PROP_SERIAL:
-		g_value_set_string (value, sensor->priv->serial);
+		g_value_set_string (value, priv->serial);
 		break;
 	case PROP_MODEL:
-		g_value_set_string (value, sensor->priv->model);
+		g_value_set_string (value, priv->model);
 		break;
 	case PROP_VENDOR:
-		g_value_set_string (value, sensor->priv->vendor);
+		g_value_set_string (value, priv->vendor);
 		break;
 	case PROP_NATIVE:
-		g_value_set_boolean (value, sensor->priv->native);
+		g_value_set_boolean (value, priv->native);
 		break;
 	case PROP_EMBEDDED:
-		g_value_set_boolean (value, sensor->priv->embedded);
+		g_value_set_boolean (value, priv->embedded);
 		break;
 	case PROP_LOCKED:
-		g_value_set_boolean (value, sensor->priv->locked);
+		g_value_set_boolean (value, priv->locked);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1526,8 +1585,6 @@ cd_sensor_class_init (CdSensorClass *klass)
 							      NULL, NULL,
 							      NULL,
 							      G_PARAM_READABLE));
-
-	g_type_class_add_private (klass, sizeof (CdSensorPrivate));
 }
 
 /*
@@ -1536,12 +1593,12 @@ cd_sensor_class_init (CdSensorClass *klass)
 static void
 cd_sensor_init (CdSensor *sensor)
 {
-	sensor->priv = CD_SENSOR_GET_PRIVATE (sensor);
-	sensor->priv->options = g_hash_table_new_full (g_str_hash,
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
+	priv->options = g_hash_table_new_full (g_str_hash,
 						       g_str_equal,
 						       (GDestroyNotify) g_free,
 						       (GDestroyNotify) g_variant_unref);
-	sensor->priv->metadata = g_hash_table_new_full (g_str_hash,
+	priv->metadata = g_hash_table_new_full (g_str_hash,
 							g_str_equal,
 							g_free,
 							g_free);
@@ -1553,32 +1610,20 @@ cd_sensor_init (CdSensor *sensor)
 static void
 cd_sensor_finalize (GObject *object)
 {
-	CdSensor *sensor;
-	guint ret;
+	CdSensor *sensor = CD_SENSOR (object);
+	CdSensorPrivate *priv = GET_PRIVATE (sensor);
 
 	g_return_if_fail (CD_IS_SENSOR (object));
 
-	sensor = CD_SENSOR (object);
-
-	g_free (sensor->priv->object_path);
-	g_free (sensor->priv->id);
-	g_free (sensor->priv->serial);
-	g_free (sensor->priv->model);
-	g_free (sensor->priv->vendor);
-	g_hash_table_unref (sensor->priv->options);
-	g_hash_table_destroy (sensor->priv->metadata);
-	if (sensor->priv->proxy != NULL) {
-		ret = g_signal_handlers_disconnect_by_func (sensor->priv->proxy,
-							    G_CALLBACK (cd_sensor_dbus_signal_cb),
-							    sensor);
-		g_assert (ret > 0);
-		ret = g_signal_handlers_disconnect_by_func (sensor->priv->proxy,
-							    G_CALLBACK (cd_sensor_dbus_properties_changed_cb),
-							    sensor);
-		g_assert (ret > 0);
-		g_object_unref (sensor->priv->proxy);
-		g_assert (!G_IS_DBUS_PROXY (sensor->priv->proxy));
-	}
+	g_free (priv->object_path);
+	g_free (priv->id);
+	g_free (priv->serial);
+	g_free (priv->model);
+	g_free (priv->vendor);
+	g_hash_table_unref (priv->options);
+	g_hash_table_destroy (priv->metadata);
+	if (priv->proxy != NULL)
+		g_object_unref (priv->proxy);
 
 	G_OBJECT_CLASS (cd_sensor_parent_class)->finalize (object);
 }

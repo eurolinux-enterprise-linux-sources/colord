@@ -48,14 +48,14 @@
  *
  * The compile-time minor version
  */
-#define CD_MINOR_VERSION				(2)
+#define CD_MINOR_VERSION				(3)
 
 /**
  * CD_MICRO_VERSION:
  *
  * The compile-time micro version
  */
-#define CD_MICRO_VERSION				(7)
+#define CD_MICRO_VERSION				(4)
 
 /**
  * CD_CHECK_VERSION:

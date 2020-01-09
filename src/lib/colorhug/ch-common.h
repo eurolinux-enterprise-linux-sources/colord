@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2011-2013 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2011-2015 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -35,13 +35,16 @@ G_BEGIN_DECLS
 #define	CH_USB_VID				0x273f
 #define	CH_USB_PID_BOOTLOADER			0x1000
 #define	CH_USB_PID_BOOTLOADER2			0x1005
+#define	CH_USB_PID_BOOTLOADER_ALS		0x1006	/* since 1.2.9 */
 #define	CH_USB_PID_BOOTLOADER_PLUS		0x1003
 #define	CH_USB_PID_FIRMWARE			0x1001
 #define	CH_USB_PID_FIRMWARE2			0x1004
+#define	CH_USB_PID_FIRMWARE_ALS			0x1007	/* since 1.2.9 */
+#define	CH_USB_PID_FIRMWARE_ALS_SENSOR_HID	0x1008	/* since 1.2.11 */
 #define	CH_USB_PID_FIRMWARE_PLUS		0x1002
 #define	CH_USB_CONFIG				0x0001
 #define	CH_USB_INTERFACE			0x0000
-#define	CH_USB_HID_EP				0x0001
+#define	CH_USB_HID_EP				0x01
 #define	CH_USB_HID_EP_IN			(CH_USB_HID_EP | 0x80)
 #define	CH_USB_HID_EP_OUT			(CH_USB_HID_EP | 0x00)
 #define	CH_USB_HID_EP_SIZE			64
@@ -71,6 +74,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -91,6 +95,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -111,6 +116,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -131,6 +137,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -151,6 +158,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -171,6 +179,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -191,6 +200,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ✓
  * ColorHug2      |      ✓       |      ✓
  * ColorHug+      |      ✓       |      ✓
+ * ColorHugALS    |      ✓       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -221,6 +231,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -241,6 +252,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -261,6 +273,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -281,6 +294,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -301,6 +315,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ✓       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -325,10 +340,53 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
 #define	CH_CMD_SET_LEDS				0x0e
+
+/**
+ * CH_CMD_GET_ILLUMINANTS:
+ *
+ * Get the illuminant state.
+ *
+ * IN:  [1:cmd]
+ * OUT: [1:retval][1:cmd][1:illuminants]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 1.3.4
+ **/
+#define	CH_CMD_GET_ILLUMINANTS			0x15
+
+/**
+ * CH_CMD_SET_ILLUMINANTS:
+ *
+ * Set the illuminants.
+ *
+ * IN:  [1:cmd][1:illuminant]
+ * OUT: [1:retval][1:cmd]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 1.3.4
+ **/
+#define	CH_CMD_SET_ILLUMINANTS			0x16
 
 /**
  * CH_CMD_GET_DARK_OFFSETS:
@@ -345,6 +403,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -367,6 +426,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -387,6 +447,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -407,6 +468,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -427,6 +489,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -447,6 +510,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -467,6 +531,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -487,6 +552,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -510,6 +576,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -539,6 +606,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -562,10 +630,11 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.31
  **/
-#define	CH_CMD_TAKE_READING_SPECTRAL		0x50
+#define	CH_CMD_TAKE_READING_SPECTRAL		0x55
 
 /**
  * CH_CMD_GET_ADC_CALIBRATION_POS:
@@ -583,6 +652,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.31
  **/
@@ -604,6 +674,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.31
  **/
@@ -626,6 +697,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.31
  **/
@@ -646,6 +718,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.31
  **/
@@ -666,6 +739,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ✓
  * ColorHug2      |      ✓       |      ✓
  * ColorHug+      |      ✓       |      ✓
+ * ColorHugALS    |      ✓       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -686,6 +760,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ×
  * ColorHug2      |      ✓       |      ×
  * ColorHug+      |      ✓       |      ×
+ * ColorHugALS    |      ✓       |      ×
  *
  * Since: 0.1.29
  **/
@@ -708,6 +783,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ×
  * ColorHug2      |      ✓       |      ×
  * ColorHug+      |      ✓       |      ×
+ * ColorHugALS    |      ✓       |      ×
  *
  * Since: 0.1.29
  **/
@@ -729,6 +805,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ×
  * ColorHug2      |      ✓       |      ×
  * ColorHug+      |      ✓       |      ×
+ * ColorHugALS    |      ✓       |      ×
  *
  * Since: 0.1.29
  **/
@@ -749,6 +826,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ×
  * ColorHug2      |      ✓       |      ×
  * ColorHug+      |      ✓       |      ×
+ * ColorHugALS    |      ✓       |      ×
  *
  * Since: 0.1.29
  **/
@@ -782,7 +860,8 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ✓
  * ColorHug2      |      ✓       |      ✓
  * ColorHug+      |      ✓       |      ✓
-
+ * ColorHugALS    |      ✓       |      ✓
+ *
  * Different values of @success are permitted in each mode.
  *
  * Since: 0.1.29
@@ -804,6 +883,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -824,6 +904,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -844,6 +925,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -864,6 +946,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -896,6 +979,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -916,6 +1000,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -931,7 +1016,8 @@ G_BEGIN_DECLS
  * 0x01		= ColorHug
  * 0x02		= ColorHug2
  * 0x03		= ColorHug+
- * 0x04-0x0f	= Reserved for future use
+ * 0x04		= ColorHugALS
+ * 0x05-0x0f	= Reserved for future use
  *
  * IN:  [1:cmd]
  * OUT: [1:retval][1:cmd][1:hw_version]
@@ -943,6 +1029,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ✓
  * ColorHug2      |      ✓       |      ✓
  * ColorHug+      |      ✓       |      ✓
+ * ColorHugALS    |      ✓       |      ✓
  *
  * Since: 0.1.29
  **/
@@ -971,6 +1058,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -998,6 +1086,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1018,6 +1107,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1040,6 +1130,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1061,6 +1152,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1083,6 +1175,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1103,6 +1196,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ✓
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ×
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1113,8 +1207,17 @@ G_BEGIN_DECLS
  *
  * Read in raw data from the SRAM memory.
  *
+ * PROTOCOLv1:
  * IN:  [1:cmd][2:address][1:length]
  * OUT: [1:retval][1:cmd][1-60:data]
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     [address-index/64]
+ * wIndex:     interface
+ * wLength:    0x64
+ * Direction:  DEVICE->HOST
+ * Data:       [64:DATA]
  *
  * This command is available under these conditions:
  *
@@ -1123,6 +1226,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1143,6 +1247,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1163,6 +1268,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ✓
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 0.1.29
  **/
@@ -1183,6 +1289,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 1.1.6
  **/
@@ -1203,6 +1310,7 @@ G_BEGIN_DECLS
  * ColorHug       |      ×       |      ×
  * ColorHug2      |      ×       |      ×
  * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
  *
  * Since: 1.1.6
  **/
@@ -1224,16 +1332,157 @@ G_BEGIN_DECLS
  * ColorHug       |      ✓       |      ✓
  * ColorHug2      |      ✓       |      ✓
  * ColorHug+      |      ✓       |      ✓
+ * ColorHugALS    |      ✓       |      ×
  *
  * Since: 0.1.29
  **/
 #define	CH_CMD_SELF_TEST			0x40
 
+/**
+ * CH_CMD_LOAD_SRAM:
+ *
+ * Load the SRAM from the EEPROM.
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     0x00
+ * wIndex:     interface
+ * wLength:    0x00
+ * Direction:  DEVICE->HOST
+ * Data:       [1:error][1:cmd]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 0.1.29
+ **/
+#define	CH_CMD_LOAD_SRAM			0x41
+
+/**
+ * CH_CMD_SAVE_SRAM:
+ *
+ * Save the SRAM to the EEPROM.
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     0x00
+ * wIndex:     interface
+ * wLength:    0x00
+ * Direction:  DEVICE->HOST
+ * Data:       [1:error][1:cmd]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 0.1.29
+ **/
+#define	CH_CMD_SAVE_SRAM			0x42
+
+/**
+ * CH_CMD_GET_ERROR:
+ *
+ * Gets any recorded error from the device.
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     0x00
+ * wIndex:     interface
+ * wLength:    0x00
+ * Direction:  DEVICE->HOST
+ * Data:       [1:error][1:cmd]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 1.3.1
+ **/
+#define	CH_CMD_GET_ERROR			0x60
+
+/**
+ * CH_CMD_CLEAR_ERROR:
+ *
+ * Clears any recorded error on the device.
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     0x00
+ * wIndex:     interface
+ * wLength:    0x00
+ * Direction:  DEVICE->HOST
+ * Data:       []
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 1.3.1
+ **/
+#define	CH_CMD_CLEAR_ERROR			0x61
+
+/**
+ * CH_CMD_SET_CRYPTO_KEY:
+ *
+ * Sets the 128 bit encyption key for the device.
+ *
+ * PROTOCOLv2:
+ * bRequest:   [cmd]
+ * wValue:     0x00
+ * wIndex:     interface
+ * wLength:    0x00
+ * Direction:  DEVICE->HOST
+ * Data:       [4:key0][4:key1][4:key2][4:key3]
+ *
+ * This command is available under these conditions:
+ *
+ *                |  Bootloader  |  Firmware
+ * ---------------+--------------+-----------
+ * ColorHug       |      ×       |      ×
+ * ColorHug2      |      ×       |      ×
+ * ColorHug+      |      ×       |      ✓
+ * ColorHugALS    |      ×       |      ×
+ *
+ * Since: 1.3.1
+ **/
+#define	CH_CMD_SET_CRYPTO_KEY			0x70
+
+/* the values here are not really API */
+#define	CH_EP0_TRANSFER_SIZE			64
+#define	CH_EP0_TRANSFER_SIZE_V2			0x400	/* since 1.3.4 */
+
 /* secret code */
 #define	CH_WRITE_EEPROM_MAGIC			"Un1c0rn2"
 #define	CH_FIRMWARE_ID_TOKEN1			"40338ceb"
 #define	CH_FIRMWARE_ID_TOKEN2			"2082b5e0"
+#define	CH_FIRMWARE_ID_TOKEN_ALS		"84f40464"	/* since 1.2.9 */
 #define	CH_FIRMWARE_ID_TOKEN_PLUS		"6d6f05a9"
+
+#define CH_DEVICE_GUID_COLORHUG			"40338ceb-b966-4eae-adae-9c32edfcc484"	/* since 1.2.9 */
+#define CH_DEVICE_GUID_COLORHUG2		"2082b5e0-7a64-478a-b1b2-e3404fab6dad"	/* since 1.2.9 */
+#define CH_DEVICE_GUID_COLORHUG_ALS		"84f40464-9272-4ef7-9399-cd95f12da696"	/* since 1.2.9 */
+#define CH_DEVICE_GUID_COLORHUG_PLUS		"6d6f05a9-3ecb-43a2-bcbb-3844f1825366"	/* since 1.2.9 */
 
 /* input and output buffer offsets */
 #define	CH_BUFFER_INPUT_CMD			0x00
@@ -1244,9 +1493,10 @@ G_BEGIN_DECLS
 
 /* where the custom firmware is stored */
 #define CH_EEPROM_ADDR_RUNCODE			0x4000
+#define CH_EEPROM_ADDR_RUNCODE_ALS		0x2000		/* since 1.2.9 */
 
 /* the number of useful samples from the the CCD */
-#define CH_CCD_SPECTRAL_RESOLUTION		3648
+#define CH_CCD_SPECTRAL_RESOLUTION		1024
 
 /* although each calibration can be stored in 60 bytes,
  * we use a full 64 byte block */
@@ -1297,6 +1547,15 @@ typedef enum {
 	CH_STATUS_LED_BLUE	= 1 << 2	/* Since: 0.1.29 */
 } ChStatusLed;
 
+/* Illuminants: possible bitfield values */
+typedef enum {
+	CH_ILLUMINANT_NONE	= 0,		/* Since: 1.3.4 */
+	CH_ILLUMINANT_A		= 1 << 0,	/* Since: 1.3.4 */
+	CH_ILLUMINANT_UV	= 1 << 1,	/* Since: 1.3.4 */
+	/*< private >*/
+	CH_ILLUMINANT_LAST
+} ChIlluminant;
+
 /* what frequency divider to use */
 typedef enum {
 	CH_FREQ_SCALE_0,
@@ -1342,6 +1601,8 @@ typedef enum {
 	CH_ERROR_SELF_TEST_ADC_VREF,
 	CH_ERROR_I2C_SLAVE_ADDRESS,
 	CH_ERROR_I2C_SLAVE_CONFIG,
+	CH_ERROR_SELF_TEST_EEPROM,	/* since 1.2.9 */
+	/*< private >*/
 	CH_ERROR_LAST
 } ChError;
 
@@ -1356,6 +1617,7 @@ typedef enum {
 	CH_PCB_ERRATA_NONE		= 0,
 	CH_PCB_ERRATA_SWAPPED_LEDS	= 1 << 0,
 	CH_PCB_ERRATA_NO_WELCOME	= 1 << 1,
+	/*< private >*/
 	CH_PCB_ERRATA_LAST		= 1 << 2
 } ChPcbErrata;
 
@@ -1368,12 +1630,25 @@ typedef enum {
 	CH_DEVICE_MODE_FIRMWARE_PLUS,
 	CH_DEVICE_MODE_FIRMWARE2,	/* since 1.2.2 */
 	CH_DEVICE_MODE_BOOTLOADER2,	/* since 1.2.3 */
+	CH_DEVICE_MODE_BOOTLOADER_ALS,	/* since 1.2.9 */
+	CH_DEVICE_MODE_FIRMWARE_ALS,	/* since 1.2.9 */
+	/*< private >*/
 	CH_DEVICE_MODE_LAST
 } ChDeviceMode;
 
+typedef enum {
+	CH_SPECTRUM_KIND_RAW		= 0x00,	/* since 1.3.4 */
+	CH_SPECTRUM_KIND_DARK_CAL	= 0x01,	/* since 1.3.4 */
+	CH_SPECTRUM_KIND_TEMP_CAL	= 0x02,	/* since 1.3.4 */
+	CH_SPECTRUM_KIND_IRRADIANCE_CAL	= 0x03,	/* since 1.3.4 */
+	CH_SPECTRUM_KIND_LAST
+} ChSpectrumKind;
+
+typedef guint8 ChCmd;
+
 /* prototypes */
 const gchar	*ch_strerror			(ChError	 error_enum);
-const gchar	*ch_command_to_string		(guint8		 cmd);
+const gchar	*ch_command_to_string		(ChCmd		 cmd);
 const gchar	*ch_multiplier_to_string	(ChFreqScale	 multiplier);
 const gchar	*ch_color_select_to_string	(ChColorSelect	 color_select);
 const gchar	*ch_measure_mode_to_string	(ChMeasureMode	 measure_mode);

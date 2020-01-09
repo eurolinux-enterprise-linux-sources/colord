@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2011-2012 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2011-2016 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -28,6 +28,7 @@
 
 #include <glib.h>
 #include <gusb.h>
+#include <colord-private.h>
 
 #include "ch-common.h"
 
@@ -37,6 +38,9 @@ G_BEGIN_DECLS
 
 GQuark		 ch_device_error_quark		(void);
 gboolean	 ch_device_open			(GUsbDevice	*device,
+						 GError		**error)
+						 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 ch_device_close		(GUsbDevice	*device,
 						 GError		**error)
 						 G_GNUC_WARN_UNUSED_RESULT;
 gboolean	 ch_device_is_colorhug		(GUsbDevice	*device);
@@ -68,6 +72,125 @@ gboolean	 ch_device_check_firmware	(GUsbDevice	*device,
 						 gsize		 data_len,
 						 GError		**error)
 						 G_GNUC_WARN_UNUSED_RESULT;
+guint16		 ch_device_get_runcode_address	(GUsbDevice	*device);
+const gchar	*ch_device_get_guid		(GUsbDevice	*device);
+gboolean	 ch_device_open_full		(GUsbDevice	*device,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_self_test		(GUsbDevice	*device,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_serial_number	(GUsbDevice	*device,
+						 guint32	 value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_serial_number	(GUsbDevice	*device,
+						 guint32	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_leds		(GUsbDevice	*device,
+						 ChStatusLed	 value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_leds		(GUsbDevice	*device,
+						 ChStatusLed	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_illuminants	(GUsbDevice	*device,
+						 ChIlluminant	 value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_illuminants	(GUsbDevice	*device,
+						 ChIlluminant	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_pcb_errata	(GUsbDevice	*device,
+						 ChPcbErrata	 value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_pcb_errata	(GUsbDevice	*device,
+						 ChPcbErrata	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_ccd_calibration	(GUsbDevice	*device,
+						 gdouble	 nm_start,
+						 gdouble	 c0,
+						 gdouble	 c1,
+						 gdouble	 c2,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_crypto_key	(GUsbDevice	*device,
+						 guint32	 keys[4],
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_ccd_calibration	(GUsbDevice	*device,
+						 gdouble	*nm_start,
+						 gdouble	*c0,
+						 gdouble	*c1,
+						 gdouble	*c2,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_integral_time	(GUsbDevice	*device,
+						 guint16	 value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_integral_time	(GUsbDevice	*device,
+						 guint16	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_temperature	(GUsbDevice	*device,
+						 gdouble	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_adc_calibration_pos (GUsbDevice	*device,
+						 gdouble	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_adc_calibration_neg (GUsbDevice	*device,
+						 gdouble	*value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_get_error		(GUsbDevice	*device,
+						 ChError	*status,
+						 ChCmd		*cmd,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_take_reading_spectral(GUsbDevice	*device,
+						 ChSpectrumKind value,
+						 GCancellable	*cancellable,
+						 GError		**error);
+CdColorXYZ	*ch_device_take_reading_xyz	(GUsbDevice	*device,
+						 guint16	 calibration_idx,
+						 GCancellable	*cancellable,
+						 GError		**error);
+CdSpectrum	*ch_device_get_spectrum		(GUsbDevice	*device,
+						 GCancellable	*cancellable,
+						 GError		**error);
+CdSpectrum	*ch_device_get_spectrum_full	(GUsbDevice	*device,
+						 ChSpectrumKind	 kind,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_set_spectrum_full	(GUsbDevice	*device,
+						 ChSpectrumKind	 kind,
+						 CdSpectrum	*sp,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_load_sram		(GUsbDevice	*device,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_save_sram		(GUsbDevice	*device,
+						 GCancellable	*cancellable,
+						 GError		**error);
+GBytes		*ch_device_read_sram		(GUsbDevice	*device,
+						 guint16	 addr,
+						 guint16	 len,
+						 GCancellable	*cancellable,
+						 GError		**error);
+gboolean	 ch_device_write_sram		(GUsbDevice	*device,
+						 guint16	 addr,
+						 GBytes		*data,
+						 GCancellable	*cancellable,
+						 GError		**error);
 
 G_END_DECLS
 

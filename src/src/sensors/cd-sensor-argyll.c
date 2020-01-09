@@ -28,11 +28,10 @@
 #include <glib-object.h>
 #include <stdlib.h>
 
-#include "cd-cleanup.h"
 #include "cd-sensor.h"
 #include "cd-spawn.h"
 
-#define CD_SENSOR_ARGYLL_MAX_SAMPLE_TIME	10000 /* ms */
+#define CD_SENSOR_ARGYLL_MAX_SAMPLE_TIME	60000 /* ms */
 
 typedef enum {
 	CD_SENSOR_ARGYLL_POS_UNKNOWN,
@@ -53,78 +52,62 @@ cd_sensor_argyll_get_private (CdSensor *sensor)
 	return g_object_get_data (G_OBJECT (sensor), "priv");
 }
 
-/* async state for the sensor readings */
+/* async task for the sensor readings */
 typedef struct {
 	gboolean		 ret;
 	CdColorXYZ		*sample;
-	GSimpleAsyncResult	*res;
 	CdSensor		*sensor;
 	guint			 exit_id;
 	guint			 stdout_id;
 	guint			 timeout_id;
-} CdSensorAsyncState;
+} CdSensorTaskData;
 
 static void
-cd_sensor_get_sample_state_finish (CdSensorAsyncState *state,
-				   const GError *error)
+cd_sensor_task_data_free (CdSensorTaskData *data)
 {
-	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (state->sensor);
-
-	if (state->ret) {
-		g_simple_async_result_set_op_res_gpointer (state->res,
-							   state->sample,
-							   (GDestroyNotify) cd_color_xyz_free);
-	} else {
-		g_simple_async_result_set_from_error (state->res, error);
-	}
-
-	/* set state */
-	cd_sensor_set_state (state->sensor, CD_SENSOR_STATE_IDLE);
-
-	/* complete */
-	g_simple_async_result_complete_in_idle (state->res);
+	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (data->sensor);
 
 	/* disconnect handlers */
-	g_signal_handler_disconnect (priv->spawn, state->exit_id);
-	g_signal_handler_disconnect (priv->spawn, state->stdout_id);
-	g_source_remove (state->timeout_id);
-
-	g_object_unref (state->res);
-	g_object_unref (state->sensor);
-	g_slice_free (CdSensorAsyncState, state);
+	if (data->exit_id > 0)
+		g_signal_handler_disconnect (priv->spawn, data->exit_id);
+	if (data->stdout_id > 0)
+		g_signal_handler_disconnect (priv->spawn, data->stdout_id);
+	if (data->timeout_id > 0)
+		g_source_remove (data->timeout_id);
+	g_object_unref (data->sensor);
+	g_free (data);
 }
 
 static gboolean
-cd_sensor_get_sample_timeout_cb (CdSensorAsyncState *state)
+cd_sensor_get_sample_timeout_cb (GTask *task)
 {
-	GError *error;
-	error = g_error_new (CD_SENSOR_ERROR,
-			     CD_SENSOR_ERROR_INTERNAL,
-			     "spotread timed out");
-	cd_sensor_get_sample_state_finish (state, error);
-	g_error_free (error);
+	g_task_return_new_error (task,
+				 CD_SENSOR_ERROR,
+				 CD_SENSOR_ERROR_INTERNAL,
+				 "spotread timed out");
+	g_object_unref (task);
 	return G_SOURCE_REMOVE;
 }
 
 static void
 cd_sensor_get_sample_exit_cb (CdSpawn *spawn,
 			      CdSpawnExitType exit_type,
-			      CdSensorAsyncState *state)
+			      GTask *task)
 {
-	GError *error;
-	error = g_error_new (CD_SENSOR_ERROR,
-			     CD_SENSOR_ERROR_INTERNAL,
-			     "spotread exited unexpectedly");
-	cd_sensor_get_sample_state_finish (state, error);
-	g_error_free (error);
+	g_task_return_new_error (task,
+				 CD_SENSOR_ERROR,
+				 CD_SENSOR_ERROR_INTERNAL,
+				 "spotread exited unexpectedly");
+	g_object_unref (task);
 }
 
 static void
-cd_sensor_get_sample_stdout_cb (CdSpawn *spawn, const gchar *line, CdSensorAsyncState *state)
+cd_sensor_get_sample_stdout_cb (CdSpawn *spawn, const gchar *line, GTask *task)
 {
-	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (state->sensor);
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_strv_free_ gchar **parts = NULL;
+	CdSensorTaskData *data = g_task_get_task_data (task);
+	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (data->sensor);
+	g_autoptr(GError) error = NULL;
+	g_auto(GStrv) parts = NULL;
 
 	g_debug ("line='%s'", line);
 
@@ -143,31 +126,34 @@ cd_sensor_get_sample_stdout_cb (CdSpawn *spawn, const gchar *line, CdSensorAsync
 
 	/* got measurement */
 	if (g_str_has_prefix (line, " Result is XYZ:")) {
+		CdColorXYZ *sample;
 		parts = g_strsplit_set (line, " ,", -1);
-		state->ret = TRUE;
-		state->sample = cd_color_xyz_new ();
-		state->sample->X = atof (parts[4]);
-		state->sample->Y = atof (parts[5]);
-		state->sample->Z = atof (parts[6]);
-		cd_sensor_get_sample_state_finish (state, NULL);
+		sample = cd_color_xyz_new ();
+		sample->X = atof (parts[4]);
+		sample->Y = atof (parts[5]);
+		sample->Z = atof (parts[6]);
+		g_task_return_pointer (task, sample, (GDestroyNotify) cd_color_xyz_free);
+		g_object_unref (task);
 		return;
 	}
 
 	/* failed */
 	if (g_str_has_prefix (line, "Instrument initialisation failed")) {
-		error = g_error_new (CD_SENSOR_ERROR,
-				     CD_SENSOR_ERROR_INTERNAL,
-				     "failed to contact hardware (replug)");
-		cd_sensor_get_sample_state_finish (state, error);
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_INTERNAL,
+					 "failed to contact hardware (replug)");
+		g_object_unref (task);
 		return;
 	}
 
 	/* need surface */
 	if (g_strcmp0 (line, "(Sensor should be in surface position)") == 0) {
-		error = g_error_new (CD_SENSOR_ERROR,
-				     CD_SENSOR_ERROR_REQUIRED_POSITION_SURFACE,
-				     "Move to surface position");
-		cd_sensor_get_sample_state_finish (state, error);
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_REQUIRED_POSITION_SURFACE,
+					 "Move to surface position");
+		g_object_unref (task);
 		return;
 	}
 
@@ -181,10 +167,11 @@ cd_sensor_get_sample_stdout_cb (CdSpawn *spawn, const gchar *line, CdSensorAsync
 			priv->pos_required = CD_SENSOR_ARGYLL_POS_CALIBRATE;
 			return;
 		}
-		error = g_error_new (CD_SENSOR_ERROR,
-				     CD_SENSOR_ERROR_REQUIRED_POSITION_CALIBRATE,
-				     "Move to calibration position");
-		cd_sensor_get_sample_state_finish (state, error);
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_REQUIRED_POSITION_CALIBRATE,
+					 "Move to calibration position");
+		g_object_unref (task);
 		return;
 	}
 }
@@ -235,41 +222,41 @@ cd_sensor_get_sample_async (CdSensor *sensor,
 			    gpointer user_data)
 {
 	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (sensor);
-	CdSensorAsyncState *state;
+	CdSensorTaskData *data;
+	GTask *task = NULL;
 	const gchar *envp[] = { "ARGYLL_NOT_INTERACTIVE=1", NULL };
 	gboolean ret;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *argv = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GPtrArray) argv = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 
-	/* save state */
-	state = g_slice_new0 (CdSensorAsyncState);
-	state->res = g_simple_async_result_new (G_OBJECT (sensor),
-						callback,
-						user_data,
-						cd_sensor_get_sample_async);
-	state->sensor = g_object_ref (sensor);
+	task = g_task_new (sensor, cancellable, callback, user_data);
+
+	/* set state */
+	data = g_new0 (CdSensorTaskData, 1);
+	data->sensor = g_object_ref (sensor);
+	g_task_set_task_data (task, data, (GDestroyNotify) cd_sensor_task_data_free);
 
 	/* set state */
 	cd_sensor_set_state (sensor, CD_SENSOR_STATE_MEASURING);
 
 	/* connect before spotread produces values */
-	state->exit_id = g_signal_connect (priv->spawn,
-					   "exit",
-					   G_CALLBACK (cd_sensor_get_sample_exit_cb),
-					   state);
-	state->stdout_id = g_signal_connect (priv->spawn,
-					     "stdout",
-					     G_CALLBACK (cd_sensor_get_sample_stdout_cb),
-					     state);
+	data->exit_id = g_signal_connect (priv->spawn,
+					  "exit",
+					  G_CALLBACK (cd_sensor_get_sample_exit_cb),
+					  task);
+	data->stdout_id = g_signal_connect (priv->spawn,
+					    "stdout",
+					    G_CALLBACK (cd_sensor_get_sample_stdout_cb),
+					    task);
 
 	/* if spotread is not already running then execute */
 	if (!cd_spawn_is_running (priv->spawn)) {
 		argv = g_ptr_array_new_with_free_func (g_free);
 		g_ptr_array_add (argv, g_strdup ("/usr/bin/spotread"));
 		g_ptr_array_add (argv, g_strdup ("-d"));
-		g_ptr_array_add (argv, g_strdup_printf ("-c%i", priv->communication_port));
+		g_ptr_array_add (argv, g_strdup_printf ("-c%u", priv->communication_port));
 		g_ptr_array_add (argv, g_strdup ("-N")); //no autocal
 		g_ptr_array_add (argv, g_strdup (cd_sensor_get_y_arg_for_cap (cap)));
 		g_ptr_array_add (argv, NULL);
@@ -278,7 +265,10 @@ cd_sensor_get_sample_async (CdSensor *sensor,
 				     (gchar **) envp,
 				     &error);
 		if (!ret) {
-			cd_sensor_get_sample_state_finish (state, error);
+			g_task_return_new_error (task,
+						 CD_SENSOR_ERROR,
+						 CD_SENSOR_ERROR_INTERNAL,
+						 "%s", error->message);
 			return;
 		}
 	} else {
@@ -286,29 +276,16 @@ cd_sensor_get_sample_async (CdSensor *sensor,
 	}
 
 	/* cover the case where spotread crashes */
-	state->timeout_id = g_timeout_add (CD_SENSOR_ARGYLL_MAX_SAMPLE_TIME,
-					     (GSourceFunc) cd_sensor_get_sample_timeout_cb,
-					     state);
+	data->timeout_id = g_timeout_add (CD_SENSOR_ARGYLL_MAX_SAMPLE_TIME,
+					  (GSourceFunc) cd_sensor_get_sample_timeout_cb,
+					  task);
 }
 
 CdColorXYZ *
-cd_sensor_get_sample_finish (CdSensor *sensor,
-			     GAsyncResult *res,
-			     GError **error)
+cd_sensor_get_sample_finish (CdSensor *sensor, GAsyncResult *res, GError **error)
 {
-	GSimpleAsyncResult *simple;
-
-	g_return_val_if_fail (CD_IS_SENSOR (sensor), NULL);
-	g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (res), NULL);
-	g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-	/* failed */
-	simple = G_SIMPLE_ASYNC_RESULT (res);
-	if (g_simple_async_result_propagate_error (simple, error))
-		return NULL;
-
-	/* grab detail */
-	return cd_color_xyz_dup (g_simple_async_result_get_op_res_gpointer (simple));
+	g_return_val_if_fail (g_task_is_valid (res, sensor), NULL);
+	return g_task_propagate_pointer (G_TASK (res), error);
 }
 
 static void
@@ -358,6 +335,8 @@ cd_sensor_to_argyll_name (CdSensor *sensor)
 		return "Datacolor Spyder3";
 	case CD_SENSOR_KIND_SPYDER:
 		return "Datacolor Spyder4";
+	case CD_SENSOR_KIND_SPYDER5:
+		return "Datacolor Spyder5";
 	case CD_SENSOR_KIND_HUEY:
 		return "GretagMacbeth Huey";
 	case CD_SENSOR_KIND_COLORHUG:
@@ -379,11 +358,12 @@ cd_sensor_find_device_details (CdSensor *sensor, GError **error)
 	const gchar *argv[] = { "spotread", "--help", NULL };
 	const gchar *argyll_name;
 	const gchar *envp[] = { "ARGYLL_NOT_INTERACTIVE=1", NULL };
+	const gchar *usb_path;
 	gboolean ret;
 	guint i;
 	guint listno = 0;
-	_cleanup_free_ gchar *stdout = NULL;
-	_cleanup_strv_free_ gchar **lines = NULL;
+	g_autofree gchar *stdout = NULL;
+	g_auto(GStrv) lines = NULL;
 
 	/* spawn the --help output to parse the comm-port */
 	ret = g_spawn_sync (NULL,
@@ -399,23 +379,23 @@ cd_sensor_find_device_details (CdSensor *sensor, GError **error)
 	if (!ret)
 		return FALSE;
 
-	/* split into lines and search */
-	lines = g_strsplit (stdout, "\n", -1);
+	/* look for the usb /dev/bus/usb/002/003 path first */
+	usb_path = cd_sensor_get_usb_path (sensor);
 	argyll_name = cd_sensor_to_argyll_name (sensor);
-	if (argyll_name == NULL) {
-		g_set_error_literal (error,
-				     CD_SENSOR_ERROR,
-				     CD_SENSOR_ERROR_INTERNAL,
-				     "Failed to find sensor");
-		return FALSE;
-	}
+	lines = g_strsplit (stdout, "\n", -1);
 	for (i = 0; lines[i] != NULL; i++) {
 
 		/* look for the communication port listing of the
 		 * device type we have plugged in */
 		if (g_strstr_len (lines[i], -1, " = ") != NULL) {
 			listno++;
-			if (g_strstr_len (lines[i], -1, argyll_name) != NULL) {
+			if (usb_path != NULL &&
+			    g_strstr_len (lines[i], -1, usb_path) != NULL) {
+				priv->communication_port = listno;
+				break;
+			}
+			if (argyll_name != NULL &&
+			    g_strstr_len (lines[i], -1, argyll_name) != NULL) {
 				priv->communication_port = listno;
 				break;
 			}
@@ -435,53 +415,22 @@ cd_sensor_find_device_details (CdSensor *sensor, GError **error)
 }
 
 static void
-cd_sensor_unlock_state_finish (CdSensorAsyncState *state,
-			       const GError *error)
-{
-	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (state->sensor);
-
-	if (state->ret) {
-		g_simple_async_result_set_op_res_gboolean (state->res,
-							   state->ret);
-	} else {
-		g_simple_async_result_set_from_error (state->res, error);
-	}
-
-	/* set state */
-	cd_sensor_set_state (state->sensor, CD_SENSOR_STATE_IDLE);
-
-	/* complete */
-	g_simple_async_result_complete_in_idle (state->res);
-
-	/* disconnect handlers */
-	if (state->exit_id != 0)
-		g_signal_handler_disconnect (priv->spawn, state->exit_id);
-	if (state->timeout_id != 0)
-		g_source_remove (state->timeout_id);
-
-	/* this is no longer valid (put in ::Lock() also?) */
-	priv->pos_required = CD_SENSOR_ARGYLL_POS_UNKNOWN;
-
-	g_object_unref (state->res);
-	g_object_unref (state->sensor);
-	g_slice_free (CdSensorAsyncState, state);
-}
-
-static void
 cd_sensor_unlock_exit_cb (CdSpawn *spawn,
 			  CdSpawnExitType exit_type,
-			  CdSensorAsyncState *state)
+			  GTask *task)
 {
-	if (exit_type == CD_SPAWN_EXIT_TYPE_SIGQUIT) {
-		state->ret = TRUE;
-		cd_sensor_unlock_state_finish (state, NULL);
-	} else {
-		_cleanup_error_free_ GError *error = NULL;
-		error = g_error_new (CD_SENSOR_ERROR,
-				     CD_SENSOR_ERROR_INTERNAL,
-				     "exited without sigquit");
-		cd_sensor_unlock_state_finish (state, error);
+	if (exit_type != CD_SPAWN_EXIT_TYPE_SIGQUIT) {
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_INTERNAL,
+					 "exited without sigquit");
+		g_object_unref (task);
+		return;
 	}
+
+	/* success */
+	g_task_return_boolean (task, TRUE);
+	g_object_unref (task);
 }
 
 void
@@ -491,31 +440,30 @@ cd_sensor_unlock_async (CdSensor *sensor,
 			gpointer user_data)
 {
 	CdSensorArgyllPrivate *priv = cd_sensor_argyll_get_private (sensor);
-	CdSensorAsyncState *state;
+	CdSensorTaskData *data;
+	GTask *task = NULL;
 
 	g_return_if_fail (CD_IS_SENSOR (sensor));
 
-	/* save state */
-	state = g_slice_new0 (CdSensorAsyncState);
-	state->res = g_simple_async_result_new (G_OBJECT (sensor),
-						callback,
-						user_data,
-						cd_sensor_unlock_async);
-	state->sensor = g_object_ref (sensor);
+	task = g_task_new (sensor, cancellable, callback, user_data);
+
+	/* set state */
+	data = g_new0 (CdSensorTaskData, 1);
+	data->sensor = g_object_ref (sensor);
+	g_task_set_task_data (task, data, (GDestroyNotify) cd_sensor_task_data_free);
 
 	/* wait for exit */
-	state->exit_id = g_signal_connect (priv->spawn,
-					   "exit",
-					   G_CALLBACK (cd_sensor_unlock_exit_cb),
-					   state);
+	data->exit_id = g_signal_connect (priv->spawn,
+					  "exit",
+					  G_CALLBACK (cd_sensor_unlock_exit_cb),
+					  task);
 	/* kill spotread */
 	if (!cd_spawn_kill (priv->spawn)) {
-		_cleanup_error_free_ GError *error = NULL;
-		g_set_error (&error,
-			     CD_SENSOR_ERROR,
-			     CD_SENSOR_ERROR_INTERNAL,
-			     "failed to kill spotread");
-		cd_sensor_unlock_state_finish (state, error);
+		g_task_return_new_error (task,
+					 CD_SENSOR_ERROR,
+					 CD_SENSOR_ERROR_INTERNAL,
+					 "failed to kill spotread");
+		g_object_unref (task);
 		return;
 	}
 }

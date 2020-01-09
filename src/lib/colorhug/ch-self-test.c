@@ -39,7 +39,7 @@ ch_test_hash_func (void)
 	ChSha1 sha1;
 	gboolean ret;
 	gchar *str;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	/* parse into structure */
 	ret = ch_sha1_parse ("f18973b4ebaeab527dc15d5dd246debfbff20324",
@@ -76,7 +76,7 @@ ch_test_device_queue_progress_changed_cb (ChDeviceQueue	*device_queue,
 					  gpointer	 user_data)
 {
 	progress_changed_cnt++;
-	g_debug ("queue complete %i%%",
+	g_debug ("queue complete %u%%",
 		 percentage);
 }
 
@@ -85,22 +85,19 @@ ch_test_device_queue_func (void)
 {
 	ChDeviceQueue *device_queue;
 	gboolean ret;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	GPtrArray *devices;
 	guint i;
 	guint valid_devices = 0;
 	GUsbContext *usb_ctx;
 	GUsbDevice *device;
-	GUsbDeviceList *list;
 
 	/* try to find any ColorHug devices */
 	usb_ctx = g_usb_context_new (NULL);
 	if (usb_ctx == NULL)
 		return;
 
-	list = g_usb_device_list_new (usb_ctx);
-	g_usb_device_list_coldplug (list);
-	devices = g_usb_device_list_get_devices (list);
+	devices = g_usb_context_get_devices (usb_ctx);
 
 	/* watch for any failed devices */
 	device_queue = ch_device_queue_new ();
@@ -208,11 +205,9 @@ ch_test_device_queue_func (void)
 	g_assert_error (error, 1, 0);
 	g_debug ("error was: %s", error->message);
 	g_assert (!ret);
-	g_error_free (error);
 out:
 	g_ptr_array_unref (devices);
 	g_object_unref (device_queue);
-	g_object_unref (list);
 	g_object_unref (usb_ctx);
 }
 
@@ -451,7 +446,6 @@ ch_client_get_default (GError **error)
 	gboolean ret;
 	GUsbContext *usb_ctx;
 	GUsbDevice *device = NULL;
-	GUsbDeviceList *list;
 
 	g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -464,17 +458,15 @@ ch_client_get_default (GError **error)
 			    "No device found; USB initialisation failed");
 		return NULL;
 	}
-	list = g_usb_device_list_new (usb_ctx);
-	g_usb_device_list_coldplug (list);
-	device = g_usb_device_list_find_by_vid_pid (list,
-						    CH_USB_VID,
-						    CH_USB_PID_FIRMWARE,
-						    NULL);
+	device = g_usb_context_find_by_vid_pid (usb_ctx,
+						CH_USB_VID,
+						CH_USB_PID_FIRMWARE_ALS_SENSOR_HID,
+						NULL);
 	if (device == NULL) {
-		device = g_usb_device_list_find_by_vid_pid (list,
-							    CH_USB_VID,
-							    CH_USB_PID_FIRMWARE_PLUS,
-							    error);
+		device = g_usb_context_find_by_vid_pid (usb_ctx,
+							CH_USB_VID,
+							CH_USB_PID_FIRMWARE,
+							error);
 	}
 	if (device == NULL)
 		goto out;
@@ -485,8 +477,6 @@ ch_client_get_default (GError **error)
 		goto out;
 out:
 	g_object_unref (usb_ctx);
-	if (list != NULL)
-		g_object_unref (list);
 	return device;
 }
 
@@ -498,7 +488,7 @@ ch_test_state_func (void)
 	ChFreqScale multiplier = 0;
 	gboolean ret;
 	gdouble elapsed;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	GTimer *timer;
 	guint16 integral_time = 0;
 	guint8 leds = 0;
@@ -511,7 +501,6 @@ ch_test_state_func (void)
 					       G_USB_DEVICE_ERROR,
 					       G_USB_DEVICE_ERROR_NO_DEVICE)) {
 		g_debug ("no device, skipping tests");
-		g_error_free (error);
 		return;
 	}
 	g_assert_no_error (error);
@@ -521,7 +510,7 @@ ch_test_state_func (void)
 	device_queue = ch_device_queue_new ();
 	ch_device_queue_set_leds (device_queue,
 				  device,
-				  3,
+				  1,
 				  0,
 				  0x00,
 				  0x00);
@@ -540,7 +529,7 @@ ch_test_state_func (void)
 				       &error);
 	g_assert_no_error (error);
 	g_assert (ret);
-	g_assert_cmpint (leds, ==, 3);
+	g_assert_cmpint (leds, ==, 1);
 
 	/* verify color select */
 	if (ch_device_get_mode (device) == CH_DEVICE_MODE_FIRMWARE) {
@@ -651,6 +640,11 @@ ch_test_state_func (void)
 		g_timer_destroy (timer);
 	}
 
+	/* close */
+	ret = ch_device_close (device, &error);
+	g_assert_no_error (error);
+	g_assert (ret);
+
 	g_object_unref (device_queue);
 }
 
@@ -658,7 +652,7 @@ static void
 ch_test_eeprom_func (void)
 {
 	gboolean ret;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	guint16 major = 0;
 	guint16 micro = 0;
 	guint16 minor = 0;
@@ -677,11 +671,17 @@ ch_test_eeprom_func (void)
 
 	/* load the device */
 	device = ch_client_get_default (&error);
+	if (device != NULL && g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE) {
+		ret = ch_device_close (device, &error);
+		g_assert_no_error (error);
+		g_assert (ret);
+		g_debug ("not capable device, skipping tests");
+		return;
+	}
 	if (device == NULL && g_error_matches (error,
 					       G_USB_DEVICE_ERROR,
 					       G_USB_DEVICE_ERROR_NO_DEVICE)) {
 		g_debug ("no device, skipping tests");
-		g_error_free (error);
 		return;
 	}
 	g_assert_no_error (error);
@@ -914,6 +914,9 @@ ch_test_eeprom_func (void)
 	g_assert (ret);
 #endif
 
+	ret = ch_device_close (device, &error);
+	g_assert_no_error (error);
+	g_assert (ret);
 	g_object_unref (device);
 	g_object_unref (device_queue);
 }
@@ -922,7 +925,7 @@ static void
 ch_test_reading_func (void)
 {
 	gboolean ret;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	guint32 take_reading = 0;
 	GUsbDevice *device;
 	ChDeviceQueue *device_queue;
@@ -933,7 +936,6 @@ ch_test_reading_func (void)
 					       G_USB_DEVICE_ERROR,
 					       G_USB_DEVICE_ERROR_NO_DEVICE)) {
 		g_debug ("no device, skipping tests");
-		g_error_free (error);
 		return;
 	}
 	g_assert_no_error (error);
@@ -979,6 +981,11 @@ ch_test_reading_func (void)
 	g_assert (ret);
 	g_assert_cmpint (take_reading, >, 0);
 
+	/* close */
+	ret = ch_device_close (device, &error);
+	g_assert_no_error (error);
+	g_assert (ret);
+
 	g_object_unref (device);
 	g_object_unref (device_queue);
 }
@@ -991,7 +998,7 @@ ch_test_reading_xyz_func (void)
 	CdColorXYZ reading1;
 	CdColorXYZ reading2;
 	gdouble scaling_factor_actual;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	guint16 calibration_map[6];
 	guint16 post_scale;
 	guint i;
@@ -1001,11 +1008,17 @@ ch_test_reading_xyz_func (void)
 
 	/* load the device */
 	device = ch_client_get_default (&error);
+	if (device != NULL && g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE) {
+		ret = ch_device_close (device, &error);
+		g_assert_no_error (error);
+		g_assert (ret);
+		g_debug ("not capable device, skipping tests");
+		return;
+	}
 	if (device == NULL && g_error_matches (error,
 					       G_USB_DEVICE_ERROR,
 					       G_USB_DEVICE_ERROR_NO_DEVICE)) {
 		g_debug ("no device, skipping tests");
-		g_error_free (error);
 		return;
 	}
 	g_assert_no_error (error);
@@ -1071,7 +1084,7 @@ ch_test_reading_xyz_func (void)
 
 	/* set post scale much higher */
 	for (post_scale = 1; post_scale < 2000; post_scale *= 2) {
-		g_debug ("Setting post-scale %i", post_scale);
+		g_debug ("Setting post-scale %" G_GUINT16_FORMAT, post_scale);
 		ch_device_queue_set_post_scale (device_queue,
 						device,
 						post_scale);
@@ -1113,6 +1126,12 @@ ch_test_reading_xyz_func (void)
 		g_assert_cmpfloat (scaling_factor_actual, <, 1.1);
 		reading1.Z = reading2.Z * 2;
 	}
+
+	/* close */
+	ret = ch_device_close (device, &error);
+	g_assert_no_error (error);
+	g_assert (ret);
+
 	g_object_unref (device);
 	g_object_unref (device_queue);
 }
@@ -1129,18 +1148,24 @@ static void
 ch_test_incomplete_request_func (void)
 {
 	gboolean ret;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	guint8 buffer[CH_USB_HID_EP_SIZE];
 	GUsbDevice *device = NULL;
 
 
 	/* load the device */
 	device = ch_client_get_default (&error);
+	if (device != NULL && g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE) {
+		ret = ch_device_close (device, &error);
+		g_assert_no_error (error);
+		g_assert (ret);
+		g_debug ("not capable device, skipping tests");
+		return;
+	}
 	if (device == NULL && g_error_matches (error,
 					       G_USB_DEVICE_ERROR,
 					       G_USB_DEVICE_ERROR_NO_DEVICE)) {
 		g_debug ("no device, skipping tests");
-		g_error_free (error);
 		return;
 	}
 	g_assert_no_error (error);
@@ -1159,7 +1184,6 @@ ch_test_incomplete_request_func (void)
 					       &error);
 	if (!ret) {
 		g_warning ("Error: %s", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -1179,7 +1203,6 @@ ch_test_incomplete_request_func (void)
 					       &error);
 	if (!ret) {
 		g_warning ("Error: %s", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -1195,14 +1218,17 @@ ch_test_incomplete_request_func (void)
 					       &error);
 	if (!ret) {
 		g_warning ("Error: %s", error->message);
-		g_error_free (error);
 		goto out;
 	}
 	g_assert_cmpint (buffer[0], ==, CH_ERROR_INCOMPLETE_REQUEST);
 	g_assert_cmpint (buffer[1], ==, CH_CMD_GET_FIRMWARE_VERSION);
 out:
-	if (device != NULL)
+	if (device != NULL) {
+		ret = ch_device_close (device, &error);
+		g_assert_no_error (error);
+		g_assert (ret);
 		g_object_unref (device);
+	}
 }
 
 /**

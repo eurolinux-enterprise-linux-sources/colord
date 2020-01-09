@@ -35,20 +35,8 @@
 
 G_BEGIN_DECLS
 
-#define CH_TYPE_DEVICE_QUEUE		(ch_device_queue_get_type ())
-#define CH_DEVICE_QUEUE(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), CH_TYPE_DEVICE_QUEUE, ChDeviceQueue))
-#define CH_DEVICE_QUEUE_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), CH_TYPE_DEVICE_QUEUE, ChDeviceQueueClass))
-#define CH_IS_DEVICE_QUEUE(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), CH_TYPE_DEVICE_QUEUE))
-
-typedef struct _ChDeviceQueuePrivate	ChDeviceQueuePrivate;
-typedef struct _ChDeviceQueue		ChDeviceQueue;
-typedef struct _ChDeviceQueueClass	ChDeviceQueueClass;
-
-struct _ChDeviceQueue
-{
-	 GObject		 parent;
-	 ChDeviceQueuePrivate	*priv;
-};
+#define CH_TYPE_DEVICE_QUEUE (ch_device_queue_get_type ())
+G_DECLARE_DERIVABLE_TYPE (ChDeviceQueue, ch_device_queue, CH, DEVICE_QUEUE, GObject)
 
 struct _ChDeviceQueueClass
 {
@@ -96,7 +84,6 @@ typedef enum {
 	CH_DEVICE_QUEUE_PROCESS_FLAGS_NONFATAL_ERRORS	= 1 << 1
 } ChDeviceQueueProcessFlags;
 
-GType		 ch_device_queue_get_type	(void);
 ChDeviceQueue	*ch_device_queue_new		(void);
 
 void		 ch_device_queue_add		(ChDeviceQueue	*device_queue,
@@ -327,6 +314,10 @@ void		 ch_device_queue_verify_firmware	(ChDeviceQueue	*device_queue,
 							 GUsbDevice	*device,
 							 const guint8	*data,
 							 gsize		 len);
+void		 ch_device_queue_read_firmware		(ChDeviceQueue	*device_queue,
+							 GUsbDevice	*device,
+							 guint8		**data,
+							 gsize		*len);
 
 G_END_DECLS
 

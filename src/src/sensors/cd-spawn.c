@@ -40,7 +40,6 @@
 
 #include <glib/gi18n.h>
 
-#include "cd-cleanup.h"
 #include "cd-spawn.h"
 
 static void     cd_spawn_finalize	(GObject       *object);
@@ -102,7 +101,7 @@ cd_spawn_emit_whole_lines (CdSpawn *spawn, GString *string)
 	guint i;
 	guint size;
 	guint bytes_processed;
-	_cleanup_strv_free_ gchar **lines = NULL;
+	g_auto(GStrv) lines = NULL;
 
 	/* if nothing then don't emit */
 	if (string->len == 0)
@@ -366,7 +365,7 @@ cd_spawn_send_stdin (CdSpawn *spawn, const gchar *command)
 {
 	gint wrote;
 	gint length;
-	_cleanup_free_ gchar *buffer = NULL;
+	g_autofree gchar *buffer = NULL;
 
 	g_return_val_if_fail (CD_IS_SPAWN (spawn), FALSE);
 
@@ -408,7 +407,7 @@ cd_spawn_argv (CdSpawn *spawn, gchar **argv, gchar **envp, GError **error)
 	guint i;
 	guint len;
 	gint rc;
-	_cleanup_error_free_ GError *error_local = NULL;
+	g_autoptr(GError) error_local = NULL;
 
 	g_return_val_if_fail (CD_IS_SPAWN (spawn), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -416,11 +415,11 @@ cd_spawn_argv (CdSpawn *spawn, gchar **argv, gchar **envp, GError **error)
 
 	len = g_strv_length (argv);
 	for (i = 0; i < len; i++)
-		g_debug ("argv[%i] '%s'", i, argv[i]);
+		g_debug ("argv[%u] '%s'", i, argv[i]);
 	if (envp != NULL) {
 		len = g_strv_length (envp);
 		for (i = 0; i < len; i++)
-			g_debug ("envp[%i] '%s'", i, envp[i]);
+			g_debug ("envp[%u] '%s'", i, envp[i]);
 	}
 
 	/* create spawned object for tracking */

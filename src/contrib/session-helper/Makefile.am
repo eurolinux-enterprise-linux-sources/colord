@@ -53,7 +53,7 @@ colord_session_LDFLAGS =				\
 	$(PIE_LDFLAGS)
 
 colord_session_CFLAGS =					\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 dbusservicemaindir = $(datadir)/dbus-1/services
 dbusservicemain_in_files = org.freedesktop.ColorHelper.service.in
@@ -61,6 +61,12 @@ dbusservicemain_DATA     = $(dbusservicemain_in_files:.service.in=.service)
 $(dbusservicemain_DATA): $(dbusservicemain_in_files) Makefile
 	@sed -e "s|\@servicedir\@|$(libexecdir)|" $< | \
 	sed -e "s|\@daemon_user\@|$(daemon_user)|" > $@
+
+systemduserdir = $(prefix)/lib/systemd/user
+systemduser_in_files = colord-session.service.in
+systemduser_DATA     = $(systemduser_in_files:.service.in=.service)
+$(systemduser_DATA): $(systemduser_in_files) Makefile
+	@sed -e "s|\@servicedir\@|$(libexecdir)|" $< > $@
 
 if CD_BUILD_SESSION_EXAMPLE
 noinst_PROGRAMS =					\
@@ -74,7 +80,7 @@ colord_session_example_LDADD =				\
 	$(GNOME_DESKTOP_LIBS)				\
 	$(LCMS_LIBS) -lm
 colord_session_example_CFLAGS =				\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 test: colord-session-example
 	./colord-session-example			\
@@ -93,10 +99,12 @@ gsettings_SCHEMAS = $(gsettings_schemas_in_files:.gschema.xml.in=.gschema.xml)
 
 EXTRA_DIST =						\
 	$(gsettings_schemas_in_files)			\
+	$(systemduser_in_files)				\
 	$(dbusservicemain_in_files)
 
 DISTCLEANFILES =					\
 	$(dbusservicemain_DATA)				\
+	$(systemduser_DATA)				\
 	org.freedesktop.ColorHelper.gschema.xml
 
 -include $(top_srcdir)/git.mk

@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2014 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2015 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -29,9 +29,9 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <colord/colord.h>
-
-#include "cd-cleanup.h"
 
 #define CD_ERROR			1
 #define CD_ERROR_INVALID_ARGUMENTS	0
@@ -124,7 +124,7 @@ cd_util_print_field_time (const gchar *title,
 			  gint64 usecs)
 {
 	GDateTime *datetime;
-	_cleanup_free_ gchar *str = NULL;
+	g_autofree gchar *str = NULL;
 
 	datetime = g_date_time_new_from_unix_utc (usecs / G_USEC_PER_SEC);
 	/* TRANSLATORS: this is the profile creation date strftime format */
@@ -145,7 +145,7 @@ cd_util_show_owner (CdUtilPrivate *priv, guint uid)
 	/* TRANSLATORS: profile owner */
 	cd_util_print_field (_("Owner"), "owner", priv, pw->pw_name);
 #else
-	_cleanup_free_ gchar *str = NULL;
+	g_autofree gchar *str = NULL;
 	str = g_strdup_printf ("%u", uid);
 	/* TRANSLATORS: profile UID */
 	cd_util_print_field (_("Owner"), "owner", priv, str);
@@ -167,8 +167,8 @@ cd_util_show_profile (CdUtilPrivate *priv, CdProfile *profile)
 	GList *l;
 	guint i;
 	guint size;
-	_cleanup_hashtable_unref_ GHashTable *metadata = NULL;
-	_cleanup_list_free_ GList *list = NULL;
+	g_autoptr(GHashTable) metadata = NULL;
+	g_autoptr(GList) list = NULL;
 
 	/* TRANSLATORS: the internal DBus path */
 	cd_util_print_field (_("Object Path"),
@@ -273,8 +273,8 @@ cd_util_show_device (CdUtilPrivate *priv, CdDevice *device)
 	GList *l;
 	GPtrArray *profiles;
 	guint i;
-	_cleanup_hashtable_unref_ GHashTable *metadata = NULL;
-	_cleanup_list_free_ GList *list = NULL;
+	g_autoptr(GHashTable) metadata = NULL;
+	g_autoptr(GList) list = NULL;
 
 	/* TRANSLATORS: the internal DBus path */
 	cd_util_print_field (_("Object Path"),
@@ -371,7 +371,7 @@ cd_util_show_device (CdUtilPrivate *priv, CdDevice *device)
 	for (i = 0; i < profiles->len; i++) {
 		profile_tmp = g_ptr_array_index (profiles, i);
 		/* TRANSLATORS: the profile for the device */
-		str_tmp = g_strdup_printf ("%s %i", _("Profile"), i+1);
+		str_tmp = g_strdup_printf ("%s %u", _("Profile"), i+1);
 		ret = cd_profile_connect_sync (profile_tmp, NULL, &error);
 		if (!ret) {
 			cd_util_print_field (str_tmp,
@@ -449,6 +449,18 @@ cd_util_sensor_cap_to_string (CdSensorCap sensor_cap)
 		/* TRANSLATORS: this is the display technology */
 		return _("Calibration");
 	}
+	if (sensor_cap == CD_SENSOR_CAP_CALIBRATION_DARK) {
+		/* TRANSLATORS: this is the display calibration type */
+		return _("Dark Calibration");
+	}
+	if (sensor_cap == CD_SENSOR_CAP_CALIBRATION_IRRADIANCE) {
+		/* TRANSLATORS: this is the display calibration type */
+		return _("Irradiance Calibration");
+	}
+	if (sensor_cap == CD_SENSOR_CAP_SPECTRAL) {
+		/* TRANSLATORS: this is the sensor capability */
+		return _("Spectral");
+	}
 	if (sensor_cap == CD_SENSOR_CAP_LCD) {
 		/* TRANSLATORS: this is the display technology,
 		 * where LCD stands for 'Liquid Crystal Display' */
@@ -513,11 +525,11 @@ cd_util_show_sensor (CdUtilPrivate *priv, CdSensor *sensor)
 	guint caps;
 	guint i;
 	GVariant *value_tmp;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_hashtable_unref_ GHashTable *metadata = NULL;
-	_cleanup_hashtable_unref_ GHashTable *options = NULL;
-	_cleanup_list_free_ GList *list = NULL;
-	_cleanup_string_free_ GString *caps_str = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GHashTable) metadata = NULL;
+	g_autoptr(GHashTable) options = NULL;
+	g_autoptr(GList) list = NULL;
+	g_autoptr(GString) caps_str = NULL;
 
 	/* TRANSLATORS: the internal DBus path */
 	cd_util_print_field (_("Object Path"),
@@ -692,7 +704,7 @@ cd_util_add (GPtrArray *array,
 {
 	guint i;
 	CdUtilItem *item;
-	_cleanup_strv_free_ gchar **names = NULL;
+	g_auto(GStrv) names = NULL;
 
 	g_return_if_fail (name != NULL);
 	g_return_if_fail (description != NULL);
@@ -770,7 +782,7 @@ cd_util_run (CdUtilPrivate *priv, const gchar *command, gchar **values, GError *
 {
 	guint i;
 	CdUtilItem *item;
-	_cleanup_string_free_ GString *string = NULL;
+	g_autoptr(GString) string = NULL;
 
 	/* find command */
 	for (i = 0; i < priv->cmd_array->len; i++) {
@@ -808,10 +820,10 @@ cd_util_dump (CdUtilPrivate *priv, gchar **values, GError **error)
 	GDateTime *dt;
 	GError *error_local = NULL;
 	guint i;
-	_cleanup_free_ gchar *mapping_db = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *devices = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *profiles = NULL;
-	_cleanup_string_free_ GString *str = NULL;
+	g_autofree gchar *mapping_db = NULL;
+	g_autoptr(GPtrArray) devices = NULL;
+	g_autoptr(GPtrArray) profiles = NULL;
+	g_autoptr(GString) str = NULL;
 
 	/* header */
 	str = g_string_new ("");
@@ -835,19 +847,19 @@ cd_util_dump (CdUtilPrivate *priv, gchar **values, GError **error)
 		ret = FALSE;
 		goto out;
 	}
-	g_string_append_printf (str, "no-profile\t%i\n", profiles->len);
+	g_string_append_printf (str, "no-profile\t%u\n", profiles->len);
 	for (i = 0; i < profiles->len; i++) {
 		profile = g_ptr_array_index (profiles, i);
 		ret = cd_profile_connect_sync (profile, NULL, &error_local);
 		if (!ret) {
-			g_string_append_printf (str, "profile-%02i\t%s\tERROR: %s\n",
-						i,
+			g_string_append_printf (str, "profile-%02u\t%s\tERROR: %s\n",
+						(guint) i,
 						cd_profile_get_object_path (profile),
 						error_local->message);
 			g_clear_error (&error_local);
 		}
-		g_string_append_printf (str, "profile-%02i\t%s\t%s\n",
-					i,
+		g_string_append_printf (str, "profile-%02u\t%s\t%s\n",
+					(guint) i,
 					cd_profile_get_id (profile),
 					cd_profile_get_filename (profile));
 	}
@@ -858,13 +870,13 @@ cd_util_dump (CdUtilPrivate *priv, gchar **values, GError **error)
 		ret = FALSE;
 		goto out;
 	}
-	g_string_append_printf (str, "no-devices\t%i\n", devices->len);
+	g_string_append_printf (str, "no-devices\t%u\n", devices->len);
 	for (i = 0; i < devices->len; i++) {
 		device = g_ptr_array_index (devices, i);
 		ret = cd_device_connect_sync (device, NULL, &error_local);
 		if (!ret) {
-			g_string_append_printf (str, "device-%02i\t%s\tERROR: %s\n",
-						i,
+			g_string_append_printf (str, "device-%02u\t%s\tERROR: %s\n",
+						(guint) i,
 						cd_device_get_object_path (device),
 						error_local->message);
 			g_clear_error (&error_local);
@@ -875,8 +887,8 @@ cd_util_dump (CdUtilPrivate *priv, gchar **values, GError **error)
 			if (!ret)
 				goto out;
 		}
-		g_string_append_printf (str, "device-%02i\t%s\t%s\n",
-					i,
+		g_string_append_printf (str, "device-%02u\t%s\t%s\n",
+					(guint) i,
 					profile != NULL ?
 					 cd_profile_get_id (profile) :
 					 "                                    ",
@@ -913,7 +925,7 @@ cd_util_get_devices (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	CdDevice *device;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	/* execute sync method */
 	array = cd_client_get_devices_sync (priv->client, NULL, error);
@@ -938,7 +950,7 @@ cd_util_get_devices_by_kind (CdUtilPrivate *priv, gchar **values, GError **error
 {
 	CdDevice *device;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -976,7 +988,7 @@ cd_util_get_profiles (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	CdProfile *profile;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	/* execute sync method */
 	array = cd_client_get_profiles_sync (priv->client, NULL, error);
@@ -1001,7 +1013,7 @@ cd_util_get_sensors (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	CdSensor *sensor;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	/* execute sync method */
 	array = cd_client_get_sensors_sync (priv->client, NULL, error);
@@ -1033,7 +1045,7 @@ cd_util_sensor_lock (CdUtilPrivate *priv, gchar **values, GError **error)
 	CdSensor *sensor;
 	GMainLoop *loop = NULL;
 	guint i;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	/* execute sync method */
 	array = cd_client_get_sensors_sync (priv->client, NULL, error);
@@ -1068,13 +1080,13 @@ cd_util_sensor_lock (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_get_sensor_reading (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	CdColorXYZ *xyz;
 	CdSensorCap cap;
+	CdSensorCap cap_tmp = CD_SENSOR_CAP_UNKNOWN;
 	CdSensor *sensor;
 	GError *error_local = NULL;
 	guint i;
 	guint j;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1098,6 +1110,7 @@ cd_util_get_sensor_reading (CdUtilPrivate *priv, gchar **values, GError **error)
 	}
 	cap = cd_sensor_cap_from_string (values[0]);
 	for (i = 0; i < array->len; i++) {
+		g_autoptr(CdColorXYZ) xyz = NULL;
 		sensor = g_ptr_array_index (array, i);
 
 		if (!cd_sensor_connect_sync (sensor, NULL, error))
@@ -1115,7 +1128,7 @@ cd_util_get_sensor_reading (CdUtilPrivate *priv, gchar **values, GError **error)
 		/* get 3 samples sync */
 		for (j = 1; j < 4; j++) {
 			xyz = cd_sensor_get_sample_sync (sensor,
-							 cap,
+							 cap_tmp ? cap_tmp : cap,
 							 NULL,
 							 &error_local);
 			if (xyz == NULL) {
@@ -1137,6 +1150,26 @@ cd_util_get_sensor_reading (CdUtilPrivate *priv, gchar **values, GError **error)
 					j--;
 					g_clear_error (&error_local);
 					continue;
+				} else if (g_error_matches (error_local,
+							    CD_SENSOR_ERROR,
+							    CD_SENSOR_ERROR_REQUIRED_DARK_CALIBRATION)) {
+					/* TRANSLATORS: the user needs to change something on the device */
+					g_print ("%s\n", _("Put the device in a dark place and press enter."));
+					getchar ();
+					j--;
+					g_clear_error (&error_local);
+					cap_tmp = CD_SENSOR_CAP_CALIBRATION_DARK;
+					continue;
+				} else if (g_error_matches (error_local,
+							    CD_SENSOR_ERROR,
+							    CD_SENSOR_ERROR_REQUIRED_IRRADIANCE_CALIBRATION)) {
+					/* TRANSLATORS: the user needs to change something on the device */
+					g_print ("%s\n", _("Calibrate with a 3200K light source."));
+					getchar ();
+					j--;
+					g_clear_error (&error_local);
+					cap_tmp = CD_SENSOR_CAP_CALIBRATION_IRRADIANCE;
+					continue;
 				} else {
 					g_propagate_error (error,
 							   error_local);
@@ -1144,12 +1177,114 @@ cd_util_get_sensor_reading (CdUtilPrivate *priv, gchar **values, GError **error)
 				}
 			}
 
+			/* reset back */
+			if (cap_tmp == CD_SENSOR_CAP_CALIBRATION_DARK ||
+			    cap_tmp == CD_SENSOR_CAP_CALIBRATION_IRRADIANCE) {
+				cap_tmp = CD_SENSOR_CAP_UNKNOWN;
+				g_print ("%s\n", _("Put the device on the color to be measured and press enter."));
+				getchar ();
+			}
+
 			/* TRANSLATORS: this is the XYZ color value */
 			g_print ("%s XYZ : %f, %f, %f\n",
 				 _("Color"),
 				 xyz->X, xyz->Y, xyz->Z);
-			cd_color_xyz_free (xyz);
 		}
+
+		/* unlock */
+		if (!cd_sensor_unlock_sync (sensor, NULL, error))
+			return FALSE;
+	}
+	return TRUE;
+}
+
+/**
+ * cd_util_get_spectral_reading:
+ **/
+static gboolean
+cd_util_get_spectral_reading (CdUtilPrivate *priv, gchar **values, GError **error)
+{
+	CdSensorCap cap;
+	CdSensor *sensor;
+	GError *error_local = NULL;
+	guint i;
+	guint width = 130;
+	guint height = 30;
+	struct winsize w;
+	g_autoptr(GPtrArray) array = NULL;
+
+	if (g_strv_length (values) < 1) {
+		g_set_error_literal (error,
+				     CD_ERROR,
+				     CD_ERROR_INVALID_ARGUMENTS,
+				     "Not enough arguments, "
+				     "expected device type "
+				     "e.g. 'calibration' or 'spectral'");
+		return FALSE;
+	}
+
+	/* get window size */
+	if (ioctl (STDOUT_FILENO, TIOCGWINSZ, &w) == 0) {
+		width = w.ws_col - 1;
+		height = w.ws_row * 3 / 4;
+	}
+
+	/* execute sync method */
+	array = cd_client_get_sensors_sync (priv->client, NULL, error);
+	if (array == NULL)
+		return FALSE;
+	if (array->len == 0) {
+		/* TRANSLATORS: the user does not have a colorimeter attached */
+		g_set_error_literal (error, CD_ERROR, CD_ERROR_INVALID_ARGUMENTS,
+				     _("There are no supported sensors attached"));
+		return FALSE;
+	}
+	cap = cd_sensor_cap_from_string (values[0]);
+	for (i = 0; i < array->len; i++) {
+		g_autofree gchar *txt = NULL;
+		g_autoptr(CdSpectrum) sp = NULL;
+
+		sensor = g_ptr_array_index (array, i);
+
+		if (!cd_sensor_connect_sync (sensor, NULL, error))
+			return FALSE;
+
+		/* can we do spectral */
+		if (!cd_sensor_has_cap (sensor, CD_SENSOR_CAP_SPECTRAL)) {
+			/* TRANSLATORS: sensor can't do this */
+			g_print ("%s\n", _("No spectral capability"));
+			continue;
+		}
+
+		/* TRANSLATORS: this is the sensor title */
+		g_print ("%s: %s - %s\n", _("Sensor"),
+			 cd_sensor_get_vendor (sensor),
+			 cd_sensor_get_model (sensor));
+
+		/* lock */
+		if (!cd_sensor_lock_sync (sensor, NULL, error))
+			return FALSE;
+
+		/* get data */
+		sp = cd_sensor_get_spectrum_sync (sensor, cap, NULL, &error_local);
+		if (sp == NULL) {
+			if (g_error_matches (error_local,
+					     CD_SENSOR_ERROR,
+					     CD_SENSOR_ERROR_NO_SUPPORT)) {
+				/* TRANSLATORS: sensor can't do this */
+				g_print ("%s: %s\n", _("No spectral capability"),
+					 error_local->message);
+				g_clear_error (&error_local);
+				continue;
+			}
+			g_propagate_error (error, error_local);
+			error_local = NULL;
+			return FALSE;
+		}
+
+		/* print to console */
+		txt = cd_spectrum_to_string (sp, width, height);
+		g_print ("%s", txt);
 
 		/* unlock */
 		if (!cd_sensor_unlock_sync (sensor, NULL, error))
@@ -1168,8 +1303,8 @@ cd_util_sensor_set_options (CdUtilPrivate *priv, gchar **values, GError **error)
 	gchar *endptr = NULL;
 	gdouble val;
 	guint i;
-	_cleanup_hashtable_unref_ GHashTable *options = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
+	g_autoptr(GHashTable) options = NULL;
+	g_autoptr(GPtrArray) array = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1239,8 +1374,8 @@ static gboolean
 cd_util_create_device (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	guint mask;
-	_cleanup_hashtable_unref_ GHashTable *device_props = NULL;
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(GHashTable) device_props = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 3) {
 		g_set_error_literal (error,
@@ -1279,7 +1414,7 @@ cd_util_create_device (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_find_device (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1308,7 +1443,7 @@ cd_util_find_device (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_find_device_by_property (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1340,7 +1475,7 @@ cd_util_find_device_by_property (CdUtilPrivate *priv, gchar **values, GError **e
 static gboolean
 cd_util_find_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1369,7 +1504,7 @@ cd_util_find_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_find_profile_by_filename (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1398,7 +1533,7 @@ cd_util_find_profile_by_filename (CdUtilPrivate *priv, gchar **values, GError **
 static gboolean
 cd_util_get_standard_space (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1429,7 +1564,7 @@ cd_util_get_standard_space (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_create_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 	guint mask;
 
 	if (g_strv_length (values) < 2) {
@@ -1461,8 +1596,8 @@ cd_util_create_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_device_add_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdDevice) device = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1508,8 +1643,8 @@ cd_util_device_add_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_device_make_profile_default (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdDevice) device = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1551,7 +1686,7 @@ cd_util_device_make_profile_default (CdUtilPrivate *priv, gchar **values, GError
 static gboolean
 cd_util_delete_device (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1581,7 +1716,7 @@ cd_util_delete_device (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_delete_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1611,7 +1746,7 @@ cd_util_delete_profile (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_profile_set_property (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 3) {
 		g_set_error_literal (error,
@@ -1647,7 +1782,7 @@ cd_util_profile_set_property (CdUtilPrivate *priv, gchar **values, GError **erro
 static gboolean
 cd_util_device_set_model (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1679,7 +1814,7 @@ cd_util_device_set_model (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_device_set_enabled (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1715,8 +1850,8 @@ cd_util_device_get_default_profile (CdUtilPrivate *priv,
 				    gchar **values,
 				    GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdDevice) device = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -1759,7 +1894,7 @@ cd_util_device_get_default_profile (CdUtilPrivate *priv,
 static gboolean
 cd_util_device_set_vendor (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1791,7 +1926,7 @@ cd_util_device_set_vendor (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_device_set_serial (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1823,7 +1958,7 @@ cd_util_device_set_serial (CdUtilPrivate *priv, gchar **values, GError **error)
 static gboolean
 cd_util_device_set_kind (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1857,7 +1992,7 @@ cd_util_device_inhibit (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	GMainLoop *loop = NULL;
 	gint timeout;
-	_cleanup_object_unref_ CdDevice *device = NULL;
+	g_autoptr(CdDevice) device = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1914,8 +2049,8 @@ cd_util_device_get_profile_for_qualifiers (CdUtilPrivate *priv,
 					   gchar **values,
 					   GError **error)
 {
-	_cleanup_object_unref_ CdDevice *device = NULL;
-	_cleanup_object_unref_ CdProfile *profile = NULL;
+	g_autoptr(CdDevice) device = NULL;
+	g_autoptr(CdProfile) profile = NULL;
 
 	if (g_strv_length (values) < 2) {
 		g_set_error_literal (error,
@@ -1958,8 +2093,8 @@ cd_util_import_profile (CdUtilPrivate *priv,
 			gchar **values,
 			GError **error)
 {
-	_cleanup_object_unref_ CdProfile *profile = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autoptr(CdProfile) profile = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	if (g_strv_length (values) < 1) {
 		g_set_error_literal (error,
@@ -2004,9 +2139,9 @@ main (int argc, char *argv[])
 	gboolean verbose = FALSE;
 	gboolean version = FALSE;
 	guint retval = 1;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_free_ gchar *cmd_descriptions = NULL;
-	_cleanup_free_ gchar *filter = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autofree gchar *cmd_descriptions = NULL;
+	g_autofree gchar *filter = NULL;
 	const GOptionEntry options[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
 			/* TRANSLATORS: command line option */
@@ -2064,6 +2199,12 @@ main (int argc, char *argv[])
 		     /* TRANSLATORS: command description */
 		     _("Gets all the available color sensors"),
 		     cd_util_get_sensors);
+	cd_util_add (priv->cmd_array,
+		     "get-spectral-reading",
+		     "[KIND]",
+		     /* TRANSLATORS: command description */
+		     _("Gets a spectral reading from a sensor"),
+		     cd_util_get_spectral_reading);
 	cd_util_add (priv->cmd_array,
 		     "get-sensor-reading",
 		     "[KIND]",
@@ -2269,7 +2410,7 @@ main (int argc, char *argv[])
 	ret = cd_util_run (priv, argv[1], (gchar**) &argv[2], &error);
 	if (!ret) {
 		if (g_error_matches (error, CD_ERROR, CD_ERROR_NO_SUCH_CMD)) {
-			_cleanup_free_ gchar *tmp = NULL;
+			g_autofree gchar *tmp = NULL;
 			tmp = g_option_context_get_help (priv->context, TRUE, NULL);
 			g_print ("%s", tmp);
 		} else {

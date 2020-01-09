@@ -2,8 +2,8 @@
 AC_PREREQ(2.63)
 
 m4_define([cd_major_version], [1])
-m4_define([cd_minor_version], [2])
-m4_define([cd_micro_version], [7])
+m4_define([cd_minor_version], [3])
+m4_define([cd_micro_version], [4])
 m4_define([cd_version],
           [cd_major_version.cd_minor_version.cd_micro_version])
 
@@ -14,7 +14,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_LIBTOOL
 
-GOBJECT_INTROSPECTION_CHECK([0.9.8])
+m4_ifdef([GOBJECT_INTROSPECTION_CHECK], [GOBJECT_INTROSPECTION_CHECK([0.9.8])])
+AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$found_introspection" = xyes)
 GLIB_GSETTINGS
 
 # set up gtk-doc
@@ -38,7 +39,7 @@ AC_SUBST(CD_MICRO_VERSION)
 # REVISION	If the API and ABI remains the same, but bugs are fixed.
 # AGE		Don't use.
 LT_CURRENT=2
-LT_REVISION=3
+LT_REVISION=5
 LT_AGE=0
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
@@ -55,59 +56,29 @@ AM_PROG_CC_C_O
 IT_PROG_INTLTOOL([0.35.0])
 AC_PATH_PROG(XSLTPROC, xsltproc)
 
-dnl ---------------------------------------------------------------------------
-dnl - Use strict options (default enabled for devs, disabled in releases)
-dnl ---------------------------------------------------------------------------
-if test -d ".git"; then
-	default_strict=yes
-else
-	default_strict=no
-fi
-
-AC_ARG_ENABLE(strict, AS_HELP_STRING([--enable-strict],
-				     [Enable strict compilation options]),
-				     enable_strict=$enableval,
-				     enable_strict=$default_strict)
-if test x$enable_strict != xno; then
-	CPPFLAGS="$CPPFLAGS -DG_DISABLE_SINGLE_INCLUDES"
-	CPPFLAGS="$CPPFLAGS -DG_DISABLE_DEPRECATED"
-	CPPFLAGS="$CPPFLAGS -DGSEAL_ENABLE"
-fi
-
-dnl ---------------------------------------------------------------------------
-dnl - Extra verbose warning switches
-dnl ---------------------------------------------------------------------------
-
-if test "$GCC" = "yes"; then
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wall"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wcast-align -Wno-uninitialized"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wmissing-declarations"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wpointer-arith"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wcast-align"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wwrite-strings"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Winit-self"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wreturn-type"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wformat-nonliteral"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wformat-security"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wmissing-include-dirs"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wmissing-format-attribute"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wclobbered"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wempty-body"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wignored-qualifiers"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wsign-compare"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wtype-limits"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wuninitialized"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Waggregate-return"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wdeclaration-after-statement"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wshadow"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wno-strict-aliasing"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Winline"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Wmissing-parameter-type"
-	WARNINGFLAGS_C="$WARNINGFLAGS_C -Woverride-init"
-else
-	WARNINGFLAGS_C=""
-fi
-AC_SUBST(WARNINGFLAGS_C)
+GNOME_COMPILE_WARNINGS([maximum],[
+	-Wmissing-declarations
+	-Wcast-align
+	-Wwrite-strings
+	-Wreturn-type
+	-Wformat-nonliteral
+	-Wmissing-format-attribute
+	-Wclobbered
+	-Wempty-body
+	-Wignored-qualifiers
+	-Wsign-compare
+	-Wtype-limits
+	-Wuninitialized
+	-Waggregate-return
+	-Wdeclaration-after-statement
+	-Wshadow
+	-Wno-strict-aliasing
+	-Winline
+	-Wmissing-parameter-type
+	-Woverride-init
+	-Wno-discarded-qualifiers
+	-Wformat-signedness
+])
 
 dnl ---------------------------------------------------------------------------
 dnl - gettext stuff
@@ -149,7 +120,7 @@ dnl ---------------------------------------------------------------------------
 dnl - Check library dependencies
 dnl ---------------------------------------------------------------------------
 COLORD_REQUIRES_PRIVATE="lcms2"
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.36.0 gobject-2.0 gthread-2.0 gio-2.0 >= 2.25.9 gmodule-2.0)
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.44.0 gobject-2.0 gthread-2.0 gio-2.0 >= 2.25.9 gmodule-2.0)
 
 dnl ---------------------------------------------------------------------------
 dnl - Check Linux-specific dependencies
@@ -185,12 +156,21 @@ else
 fi
 AC_SUBST([CD_IT8])
 AC_SUBST([CD_CREATE_PROFILE])
-AM_CONDITIONAL(HAVE_UNIX, test x$enable_unix = xyes)
+
+# optional
+AC_ARG_ENABLE(session_helper, AS_HELP_STRING([--enable-session-helper],[Enable Session Helper]),
+	      enable_session_helper=$enableval, enable_session_helper=$enable_unix)
+AM_CONDITIONAL(HAVE_SESSION_HELPER, test x$enable_session_helper = xyes)
+
+# optional
+AC_ARG_ENABLE(daemon, AS_HELP_STRING([--enable-daemon],[Enable daemon]),
+	      enable_daemon=$enableval, enable_daemon=$enable_unix)
+AM_CONDITIONAL(HAVE_DAEMON, test x$enable_daemon = xyes)
 
 AC_ARG_ENABLE(gusb, AS_HELP_STRING([--enable-gusb],[Enable GUSB support]),
 	      enable_gusb=$enableval, enable_gusb=yes)
 if test x$enable_gusb != xno; then
-	PKG_CHECK_MODULES(GUSB, gusb >= 0.1.1)
+	PKG_CHECK_MODULES(GUSB, gusb >= 0.2.7)
 	AC_DEFINE(HAVE_GUSB,1,[whether gusb is available])
 fi
 AM_CONDITIONAL(HAVE_GUSB, test x$enable_gusb = xyes)
@@ -238,6 +218,10 @@ AM_CONDITIONAL(CD_BUILD_POLKIT, test x$enable_polkit = xyes)
 if test x$enable_polkit = xyes; then
 	PKG_CHECK_MODULES(POLKIT, polkit-gobject-1 >= 0.103)
 	AC_DEFINE(USE_POLKIT, 1, [if we should use PolicyKit])
+
+        PKG_CHECK_EXISTS([polkit-gobject-1 >= 0.114],
+                         [AC_DEFINE(POLKIT_HAS_AUTOPTR_MACROS, 1, [if PolKit has autoptr macros])],
+                         [])
 fi
 
 dnl ---------------------------------------------------------------------------
@@ -253,6 +237,17 @@ if test "x$with_systemdsystemunitdir" != "xno"; then
 fi
 AM_CONDITIONAL(HAVE_SYSTEMD, [test -n "$systemdsystemunitdir"])
 
+dnl ---------------------------------------------------------------------------
+dnl - Where to install tmpfiles.d snippet rules
+dnl ---------------------------------------------------------------------------
+AC_ARG_WITH([tmpfilesdir],
+            AS_HELP_STRING([--with-tmpfilesdir=DIR], [Directory for tmpfiles.d snippet files]),
+            [],
+            [with_tmpfilesdir=$($PKG_CONFIG --variable=tmpfilesdir systemd)])
+if test "x$with_tmpfilesdir" != "xno"; then
+	AC_SUBST([tmpfilesdir], [$with_tmpfilesdir])
+fi
+
 dnl **** Check if we should build libcolordcompat ****
 AC_ARG_ENABLE(libcolordcompat, AS_HELP_STRING([--enable-libcolordcompat],
 					      [Enable libcolordcompat.so which is used by ArgyllCMS]),
@@ -263,15 +258,19 @@ fi
 AM_CONDITIONAL(BUILD_LIBCOLORDCOMPAT, test x$build_libcolordcompat = xyes)
 
 dnl ---------------------------------------------------------------------------
-dnl - Use libsystemd-login to track the process seat
+dnl - Use systemd-login to track the process seat
 dnl ---------------------------------------------------------------------------
-AC_ARG_ENABLE(systemd-login, AS_HELP_STRING([--enable-systemd-login],[Build systemd-login support]),
+AC_ARG_ENABLE(systemd-login, AS_HELP_STRING([--enable-systemd-login],[Build systemd seat-tracking support]),
 	      enable_systemd_login=$enableval, enable_systemd_login=yes)
 AM_CONDITIONAL(HAVE_LIBSYSTEMD_LOGIN, test x$enable_systemd_login = xyes)
 if test x$enable_systemd_login != xno; then
-	PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN,
-			  [libsystemd-login >= 44])
-	AC_DEFINE([HAVE_LIBSYSTEMD_LOGIN], 1, [Define to 1 if libsystemd-login is available])
+	PKG_CHECK_MODULES(LIBSYSTEMD,
+			  [libsystemd],
+			  [LIBSYSTEMD_LOGIN_CFLAGS=$LIBSYSTEMD_CFLAGS;
+			   LIBSYSTEMD_LOGIN_LIBS=$LIBSYSTEMD_LIBS],
+			  [PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN,
+			                     [libsystemd-login >= 44])])
+	AC_DEFINE([HAVE_LIBSYSTEMD_LOGIN], 1, [Define to 1 if systemd login is available])
 fi
 AC_SUBST(HAVE_LIBSYSTEMD_LOGIN)
 AC_SUBST(LIBSYSTEMD_LOGIN_CFLAGS)
@@ -325,6 +324,7 @@ AC_ARG_ENABLE(sane, AS_HELP_STRING([--enable-sane],[Enable SANE support]),
 has_sane=no
 if test x$enable_sane != xno; then
 	PKG_CHECK_MODULES(SANE, sane-backends, has_sane=yes, has_sane=no)
+	PKG_CHECK_MODULES(DBUS, dbus-1, have_dbus=yes, have_dbus=no)
 	if test $has_sane = "no"; then
 		# fall back to detecting the header for some distros
 		AC_CHECK_HEADER(sane/sane.h, has_sane=yes, has_sane=no)
@@ -470,6 +470,7 @@ lib/compat/Makefile
 lib/dtp94/Makefile
 lib/huey/Makefile
 lib/munki/Makefile
+lib/ospark/Makefile
 ])
 AC_OUTPUT
 
@@ -492,6 +493,7 @@ echo "
         SANE support:              ${has_sane}
         Udev support:              ${enable_udev}
         GUsb support:              ${enable_gusb}
+        Build daemon:              ${enable_daemon}
         Extra print profiles:      ${enable_print_profiles}
         Install tests:             ${enable_installed_tests}
         ArgyllCMS sensor:          ${enable_argyllcms_sensor}
@@ -499,8 +501,10 @@ echo "
         Vala API generator:        ${has_vapigen}
         Daemon user:               ${daemon_user}
         udev rules.d dir:          ${with_udevrulesdir}
-        using libsystemd-login:    ${enable_systemd_login}
+        systemd-login support:     ${enable_systemd_login}
         systemd service dir:       ${with_systemdsystemunitdir}
+        tmpfiles.d dir:            ${with_tmpfilesdir}
+        Session helper support:    ${enable_session_helper}
         Unix support:              ${enable_unix}
 "
 

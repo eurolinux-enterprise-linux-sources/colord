@@ -28,9 +28,9 @@
 
 /* compile time version
  */
-#define CH_MAJOR_VERSION				(@CH_MAJOR_VERSION@)
-#define CH_MINOR_VERSION				(@CH_MINOR_VERSION@)
-#define CH_MICRO_VERSION				(@CH_MICRO_VERSION@)
+#define CH_MAJOR_VERSION				(1)
+#define CH_MINOR_VERSION				(3)
+#define CH_MICRO_VERSION				(4)
 
 /* check whether a Ch version equal to or greater than
  * major.minor.micro.
