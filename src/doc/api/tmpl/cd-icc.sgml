@@ -48,7 +48,8 @@ cd-icc
 @CD_ICC_ERROR_FAILED_TO_SAVE: 
 @CD_ICC_ERROR_FAILED_TO_CREATE: 
 @CD_ICC_ERROR_INVALID_COLORSPACE: 
-@CD_ICC_ERROR_LAST: 
+@CD_ICC_ERROR_CORRUPTION_DETECTED: 
+@CD_ICC_ERROR_INTERNAL: 
 
 <!-- ##### USER_FUNCTION _cd_icc_reserved1 ##### -->
 <para>
@@ -125,8 +126,8 @@ cd-icc
 @CD_ICC_LOAD_FLAGS_METADATA: 
 @CD_ICC_LOAD_FLAGS_FALLBACK_MD5: 
 @CD_ICC_LOAD_FLAGS_PRIMARIES: 
+@CD_ICC_LOAD_FLAGS_CHARACTERIZATION: 
 @CD_ICC_LOAD_FLAGS_ALL: 
-@CD_ICC_LOAD_FLAGS_LAST: 
 
 <!-- ##### ENUM CdIccSaveFlags ##### -->
 <para>
@@ -134,7 +135,6 @@ cd-icc
 </para>
 
 @CD_ICC_SAVE_FLAGS_NONE: 
-@CD_ICC_SAVE_FLAGS_LAST: 
 
 <!-- ##### FUNCTION cd_icc_error_quark ##### -->
 <para>
@@ -228,6 +228,18 @@ cd-icc
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_icc_save_default ##### -->
+<para>
+
+</para>
+
+@icc: 
+@flags: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_icc_to_string ##### -->
 <para>
 
@@ -238,6 +250,15 @@ cd-icc
 
 
 <!-- ##### FUNCTION cd_icc_get_handle ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_context ##### -->
 <para>
 
 </para>
@@ -410,6 +431,24 @@ cd-icc
 @locale: 
 @error: 
 @Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_characterization_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_characterization_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@data: 
 
 
 <!-- ##### FUNCTION cd_icc_get_copyright ##### -->
@@ -590,6 +629,27 @@ cd-icc
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_icc_create_from_edid_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@edid: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_create_default ##### -->
+<para>
+
+</para>
+
+@icc: 
+@error: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_icc_get_vcgt ##### -->
 <para>
 
@@ -619,6 +679,39 @@ cd-icc
 
 @icc: 
 @size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_tags ##### -->
+<para>
+
+</para>
+
+@icc: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_tag_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@tag: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_tag_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@tag: 
+@data: 
 @error: 
 @Returns: 
 

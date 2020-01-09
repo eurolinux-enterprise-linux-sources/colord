@@ -1,54 +1,269 @@
-Version 1.0.4
+Version 1.2.7
+~~~~~~~~~~~~~
+Released: 2014-12-02
+
+Bugfixes:
+ - Don't build the daemon when compiling for MinGW (Richard Hughes)
+ - Use wine to run the client build tools when compiling under MinGW (Richard Hughes)
+
+Version 1.2.6
+~~~~~~~~~~~~~
+Released: 2014-11-24
+
+New Features:
+ - Allowing compile using mingw (Richard Hughes)
+ - Make the ArgyllCMS sensor driver optional (Richard Hughes)
+ - libcolord: Add cd_it8_get_xyz_for_rgb() (Richard Hughes)
+ - libcolord: Add cd_it8_utils_calculate_gamma() (Richard Hughes)
+ - libcolord: Add cd_spectrum_get_resolution() (Richard Hughes)
+ - libcolord: Add cd_spectrum_get_value_raw() (Richard Hughes)
+ - libcolord: Add cd_spectrum_normalize_max() (Richard Hughes)
+ - libcolord: Add cd_spectrum_set_value() (Richard Hughes)
+
+Bugfixes:
+ - libcolord: Allow a SPECTRAL_START_NM value of zero (Richard Hughes)
+ - libcolord: Always replace CCSS spectral data of the same ID (Richard Hughes)
+ - libcolord: Deep copy the spectral data when using cd_spectrum_dup() (Richard Hughes)
+ - libcolord: Fix using cd_it8_add_spectrum() where the spectra have no ID values (Richard Hughes)
+ - libcolord: Never allow duplicate CCSS IDs for small wavelength ranges (Richard Hughes)
+ - libcolord: Only set SPECTRAL_NORM when the normalisation is enabled (Richard Hughes)
+ - libcolord: Return correct values when no LUMINANCE_XYZ_CDM2 is specified (Richard Hughes)
+ - libcolord: Use double precision for SPECTRAL_START_NM and SPECTRAL_END_NM (Richard Hughes)
+ - libcolord: When using cd_it8_add_spectrum() replace any with the same ID (Richard Hughes)
+
+Version 1.2.5
+~~~~~~~~~~~~~
+Released: 2014-11-10
+
+New Features:
+ - Add a branding-less ColorHug2 figure (Pascal de Bruijn)
+ - Add the calculate-ccmx subcommand to cd-it8 (Richard Hughes)
+ - Install the now-useful cd-it8 helper (Richard Hughes)
+
+Bugfixes:
+ - Drop nb.po, its superfluous with nb_NO.po around (Torstein Husebø)
+ - Fix a crash in the session helper while calibrating (Richard Hughes)
+ - Remove the private cd-find-broken tool (Richard Hughes)
+
+Version 1.2.4
+~~~~~~~~~~~~~
+Released: 2014-10-12
+
+New Features:
+ - libcolord: Add cd_mat33_init() helper function (Richard Hughes)
+ - libcolorhug: Retry the command if the response is incomplete (Richard Hughes)
+
+Bugfixes:
+ - Don't enable PIE support when --without-pic is specified (Richard Hughes)
+ - libcolord: Build with PIE enabled (Richard Hughes)
+
+Version 1.2.3
+~~~~~~~~~~~~~
+Released: 2014-09-12
+
+New Features:
+ - colorhug: Add ch_device_check_firmware() (Richard Hughes)
+ - colorhug: Add ch_device_mode_from_firmware() (Richard Hughes)
+ - colorhug: Use a different PID for the ColorHug2 bootloader (Richard Hughes)
+
+Bugfixes:
+ - Fix the device path to allow uid or username to be omitted (Iain Lane)
+ - There is no seat if running in a chroot (Iain Lane)
+
+Version 1.2.2
+~~~~~~~~~~~~~
+Released: 2014-08-18
+
+New Features:
+ - Add a helper to calculate the ΔE of two colors (Richard Hughes)
+ - Bump the lcms2 dep to 2.6 (Richard Hughes)
+ - Use the ColorHug sensor driver for the ColorHug2 hardware (Richard Hughes)
+
+Bugfixes:
+ - Actually parse the EDID for better duplicate detection (Richard Hughes)
+ - Actually write a file when using cd_icc_save_default() (Richard Hughes)
+ - Do not try to return a CdIcc instance for virtual profiles (Richard Hughes)
+ - Use __attribute__(cleanup) to simplify memory cleanup (Richard Hughes)
+
+Version 1.2.1
+~~~~~~~~~~~~~
+Released: 2014-05-23
+
+New Features:
+ - Allow users to rename session and system ICC profiles (Richard Hughes)
+
+Bugfixes:
+ - Fix building the CMF spectra on OpenBSD/sparc64 (Richard Hughes)
+ - Fix the style of two colorimeter figures (Pascal de Bruijn)
+ - Make colord polkit policy usable on servers (Stef Walter)
+ - Trim out the CUPS-supplied prefix for the printer serial number (Richard Hughes)
+
+Version 1.2.0
+~~~~~~~~~~~~~
+Released: 2014-04-05
+
+New Features:
+ - Generate the CMFs from source data (Richard Hughes)
+ - Install several standard illuminants (Richard Hughes)
+ - Install the CRI Test Color Samples (Richard Hughes)
+ - Make colormgr script friendly by allowing filtering (Richard Hughes)
+ - Use the new cmsContext functionality in LCMS 2.6 (Richard Hughes)
+ - colord: Add a RGB32 pixel format for GdkPixbuf (Richard Hughes)
+ - colord: Add a utility function to calculate an XYZ value from a CMF (Richard Hughes)
+ - colord: Add a whitepoint value to cd_color_xyz_to_uvw() (Richard Hughes)
+ - colord: Add CdColorUVW and some useful functionality (Richard Hughes)
+ - colord: Add cd_color_xyz_to_cct() (Richard Hughes)
+ - colord: Add cd_icc_get_context() to get the internal cmsContext used by lcms2 (Richard Hughes)
+ - colord: Add cd_it8_utils_calculate_cri_from_cmf() to generate a CRI (Richard Hughes)
+ - colord: Add cd_spectrum_multiply() to multiply two spectra (Richard Hughes)
+ - colord: Add cd_spectrum_planckian_new() (Richard Hughes)
+ - colord: Add functionality to read and write raw tag data (Richard Hughes)
+ - colord: Support CCSS data files (Richard Hughes)
+ - colord: Support SPECTRAL_NORM in it8 files (Richard Hughes)
+ - colorhug: Support setting and getting the DAC value (Richard Hughes)
+
+Bugfixes:
+ - Correctly convert all of the image when using CdTransform (Richard Hughes)
+ - EDID strings can be up to 13 bytes (Florian Höch)
+ - Fix the blue primary check so ProPhotoRGB is not marked as invalid (Richard Hughes)
+ - Fix the tag 'size' when viewing a profile in cd-iccdump with newer lcms versions (Richard Hughes)
+ - Only include libudev in Requires.private on Linux (Richard Hughes)
+ - Use the corect sensor-kind values for GretagMacbeth sensors (Richard Hughes)
+ - colord: Do not invalidate the CdTransform if the CdIcc object does not change (Richard Hughes)
+ - colord: Do not use G_GNUC_WARN_UNUSED_RESULT when uninhibiting (Richard Hughes)
+ - colord: Fix a potential crash when destroying a CdIt8 object (Richard Hughes)
+ - colord: Fix the GObject introspection for cd_device_get_profiles() (Richard Hughes)
+ - colord: Improve the error handling in CdIt8 (Richard Hughes)
+ - colord: Load the profile defaults when using cd_icc_create_default() (Richard Hughes)
+ - colorhug: Handle failure to initialise GUsb in self-tests (Christopher James Halse Rogers)
+ - colorhug: Rename 'ColorHug Spectro' to 'ColorHug+' for trademark reasons (Richard Hughes)
+
+Version 1.1.5
+~~~~~~~~~~~~~
+Released: 2013-12-11
+
+New Features:
+ - Change the --enable-gudev parameter into --enable-udev (Richard Hughes)
+ - Fall back to parsing pnp.ids if udev is not available (Richard Hughes)
+
+Bugfixes:
+ - Don't crash with zero-sized ICC file (Marti Raudsepp)
+ - Never add USB hubs as scanner devices even if tagged (Richard Hughes)
+ - Never create color managed webcam devices (Richard Hughes)
+ - libcolord: Check that the vendor and model are valid UTF-8 (Richard Hughes)
+ - libcolord: Do not write invalid data when the resaving a profile (Richard Hughes)
+ - libcolord: Don't create legacy locations (Matthias Clasen)
+ - libcolord: Ensure the parsed EDID strings are valid UTF-8 (Richard Hughes)
+ - libcolord: Ensure the version is set when creating from the EDID (Richard Hughes)
+ - libcolord: Fix crash when using cd_color_get_blackbody_rgb() (Richard Hughes)
+ - libcolord: No critical warning if udev_hwdb_new() fails (Richard Hughes)
+ - session-helper: Do not crash when moving the sensor position (Richard Hughes)
+
+Version 1.1.4
+~~~~~~~~~~~~~
+Released: 2013-11-19
+
+Bugfixes:
+ - Only syslog() profile additions when they're added via DBus (Colin Walters)
+ - Reset the LCMS log handlers to default after use (Richard Hughes)
+ - Use the threadsafe versions of the LCMS functions (Richard Hughes)
+
+Version 1.1.3
 ~~~~~~~~~~~~~
 Released: 2013-10-30
 
-Bugfixes:
- - Add documentation examples for system vendor/model (Conley Moorhous)
- - Fix the AdobeRGB and WideGamutRGB gamma values (Richard Hughes)
- - Fix typo in the quirk database where Liyama should be Iiyama (Florian Höch)
- - Remove duplicated Hewlett Packard entry in the quirk database (Florian Höch)
- - Restrict the length of key and values when setting metadata (Richard Hughes)
- - Use the exact D50 whitepoint values (Richard Hughes)
+Note:
+ - This release contains a patch that fixes a very mild security bug:
+   If you send keep sending hundreds of megabytes of random text data to the
+   SetProperty() method you can eventually cause the daemon to use a lot of
+   memory and then crash with an out-of-memory condition.
+ - As the daemon is typically running as a restricted user and the daemon is
+   respawned by any client the system will automatically recover.
+ - This issue was found by Matus Marhefka using the dfuzzer tool.
 
-Version 1.0.3
+Bugfixes:
+ - Never print incomplete 'colormgr dump' output (Richard Hughes)
+ - Restrict the length of key and values when setting metadata (Richard Hughes)
+
+Version 1.1.2
 ~~~~~~~~~~~~~
-Released: 2013-08-19
+Released: 2013-09-13
+
+New Features:
+ - Add a 'dump' colormgr command to aid debugging (Richard Hughes)
+ - libcolord: Add ability to create a CdIcc object from an EDID blob (Richard Hughes)
+ - libcolord: Add cd_icc_create_default() to use the default sRGB profile (Richard Hughes)
+ - libcolord: Export cd_icc_utils_get_coverage() for comparing two profiles (Richard Hughes)
+ - Set 'GAMUT_coverage(srgb)' when generating standard space profiles (Richard Hughes)
 
 Bugfixes:
  - Allow profiles to be added or removed when the device is not enabled (Richard Hughes)
  - Always return soft-add calibration profiles before soft-add EDID profiles (Richard Hughes)
+ - Do not add fake metadata to avoid creating an empty dictionary (Richard Hughes)
  - Do not mix up device paths and device IDs in the documentation (Conley Moorhous)
+ - Fix an error when building the print profiles (Richard Hughes)
+ - Fix creation of the dummy sensor device (Richard Hughes)
+ - Fix the AdobeRGB and WideGamutRGB gamma values (Richard Hughes)
+ - Fix transposed bits for EDID red y (Florian Höch)
+ - Fix up various vendor quirks (Florian Höch)
  - Fix warning when any test profile has an EDID source and no ICC file (Richard Hughes)
  - libcolord: Always calculate the fallback checksum when using CdIccStore (Richard Hughes)
  - libcolord: Do not assert on finalize if connecting to the profile failed (Richard Hughes)
- - libcolord: Register a log handler when using lcms2 (Richard Hughes)
+ - Migrate from usb_id and usb_db to udev builtins usb_id and hwdb (Dmitrijs Ledkovs)
+ - Show a warning for incorrect or extra command line arguments (Richard Hughes)
  - Use %ghost in the example spec file to avoid removing databases on upgrades (Richard Hughes)
+ - Use the exact D50 whitepoint values (Richard Hughes)
 
-Version 1.0.2
+Version 1.1.1
 ~~~~~~~~~~~~~
-Released: 2013-07-07
+Released: 2013-07-30
+
+Notes:
+ - This release bumps the soname of libcolord as long deprecated methods have
+   finally been removed. Any programs that link against libcolord will have to
+   be recompiled against this new version.
+ - This unstable branch is full of new features and experimental code, and
+   therefore this release should probably be restricted to non-stable distros.
+ - The colord.conf file has been removed and features are now autodetected at
+   runtime where possible or specified in configure.
 
 New Features:
- - Add cd_icc_save_data() so that we can easily set _ICC_PROFILE (Richard Hughes)
+ - Add a shim libcolordcompat library with some helpers for ArgyllCMS (Richard Hughes)
+ - Add SystemVendor and SystemModel string properties to the main interface (Richard Hughes)
+ - Add the sub-command import-profile to colormgr (Richard Hughes)
+ - libcolord: Add cd_icc_save_data() so that we can set _ICC_PROFILE (Richard Hughes)
+ - libcolord: Add cd_icc_save_default() to save a profile to the default location (Richard Hughes)
+ - libcolord: Add functionality to set and get the profile characterization data (Richard Hughes)
+ - libcolord: Add methods to create a profile using CdClient with a CdIcc object (Richard Hughes)
+ - List the required parameters in the 'colormgr --help' output (Richard Hughes)
+ - Remove the AlwaysUseXrandrName config option and auto-detect it at runtime (Richard Hughes)
+ - Show the viewing conditions when dumping the ICC profile (Richard Hughes)
+
+Bugfixes:
+ - Add a quirk for ThinkPads so that we show 'ThinkPad T510' rather than '4384BR2' (Richard Hughes)
  - Add CdIccStore to monitor directories of ICC profiles (Richard Hughes)
- - Add SystemVendor and SystemModel properties to the main interface (Richard Hughes)
-
-Bugfixes:
- - Allow to specify a non-qualified path when using FindProfileByFilename (Richard Hughes)
+ - Add optional installed tests (Richard Hughes)
+ - Allow colormgr to take an object path or an ID as input (Richard Hughes)
+ - Allow the user to specify a non-qualified path when using FindProfileByFilename (Richard Hughes)
  - Allow using the key 'Filename' when using FindProfileByProperty (Richard Hughes)
- - Always return the error if any sync method failed (Richard Hughes)
- - Fix GObject introspection when getting lists (Richard Hughes)
- - Fix GObject introspection when getting metadata (Richard Hughes)
-
-Version 1.0.1
-~~~~~~~~~~~~~
-Released: 2013-06-11
-
-Bugfixes:
- - Add 0.1.34 to 1.0.0 deprecated methods to preserve ABI (Richard Hughes)
+ - Bump the lcms2 dep to 2.4 (Richard Hughes)
+ - Correct a few translatable command descriptions for colormgr (Richard Hughes)
+ - Do not always overwrite files when using cd-fix-profile (Richard Hughes)
  - Do not unconditionally enable BPC on the color transform (Richard Hughes)
- - Fix profile created time for non-UTC timezones (Christopher James Halse Rogers)
- - Record the gamma table in the session helper error message (Richard Hughes)
+ - Fix ‘created’ time for non-UTC timezones again (Christopher James Halse Rogers)
+ - Fix GObject introspection when getting lists and metadata (Richard Hughes)
+ - libcolord: Always return the error if any sync method failed (Richard Hughes)
+ - libcolord: Set an instance GError when lcms does the error callback (Richard Hughes)
+ - libcolord: Work around a bug in cmsSaveProfileToMem() (Richard Hughes)
+ - Remove deprecated API and bump the soname (Richard Hughes)
+ - Remove the ICC volume searching functionality as it is not effective (Richard Hughes)
+ - Remove the now-unused /etc/colord.conf (Richard Hughes)
+ - Remove the StandardSpaces configure option (Richard Hughes)
+ - Remove the UseSANE config option (Richard Hughes)
+ - session-helper: Record the gamma table in the error message (Richard Hughes)
+ - Update the colormgr man page to reflect reality (Richard Hughes)
+ - Use an autogenerated device-id in the daemon self-test code (Richard Hughes)
+ - Use the GLib functions for converting USC4<->UTF-8 (Richard Hughes)
 
 Version 1.0.0
 ~~~~~~~~~~~~~

@@ -5,11 +5,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 NULL =
 
 SUBDIRS = 						\
-	etc						\
-	policy						\
-	man						\
 	lib						\
-	rules						\
 	po
 
 # this needs libcolord
@@ -24,8 +20,13 @@ SUBDIRS += 						\
 	data
 
 # this needs data/profiles/*.icc
+if HAVE_UNIX
 SUBDIRS += 						\
+	man						\
+	policy						\
+	rules						\
 	src
+endif
 
 snapshot:
 	$(MAKE) dist distdir=$(PACKAGE)-$(VERSION)-`date +"%Y%m%d"`
@@ -35,6 +36,7 @@ DISTCHECK_CONFIGURE_FLAGS =				\
 	--enable-fd-fallback				\
 	--enable-gtk					\
 	--enable-sane					\
+	--enable-libcolordcompat			\
 	--disable-print-profiles			\
 	--disable-bash-completion			\
 	--enable-gtk-doc				\
@@ -45,7 +47,7 @@ EXTRA_DIST =						\
 	COPYING						\
 	MAINTAINERS					\
 	AUTHORS						\
-	README						\
+	README.md					\
 	NEWS						\
 	autogen.sh					\
 	config.h					\

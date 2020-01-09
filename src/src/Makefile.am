@@ -12,6 +12,7 @@ dist_introspection_DATA = 				\
 AM_CPPFLAGS =						\
 	$(PIE_CFLAGS)					\
 	$(GLIB_CFLAGS)					\
+	$(GLIB_UNIX_CFLAGS)				\
 	$(POLKIT_CFLAGS)				\
 	$(LCMS_CFLAGS)					\
 	$(GUDEV_CFLAGS)					\
@@ -64,8 +65,6 @@ libexec_PROGRAMS =					\
 colord_SOURCES =					\
 	cd-common.c					\
 	cd-common.h					\
-	cd-config.c					\
-	cd-config.h					\
 	cd-debug.c					\
 	cd-debug.h					\
 	cd-resources.c					\
@@ -84,15 +83,15 @@ colord_SOURCES =					\
 	cd-plugin.h					\
 	cd-profile-array.c				\
 	cd-profile-array.h				\
+	cd-profile-db.c					\
+	cd-profile-db.h					\
 	cd-profile.c					\
 	cd-profile.h					\
-	cd-profile-store.c				\
-	cd-profile-store.h				\
 	cd-sensor.c					\
 	cd-sensor.h					\
 	cd-main.c
 
-if HAVE_GUDEV
+if HAVE_UDEV
 colord_SOURCES +=					\
 	cd-sensor-client.c				\
 	cd-sensor-client.h
@@ -107,7 +106,8 @@ colord_LDADD =						\
 	$(GUSB_LIBS)					\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(COLORD_PRIVATE_LIBS)				\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)					\
+	$(GLIB_UNIX_LIBS)
 
 colord_LDFLAGS =					\
 	$(PIE_LDFLAGS)					\
@@ -140,6 +140,8 @@ cd_self_test_SOURCES =					\
 	cd-mapping-db.h					\
 	cd-profile-array.c				\
 	cd-profile-array.h				\
+	cd-profile-db.c					\
+	cd-profile-db.h					\
 	cd-profile.c					\
 	cd-profile.h					\
 	cd-resources.c					\
@@ -152,7 +154,8 @@ cd_self_test_LDADD =					\
 	$(LCMS_LIBS)					\
 	$(SQLITE_LIBS)					\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)					\
+	$(GLIB_UNIX_LIBS)
 
 cd_self_test_CFLAGS = $(WARNINGFLAGS_C)
 

@@ -95,6 +95,9 @@ ch_test_device_queue_func (void)
 
 	/* try to find any ColorHug devices */
 	usb_ctx = g_usb_context_new (NULL);
+	if (usb_ctx == NULL)
+		return;
+
 	list = g_usb_device_list_new (usb_ctx);
 	g_usb_device_list_coldplug (list);
 	devices = g_usb_device_list_get_devices (list);
@@ -114,7 +117,7 @@ ch_test_device_queue_func (void)
 		if (g_usb_device_get_vid (device) != CH_USB_VID)
 			continue;
 		if (g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE &&
-		    g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE_SPECTRO)
+		    g_usb_device_get_pid (device) != CH_USB_PID_FIRMWARE_PLUS)
 			continue;
 
 		valid_devices++;
@@ -454,6 +457,13 @@ ch_client_get_default (GError **error)
 
 	/* try to find the ColorHug device */
 	usb_ctx = g_usb_context_new (NULL);
+	if (usb_ctx == NULL) {
+		g_set_error(error,
+			    G_USB_DEVICE_ERROR,
+			    G_USB_DEVICE_ERROR_NO_DEVICE,
+			    "No device found; USB initialisation failed");
+		return NULL;
+	}
 	list = g_usb_device_list_new (usb_ctx);
 	g_usb_device_list_coldplug (list);
 	device = g_usb_device_list_find_by_vid_pid (list,
@@ -463,7 +473,7 @@ ch_client_get_default (GError **error)
 	if (device == NULL) {
 		device = g_usb_device_list_find_by_vid_pid (list,
 							    CH_USB_VID,
-							    CH_USB_PID_FIRMWARE_SPECTRO,
+							    CH_USB_PID_FIRMWARE_PLUS,
 							    error);
 	}
 	if (device == NULL)
@@ -598,7 +608,7 @@ ch_test_state_func (void)
 	g_assert_cmpint (integral_time, ==, 100);
 
 	/* verify sram access time */
-	if (ch_device_get_mode (device) == CH_DEVICE_MODE_FIRMWARE_SPECTRO) {
+	if (ch_device_get_mode (device) == CH_DEVICE_MODE_FIRMWARE_PLUS) {
 		guint8 data[3500*2];
 		for (i = 0; i < sizeof(data); i++)
 			data[i] = i;
@@ -1195,10 +1205,40 @@ out:
 		g_object_unref (device);
 }
 
+/**
+ * ch_test_firmware_func:
+ *
+ * This tests the firmware detection.
+ */
+static void
+ch_test_firmware_func (void)
+{
+	ChDeviceMode device_mode;
+	guint8 firmware_data[1024];
+	guint i;
+
+	/* set to something predictable */
+	for (i = 0; i < sizeof(firmware_data); i++)
+		firmware_data[i] = i % 255;
+
+	/* test with no firmware ID */
+	device_mode = ch_device_mode_from_firmware (firmware_data, 1024);
+	g_assert_cmpint (device_mode, ==, CH_DEVICE_MODE_UNKNOWN);
+
+	/* test with V1 signature */
+	memcpy (firmware_data + 64, CH_FIRMWARE_ID_TOKEN1, 8);
+	device_mode = ch_device_mode_from_firmware (firmware_data, 1024);
+	g_assert_cmpint (device_mode, ==, CH_DEVICE_MODE_FIRMWARE);
+
+	/* test with V2 signature */
+	memcpy (firmware_data + 64, CH_FIRMWARE_ID_TOKEN2, 8);
+	device_mode = ch_device_mode_from_firmware (firmware_data, 1024);
+	g_assert_cmpint (device_mode, ==, CH_DEVICE_MODE_FIRMWARE2);
+}
+
 int
 main (int argc, char **argv)
 {
-	g_type_init ();
 	g_test_init (&argc, &argv, NULL);
 
 	/* only critical and error are fatal */
@@ -1215,6 +1255,7 @@ main (int argc, char **argv)
 	g_test_add_func ("/ColorHug/reading", ch_test_reading_func);
 	g_test_add_func ("/ColorHug/reading-xyz", ch_test_reading_xyz_func);
 	g_test_add_func ("/ColorHug/device-incomplete-request", ch_test_incomplete_request_func);
+	g_test_add_func ("/ColorHug/firmware", ch_test_firmware_func);
 
 	return g_test_run ();
 }

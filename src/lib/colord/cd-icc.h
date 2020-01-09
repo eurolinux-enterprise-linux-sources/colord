@@ -31,6 +31,7 @@
 
 #include "cd-color.h"
 #include "cd-enum.h"
+#include "cd-edid.h"
 
 G_BEGIN_DECLS
 
@@ -60,19 +61,22 @@ typedef struct
  * @CD_ICC_ERROR_FAILED_TO_SAVE:	Failed to save file
  * @CD_ICC_ERROR_FAILED_TO_CREATE:	Failed to create file
  * @CD_ICC_ERROR_INVALID_COLORSPACE:	Invalid colorspace
+ * @CD_ICC_ERROR_CORRUPTION_DETECTED:	Corruption has been detected
+ * @CD_ICC_ERROR_INTERNAL:		Something inside LCMS broke
  *
  * The ICC error code.
- *
- * Since: 0.1.32
  **/
 typedef enum {
-	CD_ICC_ERROR_FAILED_TO_OPEN,
-	CD_ICC_ERROR_FAILED_TO_PARSE,
-	CD_ICC_ERROR_INVALID_LOCALE,
-	CD_ICC_ERROR_NO_DATA,
-	CD_ICC_ERROR_FAILED_TO_SAVE,
-	CD_ICC_ERROR_FAILED_TO_CREATE,
-	CD_ICC_ERROR_INVALID_COLORSPACE,
+	CD_ICC_ERROR_FAILED_TO_OPEN,			/* Since: 0.1.32 */
+	CD_ICC_ERROR_FAILED_TO_PARSE,			/* Since: 0.1.32 */
+	CD_ICC_ERROR_INVALID_LOCALE,			/* Since: 0.1.32 */
+	CD_ICC_ERROR_NO_DATA,				/* Since: 0.1.32 */
+	CD_ICC_ERROR_FAILED_TO_SAVE,			/* Since: 0.1.32 */
+	CD_ICC_ERROR_FAILED_TO_CREATE,			/* Since: 0.1.32 */
+	CD_ICC_ERROR_INVALID_COLORSPACE,		/* Since: 0.1.34 */
+	CD_ICC_ERROR_CORRUPTION_DETECTED,		/* Since: 1.1.1 */
+	CD_ICC_ERROR_INTERNAL,				/* Since: 1.1.1 */
+	/*< private >*/
 	CD_ICC_ERROR_LAST
 } CdIccError;
 
@@ -100,20 +104,23 @@ typedef struct
  * @CD_ICC_LOAD_FLAGS_FALLBACK_MD5:	Calculate the profile MD5 if a profile
  * 					ID was not supplied in the profile.
  * @CD_ICC_LOAD_FLAGS_PRIMARIES:	Parse the primaries in the profile.
+ * @CD_ICC_LOAD_FLAGS_CHARACTERIZATION:	Load the characterization data from the profile
  *
  * Flags used when loading an ICC profile.
  *
  * Since: 0.1.32
  **/
 typedef enum {
-	CD_ICC_LOAD_FLAGS_NONE		= 0,
-	CD_ICC_LOAD_FLAGS_NAMED_COLORS	= (1 << 0),
-	CD_ICC_LOAD_FLAGS_TRANSLATIONS	= (1 << 1),
-	CD_ICC_LOAD_FLAGS_METADATA	= (1 << 2),
-	CD_ICC_LOAD_FLAGS_FALLBACK_MD5	= (1 << 3),
-	CD_ICC_LOAD_FLAGS_PRIMARIES	= (1 << 4),
+	CD_ICC_LOAD_FLAGS_NONE		= 0,		/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_NAMED_COLORS	= (1 << 0),	/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_TRANSLATIONS	= (1 << 1),	/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_METADATA	= (1 << 2),	/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_FALLBACK_MD5	= (1 << 3),	/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_PRIMARIES	= (1 << 4),	/* Since: 0.1.32 */
+	CD_ICC_LOAD_FLAGS_CHARACTERIZATION = (1 << 5),	/* Since: 1.1.1 */
 	/* new entries go here: */
-	CD_ICC_LOAD_FLAGS_ALL		= 0xff,
+	CD_ICC_LOAD_FLAGS_ALL		= 0xff,		/* Since: 0.1.32 */
+	/*< private >*/
 	CD_ICC_LOAD_FLAGS_LAST
 } CdIccLoadFlags;
 
@@ -126,7 +133,8 @@ typedef enum {
  * Since: 0.1.32
  **/
 typedef enum {
-	CD_ICC_SAVE_FLAGS_NONE		= 0,
+	CD_ICC_SAVE_FLAGS_NONE		= 0,		/* Since: 0.1.32 */
+	/*< private >*/
 	CD_ICC_SAVE_FLAGS_LAST
 } CdIccSaveFlags;
 
@@ -166,9 +174,15 @@ gboolean	 cd_icc_save_file			(CdIcc		*icc,
 							 GCancellable	*cancellable,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_icc_save_default			(CdIcc		*icc,
+							 CdIccSaveFlags	 flags,
+							 GCancellable	*cancellable,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
 gchar		*cd_icc_to_string			(CdIcc		*icc)
 							 G_GNUC_WARN_UNUSED_RESULT;
 gpointer	 cd_icc_get_handle			(CdIcc		*icc);
+gpointer	 cd_icc_get_context			(CdIcc		*icc);
 guint32		 cd_icc_get_size			(CdIcc		*icc);
 const gchar	*cd_icc_get_filename			(CdIcc		*icc);
 void		 cd_icc_set_filename			(CdIcc		*icc,
@@ -197,6 +211,9 @@ const gchar	*cd_icc_get_checksum			(CdIcc		*icc);
 const gchar	*cd_icc_get_description			(CdIcc		*icc,
 							 const gchar	*locale,
 							 GError		**error);
+const gchar	*cd_icc_get_characterization_data	(CdIcc		*icc);
+void		 cd_icc_set_characterization_data	(CdIcc		*icc,
+							 const gchar	*data);
 const gchar	*cd_icc_get_copyright			(CdIcc		*icc,
 							 const gchar	*locale,
 							 GError		**error);
@@ -241,6 +258,13 @@ gboolean	 cd_icc_create_from_edid		(CdIcc		*icc,
 							 const CdColorYxy *white,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_icc_create_from_edid_data		(CdIcc		*icc,
+							 CdEdid		*edid,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_icc_create_default			(CdIcc		*icc,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
 GPtrArray	*cd_icc_get_vcgt			(CdIcc		*icc,
 							 guint		 size,
 							 GError		**error)
@@ -253,6 +277,15 @@ GPtrArray	*cd_icc_get_response			(CdIcc		*icc,
 							 guint		 size,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
+gchar		**cd_icc_get_tags			(CdIcc		*icc,
+							 GError		**error);
+GBytes		*cd_icc_get_tag_data			(CdIcc		*icc,
+							 const gchar	*tag,
+							 GError		**error);
+gboolean	 cd_icc_set_tag_data			(CdIcc		*icc,
+							 const gchar	*tag,
+							 GBytes		*data,
+							 GError		**error);
 
 G_END_DECLS
 

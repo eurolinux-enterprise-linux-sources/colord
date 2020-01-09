@@ -95,6 +95,19 @@ cd-client-sync
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_client_create_profile_for_icc_sync ##### -->
+<para>
+
+</para>
+
+@client: 
+@icc: 
+@scope: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_client_import_profile_sync ##### -->
 <para>
 

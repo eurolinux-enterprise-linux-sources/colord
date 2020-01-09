@@ -34,3 +34,42 @@ cd-it8-utils
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_it8_utils_calculate_xyz_from_cmf ##### -->
+<para>
+
+</para>
+
+@cmf: 
+@illuminant: 
+@spectrum: 
+@value: 
+@resolution: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_it8_utils_calculate_cri_from_cmf ##### -->
+<para>
+
+</para>
+
+@cmf: 
+@tcs: 
+@illuminant: 
+@value: 
+@resolution: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_it8_utils_calculate_gamma ##### -->
+<para>
+
+</para>
+
+@it8: 
+@gamma_y: 
+@error: 
+@Returns: 
+
+

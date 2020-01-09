@@ -1,0 +1,1061 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>colord Reference Manual: cd-spectrum</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-math.html" title="cd-math">
+<link rel="next" href="colord-cd-version.html" title="cd-version">
+<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#colord-cd-spectrum.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#colord-cd-spectrum.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-math.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-version.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="colord-cd-spectrum"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-spectrum.top_of_page"></a>cd-spectrum</span></h2>
+<p>cd-spectrum — A single set of spectral values</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="colord-cd-spectrum.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-new" title="cd_spectrum_new ()">cd_spectrum_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-sized-new" title="cd_spectrum_sized_new ()">cd_spectrum_sized_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-planckian-new" title="cd_spectrum_planckian_new ()">cd_spectrum_planckian_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-free" title="cd_spectrum_free ()">cd_spectrum_free</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-dup" title="cd_spectrum_dup ()">cd_spectrum_dup</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-normalize" title="cd_spectrum_normalize ()">cd_spectrum_normalize</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-normalize-max" title="cd_spectrum_normalize_max ()">cd_spectrum_normalize_max</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-id" title="cd_spectrum_get_id ()">cd_spectrum_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-data" title="cd_spectrum_get_data ()">cd_spectrum_get_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-start" title="cd_spectrum_get_start ()">cd_spectrum_get_start</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-end" title="cd_spectrum_get_end ()">cd_spectrum_get_end</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-norm" title="cd_spectrum_get_norm ()">cd_spectrum_get_norm</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-resolution" title="cd_spectrum_get_resolution ()">cd_spectrum_get_resolution</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-size" title="cd_spectrum_get_size ()">cd_spectrum_get_size</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-value" title="cd_spectrum_get_value ()">cd_spectrum_get_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-value-raw" title="cd_spectrum_get_value_raw ()">cd_spectrum_get_value_raw</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-wavelength" title="cd_spectrum_get_wavelength ()">cd_spectrum_get_wavelength</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-value-for-nm" title="cd_spectrum_get_value_for_nm ()">cd_spectrum_get_value_for_nm</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-id" title="cd_spectrum_set_id ()">cd_spectrum_set_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-data" title="cd_spectrum_set_data ()">cd_spectrum_set_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-start" title="cd_spectrum_set_start ()">cd_spectrum_set_start</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-end" title="cd_spectrum_set_end ()">cd_spectrum_set_end</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-norm" title="cd_spectrum_set_norm ()">cd_spectrum_set_norm</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-set-value" title="cd_spectrum_set_value ()">cd_spectrum_set_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-add-value" title="cd_spectrum_add_value ()">cd_spectrum_add_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-spectrum.html#cd-spectrum-multiply" title="cd_spectrum_multiply ()">cd_spectrum_multiply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<a name="CdSpectrum"></a><div class="refsect1">
+<a name="colord-cd-spectrum.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-Boxed-Types.html">GBoxed</a>
+    <span class="lineart">╰──</span> CdSpectrum
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-spectrum.description"></a><h2>Description</h2>
+<p>Functions to manipulate spectral values.</p>
+</div>
+<div class="refsect1">
+<a name="colord-cd-spectrum.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-spectrum-new"></a><h3>cd_spectrum_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_spectrum_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Allocates a spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.2.5"></a><h4>Returns</h4>
+<p> A newly allocated <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> object</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-sized-new"></a><h3>cd_spectrum_sized_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_spectrum_sized_new (<em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> reserved_size</code></em>);</pre>
+<p>Allocates a spectrum with a preallocated size.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.3.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>reserved_size</p></td>
+<td class="parameter_description"><p>the future size of the spectrum</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.3.6"></a><h4>Returns</h4>
+<p> A newly allocated <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> object</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-planckian-new"></a><h3>cd_spectrum_planckian_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_spectrum_planckian_new (<em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> temperature</code></em>);</pre>
+<p>Allocates a Planckian spectrum at a specific temperature.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.4.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>temperature</p></td>
+<td class="parameter_description"><p>the temperature in Kelvin</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.4.6"></a><h4>Returns</h4>
+<p> A newly allocated <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> object</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-free"></a><h3>cd_spectrum_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_free (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Deallocates a color spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.5.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>the spectrum</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-dup"></a><h3>cd_spectrum_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_spectrum_dup (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.3.16.7.6.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.6.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-normalize"></a><h3>cd_spectrum_normalize ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_normalize (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> wavelength</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>);</pre>
+<p>Normalizes a spectrum to a specific value at a specific wavelength.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.7.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>wavelength</p></td>
+<td class="parameter_description"><p>the wavelength in nm</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the value to normalize to</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-normalize-max"></a><h3>cd_spectrum_normalize_max ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_normalize_max (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                           <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>);</pre>
+<p>Normalizes a spectrum to a specific value at its maximum value.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.8.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the value to normalize to</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-id"></a><h3>cd_spectrum_get_id ()</h3>
+<pre class="programlisting">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_spectrum_get_id (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the spectral data.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.9.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.9.6"></a><h4>Returns</h4>
+<p> the textual ID of the sample</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-data"></a><h3>cd_spectrum_get_data ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *
+cd_spectrum_get_data (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the spectral data.
+NOTE: This is not normalized</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.10.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.10.6"></a><h4>Returns</h4>
+<p> spectral data. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-start"></a><h3>cd_spectrum_get_start ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_start (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the start value of the spectral data.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.11.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.11.6"></a><h4>Returns</h4>
+<p> the value in nm</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-end"></a><h3>cd_spectrum_get_end ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_end (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the end value of the spectral data.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.12.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.12.6"></a><h4>Returns</h4>
+<p> the value in nm</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-norm"></a><h3>cd_spectrum_get_norm ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_norm (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the normalization value of the spectral data.
+NOTE: This affects every value in the spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.13.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.13.6"></a><h4>Returns</h4>
+<p> the value</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-resolution"></a><h3>cd_spectrum_get_resolution ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_resolution (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the divisor of the spectra, for instance a .</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.14.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.14.6"></a><h4>Returns</h4>
+<p> the value</p>
+<p></p>
+</div>
+<p class="since">Since 1.2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-size"></a><h3>cd_spectrum_get_size ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+cd_spectrum_get_size (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>);</pre>
+<p>Gets the size of the spectrum data.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.15.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.15.6"></a><h4>Returns</h4>
+<p> number of data items in this spectrum</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-value"></a><h3>cd_spectrum_get_value ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_value (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>);</pre>
+<p>Gets the spectrum data at a specified index.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.16.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>idx</p></td>
+<td class="parameter_description"><p>an index into the data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.16.6"></a><h4>Returns</h4>
+<p> spectral data value, or -1 for invalid</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-value-raw"></a><h3>cd_spectrum_get_value_raw ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_value_raw (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                           <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>);</pre>
+<p>Gets the spectrum data at a specified index, without any normalization
+applied. Most people should use <a class="link" href="colord-cd-spectrum.html#cd-spectrum-get-value" title="cd_spectrum_get_value ()"><code class="function">cd_spectrum_get_value()</code></a> instead.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.17.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>idx</p></td>
+<td class="parameter_description"><p>an index into the data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.17.6"></a><h4>Returns</h4>
+<p> spectral data value, or -1 for invalid</p>
+<p></p>
+</div>
+<p class="since">Since 1.2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-wavelength"></a><h3>cd_spectrum_get_wavelength ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_wavelength (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                            <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>);</pre>
+<p>Gets the wavelenth that corresponds to the specified index.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.18.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>idx</p></td>
+<td class="parameter_description"><p>an index into the data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.18.6"></a><h4>Returns</h4>
+<p> wavelenth value in nm, or -1 for invalid</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-get-value-for-nm"></a><h3>cd_spectrum_get_value_for_nm ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_spectrum_get_value_for_nm (<em class="parameter"><code>const <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> wavelength</code></em>);</pre>
+<p>Gets the value from the spectral data for a given wavelength.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.19.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>wavelength</p></td>
+<td class="parameter_description"><p>the wavelength in nm</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.19.6"></a><h4>Returns</h4>
+<p> the value for the wavelength</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-id"></a><h3>cd_spectrum_set_id ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_id (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                    <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *id</code></em>);</pre>
+<p>Sets a spectrum id.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.20.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>the destination spectrum</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>id</p></td>
+<td class="parameter_description"><p>component id</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-data"></a><h3>cd_spectrum_set_data ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_data (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Arrays.html#GArray"><span class="type">GArray</span></a> *value</code></em>);</pre>
+<p>Sets the spectrum data.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.21.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>the destination spectrum</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p> component value. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-start"></a><h3>cd_spectrum_set_start ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_start (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> start</code></em>);</pre>
+<p>Set the start value of the spectal data in nm.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.22.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>start</p></td>
+<td class="parameter_description"><p>the start value of the spectral data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-end"></a><h3>cd_spectrum_set_end ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_end (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> end</code></em>);</pre>
+<p>Set the end value of the spectal data in nm.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.23.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>end</p></td>
+<td class="parameter_description"><p>the end value of the spectral data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-norm"></a><h3>cd_spectrum_set_norm ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_norm (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> norm</code></em>);</pre>
+<p>Set the normalization value of the spectrum.
+NOTE: This affects every value in the spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.24.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>norm</p></td>
+<td class="parameter_description"><p>the end value of the spectral data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-set-value"></a><h3>cd_spectrum_set_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_set_value (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> data</code></em>);</pre>
+<p>Overwrites the spectrum data at a specified index.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.25.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>idx</p></td>
+<td class="parameter_description"><p>an index into the data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>data</p></td>
+<td class="parameter_description"><p>a data value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 1.2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-add-value"></a><h3>cd_spectrum_add_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_spectrum_add_value (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> data</code></em>);</pre>
+<p>Adds a value in nm to the spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.26.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>the spectrum</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-spectrum-multiply"></a><h3>cd_spectrum_multiply ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="returnvalue">CdSpectrum</span></a> *
+cd_spectrum_multiply (<em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *s1</code></em>,
+                      <em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *s2</code></em>,
+                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> resolution</code></em>);</pre>
+<p>Multiplies two spectra together.</p>
+<div class="refsect3">
+<a name="id-1.3.16.7.27.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>s1</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance, possibly an illuminant.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>s2</p></td>
+<td class="parameter_description"><p>a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance, possibly an absorption spectrum.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>resolution</p></td>
+<td class="parameter_description"><p>the step size in nm</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.16.7.27.6"></a><h4>Returns</h4>
+<p> a <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> instance</p>
+<p></p>
+</div>
+<p class="since">Since 1.1.6</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="colord-cd-spectrum.other_details"></a><h2>Types and Values</h2>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.21</div>
+</body>
+</html>

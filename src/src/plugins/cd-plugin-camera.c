@@ -23,6 +23,9 @@
 #include <gio/gio.h>
 #include <cd-plugin.h>
 #include <gudev/gudev.h>
+
+#include "cd-cleanup.h"
+
 #include <cd-device.h>
 
 struct CdPluginPrivate {
@@ -72,11 +75,11 @@ cd_plugin_get_camera_id_for_udev_device (GUdevDevice *udev_device)
 static gboolean
 cd_plugin_is_device_embedded (GUdevDevice *device)
 {
+	GUdevDevice *p = device;
 	const gchar *removable;
 	gboolean embedded = FALSE;
-	GUdevDevice *p = device;
-	GPtrArray *array;
 	guint i;
+	_cleanup_ptrarray_unref_ GPtrArray *array = NULL;
 
 	/* get a chain of all the parent devices */
 	array = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
@@ -97,7 +100,6 @@ cd_plugin_is_device_embedded (GUdevDevice *device)
 			break;
 		}
 	}
-	g_ptr_array_unref (array);
 	return embedded;
 }
 
@@ -107,19 +109,19 @@ cd_plugin_is_device_embedded (GUdevDevice *device)
 static void
 cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 {
-	CdDevice *device = NULL;
-	const gchar *kind = "webcam";
 	const gchar *seat;
-	gboolean embedded;
-	gboolean ret;
-	gchar *id = NULL;
-	gchar *model = NULL;
-	gchar *vendor = NULL;
+	_cleanup_free_ gchar *id = NULL;
+	_cleanup_free_ gchar *model = NULL;
+	_cleanup_free_ gchar *vendor = NULL;
+	_cleanup_object_unref_ CdDevice *device = NULL;
+
+	/* is a proper camera and not a webcam */
+	if (!g_udev_device_has_property (udev_device, "ID_GPHOTO2"))
+		return;
 
 	/* is a scanner? */
-	ret = g_udev_device_has_property (udev_device, "COLORD_DEVICE");
-	if (!ret)
-		goto out;
+	if (!g_udev_device_has_property (udev_device, "COLORD_DEVICE"))
+		return;
 
 	/* replace underscores with spaces */
 	model = g_strdup (g_udev_device_get_property (udev_device,
@@ -135,11 +137,6 @@ cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 		g_strchomp (vendor);
 	}
 
-	/* is a proper camera and not a webcam */
-	ret = g_udev_device_has_property (udev_device, "ID_GPHOTO2");
-	if (ret)
-		kind = "camera";
-
 	/* generate ID */
 	id = cd_plugin_get_camera_id_for_udev_device (udev_device);
 
@@ -148,15 +145,12 @@ cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 	if (seat == NULL)
 		seat = "seat0";
 
-	/* find if the device is embedded */
-	embedded = cd_plugin_is_device_embedded (udev_device);
-
 	/* create new device */
 	device = cd_device_new ();
 	cd_device_set_id (device, id);
 	cd_device_set_property_internal (device,
 					 CD_DEVICE_PROPERTY_KIND,
-					 kind,
+					 cd_device_kind_to_string (CD_DEVICE_KIND_CAMERA),
 					 FALSE,
 					 NULL);
 	if (model != NULL) {
@@ -188,7 +182,7 @@ cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 					 seat,
 					 FALSE,
 					 NULL);
-	if (embedded) {
+	if (cd_plugin_is_device_embedded (udev_device)) {
 		cd_device_set_property_internal (device,
 						 CD_DEVICE_PROPERTY_EMBEDDED,
 						 NULL,
@@ -203,12 +197,6 @@ cd_plugin_add (CdPlugin *plugin, GUdevDevice *udev_device)
 
 	g_debug ("CdPlugin: emit add: %s", id);
 	cd_plugin_device_added (plugin, device);
-out:
-	if (device != NULL)
-		g_object_unref (device);
-	g_free (id);
-	g_free (model);
-	g_free (vendor);
 }
 
 /**
@@ -230,21 +218,19 @@ cd_plugin_uevent_cb (GUdevClient *udev_client,
 		sysfs_path = g_udev_device_get_sysfs_path (udev_device);
 		device = g_hash_table_lookup (plugin->priv->devices, sysfs_path);
 		if (device == NULL)
-			goto out;
+			return;
 
 		g_debug ("CdPlugin: remove %s", sysfs_path);
 		cd_plugin_device_removed (plugin, device);
 		g_hash_table_remove (plugin->priv->devices, sysfs_path);
-		goto out;
+		return;
 	}
 
 	/* add */
 	if (g_strcmp0 (action, "add") == 0) {
 		cd_plugin_add (plugin, udev_device);
-		goto out;
+		return;
 	}
-out:
-	return;
 }
 
 /**

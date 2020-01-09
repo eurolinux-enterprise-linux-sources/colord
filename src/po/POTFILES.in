@@ -1,6 +1,7 @@
 client/cd-create-profile.c
 client/cd-fix-profile.c
 client/cd-iccdump.c
+client/cd-it8.c
 client/cd-util.c
 contrib/session-helper/org.freedesktop.ColorHelper.gschema.xml.in
 data/profiles/AdobeRGB1998.xml.in
@@ -32,6 +33,7 @@ data/profiles/IFRA26S_2004_newsprint.xml.in
 data/profiles/NTSC-RGB.xml.in
 data/profiles/PAL-RGB.xml.in
 data/profiles/ProPhotoRGB.xml.in
+data/profiles/Rec709.xml.in
 data/profiles/SMPTE-C-RGB.xml.in
 data/profiles/SNAP_TR002_newsprint.xml.in
 data/profiles/sRGB.xml.in

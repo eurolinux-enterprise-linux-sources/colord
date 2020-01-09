@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2013 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2014 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -26,14 +26,20 @@
 #include <lcms2.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef HAVE_PWD_H
 #include <pwd.h>
+#endif
 #include <math.h>
 
+#include "cd-cleanup.h"
 #include "cd-common.h"
 #include "cd-profile.h"
+#include "cd-profile-db.h"
 #include "cd-resources.h"
 
-static void     cd_profile_finalize	(GObject     *object);
+static void	cd_profile_finalize	(GObject	*object);
+static void	cd_profile_set_filename	(CdProfile	*profile,
+					 const gchar	*filename);
 
 #define CD_PROFILE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CD_TYPE_PROFILE, CdProfilePrivate))
 
@@ -65,6 +71,7 @@ struct _CdProfilePrivate
 	gchar				**warnings;
 	GMappedFile			*mapped_file;
 	guint				 score;
+	CdProfileDb			*db;
 };
 
 enum {
@@ -193,12 +200,14 @@ cd_profile_get_id (CdProfile *profile)
 static void
 cd_profile_set_object_path (CdProfile *profile)
 {
-	gchar *path_tmp;
-	gchar *path_owner;
+#ifdef HAVE_PWD_H
 	struct passwd *pw;
-
+#endif
+	_cleanup_free_ gchar *path_tmp = NULL;
+	_cleanup_free_ gchar *path_owner = NULL;
 
 	/* append the uid to the object path */
+#ifdef HAVE_PWD_H
 	pw = getpwuid (profile->priv->owner);
 	if (profile->priv->owner == 0 ||
 	    g_strcmp0 (pw->pw_name, DAEMON_USER) == 0) {
@@ -209,6 +218,15 @@ cd_profile_set_object_path (CdProfile *profile)
 					    pw->pw_name,
 					    profile->priv->owner);
 	}
+#else
+	if (profile->priv->owner == 0) {
+		path_tmp = g_strdup (profile->priv->id);
+	} else {
+		path_tmp = g_strdup_printf ("%s_%d",
+					    profile->priv->id,
+					    profile->priv->owner);
+	}
+#endif
 	/* make sure object path is sane */
 	path_owner = cd_main_ensure_dbus_path (path_tmp);
 
@@ -216,8 +234,6 @@ cd_profile_set_object_path (CdProfile *profile)
 						       "profiles",
 						       path_owner,
 						       NULL);
-	g_free (path_owner);
-	g_free (path_tmp);
 }
 
 /**
@@ -345,6 +361,8 @@ cd_profile_dbus_emit_property_changed (CdProfile *profile,
 				       &builder,
 				       &invalidated_builder),
 				       NULL);
+	g_variant_builder_clear (&builder);
+	g_variant_builder_clear (&invalidated_builder);
 }
 
 /**
@@ -386,46 +404,43 @@ cd_profile_dbus_emit_profile_changed (CdProfile *profile)
 static gboolean
 cd_profile_install_system_wide (CdProfile *profile, GError **error)
 {
-	gboolean ret = TRUE;
-	gchar *basename = NULL;
-	gchar *filename = NULL;
-	GError *error_local = NULL;
-	GFile *file_dest = NULL;
-	GFile *file = NULL;
 	CdProfilePrivate *priv = profile->priv;
+	gboolean ret = TRUE;
+	_cleanup_error_free_ GError *error_local = NULL;
+	_cleanup_free_ gchar *basename = NULL;
+	_cleanup_free_ gchar *filename = NULL;
+	_cleanup_object_unref_ GFile *file_dest = NULL;
+	_cleanup_object_unref_ GFile *file = NULL;
 
 	/* is icc filename set? */
 	if (priv->filename == NULL) {
-		ret = FALSE;
 		g_set_error (error,
 			     CD_PROFILE_ERROR,
 			     CD_PROFILE_ERROR_INTERNAL,
 			     "icc filename not set");
-		goto out;
+		return FALSE;
 	}
 
 	/* is profile already installed in /var/lib/color */
 	if (g_str_has_prefix (priv->filename,
 			      CD_SYSTEM_PROFILES_DIR)) {
-		ret = FALSE;
 		g_set_error (error,
 			     CD_PROFILE_ERROR,
 			     CD_PROFILE_ERROR_ALREADY_INSTALLED,
 			     "file %s already installed in /var",
 			     priv->filename);
-		goto out;
+		return FALSE;
 	}
 
 	/* is profile already installed in /usr/share/color */
 	if (g_str_has_prefix (priv->filename,
 			      DATADIR "/color")) {
-		ret = FALSE;
 		g_set_error (error,
 			     CD_PROFILE_ERROR,
 			     CD_PROFILE_ERROR_ALREADY_INSTALLED,
 			     "file %s already installed in /usr",
 			     priv->filename);
-		goto out;
+		return FALSE;
 	}
 
 	/* copy */
@@ -447,40 +462,29 @@ cd_profile_install_system_wide (CdProfile *profile, GError **error)
 					       NULL, /* cancellable */
 					       &error_local);
 		if (!ret) {
-			ret = FALSE;
 			g_set_error (error,
 				     CD_PROFILE_ERROR,
 				     CD_PROFILE_ERROR_FAILED_TO_WRITE,
 				     "failed to write mapped file %s: %s",
 				     priv->filename,
 				     error_local->message);
-			g_error_free (error_local);
-			goto out;
+			return FALSE;
 		}
 	} else {
 		file = g_file_new_for_path (priv->filename);
 		ret = g_file_copy (file, file_dest, G_FILE_COPY_OVERWRITE,
 				   NULL, NULL, NULL, &error_local);
 		if (!ret) {
-			ret = FALSE;
 			g_set_error (error,
 				     CD_PROFILE_ERROR,
 				     CD_PROFILE_ERROR_FAILED_TO_WRITE,
 				     "failed to copy %s: %s",
 				     priv->filename,
 				     error_local->message);
-			g_error_free (error_local);
-			goto out;
+			return FALSE;
 		}
 	}
-out:
-	g_free (filename);
-	g_free (basename);
-	if (file != NULL)
-		g_object_unref (file);
-	if (file_dest != NULL)
-		g_object_unref (file_dest);
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -489,16 +493,13 @@ out:
 static GVariant *
 cd_profile_get_metadata_as_variant (CdProfile *profile)
 {
-	GList *list, *l;
+	GList *l;
 	GVariantBuilder builder;
-	GVariant *value;
+	_cleanup_list_free_ GList *list = NULL;
 
 	/* do not try to build an empty array */
-	if (g_hash_table_size (profile->priv->metadata) == 0) {
-		value = g_variant_new_array (G_VARIANT_TYPE ("{ss}"),
-					     NULL, 0);
-		goto out;
-	}
+	if (g_hash_table_size (profile->priv->metadata) == 0)
+		return g_variant_new_array (G_VARIANT_TYPE ("{ss}"), NULL, 0);
 
 	/* add all the keys in the dictionary to the variant builder */
 	list = g_hash_table_get_keys (profile->priv->metadata);
@@ -510,10 +511,7 @@ cd_profile_get_metadata_as_variant (CdProfile *profile)
 				       g_hash_table_lookup (profile->priv->metadata,
 							    l->data));
 	}
-	g_list_free (list);
-	value = g_variant_builder_end (&builder);
-out:
-	return value;
+	return g_variant_builder_end (&builder);
 }
 
 /**
@@ -528,41 +526,65 @@ cd_profile_get_nullable_for_string (const gchar *value)
 }
 
 /**
+ * cd_profile_set_title:
+ **/
+static gboolean
+cd_profile_set_title (CdProfile *profile,
+		      const gchar *value,
+		      guint sender_uid,
+		      GError **error)
+{
+	CdProfilePrivate *priv = profile->priv;
+
+	/* check title is suitable */
+	if (value == NULL || strlen (value) < 3 ||
+	    !g_utf8_validate (value, -1, NULL)) {
+		g_set_error (error,
+			     CD_CLIENT_ERROR,
+			     CD_CLIENT_ERROR_INPUT_INVALID,
+			     "'Title' value input invalid: %s", value);
+		return FALSE;
+	}
+
+	/* save in database */
+	return cd_profile_db_set_property (priv->db, priv->id,
+					   CD_PROFILE_PROPERTY_TITLE, sender_uid,
+					   value, error);
+}
+
+/**
  * cd_profile_set_property_internal:
  **/
 gboolean
 cd_profile_set_property_internal (CdProfile *profile,
 				  const gchar *property,
 				  const gchar *value,
+				  guint sender_uid,
 				  GError **error)
 {
-	gboolean ret = TRUE;
 	CdProfilePrivate *priv = profile->priv;
 
 	/* sanity check the length of the key and value */
 	if (strlen (property) > CD_DBUS_METADATA_KEY_LEN_MAX) {
-		ret = FALSE;
 		g_set_error_literal (error,
 				     CD_CLIENT_ERROR,
 				     CD_CLIENT_ERROR_INPUT_INVALID,
 				     "metadata key length invalid");
-		goto out;
+		return FALSE;
 	}
 	if (value != NULL && strlen (value) > CD_DBUS_METADATA_VALUE_LEN_MAX) {
-		ret = FALSE;
 		g_set_error_literal (error,
 				     CD_CLIENT_ERROR,
 				     CD_CLIENT_ERROR_INPUT_INVALID,
 				     "metadata value length invalid");
-		goto out;
+		return FALSE;
 	}
 
 	if (g_strcmp0 (property, CD_PROFILE_PROPERTY_FILENAME) == 0) {
-		ret = cd_profile_set_filename (profile,
-					       value,
-					       error);
-		if (!ret)
-			goto out;
+		cd_profile_set_filename (profile, value);
+		cd_profile_dbus_emit_property_changed (profile,
+						       property,
+						       g_variant_new_string (value));
 	} else if (g_strcmp0 (property, CD_PROFILE_PROPERTY_QUALIFIER) == 0) {
 		cd_profile_set_qualifier (profile, value);
 		cd_profile_dbus_emit_property_changed (profile,
@@ -578,19 +600,23 @@ cd_profile_set_property_internal (CdProfile *profile,
 		cd_profile_dbus_emit_property_changed (profile,
 						       property,
 						       g_variant_new_string (value));
+	} else if (g_strcmp0 (property, CD_PROFILE_PROPERTY_TITLE) == 0) {
+		if (!cd_profile_set_title (profile, value, sender_uid, error))
+			return FALSE;
+		cd_profile_dbus_emit_property_changed (profile, property,
+						       g_variant_new_string (value));
 	} else {
 		/* add to metadata */
 		cd_profile_set_metadata (profile, property, value);
 		cd_profile_dbus_emit_property_changed (profile,
 						       CD_PROFILE_PROPERTY_METADATA,
 						       cd_profile_get_metadata_as_variant (profile));
-		goto out;
+		return TRUE;
 	}
 
 	/* emit global signal */
 	cd_profile_dbus_emit_profile_changed (profile);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -602,11 +628,12 @@ cd_profile_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 			    const gchar *method_name, GVariant *parameters,
 			    GDBusMethodInvocation *invocation, gpointer user_data)
 {
+	CdProfile *profile = CD_PROFILE (user_data);
 	gboolean ret;
+	guint uid;
 	const gchar *property_name = NULL;
 	const gchar *property_value = NULL;
-	GError *error = NULL;
-	CdProfile *profile = CD_PROFILE (user_data);
+	_cleanup_error_free_ GError *error = NULL;
 
 	/* return '' */
 	if (g_strcmp0 (method_name, "SetProperty") == 0) {
@@ -621,8 +648,17 @@ cd_profile_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 							       CD_PROFILE_ERROR,
 							       CD_PROFILE_ERROR_FAILED_TO_AUTHENTICATE,
 							       "%s", error->message);
-			g_error_free (error);
-			goto out;
+			return;
+		}
+
+		/* get UID */
+		uid = cd_main_get_sender_uid (connection, sender, &error);
+		if (uid == G_MAXUINT) {
+			g_dbus_method_invocation_return_error (invocation,
+							       CD_PROFILE_ERROR,
+							       CD_PROFILE_ERROR_FAILED_TO_GET_UID,
+							       "%s", error->message);
+			return;
 		}
 
 		/* set, and parse */
@@ -638,20 +674,19 @@ cd_profile_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 							       "Setting the %s property after "
 							       "profile creation is no longer supported",
 							       property_name);
-			goto out;
+			return;
 		}
 		ret = cd_profile_set_property_internal (profile,
 							property_name,
 							property_value,
+							uid,
 							&error);
 		if (!ret) {
-			g_dbus_method_invocation_return_gerror (invocation,
-								error);
-			g_error_free (error);
-			goto out;
+			g_dbus_method_invocation_return_gerror (invocation, error);
+			return;
 		}
 		g_dbus_method_invocation_return_value (invocation, NULL);
-		goto out;
+		return;
 	}
 
 	/* return '' */
@@ -669,102 +704,84 @@ cd_profile_dbus_method_call (GDBusConnection *connection, const gchar *sender,
 							       CD_PROFILE_ERROR,
 							       CD_PROFILE_ERROR_FAILED_TO_AUTHENTICATE,
 							       "%s", error->message);
-			g_error_free (error);
-			goto out;
+			return;
 		}
 
 		/* copy systemwide */
 		ret = cd_profile_install_system_wide (profile, &error);
 		if (!ret) {
-			g_dbus_method_invocation_return_gerror (invocation,
-								error);
-			g_error_free (error);
-			goto out;
+			g_dbus_method_invocation_return_gerror (invocation, error);
+			return;
 		}
 
 		g_dbus_method_invocation_return_value (invocation, NULL);
-		goto out;
+		return;
 	}
 
 
 	/* we suck */
 	g_critical ("failed to process method %s", method_name);
-out:
-	return;
 }
 
 /**
  * cd_profile_dbus_get_property:
  **/
 static GVariant *
-cd_profile_dbus_get_property (GDBusConnection *connection_, const gchar *sender,
+cd_profile_dbus_get_property (GDBusConnection *connection, const gchar *sender,
 			     const gchar *object_path, const gchar *interface_name,
 			     const gchar *property_name, GError **error,
 			     gpointer user_data)
 {
-	GVariant *retval = NULL;
 	CdProfile *profile = CD_PROFILE (user_data);
+	CdProfilePrivate *priv = profile->priv;
+	gboolean ret;
 
 	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_TITLE) == 0) {
-		retval = cd_profile_get_nullable_for_string (profile->priv->title);
-		goto out;
+		guint uid;
+		_cleanup_free_ gchar *title_db = NULL;
+
+		uid = cd_main_get_sender_uid (connection, sender, error);
+		if (uid == G_MAXUINT)
+			return NULL;
+		ret = cd_profile_db_get_property (priv->db, priv->id,
+						  property_name, uid,
+						  &title_db, error);
+		if (!ret)
+			return NULL;
+		if (title_db != NULL)
+			return cd_profile_get_nullable_for_string (title_db);
+		return cd_profile_get_nullable_for_string (priv->title);
 	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_ID) == 0) {
-		retval = cd_profile_get_nullable_for_string (profile->priv->id);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_QUALIFIER) == 0) {
-		retval = cd_profile_get_nullable_for_string (profile->priv->qualifier);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_FORMAT) == 0) {
-		retval = cd_profile_get_nullable_for_string (profile->priv->format);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_FILENAME) == 0) {
-		retval = cd_profile_get_nullable_for_string (profile->priv->filename);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_KIND) == 0) {
-		retval = g_variant_new_string (cd_profile_kind_to_string (profile->priv->kind));
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_COLORSPACE) == 0) {
-		retval = g_variant_new_string (cd_colorspace_to_string (profile->priv->colorspace));
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_HAS_VCGT) == 0) {
-		retval = g_variant_new_boolean (profile->priv->has_vcgt);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_IS_SYSTEM_WIDE) == 0) {
-		retval = g_variant_new_boolean (profile->priv->is_system_wide);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_METADATA) == 0) {
-		retval = cd_profile_get_metadata_as_variant (profile);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_CREATED) == 0) {
-		retval = g_variant_new_int64 (profile->priv->created);
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_SCOPE) == 0) {
-		retval = g_variant_new_string (cd_object_scope_to_string (profile->priv->object_scope));
-		goto out;
-	}
-	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_OWNER) == 0) {
-		retval = g_variant_new_uint32 (profile->priv->owner);
-		goto out;
-	}
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_ID) == 0)
+		return cd_profile_get_nullable_for_string (priv->id);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_QUALIFIER) == 0)
+		return cd_profile_get_nullable_for_string (priv->qualifier);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_FORMAT) == 0)
+		return cd_profile_get_nullable_for_string (priv->format);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_FILENAME) == 0)
+		return cd_profile_get_nullable_for_string (priv->filename);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_KIND) == 0)
+		return g_variant_new_string (cd_profile_kind_to_string (priv->kind));
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_COLORSPACE) == 0)
+		return g_variant_new_string (cd_colorspace_to_string (priv->colorspace));
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_HAS_VCGT) == 0)
+		return g_variant_new_boolean (priv->has_vcgt);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_IS_SYSTEM_WIDE) == 0)
+		return g_variant_new_boolean (priv->is_system_wide);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_METADATA) == 0)
+		return cd_profile_get_metadata_as_variant (profile);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_CREATED) == 0)
+		return g_variant_new_int64 (priv->created);
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_SCOPE) == 0)
+		return g_variant_new_string (cd_object_scope_to_string (priv->object_scope));
+	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_OWNER) == 0)
+		return g_variant_new_uint32 (priv->owner);
 	if (g_strcmp0 (property_name, CD_PROFILE_PROPERTY_WARNINGS) == 0) {
-		if (profile->priv->warnings != NULL) {
-			retval = g_variant_new_strv ((const gchar * const *) profile->priv->warnings, -1);
-		} else {
+		if (priv->warnings == NULL) {
 			const gchar *tmp[] = { NULL };
-			retval = g_variant_new_strv (tmp, -1);
+			return g_variant_new_strv (tmp, -1);
 		}
-		goto out;
+		return g_variant_new_strv ((const gchar * const *) priv->warnings, -1);
 	}
 
 	/* return an error */
@@ -773,8 +790,7 @@ cd_profile_dbus_get_property (GDBusConnection *connection_, const gchar *sender,
 		     CD_PROFILE_ERROR_INTERNAL,
 		     "failed to get profile property %s",
 		     property_name);
-out:
-	return retval;
+	return NULL;
 }
 
 /**
@@ -786,8 +802,7 @@ cd_profile_register_object (CdProfile *profile,
 			    GDBusInterfaceInfo *info,
 			    GError **error)
 {
-	GError *error_local = NULL;
-	gboolean ret = FALSE;
+	_cleanup_error_free_ GError *error_local = NULL;
 
 	static const GDBusInterfaceVTable interface_vtable = {
 		cd_profile_dbus_method_call,
@@ -810,40 +825,9 @@ cd_profile_register_object (CdProfile *profile,
 			     CD_PROFILE_ERROR_INTERNAL,
 			     "failed to register object: %s",
 			     error_local->message);
-		g_error_free (error_local);
-		goto out;
+		return FALSE;
 	}
-
-	/* success */
-	ret = TRUE;
-out:
-	return ret;
-}
-
-/**
- * cd_profile_get_fake_md5:
- *
- * this is a complete hack to work around the lack of DICT
- * support, and to give gnome-color-manager something to key on
- **/
-static gchar *
-cd_profile_get_fake_md5 (const gchar *filename)
-{
-	gchar *basename;
-	gchar *md5 = NULL;
-
-	basename = g_path_get_basename (filename);
-	if (!g_str_has_prefix (basename, "edid-"))
-		goto out;
-	if (strlen (basename) != 41)
-		goto out;
-
-	/* parse edid-f467c2e85a0abdef9415d5028e240631.icc */
-	basename[37] = '\0';
-	md5 = g_strdup (&basename[5]);
-out:
-	g_free (basename);
-	return md5;
+	return TRUE;
 }
 
 /**
@@ -852,13 +836,13 @@ out:
 static gchar *
 cd_profile_fixup_title (const gchar *text)
 {
-	gchar *title = NULL;
+	gchar *title;
 	gchar *tmp;
 	guint len;
 
 	/* nothing set */
 	if (text == NULL)
-		goto out;
+		return NULL;
 
 	/* remove the hardcoded confusing title */
 	if (g_str_has_prefix (text, "Default, "))
@@ -882,7 +866,6 @@ cd_profile_fixup_title (const gchar *text)
 		if (len > 4)
 			title[len - 4] = '\0';
 	}
-out:
 	return title;
 }
 
@@ -890,27 +873,25 @@ out:
  * cd_profile_set_from_profile:
  **/
 static gboolean
-cd_profile_set_from_profile (CdProfile *profile,
-			     CdIcc *icc,
-			     GError **error)
+cd_profile_set_from_profile (CdProfile *profile, CdIcc *icc, GError **error)
 {
 	CdProfilePrivate *priv = profile->priv;
 	CdProfileWarning warning;
+	GList *l;
 	cmsHPROFILE lcms_profile;
 	const gchar *key;
 	const gchar *value;
-	GArray *flags = NULL;
 	gboolean ret = FALSE;
-	GHashTable *metadata = NULL;
-	GList *keys = NULL;
-	GList *l;
 	guint i;
 	struct tm created;
+	_cleanup_array_unref_ GArray *flags = NULL;
+	_cleanup_hashtable_unref_ GHashTable *metadata = NULL;
+	_cleanup_list_free_ GList *keys = NULL;
 
 	/* get the description as the title */
 	value = cd_icc_get_description (icc, NULL, error);
 	if (value == NULL)
-		goto out;
+		return FALSE;
 	priv->title =  cd_profile_fixup_title (value);
 
 	/* get the profile kind */
@@ -974,16 +955,7 @@ cd_profile_set_from_profile (CdProfile *profile,
 			priv->warnings[i] = g_strdup (cd_profile_warning_to_string (warning));
 		}
 	}
-
-	/* success */
-	ret = TRUE;
-out:
-	g_list_free (keys);
-	if (metadata != NULL)
-		g_hash_table_unref (metadata);
-	if (flags != NULL)
-		g_array_unref (flags);
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -1033,160 +1005,37 @@ cd_profile_emit_parsed_property_changed (CdProfile *profile)
 }
 
 /**
- * cd_profile_set_filename:
+ * cd_profile_load_from_icc:
  **/
 gboolean
-cd_profile_set_filename (CdProfile *profile,
-			 const gchar *filename,
-			 GError **error)
+cd_profile_load_from_icc (CdProfile *profile, CdIcc *icc, GError **error)
 {
-	CdProfilePrivate *priv = profile->priv;
-	CdIcc *icc = NULL;
-	const gchar *tmp;
-	gboolean ret = FALSE;
-	GError *error_local = NULL;
-	GFile *file = NULL;
-	GBytes *gdata = NULL;
-	gchar *data = NULL;
-	gchar *fake_md5 = NULL;
-	gsize len;
-
 	g_return_val_if_fail (CD_IS_PROFILE (profile), FALSE);
 
 	/* save filename */
-	g_free (priv->filename);
-	priv->filename = g_strdup (filename);
-
-	/* if we didn't get the metadata from the DICT tag then
-	 * guess it from the filename.
-	 * we can delete this hack when lcms2 >= 2.2 is a hard dep */
-	tmp = g_hash_table_lookup (priv->metadata, CD_PROFILE_METADATA_EDID_MD5);
-	if (tmp == NULL) {
-		fake_md5 = cd_profile_get_fake_md5 (priv->filename);
-		if (fake_md5 != NULL) {
-			g_hash_table_insert (priv->metadata,
-					     g_strdup (CD_PROFILE_METADATA_EDID_MD5),
-					     g_strdup (fake_md5));
-			cd_profile_dbus_emit_property_changed (profile,
-							       CD_PROFILE_PROPERTY_METADATA,
-							       cd_profile_get_metadata_as_variant (profile));
-		}
-	}
-
-	/* check we're not already set using the fd */
-	if (priv->kind != CD_PROFILE_KIND_UNKNOWN) {
-		ret = TRUE;
-		g_debug ("profile '%s' already set",
-			 priv->object_path);
-		goto out;
-	} else if (!priv->is_system_wide) {
-#ifndef HAVE_FD_FALLBACK
-		/* we're not allowing the dameon to open the file */
-		ret = FALSE;
-		g_set_error (error,
-			     CD_PROFILE_ERROR,
-			     CD_PROFILE_ERROR_INTERNAL,
-			     "Failed to open %s as client did not send FD and "
-			     "daemon is not compiled with --enable-fd-fallback",
-			     filename);
-		goto out;
-#endif
-	}
-
-	/* find out if we have a GResource copy */
-	if (g_str_has_prefix (filename, "/usr/share/color/icc/colord/")) {
-		data = g_build_filename ("/org/freedesktop/colord",
-					 "profiles",
-					 filename + 28,
-					 NULL);
-		gdata = g_resource_lookup_data (cd_get_resource (),
-						data,
-						G_RESOURCE_LOOKUP_FLAGS_NONE,
-						NULL);
-	}
-
-	/* load the ICC file using lcms */
-	icc = cd_icc_new ();
-	if (gdata != NULL) {
-		g_debug ("Using built-in %s", data);
-		ret = cd_icc_load_data (icc,
-					g_bytes_get_data (gdata, NULL),
-					g_bytes_get_size (gdata),
-					CD_ICC_LOAD_FLAGS_METADATA,
-					&error_local);
-	} else {
-		file = g_file_new_for_path (filename);
-		ret = cd_icc_load_file (icc,
-					file,
-					CD_ICC_LOAD_FLAGS_METADATA,
-					NULL,
-					&error_local);
-	}
-	if (!ret) {
-		g_set_error_literal (error,
-				     CD_PROFILE_ERROR,
-				     CD_PROFILE_ERROR_FAILED_TO_PARSE,
-				     error_local->message);
-		g_error_free (error_local);
-		goto out;
-	}
+	cd_profile_set_filename (profile, cd_icc_get_filename (icc));
 
 	/* set the virtual profile from the lcms profile */
-	ret = cd_profile_set_from_profile (profile, icc, error);
-	if (!ret)
-		goto out;
-
-	/* try the metadata if available */
-	if (priv->checksum == NULL) {
-		tmp = g_hash_table_lookup (profile->priv->metadata,
-					   CD_PROFILE_METADATA_FILE_CHECKSUM);
-		if (tmp != NULL &&
-		    strlen (tmp) == 32) {
-			priv->checksum = g_strdup (tmp);
-		}
-	}
-
-	/* fall back to calculating it ourselves */
-	if (priv->checksum == NULL) {
-		g_debug ("%s has no profile-id nor %s, falling back "
-			 "to slow MD5",
-			 priv->filename,
-			 CD_PROFILE_METADATA_FILE_CHECKSUM);
-		ret = g_file_get_contents (priv->filename,
-					   &data, &len, error);
-		if (!ret)
-			goto out;
-		priv->checksum = g_compute_checksum_for_data (G_CHECKSUM_MD5,
-							      (const guchar *) data,
-							      len);
-	}
+	if (!cd_profile_set_from_profile (profile, icc, error))
+		return FALSE;
 
 	/* emit all the things that could have changed */
 	cd_profile_emit_parsed_property_changed (profile);
-out:
-	g_free (data);
-	g_free (fake_md5);
-	if (gdata != NULL)
-		g_bytes_unref (gdata);
-	if (icc != NULL)
-		g_object_unref (icc);
-	if (file != NULL)
-		g_object_unref (file);
-	return ret;
+	return TRUE;
 }
 
 /**
- * cd_profile_set_fd:
+ * cd_profile_load_from_fd:
  **/
 gboolean
-cd_profile_set_fd (CdProfile *profile,
-		   gint fd,
-		   GError **error)
+cd_profile_load_from_fd (CdProfile *profile,
+			 gint fd,
+			 GError **error)
 {
-	CdIcc *icc = NULL;
-	GError *error_local = NULL;
 	CdProfilePrivate *priv = profile->priv;
-	gboolean ret = FALSE;
+	gboolean ret;
+	_cleanup_error_free_ GError *error_local = NULL;
+	_cleanup_object_unref_ CdIcc *icc = NULL;
 
 	g_return_val_if_fail (CD_IS_PROFILE (profile), FALSE);
 
@@ -1197,13 +1046,12 @@ cd_profile_set_fd (CdProfile *profile,
 			     CD_PROFILE_ERROR_INTERNAL,
 			     "profile '%s' already set",
 			     priv->object_path);
-		goto out;
+		return FALSE;
 	}
 
 	/* open fd and parse the file */
 	icc = cd_icc_new ();
-	ret = cd_icc_load_fd (icc,
-			      fd,
+	ret = cd_icc_load_fd (icc, fd,
 			      CD_ICC_LOAD_FLAGS_METADATA,
 			      &error_local);
 	if (!ret) {
@@ -1211,8 +1059,7 @@ cd_profile_set_fd (CdProfile *profile,
 				     CD_PROFILE_ERROR,
 				     CD_PROFILE_ERROR_FAILED_TO_READ,
 				     error_local->message);
-		g_error_free (error_local);
-		goto out;
+		return FALSE;
 	}
 
 	/* create a mapped file */
@@ -1223,20 +1070,75 @@ cd_profile_set_fd (CdProfile *profile,
 			     CD_PROFILE_ERROR_FAILED_TO_READ,
 			     "failed to create mapped file from fd %i",
 			     fd);
-		goto out;
+		return FALSE;
 	}
 
 	/* set the virtual profile from the lcms profile */
-	ret = cd_profile_set_from_profile (profile, icc, error);
-	if (!ret)
-		goto out;
+	if (!cd_profile_set_from_profile (profile, icc, error))
+		return FALSE;
 
 	/* emit all the things that could have changed */
 	cd_profile_emit_parsed_property_changed (profile);
-out:
-	if (icc != NULL)
-		g_object_unref (icc);
-	return ret;
+	return TRUE;
+}
+
+/**
+ * cd_profile_load_from_filename:
+ **/
+gboolean
+cd_profile_load_from_filename (CdProfile *profile, const gchar *filename, GError **error)
+{
+	CdProfilePrivate *priv = profile->priv;
+	gboolean ret = FALSE;
+	_cleanup_error_free_ GError *error_local = NULL;
+	_cleanup_object_unref_ CdIcc *icc = NULL;
+	_cleanup_object_unref_ GFile *file = NULL;
+
+	g_return_val_if_fail (CD_IS_PROFILE (profile), FALSE);
+
+	/* check we're not already set */
+	if (priv->kind != CD_PROFILE_KIND_UNKNOWN) {
+		g_set_error (error,
+			     CD_PROFILE_ERROR,
+			     CD_PROFILE_ERROR_INTERNAL,
+			     "profile '%s' already set",
+			     priv->object_path);
+		return FALSE;
+	}
+
+	/* open fd and parse the file */
+	icc = cd_icc_new ();
+	file = g_file_new_for_path (filename);
+	ret = cd_icc_load_file (icc, file,
+				CD_ICC_LOAD_FLAGS_METADATA,
+				NULL,
+				&error_local);
+	if (!ret) {
+		g_set_error_literal (error,
+				     CD_PROFILE_ERROR,
+				     CD_PROFILE_ERROR_FAILED_TO_READ,
+				     error_local->message);
+		return FALSE;
+	}
+
+	/* create a mapped file */
+	priv->mapped_file = g_mapped_file_new (filename, FALSE, error);
+	if (priv->mapped_file == NULL) {
+		g_set_error (error,
+			     CD_PROFILE_ERROR,
+			     CD_PROFILE_ERROR_FAILED_TO_READ,
+			     "failed to create mapped file from filname %s",
+			     filename);
+		return FALSE;
+	}
+
+	/* set the virtual profile from the lcms profile */
+	if (!cd_profile_set_from_profile (profile, icc, error))
+		return FALSE;
+
+	/* emit all the things that could have changed */
+	cd_profile_emit_parsed_property_changed (profile);
+	return TRUE;
 }
 
 /**
@@ -1269,6 +1171,17 @@ cd_profile_set_format (CdProfile *profile, const gchar *format)
 	g_return_if_fail (CD_IS_PROFILE (profile));
 	g_free (profile->priv->format);
 	profile->priv->format = g_strdup (format);
+}
+
+/**
+ * cd_profile_set_filename:
+ **/
+static void
+cd_profile_set_filename (CdProfile *profile, const gchar *filename)
+{
+	g_return_if_fail (CD_IS_PROFILE (profile));
+	g_free (profile->priv->filename);
+	profile->priv->filename = g_strdup (filename);
 }
 
 /**
@@ -1480,6 +1393,7 @@ static void
 cd_profile_init (CdProfile *profile)
 {
 	profile->priv = CD_PROFILE_GET_PRIVATE (profile);
+	profile->priv->db = cd_profile_db_new ();
 	profile->priv->metadata = g_hash_table_new_full (g_str_hash,
 							 g_str_equal,
 							 g_free,
@@ -1510,6 +1424,7 @@ cd_profile_finalize (GObject *object)
 	g_free (priv->id);
 	g_free (priv->checksum);
 	g_free (priv->object_path);
+	g_object_unref (priv->db);
 	g_strfreev (priv->warnings);
 	g_hash_table_unref (priv->metadata);
 

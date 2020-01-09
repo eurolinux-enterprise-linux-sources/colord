@@ -253,6 +253,24 @@ cd-transform
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_transform_set_max_threads ##### -->
+<para>
+
+</para>
+
+@transform: 
+@max_threads: 
+
+
+<!-- ##### FUNCTION cd_transform_get_max_threads ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_transform_process ##### -->
 <para>
 

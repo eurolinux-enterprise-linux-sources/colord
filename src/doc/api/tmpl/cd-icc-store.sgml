@@ -22,37 +22,6 @@ CdIccStore
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT CdIccStore ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### SIGNAL CdIccStore::added ##### -->
-<para>
-
-</para>
-
-@cdiccstore: the object which received the signal.
-@arg1: 
-
-<!-- ##### SIGNAL CdIccStore::removed ##### -->
-<para>
-
-</para>
-
-@cdiccstore: the object which received the signal.
-@arg1: 
-
-<!-- ##### STRUCT CdIccStoreClass ##### -->
-<para>
-
-</para>
-
-@parent_class: 
-@added: 
-@removed: 
-
 <!-- ##### ENUM CdIccStoreSearchFlags ##### -->
 <para>
 

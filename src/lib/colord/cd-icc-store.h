@@ -19,6 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
+#if !defined (__COLORD_H_INSIDE__) && !defined (CD_COMPILATION)
+#error "Only <colord.h> can be included directly."
+#endif
+
 #ifndef __CD_ICC_STORE_H
 #define __CD_ICC_STORE_H
 
@@ -62,8 +66,8 @@ struct _CdIccStoreClass
  * Since: 1.1.1
  **/
 typedef enum {
-	CD_ICC_STORE_SEARCH_FLAGS_NONE			= 0,
-	CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION	= 1,
+	CD_ICC_STORE_SEARCH_FLAGS_NONE			= 0,	/* Since: 1.0.2 */
+	CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION	= 1,	/* Since: 1.0.2 */
 	/*< private >*/
 	CD_ICC_STORE_SEARCH_FLAGS_LAST
 } CdIccStoreSearchFlags;
@@ -79,9 +83,9 @@ typedef enum {
  * Since: 1.1.1
  **/
 typedef enum {
-	CD_ICC_STORE_SEARCH_KIND_SYSTEM,
-	CD_ICC_STORE_SEARCH_KIND_MACHINE,
-	CD_ICC_STORE_SEARCH_KIND_USER,
+	CD_ICC_STORE_SEARCH_KIND_SYSTEM,		/* Since: 1.0.2 */
+	CD_ICC_STORE_SEARCH_KIND_MACHINE,		/* Since: 1.0.2 */
+	CD_ICC_STORE_SEARCH_KIND_USER,			/* Since: 1.0.2 */
 	/*< private >*/
 	CD_ICC_STORE_SEARCH_KIND_LAST
 } CdIccStoreSearchKind;

@@ -1,15 +1,15 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Build libcolordcompat.so */
+/* #undef BUILD_LIBCOLORDCOMPAT */
+
 /* Daemon user */
 #define DAEMON_USER "root"
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #define ENABLE_NLS 1
-
-/* enable volume search */
-#define ENABLE_VOLUME_SEARCH "true"
 
 /* foo */
 #define GETTEXT_PACKAGE "colord"
@@ -29,14 +29,11 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
 
-/* Use FD fallback */
-#define HAVE_FD_FALLBACK 1
-
 /* Define if the GNU gettext() function is already present or preinstalled. */
 #define HAVE_GETTEXT 1
 
-/* Use GUDEV support for hardware */
-#define HAVE_GUDEV 1
+/* getuid() is available */
+#define HAVE_GETUID /**/
 
 /* whether gusb is available */
 #define HAVE_GUSB 1
@@ -47,20 +44,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* cmsGetHeaderCreator is available */
-#define HAVE_LCMS_GET_HEADER_CREATOR 1
-
-/* cmsGetToneCurveEstimatedTableEntries is available */
-#define HAVE_LCMS_GET_TABLE_ENTRIES 1
-
-/* cmsMLUtranslationsCount is available */
-#define HAVE_LCMS_MLU_TRANSLATIONS_COUNT 1
-
 /* Define to 1 if libsystemd-login is available */
 #define HAVE_LIBSYSTEMD_LOGIN 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
+
+/* Define to 1 if you have the <pwd.h> header file. */
+#define HAVE_PWD_H 1
 
 /* Use SANE support for detecting scanners */
 /* #undef HAVE_SANE */
@@ -77,11 +68,17 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
+/* Define to 1 if you have the <syslog.h> header file. */
+#define HAVE_SYSLOG_H 1
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
+
+/* Use UDEV support */
+#define HAVE_UDEV 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
@@ -89,9 +86,6 @@
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #define LT_OBJDIR ".libs/"
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
 
 /* Name of package */
 #define PACKAGE "colord"
@@ -103,7 +97,7 @@
 #define PACKAGE_NAME "colord"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "colord 1.0.4"
+#define PACKAGE_STRING "colord 1.2.7"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "colord"
@@ -112,7 +106,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.0.4"
+#define PACKAGE_VERSION "1.2.7"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -124,4 +118,4 @@
 #define USE_POLKIT 1
 
 /* Version number of package */
-#define VERSION "1.0.4"
+#define VERSION "1.2.7"

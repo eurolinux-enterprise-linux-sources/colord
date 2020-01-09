@@ -1,0 +1,54 @@
+<!-- ##### SECTION Title ##### -->
+cd-cleanup
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO GS_DEFINE_CLEANUP_FUNCTION ##### -->
+<para>
+
+</para>
+
+@Type: 
+@name: 
+@func: 
+
+
+<!-- ##### MACRO GS_DEFINE_CLEANUP_FUNCTION0 ##### -->
+<para>
+
+</para>
+
+@Type: 
+@name: 
+@func: 
+
+
+<!-- ##### MACRO GS_DEFINE_CLEANUP_FUNCTIONt ##### -->
+<para>
+
+</para>
+
+@Type: 
+@name: 
+@func: 
+
+

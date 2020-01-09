@@ -27,7 +27,7 @@
       <doc:doc>
         <doc:description>
           <doc:para>
-              The system vendor, e.g. <doc:tt>Lenovo</doc:tt>.
+            The system vendor.
           </doc:para>
         </doc:description>
       </doc:doc>
@@ -38,7 +38,7 @@
       <doc:doc>
         <doc:description>
           <doc:para>
-              The system model, e.g. <doc:tt>T61</doc:tt>.
+            The system model.
           </doc:para>
         </doc:description>
       </doc:doc>
@@ -299,8 +299,6 @@
             Gets a profile path for a defined profile space.
             The defined space is set from the profile metadata,
             specifically in the <doc:tt>STANDARD_space</doc:tt> entry.
-            The <doc:tt>colord.conf</doc:tt> file allows an
-            administrator to manually override profiles if required.
           </doc:para>
           <doc:para>
             NOTE: only system wide profiles are able to define

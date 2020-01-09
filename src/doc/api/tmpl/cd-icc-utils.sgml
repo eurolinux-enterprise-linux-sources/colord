@@ -1,0 +1,36 @@
+<!-- ##### SECTION Title ##### -->
+cd-icc-utils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION cd_icc_utils_get_coverage ##### -->
+<para>
+
+</para>
+
+@icc: 
+@icc_reference: 
+@coverage: 
+@error: 
+@Returns: 
+
+

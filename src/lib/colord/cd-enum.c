@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2013 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2014 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -48,7 +48,8 @@ typedef struct {
 static const CdEnumMatch enum_sensor_kind[] = {
 	{CD_SENSOR_KIND_UNKNOWN,			"unknown"},	/* fall though value */
 	{CD_SENSOR_KIND_COLORHUG,			"colorhug"},
-	{CD_SENSOR_KIND_COLORHUG_SPECTRO,		"colorhug-spectro"},
+	{CD_SENSOR_KIND_COLORHUG2,			"colorhug2"},
+	{CD_SENSOR_KIND_COLORHUG_PLUS,			"colorhug-plus"},
 	{CD_SENSOR_KIND_COLORIMTRE_HCFR,		"colorimtre-hcfr"},
 	{CD_SENSOR_KIND_COLOR_MUNKI_PHOTO,		"color-munki-photo"},
 	{CD_SENSOR_KIND_COLOR_MUNKI_SMILE,		"color-munki-smile"},
@@ -724,6 +725,8 @@ cd_profile_error_to_string (CdProfileError error_enum)
 		return CD_DBUS_INTERFACE_PROFILE ".FailedToAuthenticate";
 	if (error_enum == CD_PROFILE_ERROR_PROPERTY_INVALID)
 		return CD_DBUS_INTERFACE_PROFILE ".PropertyInvalid";
+	if (error_enum == CD_PROFILE_ERROR_FAILED_TO_GET_UID)
+		return CD_DBUS_INTERFACE_PROFILE ".FailedToGetUid";
 	return NULL;
 }
 
@@ -753,6 +756,8 @@ cd_profile_error_from_string (const gchar *error_desc)
 		return CD_PROFILE_ERROR_FAILED_TO_AUTHENTICATE;
 	if (g_strcmp0 (error_desc, CD_DBUS_INTERFACE_PROFILE ".PropertyInvalid") == 0)
 		return CD_PROFILE_ERROR_PROPERTY_INVALID;
+	if (g_strcmp0 (error_desc, CD_DBUS_INTERFACE_PROFILE ".FailedToGetUid") == 0)
+		return CD_PROFILE_ERROR_FAILED_TO_GET_UID;
 	return CD_PROFILE_ERROR_LAST;
 }
 

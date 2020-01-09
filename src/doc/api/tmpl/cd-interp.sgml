@@ -127,7 +127,6 @@ cd-interp
 </para>
 
 @CD_INTERP_ERROR_FAILED: 
-@CD_INTERP_ERROR_LAST: 
 
 <!-- ##### ENUM CdInterpKind ##### -->
 <para>
@@ -136,7 +135,6 @@ cd-interp
 
 @CD_INTERP_KIND_LINEAR: 
 @CD_INTERP_KIND_AKIMA: 
-@CD_INTERP_KIND_LAST: 
 
 <!-- ##### FUNCTION cd_interp_error_quark ##### -->
 <para>

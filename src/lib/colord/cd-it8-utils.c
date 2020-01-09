@@ -30,7 +30,9 @@
 
 #include <glib-object.h>
 #include <math.h>
+#include <lcms2.h>
 
+#include "cd-cleanup.h"
 #include "cd-color.h"
 #include "cd-it8-utils.h"
 #include "cd-math.h"
@@ -48,17 +50,15 @@ ch_it8_utils_4color_read_data (CdIt8 *it8,
 	CdColorXYZ ave_XYZ[5];
 	CdColorXYZ tmp_XYZ;
 	CdColorYxy tmp_Yxy[5];
-	gboolean ret = TRUE;
 	guint i, j;
 	guint len;
 
 	/* ensur we have multiple of 5s */
 	len = cd_it8_get_data_size (it8);
 	if (len % 5 != 0) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "expected black, white, red, green, blue");
-		goto out;
+		return FALSE;
 	}
 
 	/* find patches */
@@ -110,8 +110,7 @@ ch_it8_utils_4color_read_data (CdIt8 *it8,
 	vec_w->v0 = tmp_Yxy[1].x;
 	vec_w->v1 = tmp_Yxy[1].y;
 	vec_w->v2 = 1 - tmp_Yxy[1].x - tmp_Yxy[1].y;
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -132,13 +131,12 @@ ch_it8_utils_4color_decompose (CdIt8 *it8,
 	gchar *tmp;
 
 	/* read reference matrix */
-	ret = ch_it8_utils_4color_read_data (it8,
-				   &chroma,
-				   &white_v,
-				   abs_lumi,
-				   error);
-	if (!ret)
-		goto out;
+	if (!ch_it8_utils_4color_read_data (it8,
+					    &chroma,
+					    &white_v,
+					    abs_lumi,
+					    error))
+		return FALSE;
 
 	/* print what we've got */
 	tmp = cd_mat33_to_string (&chroma);
@@ -151,12 +149,11 @@ ch_it8_utils_4color_decompose (CdIt8 *it8,
 	/* invert chroma of M_RGB and multiply it with white */
 	ret = cd_mat33_reciprocal (&chroma, &chroma_inv);
 	if (!ret) {
-		ret = FALSE;
 		tmp = cd_mat33_to_string (&chroma);
 		g_set_error (error, 1, 0,
 			     "failed to invert %s", tmp);
 		g_free (tmp);
-		goto out;
+		return FALSE;
 	}
 	cd_mat33_vector_multiply (&chroma_inv, &white_v, &lumi_v);
 
@@ -168,8 +165,7 @@ ch_it8_utils_4color_decompose (CdIt8 *it8,
 
 	/* create RGB */
 	cd_mat33_matrix_multiply (&chroma, &lumi, rgb);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -179,7 +175,7 @@ out:
  * @it8_ccmx: The calculated correction matrix
  * @error: A #GError, or %NULL
  *
- * This calculates the colorimter correction matrix using the Four-Color
+ * This calculates the colorimeter correction matrix using the Four-Color
  * Matrix Method by Yoshihiro Ohno and Jonathan E. Hardis, 1997.
  *
  * Return value: %TRUE if a correction matrix was found.
@@ -195,29 +191,25 @@ cd_it8_utils_calculate_ccmx (CdIt8 *it8_reference,
 	CdMat3x3 m_rgb_inv;
 	CdMat3x3 n_rgb;
 	const gdouble *data;
-	gboolean ret;
-	gchar *tmp = NULL;
 	gdouble m_lumi = 0.0f;
 	gdouble n_lumi = 0.0f;
 	guint i;
+	_cleanup_free_ gchar *tmp = NULL;
 
 	/* read reference matrix */
-	ret = ch_it8_utils_4color_decompose (it8_reference, &n_rgb, &n_lumi, error);
-	if (!ret)
-		goto out;
+	if (!ch_it8_utils_4color_decompose (it8_reference, &n_rgb, &n_lumi, error))
+		return FALSE;
 
 	/* read measured matrix */
-	ret = ch_it8_utils_4color_decompose (it8_measured, &m_rgb, &m_lumi, error);
-	if (!ret)
-		goto out;
+	if (!ch_it8_utils_4color_decompose (it8_measured, &m_rgb, &m_lumi, error))
+		return FALSE;
 
 	/* create m_RGB^-1 */
-	ret = cd_mat33_reciprocal (&m_rgb, &m_rgb_inv);
-	if (!ret) {
+	if (!cd_mat33_reciprocal (&m_rgb, &m_rgb_inv)) {
 		tmp = cd_mat33_to_string (&m_rgb);
 		g_set_error (error, 1, 0,
 			     "failed to invert %s", tmp);
-		goto out;
+		return FALSE;
 	}
 
 	/* create M */
@@ -235,10 +227,9 @@ cd_it8_utils_calculate_ccmx (CdIt8 *it8_reference,
 	data = cd_mat33_get_data (&calibration);
 	for (i = 0; i < 9; i++) {
 		if (fpclassify (data[i]) != FP_NORMAL) {
-			ret = FALSE;
 			g_set_error (error, 1, 0,
 				     "Matrix value %i non-normal: %f", i, data[i]);
-			goto out;
+			return FALSE;
 		}
 	}
 
@@ -246,7 +237,305 @@ cd_it8_utils_calculate_ccmx (CdIt8 *it8_reference,
 	cd_it8_set_matrix (it8_ccmx, &calibration);
 	cd_it8_set_instrument (it8_ccmx, cd_it8_get_instrument (it8_measured));
 	cd_it8_set_reference (it8_ccmx, cd_it8_get_instrument (it8_reference));
+	return TRUE;
+}
+
+/**
+ * cd_it8_utils_calculate_xyz_from_cmf:
+ * @cmf: The color match function
+ * @illuminant: The illuminant (you can use cd_spectrum_new() for type E)
+ * @spectrum: The #CdSpectrum input data
+ * @value: The #CdColorXYZ result
+ * @resolution: The resolution in nm, typically 1.0
+ * @error: A #GError, or %NULL
+ *
+ * This calculates the XYZ from a CMF, illuminant and input spectrum.
+ *
+ * Return value: %TRUE if a XYZ value was set.
+ **/
+gboolean
+cd_it8_utils_calculate_xyz_from_cmf (CdIt8 *cmf,
+				     CdSpectrum *illuminant,
+				     CdSpectrum *spectrum,
+				     CdColorXYZ *value,
+				     gdouble resolution,
+				     GError **error)
+{
+	CdSpectrum *observer[3];
+	gdouble end;
+	gdouble i_val;
+	gdouble o_val;
+	gdouble s_val;
+	gdouble scale = 0.f;
+	gdouble start;
+	gdouble wl;
+
+	g_return_val_if_fail (CD_IS_IT8 (cmf), FALSE);
+	g_return_val_if_fail (illuminant != NULL, FALSE);
+	g_return_val_if_fail (value != NULL, FALSE);
+
+	/* check this is a CMF */
+	if (cd_it8_get_kind (cmf) != CD_IT8_KIND_CMF) {
+		g_set_error_literal (error,
+				     CD_IT8_ERROR,
+				     CD_IT8_ERROR_FAILED,
+				     "not a CMF IT8 object");
+		return FALSE;
+	}
+	observer[0] = cd_it8_get_spectrum_by_id (cmf, "X");
+	observer[1] = cd_it8_get_spectrum_by_id (cmf, "Y");
+	observer[2] = cd_it8_get_spectrum_by_id (cmf, "Z");
+	if (observer[0] == NULL || observer[1] == NULL || observer[2] == NULL) {
+		g_set_error_literal (error,
+				     CD_IT8_ERROR,
+				     CD_IT8_ERROR_FAILED,
+				     "CMF IT8 object has no X,Y,Y channel");
+		return FALSE;
+	}
+
+	/* calculate the integrals */
+	start = cd_spectrum_get_start (observer[0]);
+	end = cd_spectrum_get_end (observer[0]);
+	cd_color_xyz_clear (value);
+	for (wl = start; wl <= end; wl += resolution) {
+		i_val = cd_spectrum_get_value_for_nm (illuminant, wl);
+		s_val = cd_spectrum_get_value_for_nm (spectrum, wl);
+		o_val = cd_spectrum_get_value_for_nm (observer[0], wl);
+		value->X += i_val * o_val * s_val;
+		o_val = cd_spectrum_get_value_for_nm (observer[1], wl);
+		scale += i_val * o_val;
+		value->Y += i_val * o_val * s_val;
+		o_val = cd_spectrum_get_value_for_nm (observer[2], wl);
+		value->Z += i_val * o_val * s_val;
+	}
+
+	/* scale by Y */
+	value->X /= scale;
+	value->Y /= scale;
+	value->Z /= scale;
+	return TRUE;
+}
+
+/**
+ * cd_it8_utils_calculate_cri_from_cmf:
+ * @cmf: The color match function
+ * @tcs: The CIE TCS test patches
+ * @illuminant: The illuminant
+ * @value: The CRI result
+ * @resolution: The resolution in nm, typically 1.0
+ * @error: A #GError, or %NULL
+ *
+ * This calculates the CRI for a specific illuminant.
+ *
+ * Return value: %TRUE if a XYZ value was set.
+ **/
+gboolean
+cd_it8_utils_calculate_cri_from_cmf (CdIt8 *cmf,
+				     CdIt8 *tcs,
+				     CdSpectrum *illuminant,
+				     gdouble *value,
+				     gdouble resolution,
+				     GError **error)
+{
+	CdColorUVW d1;
+	CdColorUVW d2;
+	CdColorUVW reference_uvw[8];
+	CdColorUVW unknown_uvw[8];
+	CdColorXYZ illuminant_xyz;
+	CdColorXYZ reference_illuminant_xyz;
+	CdColorXYZ sample_xyz;
+	CdColorYxy yxy;
+	CdSpectrum *reference_illuminant = NULL;
+	CdSpectrum *sample;
+	CdSpectrum *unity;
+	GPtrArray *samples;
+	gboolean ret;
+	gdouble cct;
+	gdouble ri_sum = 0.f;
+	gdouble val;
+	guint i;
+
+	/* get the illuminant CCT */
+	unity = cd_spectrum_new ();
+	ret = cd_it8_utils_calculate_xyz_from_cmf (cmf,
+						   unity,
+						   illuminant,
+						   &illuminant_xyz,
+						   resolution,
+						   error);
+	if (!ret)
+		goto out;
+	cct = cd_color_xyz_to_cct (&illuminant_xyz);
+	cd_color_xyz_normalize (&illuminant_xyz, 1.0, &illuminant_xyz);
+
+	/* get the reference illuminant */
+	if (cct < 5000) {
+		reference_illuminant = cd_spectrum_planckian_new (cct);
+	} else {
+		ret = FALSE;
+		g_set_error_literal (error,
+				     CD_IT8_ERROR,
+				     CD_IT8_ERROR_FAILED,
+				     "need to use CIE standard illuminant D");
+		goto out;
+	}
+	cd_spectrum_normalize (reference_illuminant, 560, 1.0);
+	ret = cd_it8_utils_calculate_xyz_from_cmf (cmf,
+						   unity,
+						   reference_illuminant,
+						   &reference_illuminant_xyz,
+						   resolution,
+						   error);
+	if (!ret)
+		goto out;
+
+	/* check the source is white enough */
+	cd_color_uvw_set_planckian_locus (&d1, cct);
+	cd_color_xyz_to_yxy (&illuminant_xyz, &yxy);
+	cd_color_yxy_to_uvw (&yxy, &d2);
+	val = cd_color_uvw_get_chroma_difference (&d1, &d2);
+	if (val > 5.4e-3) {
+		ret = FALSE;
+		g_set_error (error,
+			     CD_IT8_ERROR,
+			     CD_IT8_ERROR_FAILED,
+			     "result not meaningful, DC=%f", val);
+		goto out;
+	}
+
+	/* get the XYZ for each color sample under the reference illuminant */
+	samples = cd_it8_get_spectrum_array (tcs);
+	for (i = 0; i < 8; i++) {
+		sample = g_ptr_array_index (samples, i);
+		ret = cd_it8_utils_calculate_xyz_from_cmf (cmf,
+							   reference_illuminant,
+							   sample,
+							   &sample_xyz,
+							   1.f,
+							   error);
+		if (!ret)
+			goto out;
+		cd_color_xyz_to_uvw (&sample_xyz,
+				     &illuminant_xyz,
+				     &reference_uvw[i]);
+	}
+
+	/* get the XYZ for each color sample under the unknown illuminant */
+	samples = cd_it8_get_spectrum_array (tcs);
+	for (i = 0; i < 8; i++) {
+		sample = g_ptr_array_index (samples, i);
+		ret = cd_it8_utils_calculate_xyz_from_cmf (cmf,
+							   illuminant,
+							   sample,
+							   &sample_xyz,
+							   resolution,
+							   error);
+		if (!ret)
+			goto out;
+		cd_color_xyz_to_uvw (&sample_xyz,
+				     &illuminant_xyz,
+				     &unknown_uvw[i]);
+	}
+
+	/* add up all the Ri's and take the average to get the CRI */
+	for (i = 0; i < 8; i++) {
+		val = cd_color_uvw_get_chroma_difference (&reference_uvw[i],
+							  &unknown_uvw[i]);
+		ri_sum += 100 - (4.6 * val);
+	}
+	*value = ri_sum / 8;
 out:
-	g_free (tmp);
+	if (reference_illuminant != NULL)
+		cd_spectrum_free (reference_illuminant);
 	return ret;
+}
+
+/**
+ * _cd_color_rgb_is_gray:
+ * @rgb: The sample color
+ * @delta: The allowed difference, e.g. 0.01f
+ *
+ * This returns TRUE for grey patches with a neutral axis.
+ *
+ * Return value: %TRUE if the color is gray.
+ **/
+static gboolean
+_cd_color_rgb_is_gray (CdColorRGB *rgb, gdouble delta)
+{
+	if (ABS (rgb->R - rgb->G) > delta)
+		return FALSE;
+	if (ABS (rgb->G - rgb->B) > delta)
+		return FALSE;
+	if (ABS (rgb->R - rgb->B) > delta)
+		return FALSE;
+	return TRUE;
+}
+
+/**
+ * cd_it8_utils_calculate_gamma:
+ * @it8: The reference data
+ * @gamma_y: The estimated gamma
+ * @error: A #GError, or %NULL
+ *
+ * This estimates the gamma from values obtained from an .ti3 file.
+ *
+ * Return value: %TRUE if a valid value was found.
+ *
+ * Since: 0.2.6
+ **/
+gboolean
+cd_it8_utils_calculate_gamma (CdIt8 *it8, gdouble *gamma_y, GError **error)
+{
+	CdColorRGB rgb;
+	CdColorXYZ xyz;
+	cmsToneCurve *curve;
+	gdouble len;
+	gdouble max = 0.f;
+	guint cnt = 0;
+	guint i;
+	_cleanup_free_ cmsFloat32Number *data_y = NULL;
+
+	/* find the grey gamma ramp */
+	len = cd_it8_get_data_size (it8);
+	data_y = g_new0 (cmsFloat32Number, len);
+	for (i = 0; i < len; i++) {
+		cd_it8_get_data_item (it8, i, &rgb, &xyz);
+		/* ignore if not R == G == B */
+		if (!_cd_color_rgb_is_gray (&rgb, 0.01f)) {
+			cnt = 0;
+			continue;
+		}
+		data_y[cnt++]  = xyz.Y;
+	}
+
+	/* we didn't get any measurements */
+	if (cnt == 0) {
+		g_set_error (error,
+			     CD_IT8_ERROR,
+			     CD_IT8_ERROR_FAILED,
+			     "Unable to detect gamma measurements");
+		return FALSE;
+	}
+
+	/* normalize */
+	for (i = 0; i < cnt; i++) {
+		if (data_y[i] > max)
+			max = data_y[i];
+	}
+	if (max <= 0.1f) {
+		g_set_error (error,
+			     CD_IT8_ERROR,
+			     CD_IT8_ERROR_FAILED,
+			     "Unable to get readings for gamma");
+		return FALSE;
+	}
+	for (i = 0; i < cnt; i++)
+		data_y[i] /= max;
+
+	/* use lcms2 to calculate the gamma */
+	curve = cmsBuildTabulatedToneCurveFloat (NULL, cnt, data_y);
+	if (gamma_y != NULL)
+		*gamma_y = cmsEstimateGamma (curve, 0.1);
+	cmsFreeToneCurve (curve);
+	return TRUE;
 }

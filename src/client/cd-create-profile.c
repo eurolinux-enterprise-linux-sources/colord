@@ -25,32 +25,19 @@
 #include <gio/gio.h>
 #include <locale.h>
 #include <lcms2.h>
-#include <lcms2_plugin.h>
 #include <stdlib.h>
 #include <math.h>
 #include <colord-private.h>
+
+#include "cd-cleanup.h"
+
+#define LCMS_CURVE_PLUGIN_TYPE_REC709	1024
 
 typedef struct {
 	GOptionContext		*context;
 	cmsHPROFILE		 lcms_profile;
 	CdIcc			*icc;
 } CdUtilPrivate;
-
-static gint lcms_error_code = 0;
-
-/**
- * cd_fix_profile_error_cb:
- **/
-static void
-cd_fix_profile_error_cb (cmsContext ContextID,
-			 cmsUInt32Number errorcode,
-			 const char *text)
-{
-	g_warning ("LCMS error %i: %s", errorcode, text);
-
-	/* copy this sytemwide */
-	lcms_error_code = errorcode;
-}
 
 static gboolean
 set_vcgt_from_data (cmsHPROFILE profile,
@@ -100,12 +87,6 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 	const GNode *node_stpo;
 	const GNode *tmp;
 	gboolean ret = FALSE;
-	gchar *cmdline = NULL;
-	gchar *debug_stdout = NULL;
-	gchar *debug_stderr = NULL;
-	gchar *data = NULL;
-	gchar *output_fn = NULL;
-	gchar *ti3_fn = NULL;
 	gdouble enle;
 	gdouble enpo;
 	gdouble klimit;
@@ -113,17 +94,23 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 	gdouble stle;
 	gdouble stpo;
 	gdouble tlimit;
-	GFile *output_file = NULL;
-	GFile *ti3_file = NULL;
 	gint exit_status = 0;
-	GPtrArray *argv = NULL;
 	gsize len = 0;
+	_cleanup_free_ gchar *cmdline = NULL;
+	_cleanup_free_ gchar *data = NULL;
+	_cleanup_free_ gchar *debug_stderr = NULL;
+	_cleanup_free_ gchar *debug_stdout = NULL;
+	_cleanup_free_ gchar *output_fn = NULL;
+	_cleanup_free_ gchar *ti3_fn = NULL;
+	_cleanup_object_unref_ GFile *output_file = NULL;
+	_cleanup_object_unref_ GFile *ti3_file = NULL;
+	_cleanup_ptrarray_unref_ GPtrArray *argv = NULL;
 
 #ifndef TOOL_COLPROF
 	/* no support */
 	g_set_error_literal (error, 1, 0,
 			     "not compiled with --enable-print-profiles");
-	goto out;
+	return FALSE;
 #endif
 
 	/* create common options */
@@ -150,10 +137,9 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 		shape = cd_dom_get_node_data_as_double (node_shape);
 		if (stle == G_MAXDOUBLE || stpo == G_MAXDOUBLE || enpo == G_MAXDOUBLE ||
 		    enle == G_MAXDOUBLE || shape == G_MAXDOUBLE) {
-			ret = FALSE;
 			g_set_error_literal (error, 1, 0,
 					     "XML error: invalid stle, stpo, enpo, enle, shape");
-			goto out;
+			return FALSE;
 		}
 		g_ptr_array_add (argv, g_strdup ("-kp"));
 		g_ptr_array_add (argv, g_strdup_printf ("%f", stle));
@@ -168,10 +154,9 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 	if (tmp != NULL) {
 		tlimit = cd_dom_get_node_data_as_double (tmp);
 		if (tlimit == G_MAXDOUBLE) {
-			ret = FALSE;
 			g_set_error_literal (error, 1, 0,
 					     "XML error: invalid tlimit");
-			goto out;
+			return FALSE;
 		}
 		g_ptr_array_add (argv, g_strdup_printf ("-l%.0f", tlimit));
 	}
@@ -181,10 +166,9 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 	if (tmp != NULL) {
 		klimit = cd_dom_get_node_data_as_double (tmp);
 		if (klimit == G_MAXDOUBLE) {
-			ret = FALSE;
 			g_set_error_literal (error, 1, 0,
 					     "XML error: invalid klimit");
-			goto out;
+			return FALSE;
 		}
 		g_ptr_array_add (argv, g_strdup_printf ("-L%.0f", klimit));
 	}
@@ -206,10 +190,9 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 	/* get source filename and copy into working directory */
 	tmp = cd_dom_get_node (dom, root, "data_ti3");
 	if (tmp == NULL) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "XML error: no data_ti3");
-		goto out;
+		return FALSE;
 	}
 	data_ti3 = cd_dom_get_node_data (tmp);
 	ti3_fn = g_strdup_printf ("/tmp/%s.ti3", basename);
@@ -224,15 +207,14 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 				       NULL,
 				       error);
 	if (!ret)
-		goto out;
+		return FALSE;
 
 	/* ensure temporary icc profile does not already exist */
 	output_fn = g_strdup_printf ("/tmp/%s.icc", basename);
 	output_file = g_file_new_for_path (output_fn);
 	if (g_file_query_exists (output_file, NULL)) {
-		ret = g_file_delete (output_file, NULL, error);
-		if (!ret)
-			goto out;
+		if (!g_file_delete (output_file, NULL, error))
+			return FALSE;
 	}
 
 	/* run colprof in working directory */
@@ -249,53 +231,37 @@ cd_util_create_colprof (CdUtilPrivate *priv,
 			    &exit_status,
 			    error);
 	if (!ret)
-		goto out;
+		return FALSE;
 
 	/* failed */
 	if (exit_status != 0) {
-		ret = FALSE;
 		cmdline = g_strjoinv (" ", (gchar **) argv->pdata);
 		g_set_error (error, 1, 0,
 			     "Failed to generate %s using '%s'\nOutput: %s\nError:\t%s",
 			     output_fn, cmdline, debug_stdout, debug_stderr);
-		goto out;
+		return FALSE;
 	}
 
 	/* load resulting .icc file */
-	ret = g_file_load_contents (output_file, NULL, &data, &len, NULL, error);
-	if (!ret)
-		goto out;
+	if (!g_file_load_contents (output_file, NULL, &data, &len, NULL, error))
+		return FALSE;
 
 	/* open /tmp/$basename.icc as hProfile */
-	priv->lcms_profile = cmsOpenProfileFromMem (data, len);
+	priv->lcms_profile = cmsOpenProfileFromMemTHR (cd_icc_get_context (priv->icc),
+						       data, len);
 	if (priv->lcms_profile == NULL) {
-		ret = FALSE;
 		g_set_error (error, 1, 0,
 			     "Failed to open generated %s",
 			     output_fn);
-		goto out;
+		return FALSE;
 	}
 
 	/* delete temp files */
-	ret = g_file_delete (output_file, NULL, error);
-	if (!ret)
-		goto out;
-	ret = g_file_delete (ti3_file, NULL, error);
-	if (!ret)
-		goto out;
-out:
-	if (ti3_file != NULL)
-		g_object_unref (ti3_file);
-	if (output_file != NULL)
-		g_object_unref (output_file);
-	g_free (debug_stdout);
-	g_free (debug_stderr);
-	g_free (data);
-	g_free (cmdline);
-	g_free (output_fn);
-	if (argv != NULL)
-		g_ptr_array_unref (argv);
-	return ret;
+	if (!g_file_delete (output_file, NULL, error))
+		return FALSE;
+	if (!g_file_delete (ti3_file, NULL, error))
+		return FALSE;
+	return TRUE;
 }
 
 /**
@@ -317,8 +283,8 @@ cd_util_create_named_color (CdUtilPrivate *priv,
 	const GNode *tmp;
 	gboolean ret = TRUE;
 
-	priv->lcms_profile = cmsCreateNULLProfile ();
-	if (priv->lcms_profile == NULL || lcms_error_code != 0) {
+	priv->lcms_profile = cmsCreateNULLProfileTHR (cd_icc_get_context (priv->icc));
+	if (priv->lcms_profile == NULL) {
 		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "failed to create NULL profile");
@@ -394,26 +360,22 @@ cd_util_create_x11_gamma (CdUtilPrivate *priv,
 	/* parse gamma values */
 	tmp = cd_dom_get_node (dom, root, "x11_gamma");
 	if (tmp == NULL) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0, "XML error, expected x11_gamma");
-		goto out;
+		return FALSE;
 	}
-	ret = cd_dom_get_node_rgb (tmp, &rgb);
-	if (!ret) {
+	if (!cd_dom_get_node_rgb (tmp, &rgb)) {
 		g_set_error_literal (error, 1, 0, "XML error, invalid x11_gamma");
-		goto out;
+		return FALSE;
 	}
 	points[0] = rgb.R;
 	points[1] = rgb.G;
 	points[2] = rgb.B;
 
 	/* create a bog-standard sRGB profile */
-	priv->lcms_profile = cmsCreate_sRGBProfile ();
-	if (priv->lcms_profile == NULL || lcms_error_code != 0) {
-		ret = FALSE;
-		g_set_error_literal (error, 1, 0,
-				     "failed to create profile");
-		goto out;
+	priv->lcms_profile = cmsCreate_sRGBProfileTHR (cd_icc_get_context (priv->icc));
+	if (priv->lcms_profile == NULL) {
+		g_set_error_literal (error, 1, 0, "failed to create profile");
+		return FALSE;
 	}
 
 	/* scale all the values by the floating point values */
@@ -432,10 +394,9 @@ cd_util_create_x11_gamma (CdUtilPrivate *priv,
 	if (!ret) {
 		g_set_error_literal (error, 1, 0,
 				     "failed to write VCGT");
-		goto out;
+		return FALSE;
 	}
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -469,45 +430,6 @@ cd_util_build_lstar_gamma (void)
 	params[4] = 0.080002;
 	return cmsBuildParametricToneCurve (NULL, 4, params);
 }
-
-#define LCMS_CURVE_PLUGIN_TYPE_REC709	1024
-
-/**
- * cd_util_lcms_rec709_trc_cb:
- **/
-static double
-cd_util_lcms_rec709_trc_cb (int type, const double params[], double x)
-{
-	gdouble val = 0.f;
-
-	switch (type) {
-	case -LCMS_CURVE_PLUGIN_TYPE_REC709:
-		if (x < params[4])
-			val = x * params[3];
-		else
-			val = params[1] * pow (x, (1.f / params[0])) + params[2];
-		break;
-	case LCMS_CURVE_PLUGIN_TYPE_REC709:
-		if (x <= (params[3] * params[4]))
-			val = x / params[3];
-		else
-			val = pow (((x + params[2]) / params[1]), params[0]);
-		break;
-	}
-	return val;
-}
-
-/* add Rec. 709 TRC curve type */
-cmsPluginParametricCurves cd_util_lcms_rec709_trc = {
-	{ cmsPluginMagicNumber,			/* 'acpp' */
-	  2000,					/* minimum version */
-	  cmsPluginParametricCurveSig,		/* type */
-	  NULL },				/* no more plugins */
-	1,					/* number functions */
-	{LCMS_CURVE_PLUGIN_TYPE_REC709},	/* function types */
-	{5},					/* parameter count */
-	cd_util_lcms_rec709_trc_cb		/* evaluator */
-};
 
 /**
  * cd_util_build_rec709_gamma:
@@ -652,9 +574,10 @@ cd_util_create_standard_space (CdUtilPrivate *priv,
 	primaries.Blue.Y = yxy.Y;
 
 	/* create profile */
-	priv->lcms_profile = cmsCreateRGBProfile (&white,
-						  &primaries,
-						  transfer);
+	priv->lcms_profile = cmsCreateRGBProfileTHR (cd_icc_get_context (priv->icc),
+						     &white,
+						     &primaries,
+						     transfer);
 	ret = TRUE;
 out:
 	cmsFreeToneCurve (transfer[0]);
@@ -680,37 +603,33 @@ cd_util_create_temperature (CdUtilPrivate *priv,
 	guint temp;
 
 	/* create a bog-standard sRGB profile */
-	priv->lcms_profile = cmsCreate_sRGBProfile ();
-	if (priv->lcms_profile == NULL || lcms_error_code != 0) {
-		ret = FALSE;
+	priv->lcms_profile = cmsCreate_sRGBProfileTHR (cd_icc_get_context (priv->icc));
+	if (priv->lcms_profile == NULL) {
 		g_set_error_literal (error, 1, 0,
 				     "failed to create profile");
-		goto out;
+		return FALSE;
 	}
 
 	/* parse temperature value */
 	tmp = cd_dom_get_node (dom, root, "temperature");
 	if (tmp == NULL) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0, "XML error, expected temperature");
-		goto out;
+		return FALSE;
 	}
 	temp = atoi (cd_dom_get_node_data (tmp));
 
 	/* parse gamma value */
 	tmp = cd_dom_get_node (dom, root, "gamma");
 	if (tmp == NULL) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0, "XML error, expected gamma");
-		goto out;
+		return FALSE;
 	}
 	curve_gamma = cd_dom_get_node_data_as_double (tmp);
 	if (curve_gamma == G_MAXDOUBLE) {
-		ret = FALSE;
 		g_set_error (error, 1, 0,
 			     "failed to parse gamma: '%s'",
 			     cd_dom_get_node_data (tmp));
-		goto out;
+		return FALSE;
 	}
 
 	/* generate the VCGT table */
@@ -731,12 +650,41 @@ cd_util_create_temperature (CdUtilPrivate *priv,
 				  data[2],
 				  256);
 	if (!ret) {
-		g_set_error_literal (error, 1, 0,
-				     "failed to write VCGT");
-		goto out;
+		g_set_error_literal (error, 1, 0, "failed to write VCGT");
+		return FALSE;
 	}
-out:
-	return ret;
+	return TRUE;
+}
+
+/**
+ * cd_util_icc_set_metadata_coverage:
+ **/
+static gboolean
+cd_util_icc_set_metadata_coverage (CdIcc *icc, GError **error)
+{
+	const gchar *tmp;
+	gdouble coverage = 0.0f;
+	_cleanup_free_ gchar *coverage_tmp = NULL;
+	_cleanup_object_unref_ CdIcc *icc_srgb = NULL;
+
+	/* is sRGB? */
+	tmp = cd_icc_get_metadata_item (icc, CD_PROFILE_METADATA_STANDARD_SPACE);
+	if (g_strcmp0 (tmp, "srgb") == 0)
+		return TRUE;
+
+	/* calculate coverage (quite expensive to calculate, hence metadata) */
+	icc_srgb = cd_icc_new ();
+	if (!cd_icc_create_default (icc_srgb, error))
+		return FALSE;
+	if (!cd_icc_utils_get_coverage (icc_srgb, icc, &coverage, error))
+		return FALSE;
+	if (coverage > 0.0) {
+		coverage_tmp = g_strdup_printf ("%.2f", coverage);
+		cd_icc_add_metadata (icc,
+				     "GAMUT_coverage(srgb)",
+				     coverage_tmp);
+	}
+	return TRUE;
 }
 
 /**
@@ -747,67 +695,54 @@ cd_util_create_from_xml (CdUtilPrivate *priv,
 			 const gchar *filename,
 			 GError **error)
 {
-	CdDom *dom = NULL;
 	const GNode *profile;
 	const GNode *tmp;
 	gboolean ret = TRUE;
-	gchar *data = NULL;
 	GHashTable *hash;
 	gssize data_len = -1;
+	_cleanup_free_ gchar *data = NULL;
+	_cleanup_object_unref_ CdDom *dom = NULL;
 
 	/* parse the XML into DOM */
-	ret = g_file_get_contents (filename, &data, (gsize *) &data_len, error);
-	if (!ret)
-		goto out;
+	if (!g_file_get_contents (filename, &data, (gsize *) &data_len, error))
+		return FALSE;
 	dom = cd_dom_new ();
-	ret = cd_dom_parse_xml_data (dom, data, data_len, error);
-	if (!ret)
-		goto out;
+	if (!cd_dom_parse_xml_data (dom, data, data_len, error))
+		return FALSE;
 
 	/* get root */
 	profile = cd_dom_get_node (dom, NULL, "profile");
 	if (profile == NULL) {
-		ret = FALSE;
-		g_set_error_literal (error, 1, 0,
-				     "invalid XML, expected profile");
-		goto out;
+		g_set_error_literal (error, 1, 0, "invalid XML, expected profile");
+		return FALSE;
 	}
 
 	/* get type */
 	if (cd_dom_get_node (dom, profile, "primaries") != NULL) {
-		ret = cd_util_create_standard_space (priv, dom, profile, error);
-		if (!ret)
-			goto out;
+		if (!cd_util_create_standard_space (priv, dom, profile, error))
+			return FALSE;
 	} else if (cd_dom_get_node (dom, profile, "temperature") != NULL) {
-		ret = cd_util_create_temperature (priv, dom, profile, error);
-		if (!ret)
-			goto out;
+		if (!cd_util_create_temperature (priv, dom, profile, error))
+			return FALSE;
 	} else if (cd_dom_get_node (dom, profile, "x11_gamma") != NULL) {
-		ret = cd_util_create_x11_gamma (priv, dom, profile, error);
-		if (!ret)
-			goto out;
+		if (!cd_util_create_x11_gamma (priv, dom, profile, error))
+			return FALSE;
 	} else if (cd_dom_get_node (dom, profile, "named") != NULL) {
-		ret = cd_util_create_named_color (priv, dom, profile, error);
-		if (!ret)
-			goto out;
+		if (!cd_util_create_named_color (priv, dom, profile, error))
+			return FALSE;
 	} else if (cd_dom_get_node (dom, profile, "data_ti3") != NULL) {
-		ret = cd_util_create_colprof (priv, dom, profile, error);
-		if (!ret)
-			goto out;
+		if (!cd_util_create_colprof (priv, dom, profile, error))
+			return FALSE;
 	} else {
-		ret = FALSE;
-		g_set_error_literal (error, 1, 0,
-				     "invalid XML, unknown type");
-		goto out;
+		g_set_error_literal (error, 1, 0, "invalid XML, unknown type");
+		return FALSE;
 	}
 
 	/* convert into a CdIcc object */
-	ret = cd_icc_load_handle (priv->icc,
-				  priv->lcms_profile,
-				  CD_ICC_LOAD_FLAGS_NONE,
-				  error);
+	ret = cd_icc_load_handle (priv->icc, priv->lcms_profile,
+				  CD_ICC_LOAD_FLAGS_NONE, error);
 	if (!ret)
-		goto out;
+		return FALSE;
 
 	/* also write metadata */
 	tmp = cd_dom_get_node (dom, profile, "license");
@@ -821,6 +756,8 @@ cd_util_create_from_xml (CdUtilPrivate *priv,
 		cd_icc_add_metadata (priv->icc,
 				     CD_PROFILE_METADATA_STANDARD_SPACE,
 				     cd_dom_get_node_data (tmp));
+		if (!cd_util_icc_set_metadata_coverage (priv->icc, error))
+			return FALSE;
 	}
 	tmp = cd_dom_get_node (dom, profile, "data_source");
 	if (tmp != NULL) {
@@ -853,11 +790,7 @@ cd_util_create_from_xml (CdUtilPrivate *priv,
 	hash = cd_dom_get_node_localized (profile, "manufacturer");
 	if (hash != NULL)
 		cd_icc_set_manufacturer_items (priv->icc, hash);
-out:
-	g_free (data);
-	if (dom != NULL)
-		g_object_unref (dom);
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -868,12 +801,11 @@ main (int argc, char **argv)
 {
 	CdUtilPrivate *priv;
 	gboolean ret;
-	gchar *cmd_descriptions = NULL;
-	gchar *filename = NULL;
-	GError *error = NULL;
-	GFile *file = NULL;
 	guint retval = EXIT_FAILURE;
-
+	_cleanup_error_free_ GError *error = NULL;
+	_cleanup_free_ gchar *cmd_descriptions = NULL;
+	_cleanup_free_ gchar *filename = NULL;
+	_cleanup_object_unref_ GFile *file = NULL;
 	const GOptionEntry options[] = {
 		{ "output", 'o', 0, G_OPTION_ARG_STRING, &filename,
 		/* TRANSLATORS: command line option */
@@ -882,16 +814,10 @@ main (int argc, char **argv)
 	};
 
 	setlocale (LC_ALL, "");
-	g_type_init ();
 
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
-	/* setup LCMS */
-	cmsSetLogErrorHandler (cd_fix_profile_error_cb);
-	ret = cmsPlugin (&cd_util_lcms_rec709_trc);
-	g_assert (ret);
 
 	priv = g_new0 (CdUtilPrivate, 1);
 	priv->icc = cd_icc_new ();
@@ -903,10 +829,8 @@ main (int argc, char **argv)
 	ret = g_option_context_parse (priv->context, &argc, &argv, &error);
 	if (!ret) {
 		/* TRANSLATORS: the user didn't read the man page */
-		g_print ("%s: %s\n",
-			 _("Failed to parse arguments"),
+		g_print ("%s: %s\n", _("Failed to parse arguments"),
 			 error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -921,7 +845,6 @@ main (int argc, char **argv)
 	ret = cd_util_create_from_xml (priv, argv[1], &error);
 	if (!ret) {
 		g_print ("%s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -934,7 +857,6 @@ main (int argc, char **argv)
 				&error);
 	if (!ret) {
 		g_print ("%s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -946,10 +868,6 @@ out:
 		g_object_unref (priv->icc);
 		g_free (priv);
 	}
-	if (file != NULL)
-		g_object_unref (file);
-	g_free (cmd_descriptions);
-	g_free (filename);
 	return retval;
 }
 

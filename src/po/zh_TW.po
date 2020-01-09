@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Cheng-Chia Tseng <pswo10680@gmail.com>, 2011-2012
+# Cheng-Chia Tseng <pswo10680@gmail.com>, 2011-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: colord\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-01 09:30+0100\n"
-"PO-Revision-Date: 2013-05-01 08:30+0000\n"
-"Last-Translator: Richard Hughes <richard@hughsie.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2014-11-24 14:27+0000\n"
+"PO-Revision-Date: 2014-11-10 13:44+0000\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/colord/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,6 +26,7 @@ msgstr "要建立的描述檔"
 msgid "ICC profile creation program"
 msgstr "ICC 描述檔建立程式"
 
+#. TRANSLATORS: the user didn't read the man page
 msgid "Failed to parse arguments"
 msgstr "無法解析引數"
 
@@ -93,6 +94,10 @@ msgstr "自動修正描述檔中的中介資料"
 msgid "Set the ICC profile version"
 msgstr "設定 ICC 描述檔版本"
 
+#. TRANSLATORS: command description
+msgid "Export the tag data"
+msgstr "匯出標籤資料"
+
 #. TRANSLATORS: program name
 msgid "Color Management"
 msgstr "色彩管理"
@@ -101,11 +106,24 @@ msgstr "色彩管理"
 msgid "ICC profile dump program"
 msgstr "ICC 描述檔傾印程式"
 
+#. TRANSLATORS: command description
+msgid "Create a CMF from CSV data"
+msgstr "根據 CSV 資料建立 CMF "
+
+#. TRANSLATORS: command description
+msgid "Create a spectrum from CSV data"
+msgstr "根據 CSV 資料建立光譜"
+
+#. TRANSLATORS: command description
+msgid "Create a CCMX from reference and measurement data"
+msgstr "根據參照數據與測量數據製作 CCMX"
+
 #. TRANSLATORS: this is the profile creation date strftime format
 msgid "%B %e %Y, %I:%M:%S %p"
 msgstr "%Y年%B%e日，%p %I:%M:%S"
 
 #. TRANSLATORS: profile owner
+#. TRANSLATORS: profile UID
 msgid "Owner"
 msgstr "擁有者"
 
@@ -348,6 +366,18 @@ msgstr "色彩"
 msgid "Show client and daemon versions"
 msgstr "顯示客戶端與幕後程式版本"
 
+#. TRANSLATORS: command line option
+msgid "Show the value without any header"
+msgstr "顯示沒有任何標頭的值"
+
+#. TRANSLATORS: command line option
+msgid "Filter object properties when displaying"
+msgstr "顯示時過濾物件屬性"
+
+#. TRANSLATORS: command description
+msgid "Dump all debug data to a file"
+msgstr "將所有除錯資料傾印至檔案中"
+
 #. TRANSLATORS: command description
 msgid "Gets all the color managed devices"
 msgstr "取得所有色彩管理裝置"
@@ -381,16 +411,16 @@ msgid "Create a device"
 msgstr "建立裝置"
 
 #. TRANSLATORS: command description
-msgid "Find a device"
-msgstr "尋找裝置"
+msgid "Find a device from the device ID"
+msgstr "根據裝置 ID 尋找裝置"
 
 #. TRANSLATORS: command description
-msgid "Find a device that has a specific property"
-msgstr "尋找含指定屬性的裝置"
+msgid "Find a device with a given property value"
+msgstr "根據給定的屬性值尋找裝置"
 
 #. TRANSLATORS: command description
-msgid "Find a profile"
-msgstr "尋找描述檔"
+msgid "Find a profile from the profile ID"
+msgstr "根據描述檔 ID 尋找描述檔"
 
 #. TRANSLATORS: command description
 msgid "Find a profile by filename"
@@ -405,8 +435,8 @@ msgid "Create a profile"
 msgstr "建立描述檔"
 
 #. TRANSLATORS: command description
-msgid "Add a profile to a device"
-msgstr "將描述檔加入至裝置"
+msgid "Add a profile to a device that already exists"
+msgstr "為已存在的裝置添加描述檔"
 
 #. TRANSLATORS: command description
 msgid "Makes a profile default for a device"
@@ -456,6 +486,10 @@ msgstr "抑制此裝置的色彩描述檔"
 msgid "Returns all the profiles that match a qualifier"
 msgstr "回傳符合修飾子的描述檔"
 
+#. TRANSLATORS: command description
+msgid "Import a profile and install it for the user"
+msgstr "匯入描述檔並為使用者安裝"
+
 #. TRANSLATORS: no colord available
 msgid "No connection to colord:"
 msgstr "無連至 colord 的連線："
@@ -465,6 +499,12 @@ msgstr "客戶端版本："
 
 msgid "Daemon version:"
 msgstr "幕後程式版本："
+
+msgid "System vendor:"
+msgstr "系統廠商："
+
+msgid "System model:"
+msgstr "系統型號："
 
 msgid "Default gamma for the display"
 msgstr "顯示器的預設色域"
@@ -483,13 +523,13 @@ msgid ""
 msgstr "預設顯示器校準用的目標白點，單位採科式溫標 (即度 K，Kelvin)。常見的值為 6500 表 D65，及 5000 表 D50。"
 
 msgid "Delay between sample intervals"
-msgstr ""
+msgstr "在取樣間隔之間的延遲時間"
 
 msgid ""
 "This is the delay between setting the sample color and asking the measuring "
 "instrument to take a sample. It is required because both the graphics driver"
 " and the display itself introduce latency."
-msgstr ""
+msgstr "此延遲等候期是在設定取樣色彩與提請量測儀器取樣兩者之間的間隔時間。之所以需要這段延遲等候時間，主要因為顯示卡驅動程式與顯示器本身皆會延遲一些時間。"
 
 msgid "Web service profile upload URI"
 msgstr "網頁服務描述檔上傳 URI"
@@ -507,7 +547,6 @@ msgstr "此描述檔未受已知著作權限制"
 
 #. TRANSLATORS: a editing space is a profile you use for editing,
 #. 'SWOP' is also a trademark so don't translate that
-#. 
 msgid ""
 "This editing space was designed as SMPTE-240M and encompasses most of the "
 "possible colors available on a CMYK color printer. This is a popular choice "
@@ -518,7 +557,6 @@ msgstr "此編輯用空間設計為 SMPTE-240M ，並包含 CMYK 色彩印表機
 #. TRANSLATORS: 'Adobe', 'Photoshop', 'Apple' and 'Illustrator' are
 #. trademarks,
 #. don't translate those
-#. 
 msgid ""
 "This legacy profile was originally created by Adobe for use with Photoshop "
 "and Illustrator. As it is based on the original Apple 13\" RGB monitor and "
@@ -528,7 +566,6 @@ msgstr "此遺蹟描述檔最初是由 Adobe 所建立，用於 Photoshop 與 Il
 
 #. TRANSLATORS: super-saturated is in reference to colors you can't show on a
 #. PC screen
-#. 
 msgid ""
 "This editing space can display more saturated colors than Adobe RGB and is "
 "suitable for images with highly saturated colors often used in "
@@ -582,7 +619,6 @@ msgstr "蠟筆色彩"
 
 #. TRANSLATORS: 'Crayola' is a trademark, please don't translate,
 #. also 'named colors' are color swatches with a name, e.g. 'Royal Rose'
-#. 
 msgid ""
 "This named color profile contains all the Crayola crayon colors in popular "
 "use. It is a test profile designed for testing embedding named colors into "
@@ -634,7 +670,6 @@ msgstr "FOGRA28L 捲筒塗料紙"
 
 #. TRANSLATORS: paper grade 3 is just a description meaning "not very white",
 #. LCW stands for Light Weight Coated
-#. 
 msgid ""
 "This profile is used for positive plate making, printing on paper type 3 "
 "(LWC), webfed offset. This profile should no longer be used for production, "
@@ -667,7 +702,6 @@ msgstr "FOGRA47L 無塗料紙"
 #. TRANSLATORS: coated refers to the high quality paper covering making the
 #. paper
 #. better quality, GRACoL is also a trademark don't translate please
-#. 
 msgid ""
 "This profile is used for printing on paper types 1 and 2 (coated or matte), "
 "sheetfed offset. This profile is not significantly different from U.S. "
@@ -716,7 +750,6 @@ msgstr "IFRA26S 2004 新聞紙"
 
 #. TRANSLATORS: TVI stands for 'tone value increase' and is another name for
 #. dot gain, coldset means letting the ink dry without heating it
-#. 
 #, no-c-format
 msgid ""
 "This profile is use for printing on newsprint, and is an ISO12647-3:2005 "
@@ -727,7 +760,6 @@ msgstr "此描述檔用於新聞紙的印刷，是 ISO12647-3:2005 遵循描述�
 
 #. TRANSLATORS: A little joke: Color Geeks say that NTSC stands for 'Never The
 #. Same Color' as it's really a poor choice compared to sRGB
-#. 
 msgid ""
 "This profile defines the range of colors used with the NTSC video standard. "
 "It is an obsolete standard that has been replaced by SMTE-C. You should only"
@@ -749,6 +781,13 @@ msgid ""
 "bits per channel precision, you may see color banding when editing images."
 msgstr "最初由 Eastman Kodak 設計，且稱之為 ROMM RGB。此描述檔可顯示非常大範圍的色彩，許多攝影師將它用於 RAW 影像的算繪、編輯、封存用途。除非您正使用每通道有 16 位元精準度的裝置，否則編輯影像時可能會看見色帶產生。"
 
+#. TRANSLATORS: ITU-R is a standards body
+msgid ""
+"ITU-R recommendation BT.709 is a high-definition television standard that "
+"was first approved in 1990. The Rec. 709 profile uses the same range of "
+"colors as sRGB although the luminance curve is different."
+msgstr "ITU-R 推薦的 BT.709 是高傳真電視標準，最早於 1990 年批准。Rec. 709 描述檔與 sRGB 一樣使用相同的色彩範圍，不過輝度曲線不同。"
+
 #. TRANSLATORS: studio recording means 'shows you'll see on TV'
 msgid ""
 "This is the current standard used by North America and Japan for studio "
@@ -767,7 +806,6 @@ msgstr "這是根據 ANSI CGATS/SNAP TR 002-2007 所建立的描述檔，用於�
 
 #. TRANSLATORS: Trinitron is a trademark, 'untagged' means an image with an
 #. unspecified color profile
-#. 
 msgid ""
 "This general purpose profile was designed by Hewlett-Packard and Microsoft "
 "and lives on as the default profile on the Internet for untagged RGB colors "
@@ -823,7 +861,6 @@ msgstr "X11 色彩"
 
 #. TRANSLATORS: A 'named color profile' contains a list of color swatches that
 #. look the same on all computer screens
-#. 
 msgid ""
 "This named color profile contains all the colors defined by X11, assuming "
 "the source colors were supposed to be sRGB."
@@ -831,7 +868,6 @@ msgstr "此命名的色彩描述檔包含所有 X11 定義的色彩，將來源�
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to add devices
-#. 
 msgid "Create a color managed device"
 msgstr "建立色彩管理裝置"
 
@@ -840,7 +876,6 @@ msgstr "需要認證才能建立色彩管理裝置"
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to add profiles
-#. 
 msgid "Create a color profile"
 msgstr "建立色彩描述檔"
 
@@ -849,7 +884,6 @@ msgstr "需要認證才能建立色彩描述檔"
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to delete devices
-#. 
 msgid "Remove a color managed device"
 msgstr "移除色彩管理裝置"
 
@@ -858,7 +892,6 @@ msgstr "需要認證才能移除色彩管理裝置"
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to delete profiles
-#. 
 msgid "Remove a color profile"
 msgstr "移除色彩描述檔"
 
@@ -867,7 +900,6 @@ msgstr "需要認證才能移除色彩描述檔"
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to modify devices
-#. 
 msgid "Modify color settings for a device"
 msgstr "修改裝置的色彩設定值"
 
@@ -876,7 +908,6 @@ msgstr "需要認證才能修改裝置的色彩設定值"
 
 #. SECURITY:
 #. - Normal users should not have to authenticate to modify profiles
-#. 
 msgid "Modify a color profile"
 msgstr "修改色彩描述檔"
 
@@ -890,7 +921,6 @@ msgstr "需要認證才能修改色彩描述檔"
 #. - This should not be set to 'yes' as unprivileged users could then
 #. set a profile set to all-white or all-black and thus make the
 #. other sessions unusable.
-#. 
 msgid "Install system color profiles"
 msgstr "安裝系統色彩描述檔"
 
@@ -900,7 +930,6 @@ msgstr "需要認證才能為所有使用者安裝色彩描述檔"
 #. SECURITY:
 #. - Normal users should not have to authenticate to profile
 #. devices.
-#. 
 msgid "Inhibit color profile selection"
 msgstr "抑制色彩描述檔選取"
 
@@ -910,7 +939,6 @@ msgstr "需要認證才能停用符合裝置的描述檔"
 #. SECURITY:
 #. - Normal users should not have to authenticate to use the
 #. colorimeter device.
-#. 
 msgid "Use color sensor"
 msgstr "使用色彩感測器"
 
@@ -934,6 +962,10 @@ msgstr "在一小段延遲後離開"
 #. TRANSLATORS: exit straight away, used for automatic profiling
 msgid "Exit after the engine has loaded"
 msgstr "在引擎載入後離開"
+
+#. TRANSLATORS: exit straight away, used for automatic profiling
+msgid "Create a dummy sensor for testing"
+msgstr "建立測試用途的偽感測器"
 
 msgid "Color Management D-Bus Service"
 msgstr "色彩管理 D-Bus 服務"

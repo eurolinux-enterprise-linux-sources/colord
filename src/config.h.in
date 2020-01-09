@@ -1,14 +1,14 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Build libcolordcompat.so */
+#undef BUILD_LIBCOLORDCOMPAT
+
 /* Daemon user */
 #undef DAEMON_USER
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #undef ENABLE_NLS
-
-/* enable volume search */
-#undef ENABLE_VOLUME_SEARCH
 
 /* foo */
 #undef GETTEXT_PACKAGE
@@ -28,14 +28,11 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
-/* Use FD fallback */
-#undef HAVE_FD_FALLBACK
-
 /* Define if the GNU gettext() function is already present or preinstalled. */
 #undef HAVE_GETTEXT
 
-/* Use GUDEV support for hardware */
-#undef HAVE_GUDEV
+/* getuid() is available */
+#undef HAVE_GETUID
 
 /* whether gusb is available */
 #undef HAVE_GUSB
@@ -46,20 +43,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* cmsGetHeaderCreator is available */
-#undef HAVE_LCMS_GET_HEADER_CREATOR
-
-/* cmsGetToneCurveEstimatedTableEntries is available */
-#undef HAVE_LCMS_GET_TABLE_ENTRIES
-
-/* cmsMLUtranslationsCount is available */
-#undef HAVE_LCMS_MLU_TRANSLATIONS_COUNT
-
 /* Define to 1 if libsystemd-login is available */
 #undef HAVE_LIBSYSTEMD_LOGIN
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the <pwd.h> header file. */
+#undef HAVE_PWD_H
 
 /* Use SANE support for detecting scanners */
 #undef HAVE_SANE
@@ -76,11 +67,17 @@
 /* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
+/* Define to 1 if you have the <syslog.h> header file. */
+#undef HAVE_SYSLOG_H
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
+
+/* Use UDEV support */
+#undef HAVE_UDEV
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
@@ -88,9 +85,6 @@
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-#undef NO_MINUS_C_MINUS_O
 
 /* Name of package */
 #undef PACKAGE

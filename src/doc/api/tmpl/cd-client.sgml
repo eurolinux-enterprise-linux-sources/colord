@@ -122,7 +122,7 @@ cd-client
 
 </para>
 
-@client: 
+@device: 
 
 
 <!-- ##### USER_FUNCTION _cd_client_reserved1 ##### -->
@@ -269,6 +269,30 @@ cd-client
 
 
 <!-- ##### FUNCTION cd_client_create_profile_finish ##### -->
+<para>
+
+</para>
+
+@client: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_client_create_profile_for_icc ##### -->
+<para>
+
+</para>
+
+@client: 
+@icc: 
+@scope: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION cd_client_create_profile_for_icc_finish ##### -->
 <para>
 
 </para>

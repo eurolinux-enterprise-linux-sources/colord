@@ -132,6 +132,23 @@ cd-math
 @v2: 
 
 
+<!-- ##### FUNCTION cd_mat33_init ##### -->
+<para>
+
+</para>
+
+@dest: 
+@m00: 
+@m01: 
+@m02: 
+@m10: 
+@m11: 
+@m12: 
+@m20: 
+@m21: 
+@m22: 
+
+
 <!-- ##### FUNCTION cd_mat33_clear ##### -->
 <para>
 

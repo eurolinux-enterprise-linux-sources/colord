@@ -71,7 +71,7 @@ cd_quirk_vendor_name (const gchar *vendor)
 		{ "Fujitsu Siemens Computers GmbH", "Fujitsu Siemens" },
 		{ "Funai Electric Co., Ltd.", "Funai" },
 		{ "Gigabyte Technology Co., Ltd.", "Gigabyte" },
-		{ "Goldstar Company Ltd", "Goldstar" },
+		{ "Goldstar Company Ltd", "LG" },
 		{ "Hewlett-Packard", "Hewlett Packard" },
 		{ "Hitachi America Ltd", "Hitachi" },
 		{ "HP", "Hewlett Packard" },
@@ -107,10 +107,8 @@ cd_quirk_vendor_name (const gchar *vendor)
 
 	/* correct some company names */
 	for (i = 0; vendor_names[i].old != NULL; i++) {
-		if (g_str_has_prefix (vendor, vendor_names[i].old)) {
-			display_name = g_string_new (vendor_names[i].new);
-			goto out;
-		}
+		if (g_str_has_prefix (vendor, vendor_names[i].old))
+			return g_strdup (vendor_names[i].new);
 	}
 
 	/* get rid of suffixes */
@@ -121,6 +119,5 @@ cd_quirk_vendor_name (const gchar *vendor)
 					   display_name->len - strlen (suffixes[i]));
 	}
 	g_strchomp (display_name->str);
-out:
 	return g_string_free (display_name, FALSE);
 }

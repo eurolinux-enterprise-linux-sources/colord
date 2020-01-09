@@ -29,6 +29,7 @@
 #include <glib-object.h>
 
 #include "cd-it8.h"
+#include "cd-spectrum.h"
 
 G_BEGIN_DECLS
 
@@ -37,6 +38,23 @@ gboolean	 cd_it8_utils_calculate_ccmx		(CdIt8		*it8_reference,
 							 CdIt8		*it8_ccmx,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_it8_utils_calculate_xyz_from_cmf	(CdIt8		*cmf,
+							 CdSpectrum	*illuminant,
+							 CdSpectrum	*spectrum,
+							 CdColorXYZ	*value,
+							 gdouble	 resolution,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_it8_utils_calculate_cri_from_cmf	(CdIt8		*cmf,
+							 CdIt8		*tcs,
+							 CdSpectrum	*illuminant,
+							 gdouble	*value,
+							 gdouble	 resolution,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_it8_utils_calculate_gamma		(CdIt8		*it8,
+							 gdouble	*gamma_y,
+							 GError		**error);
 
 G_END_DECLS
 

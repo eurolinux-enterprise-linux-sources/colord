@@ -2,30 +2,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>cd-it8-utils</title>
+<title>colord Reference Manual: cd-it8-utils</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="colord Reference Manual">
 <link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
 <link rel="prev" href="colord-cd-interp.html" title="cd-interp">
 <link rel="next" href="colord-cd-it8.html" title="cd-it8">
-<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
-<tr valign="middle">
-<td><a accesskey="p" href="colord-cd-interp.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
-<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
-<th width="100%" align="center">colord Reference Manual</th>
-<td><a accesskey="n" href="colord-cd-it8.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
-</tr>
-<tr><td colspan="5" class="shortcuts">
-<a href="#colord-cd-it8-utils.synopsis" class="shortcut">Top</a>
-                   | 
-                  <a href="#colord-cd-it8-utils.description" class="shortcut">Description</a>
-</td></tr>
-</table>
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#colord-cd-it8-utils.description" class="shortcut">Description</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-interp.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-it8.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
 <div class="refentry">
 <a name="colord-cd-it8-utils"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
@@ -33,69 +29,271 @@
 <h2><span class="refentrytitle"><a name="colord-cd-it8-utils.top_of_page"></a>cd-it8-utils</span></h2>
 <p>cd-it8-utils — Utilities for working with CdIt8 objects</p>
 </td>
-<td valign="top" align="right"></td>
+<td class="gallery_image" valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv">
-<a name="colord-cd-it8-utils.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-it8-utils.html#cd-it8-utils-calculate-ccmx" title="cd_it8_utils_calculate_ccmx ()">cd_it8_utils_calculate_ccmx</a>         (<em class="parameter"><code><span class="type">CdIt8</span> *it8_reference</code></em>,
-                                                         <em class="parameter"><code><span class="type">CdIt8</span> *it8_measured</code></em>,
-                                                         <em class="parameter"><code><span class="type">CdIt8</span> *it8_ccmx</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-</pre>
-</div>
 <div class="refsect1">
-<a name="colord-cd-it8-utils.description"></a><h2>Description</h2>
-<p>
-Functions to do cool things with sets of reference and measurements.
-</p>
-</div>
-<div class="refsect1">
-<a name="colord-cd-it8-utils.details"></a><h2>Details</h2>
-<div class="refsect2">
-<a name="cd-it8-utils-calculate-ccmx"></a><h3>cd_it8_utils_calculate_ccmx ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_it8_utils_calculate_ccmx         (<em class="parameter"><code><span class="type">CdIt8</span> *it8_reference</code></em>,
-                                                         <em class="parameter"><code><span class="type">CdIt8</span> *it8_measured</code></em>,
-                                                         <em class="parameter"><code><span class="type">CdIt8</span> *it8_ccmx</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<p>
-This calculates the colorimter correction matrix using the Four-Color
-Matrix Method by Yoshihiro Ohno and Jonathan E. Hardis, 1997.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
+<a name="colord-cd-it8-utils.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table width="100%" border="0">
 <colgroup>
-<col align="left" valign="top">
-<col>
+<col width="150px" class="functions_return">
+<col class="functions_name">
 </colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><em class="parameter"><code>it8_reference</code></em> :</span></p></td>
-<td>The reference data</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>it8_measured</code></em> :</span></p></td>
-<td>The measured data</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>it8_ccmx</code></em> :</span></p></td>
-<td>The calculated correction matrix</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-it8-utils.html#cd-it8-utils-calculate-ccmx" title="cd_it8_utils_calculate_ccmx ()">cd_it8_utils_calculate_ccmx</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a correction matrix was found.</td>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-it8-utils.html#cd-it8-utils-calculate-xyz-from-cmf" title="cd_it8_utils_calculate_xyz_from_cmf ()">cd_it8_utils_calculate_xyz_from_cmf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-it8-utils.html#cd-it8-utils-calculate-cri-from-cmf" title="cd_it8_utils_calculate_cri_from_cmf ()">cd_it8_utils_calculate_cri_from_cmf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-it8-utils.html#cd-it8-utils-calculate-gamma" title="cd_it8_utils_calculate_gamma ()">cd_it8_utils_calculate_gamma</a> <span class="c_punctuation">()</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
+<div class="refsect1">
+<a name="colord-cd-it8-utils.description"></a><h2>Description</h2>
+<p>Functions to do cool things with sets of reference and measurements.</p>
+</div>
+<div class="refsect1">
+<a name="colord-cd-it8-utils.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-it8-utils-calculate-ccmx"></a><h3>cd_it8_utils_calculate_ccmx ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_it8_utils_calculate_ccmx (<em class="parameter"><code><span class="type">CdIt8</span> *it8_reference</code></em>,
+                             <em class="parameter"><code><span class="type">CdIt8</span> *it8_measured</code></em>,
+                             <em class="parameter"><code><span class="type">CdIt8</span> *it8_ccmx</code></em>,
+                             <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>This calculates the colorimeter correction matrix using the Four-Color
+Matrix Method by Yoshihiro Ohno and Jonathan E. Hardis, 1997.</p>
+<div class="refsect3">
+<a name="id-1.3.13.5.2.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>it8_reference</p></td>
+<td class="parameter_description"><p>The reference data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>it8_measured</p></td>
+<td class="parameter_description"><p>The measured data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>it8_ccmx</p></td>
+<td class="parameter_description"><p>The calculated correction matrix</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.13.5.2.6"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a correction matrix was found.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-it8-utils-calculate-xyz-from-cmf"></a><h3>cd_it8_utils_calculate_xyz_from_cmf ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_it8_utils_calculate_xyz_from_cmf (<em class="parameter"><code><span class="type">CdIt8</span> *cmf</code></em>,
+                                     <em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *illuminant</code></em>,
+                                     <em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *spectrum</code></em>,
+                                     <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *value</code></em>,
+                                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> resolution</code></em>,
+                                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>This calculates the XYZ from a CMF, illuminant and input spectrum.</p>
+<div class="refsect3">
+<a name="id-1.3.13.5.3.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cmf</p></td>
+<td class="parameter_description"><p>The color match function</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>illuminant</p></td>
+<td class="parameter_description"><p>The illuminant (you can use <a class="link" href="colord-cd-spectrum.html#cd-spectrum-new" title="cd_spectrum_new ()"><code class="function">cd_spectrum_new()</code></a> for type E)</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>spectrum</p></td>
+<td class="parameter_description"><p>The <a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> input data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>The <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> result</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>resolution</p></td>
+<td class="parameter_description"><p>The resolution in nm, typically 1.0</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.13.5.3.6"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a XYZ value was set.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-it8-utils-calculate-cri-from-cmf"></a><h3>cd_it8_utils_calculate_cri_from_cmf ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_it8_utils_calculate_cri_from_cmf (<em class="parameter"><code><span class="type">CdIt8</span> *cmf</code></em>,
+                                     <em class="parameter"><code><span class="type">CdIt8</span> *tcs</code></em>,
+                                     <em class="parameter"><code><a class="link" href="colord-cd-spectrum.html#CdSpectrum"><span class="type">CdSpectrum</span></a> *illuminant</code></em>,
+                                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> *value</code></em>,
+                                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> resolution</code></em>,
+                                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>This calculates the CRI for a specific illuminant.</p>
+<div class="refsect3">
+<a name="id-1.3.13.5.4.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cmf</p></td>
+<td class="parameter_description"><p>The color match function</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>tcs</p></td>
+<td class="parameter_description"><p>The CIE TCS test patches</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>illuminant</p></td>
+<td class="parameter_description"><p>The illuminant</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>The CRI result</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>resolution</p></td>
+<td class="parameter_description"><p>The resolution in nm, typically 1.0</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.13.5.4.6"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a XYZ value was set.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-it8-utils-calculate-gamma"></a><h3>cd_it8_utils_calculate_gamma ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_it8_utils_calculate_gamma (<em class="parameter"><code><span class="type">CdIt8</span> *it8</code></em>,
+                              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> *gamma_y</code></em>,
+                              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>This estimates the gamma from values obtained from an .ti3 file.</p>
+<div class="refsect3">
+<a name="id-1.3.13.5.5.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>it8</p></td>
+<td class="parameter_description"><p>The reference data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>gamma_y</p></td>
+<td class="parameter_description"><p>The estimated gamma</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.13.5.5.6"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a valid value was found.</p>
+<p></p>
+</div>
+<p class="since">Since 0.2.6</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="colord-cd-it8-utils.other_details"></a><h2>Types and Values</h2>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.19</div>
+          Generated by GTK-Doc V1.21</div>
 </body>
 </html>

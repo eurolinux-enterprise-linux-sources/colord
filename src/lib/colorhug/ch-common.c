@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <glib.h>
+#include <string.h>
 
 #include "ch-common.h"
 
@@ -133,6 +134,12 @@ ch_strerror (ChError error_enum)
 		break;
 	case CH_ERROR_SELF_TEST_ADC_VREF:
 		str = "Self test failed: ADC Vref";
+		break;
+	case CH_ERROR_I2C_SLAVE_ADDRESS:
+		str = "I2C set slave address failed";
+		break;
+	case CH_ERROR_I2C_SLAVE_CONFIG:
+		str = "I2C set slave config failed";
 		break;
 	default:
 		str = "Unknown error, please report";
@@ -381,18 +388,52 @@ ch_device_mode_to_string (ChDeviceMode device_mode)
 	case CH_DEVICE_MODE_BOOTLOADER:
 		str = "bootloader";
 		break;
-	case CH_DEVICE_MODE_BOOTLOADER_SPECTRO:
-		str = "bootloader-spectro";
+	case CH_DEVICE_MODE_BOOTLOADER_PLUS:
+		str = "bootloader-plus";
 		break;
 	case CH_DEVICE_MODE_FIRMWARE:
 		str = "firmware";
 		break;
-	case CH_DEVICE_MODE_FIRMWARE_SPECTRO:
-		str = "firmware-spectro";
+	case CH_DEVICE_MODE_FIRMWARE_PLUS:
+		str = "firmware-plus";
+		break;
+	case CH_DEVICE_MODE_FIRMWARE2:
+		str = "firmware2";
+		break;
+	case CH_DEVICE_MODE_BOOTLOADER2:
+		str = "bootloader2";
 		break;
 	default:
 		str = "unknown";
 		break;
 	}
 	return str;
+}
+
+/**
+ * ch_device_mode_from_firmware:
+ * @data: firmware binary data
+ * @data_len: size of @data
+ *
+ * Gets the device mode from the unique code stored in the firmware data.
+ * The firmware identifier has been present since colorhug-1.2.2.bin for
+ * ColorHug and all firmware versions for ColorHug2 and ColorHug+.
+ *
+ * Return value: A #ChDeviceMode
+ *
+ * Since: 1.2.3
+ **/
+ChDeviceMode
+ch_device_mode_from_firmware (const guint8 *data, gsize data_len)
+{
+	gsize i;
+	for (i = 0; i < data_len - 8; i++) {
+		if (memcmp (data + i, CH_FIRMWARE_ID_TOKEN1, 8) == 0)
+			return CH_DEVICE_MODE_FIRMWARE;
+		if (memcmp (data + i, CH_FIRMWARE_ID_TOKEN2, 8) == 0)
+			return CH_DEVICE_MODE_FIRMWARE2;
+		if (memcmp (data + i, CH_FIRMWARE_ID_TOKEN_PLUS, 8) == 0)
+			return CH_DEVICE_MODE_FIRMWARE_PLUS;
+	}
+	return CH_DEVICE_MODE_UNKNOWN;
 }

@@ -35,6 +35,8 @@
 #include <glib.h>
 #include <lcms2.h>
 
+#include "cd-cleanup.h"
+#include "cd-context-lcms.h"
 #include "cd-transform.h"
 
 static void	cd_transform_class_init		(CdTransformClass	*klass);
@@ -56,9 +58,13 @@ struct _CdTransformPrivate
 	CdPixelFormat		 input_pixel_format;
 	CdPixelFormat		 output_pixel_format;
 	CdRenderingIntent	 rendering_intent;
+	cmsContext		 context_lcms;
 	cmsHPROFILE		 srgb;
 	cmsHTRANSFORM		 lcms_transform;
 	gboolean		 bpc;
+	guint			 max_threads;
+	guint			 bpp_input;
+	guint			 bpp_output;
 };
 
 G_DEFINE_TYPE (CdTransform, cd_transform, G_TYPE_OBJECT)
@@ -117,6 +123,10 @@ cd_transform_set_input_icc (CdTransform *transform, CdIcc *icc)
 	g_return_if_fail (CD_IS_TRANSFORM (transform));
 	g_return_if_fail (icc == NULL || CD_IS_ICC (icc));
 
+	/* no change */
+	if (transform->priv->input_icc == icc)
+		return;
+
 	if (transform->priv->input_icc != NULL)
 		g_clear_object (&transform->priv->input_icc);
 	if (icc != NULL)
@@ -155,6 +165,10 @@ cd_transform_set_output_icc (CdTransform *transform, CdIcc *icc)
 {
 	g_return_if_fail (CD_IS_TRANSFORM (transform));
 	g_return_if_fail (icc == NULL || CD_IS_ICC (icc));
+
+	/* no change */
+	if (transform->priv->output_icc == icc)
+		return;
 
 	if (transform->priv->output_icc != NULL)
 		g_clear_object (&transform->priv->output_icc);
@@ -195,6 +209,10 @@ cd_transform_set_abstract_icc (CdTransform *transform, CdIcc *icc)
 {
 	g_return_if_fail (CD_IS_TRANSFORM (transform));
 	g_return_if_fail (icc == NULL || CD_IS_ICC (icc));
+
+	/* no change */
+	if (transform->priv->abstract_icc == icc)
+		return;
 
 	if (transform->priv->abstract_icc != NULL)
 		g_clear_object (&transform->priv->abstract_icc);
@@ -363,6 +381,39 @@ cd_transform_get_bpc (CdTransform *transform)
 	return transform->priv->bpc;
 }
 
+/**
+ * cd_transform_set_max_threads:
+ * @transform: a #CdTransform instance.
+ * @max_threads: number of threads, or 0 for the number of cores on the CPU
+ *
+ * Sets the maximum number of threads to be used for the transform.
+ *
+ * Since: 1.1.1
+ **/
+void
+cd_transform_set_max_threads (CdTransform *transform, guint max_threads)
+{
+	g_return_if_fail (CD_IS_TRANSFORM (transform));
+	transform->priv->max_threads = max_threads;
+}
+
+/**
+ * cd_transform_get_max_threads:
+ * @transform: a #CdTransform instance.
+ *
+ * Gets the maximum number of threads to be used for the transform.
+ *
+ * Return value: number of threads
+ *
+ * Since: 1.1.1
+ **/
+guint
+cd_transform_get_max_threads (CdTransform *transform)
+{
+	g_return_val_if_fail (CD_IS_TRANSFORM (transform), FALSE);
+	return transform->priv->max_threads;
+}
+
 /* map lcms intent to colord type */
 const struct {
 	gint					lcms;
@@ -374,6 +425,26 @@ const struct {
 	{ INTENT_SATURATION,		CD_RENDERING_INTENT_SATURATION },
 	{ 0,				CD_RENDERING_INTENT_LAST }
 };
+
+/**
+ * cd_transform_get_bpp:
+ **/
+static guint
+cd_transform_get_bpp (CdPixelFormat format)
+{
+	switch (format) {
+	case CD_PIXEL_FORMAT_RGB24:
+		return 3;
+	case CD_PIXEL_FORMAT_ARGB32:
+	case CD_PIXEL_FORMAT_CMYK32:
+	case CD_PIXEL_FORMAT_BGRA32:
+	case CD_PIXEL_FORMAT_RGBA32:
+		return 4;
+	case CD_PIXEL_FORMAT_UNKNOWN:
+	default:
+		return 0;
+	}
+}
 
 /**
  * cd_transform_setup:
@@ -388,6 +459,7 @@ cd_transform_setup (CdTransform *transform, GError **error)
 	gboolean ret = TRUE;
 	gint lcms_intent = -1;
 	guint i;
+	_cleanup_error_free_ GError *error_local = NULL;
 
 	/* find native rendering intent */
 	for (i = 0; map_rendering_intent[i].colord != CD_RENDERING_INTENT_LAST; i++) {
@@ -439,25 +511,39 @@ cd_transform_setup (CdTransform *transform, GError **error)
 		profiles[0] = profile_in;
 		profiles[1] = cd_icc_get_handle (priv->abstract_icc);
 		profiles[2] = profile_out;
-		priv->lcms_transform = cmsCreateMultiprofileTransform (profiles,
-								       3,
-								       priv->input_pixel_format,
-								       priv->output_pixel_format,
-								       lcms_intent,
-								       lcms_flags);
+		priv->lcms_transform = cmsCreateMultiprofileTransformTHR (priv->context_lcms,
+									  profiles,
+									  3,
+									  priv->input_pixel_format,
+									  priv->output_pixel_format,
+									  lcms_intent,
+									  lcms_flags);
 
 	} else {
 		/* create basic transform */
-		priv->lcms_transform = cmsCreateTransform (profile_in,
-							   priv->input_pixel_format,
-							   profile_out,
-							   priv->output_pixel_format,
-							   lcms_intent,
-							   lcms_flags);
+		priv->lcms_transform = cmsCreateTransformTHR (priv->context_lcms,
+							      profile_in,
+							      priv->input_pixel_format,
+							      profile_out,
+							      priv->output_pixel_format,
+							      lcms_intent,
+							      lcms_flags);
 	}
+
+	/* find the bpp value */
+	priv->bpp_input = cd_transform_get_bpp (priv->input_pixel_format);
+	priv->bpp_output = cd_transform_get_bpp (priv->input_pixel_format);
 
 	/* failed? */
 	if (priv->lcms_transform == NULL) {
+		ret = cd_context_lcms_error_check (priv->context_lcms, &error_local);
+		if (!ret) {
+			g_set_error_literal (error,
+					     CD_TRANSFORM_ERROR,
+					     CD_TRANSFORM_ERROR_FAILED_TO_SETUP_TRANSFORM,
+					     error_local->message);
+			goto out;
+		}
 		ret = FALSE;
 		g_set_error_literal (error,
 				     CD_TRANSFORM_ERROR,
@@ -469,15 +555,63 @@ out:
 	return ret;
 }
 
+typedef struct {
+	guint8	*p_in;
+	guint8	*p_out;
+	guint	 width;
+	guint	 rowstride;
+	guint	 rows_to_process;
+} CdTransformJob;
+
 /**
- * cd_transform_lcms2_error_cb:
+ * cd_transform_process_func:
  **/
 static void
-cd_transform_lcms2_error_cb (cmsContext context_id,
-			     cmsUInt32Number code,
-			     const gchar *text)
+cd_transform_process_func (gpointer data, gpointer user_data)
 {
-	g_warning ("lcms2(transform): Failed with error: %s [%i]", text, code);
+	CdTransformJob *job = (CdTransformJob *) data;
+	CdTransform *transform = CD_TRANSFORM (user_data);
+	guint i;
+
+	for (i = 0; i < job->rows_to_process; i++) {
+		cmsDoTransformStride (transform->priv->lcms_transform,
+				      job->p_in,
+				      job->p_out,
+				      job->width,
+				      job->rowstride);
+		job->p_in += job->rowstride;
+		job->p_out += job->rowstride;
+	}
+	g_slice_free (CdTransformJob, job);
+}
+
+/**
+ * cd_transform_set_max_threads_default:
+ **/
+static gboolean
+cd_transform_set_max_threads_default (CdTransform *transform, GError **error)
+{
+	gchar *tmp;
+	_cleanup_free_ gchar *data = NULL;
+
+	/* use "cpu cores" to work out best number of threads */
+	if (!g_file_get_contents ("/proc/cpuinfo", &data, NULL, error))
+		return FALSE;
+	tmp = g_strstr_len (data, -1, "cpu cores\t: ");
+	if (tmp == NULL) {
+		/* some processors do not provide this info */
+		transform->priv->max_threads = 1;
+		return TRUE;
+	}
+	transform->priv->max_threads = g_ascii_strtoull (tmp + 12, NULL, 10);
+	if (transform->priv->max_threads == 0) {
+		g_set_error_literal (error,
+				     CD_TRANSFORM_ERROR,
+				     CD_TRANSFORM_ERROR_LAST,
+				     "Failed to parse number of cores");
+		return FALSE;
+	}
+	return TRUE;
 }
 
 /**
@@ -509,11 +643,14 @@ cd_transform_process (CdTransform *transform,
 		      GCancellable *cancellable,
 		      GError **error)
 {
+	CdTransformJob *job;
 	CdTransformPrivate *priv = transform->priv;
 	gboolean ret = TRUE;
-	guint i;
+	GThreadPool *pool = NULL;
 	guint8 *p_in;
 	guint8 *p_out;
+	guint i;
+	guint rows_to_process;
 
 	g_return_val_if_fail (CD_IS_TRANSFORM (transform), FALSE);
 	g_return_val_if_fail (data_in != NULL, FALSE);
@@ -521,9 +658,6 @@ cd_transform_process (CdTransform *transform,
 	g_return_val_if_fail (width != 0, FALSE);
 	g_return_val_if_fail (height != 0, FALSE);
 	g_return_val_if_fail (rowstride != 0, FALSE);
-
-	/* setup error handler */
-	cmsSetLogErrorHandler (cd_transform_lcms2_error_cb);
 
 	/* check stuff that should have been set */
 	if (priv->rendering_intent == CD_RENDERING_INTENT_UNKNOWN) {
@@ -544,6 +678,13 @@ cd_transform_process (CdTransform *transform,
 		goto out;
 	}
 
+	/* get the best number of threads */
+	if (transform->priv->max_threads == 0) {
+		ret = cd_transform_set_max_threads_default (transform, error);
+		if (!ret)
+			goto out;
+	}
+
 	/* setup the transform if required */
 	if (priv->lcms_transform == NULL) {
 		ret = cd_transform_setup (transform, error);
@@ -551,15 +692,54 @@ cd_transform_process (CdTransform *transform,
 			goto out;
 	}
 
+	/* non-threaded conversion */
+	if (transform->priv->max_threads == 1) {
+		p_in = data_in;
+		p_out = data_out;
+		for (i = 0; i < height; i++) {
+			cmsDoTransformStride (priv->lcms_transform,
+					      p_in,
+					      p_out,
+					      width,
+					      rowstride);
+			p_in += rowstride * priv->bpp_input;
+			p_out += rowstride * priv->bpp_output;
+		}
+		goto out;
+	}
+
+	/* create a threadpool for each line of the image */
+	pool = g_thread_pool_new (cd_transform_process_func,
+				  transform,
+				  transform->priv->max_threads,
+				  TRUE,
+				  error);
+	if (pool == NULL)
+		goto out;
+
 	/* do conversion */
 	p_in = data_in;
 	p_out = data_out;
-	for (i = 0; i < height; i++) {
-		cmsDoTransform (priv->lcms_transform, p_in, p_out, width);
-		p_in += rowstride;
-		p_out += rowstride;
+	rows_to_process = height / transform->priv->max_threads;
+	for (i = 0; i < height; i += rows_to_process) {
+		job = g_slice_new (CdTransformJob);
+		job->p_in = p_in;
+		job->p_out = p_out;
+		job->width = width;
+		job->rowstride = rowstride;
+		if (i + rows_to_process > height)
+			job->rows_to_process = height - i;
+		else
+			job->rows_to_process = rows_to_process;
+		ret = g_thread_pool_push (pool, job, error);
+		if (!ret)
+			goto out;
+		p_in += rowstride * rows_to_process * priv->bpp_input;
+		p_out += rowstride * rows_to_process * priv->bpp_output;
 	}
 out:
+	if (pool != NULL)
+		g_thread_pool_free (pool, FALSE, TRUE);
 	return ret;
 }
 
@@ -714,10 +894,12 @@ static void
 cd_transform_init (CdTransform *transform)
 {
 	transform->priv = CD_TRANSFORM_GET_PRIVATE (transform);
+	transform->priv->context_lcms = cd_context_lcms_new ();
 	transform->priv->rendering_intent = CD_RENDERING_INTENT_UNKNOWN;
 	transform->priv->input_pixel_format = CD_PIXEL_FORMAT_UNKNOWN;
 	transform->priv->output_pixel_format = CD_PIXEL_FORMAT_UNKNOWN;
-	transform->priv->srgb = cmsCreate_sRGBProfile ();
+	transform->priv->srgb = cmsCreate_sRGBProfileTHR (transform->priv->context_lcms);
+	transform->priv->max_threads = 1;
 }
 
 /**
@@ -738,6 +920,7 @@ cd_transform_finalize (GObject *object)
 		g_object_unref (priv->abstract_icc);
 	if (priv->lcms_transform != NULL)
 		cmsDeleteTransform (priv->lcms_transform);
+	cd_context_lcms_free (priv->context_lcms);
 
 	G_OBJECT_CLASS (cd_transform_parent_class)->finalize (object);
 }

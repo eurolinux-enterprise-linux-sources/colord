@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2014 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -60,12 +60,19 @@ typedef struct {
 	gdouble	 B;
 } CdColorRGB;
 
+typedef struct {
+	gdouble	 U;
+	gdouble	 V;
+	gdouble	 W;
+} CdColorUVW;
+
 typedef struct _CdColorSwatch	CdColorSwatch;
 
 #define	CD_TYPE_COLOR_RGB	(cd_color_rgb_get_type ())
 #define	CD_TYPE_COLOR_XYZ	(cd_color_xyz_get_type ())
 #define	CD_TYPE_COLOR_LAB	(cd_color_lab_get_type ())
 #define	CD_TYPE_COLOR_YXY	(cd_color_yxy_get_type ())
+#define	CD_TYPE_COLOR_UVW	(cd_color_uvw_get_type ())
 #define	CD_TYPE_COLOR_SWATCH	(cd_color_swatch_get_type ())
 
 /* types */
@@ -73,6 +80,7 @@ GType		 cd_color_xyz_get_type			(void);
 GType		 cd_color_lab_get_type			(void);
 GType		 cd_color_rgb_get_type			(void);
 GType		 cd_color_yxy_get_type			(void);
+GType		 cd_color_uvw_get_type			(void);
 GType		 cd_color_swatch_get_type		(void);
 
 const gchar	*cd_color_swatch_get_name		(const CdColorSwatch	*swatch);
@@ -82,18 +90,21 @@ CdColorXYZ	*cd_color_xyz_new			(void);
 CdColorLab	*cd_color_lab_new			(void);
 CdColorRGB	*cd_color_rgb_new			(void);
 CdColorYxy	*cd_color_yxy_new			(void);
+CdColorUVW	*cd_color_uvw_new			(void);
 CdColorSwatch	*cd_color_swatch_new			(void);
 
 void		 cd_color_xyz_free			(CdColorXYZ		*src);
 void		 cd_color_rgb_free			(CdColorRGB		*src);
 void		 cd_color_lab_free			(CdColorLab		*src);
 void		 cd_color_yxy_free			(CdColorYxy		*src);
+void		 cd_color_uvw_free			(CdColorUVW		*src);
 void		 cd_color_swatch_free			(CdColorSwatch		*src);
 
 CdColorXYZ	*cd_color_xyz_dup			(const CdColorXYZ	*src);
 CdColorLab	*cd_color_lab_dup			(const CdColorLab	*src);
 CdColorRGB	*cd_color_rgb_dup			(const CdColorRGB	*src);
 CdColorYxy	*cd_color_yxy_dup			(const CdColorYxy	*src);
+CdColorUVW	*cd_color_uvw_dup			(const CdColorUVW	*src);
 CdColorSwatch	*cd_color_swatch_dup			(const CdColorSwatch	*src);
 
 void		 cd_color_xyz_set			(CdColorXYZ		*dest,
@@ -112,6 +123,10 @@ void		 cd_color_yxy_set			(CdColorYxy		*dest,
 							 gdouble		 Y,
 							 gdouble		 x,
 							 gdouble		 y);
+void		 cd_color_uvw_set			(CdColorUVW		*dest,
+							 gdouble		 U,
+							 gdouble		 V,
+							 gdouble		 W);
 void		 cd_color_swatch_set_name		(CdColorSwatch		*dest,
 							 const gchar		*name);
 void		 cd_color_swatch_set_value		(CdColorSwatch		*dest,
@@ -121,8 +136,12 @@ void		 cd_color_xyz_copy			(const CdColorXYZ	*src,
 							 CdColorXYZ		*dest);
 void		 cd_color_yxy_copy			(const CdColorYxy	*src,
 							 CdColorYxy		*dest);
+void		 cd_color_uvw_copy			(const CdColorUVW	*src,
+							 CdColorUVW		*dest);
 void		 cd_color_lab_copy			(const CdColorLab	*src,
 							 CdColorLab		*dest);
+gdouble		 cd_color_lab_delta_e76			(const CdColorLab	*p1,
+							 const CdColorLab	*p2);
 void		 cd_color_xyz_clear			(CdColorXYZ		*dest);
 void		 cd_color_rgb_copy			(const CdColorRGB	*src,
 							 CdColorRGB		*dest);
@@ -134,12 +153,25 @@ void		 cd_color_yxy_to_xyz			(const CdColorYxy	*src,
 							 CdColorXYZ		*dest);
 void		 cd_color_xyz_to_yxy			(const CdColorXYZ	*src,
 							 CdColorYxy		*dest);
-void		 cd_color_get_blackbody_rgb		(guint			 temp,
+void		 cd_color_xyz_to_uvw			(const CdColorXYZ	*src,
+							 const CdColorXYZ	*whitepoint,
+							 CdColorUVW		*dest);
+void		 cd_color_yxy_to_uvw			(const CdColorYxy	*src,
+							 CdColorUVW		*dest);
+void		 cd_color_uvw_set_planckian_locus	(CdColorUVW		*dest,
+							 gdouble		 temp);
+gdouble		 cd_color_uvw_get_chroma_difference	(const CdColorUVW	*p1,
+							 const CdColorUVW	*p2);
+gboolean	 cd_color_get_blackbody_rgb		(guint			 temp,
 							 CdColorRGB		*result);
 void		 cd_color_rgb_interpolate		(const CdColorRGB	*p1,
 							 const CdColorRGB	*p2,
 							 gdouble		 index,
 							 CdColorRGB		*result);
+gdouble		 cd_color_xyz_to_cct			(const CdColorXYZ	*src);
+void		 cd_color_xyz_normalize			(const CdColorXYZ	*src,
+							 gdouble		 max,
+							 CdColorXYZ		*dest);
 
 GPtrArray	*cd_color_rgb_array_new			(void);
 gboolean	 cd_color_rgb_array_is_monotonic	(const GPtrArray	*array);

@@ -19,27 +19,16 @@ COLORD_LIBS =						\
 	$(top_builddir)/lib/colord/libcolordprivate.la	\
 	$(top_builddir)/lib/colord/libcolord.la
 
-noinst_PROGRAMS =					\
-	cd-find-broken
-
 bin_PROGRAMS =						\
-	colormgr					\
 	cd-create-profile				\
 	cd-iccdump					\
+	cd-it8						\
 	cd-fix-profile
 
-cd_find_broken_SOURCES =				\
-	cd-find-broken.c
-
-cd_find_broken_LDADD =					\
-	$(COLORD_LIBS)					\
-	$(GLIB_LIBS)
-
-cd_find_broken_LDFLAGS =				\
-	$(PIE_LDFLAGS)
-
-cd_find_broken_CFLAGS =					\
-	$(WARNINGFLAGS_C)
+if HAVE_UNIX
+bin_PROGRAMS +=						\
+	colormgr
+endif
 
 colormgr_SOURCES =					\
 	cd-util.c
@@ -82,6 +71,21 @@ cd_iccdump_LDFLAGS =					\
 	$(PIE_LDFLAGS)
 
 cd_iccdump_CFLAGS =					\
+	$(WARNINGFLAGS_C)
+
+cd_it8_SOURCES =					\
+	cd-it8.c
+
+cd_it8_LDADD =						\
+	$(GLIB_LIBS)					\
+	$(LCMS_LIBS)					\
+	$(COLORD_LIBS)					\
+	-lm
+
+cd_it8_LDFLAGS =					\
+	$(PIE_LDFLAGS)
+
+cd_it8_CFLAGS =						\
 	$(WARNINGFLAGS_C)
 
 cd_create_profile_SOURCES =				\

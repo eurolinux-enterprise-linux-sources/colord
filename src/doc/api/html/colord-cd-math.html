@@ -2,30 +2,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>cd-math</title>
+<title>colord Reference Manual: cd-math</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="colord Reference Manual">
 <link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
 <link rel="prev" href="colord-cd-it8.html" title="cd-it8">
-<link rel="next" href="colord-cd-version.html" title="cd-version">
-<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="next" href="colord-cd-spectrum.html" title="cd-spectrum">
+<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
-<tr valign="middle">
-<td><a accesskey="p" href="colord-cd-it8.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
-<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
-<th width="100%" align="center">colord Reference Manual</th>
-<td><a accesskey="n" href="colord-cd-version.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
-</tr>
-<tr><td colspan="5" class="shortcuts">
-<a href="#colord-cd-math.synopsis" class="shortcut">Top</a>
-                   | 
-                  <a href="#colord-cd-math.description" class="shortcut">Description</a>
-</td></tr>
-</table>
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#colord-cd-math.description" class="shortcut">Description</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="colord-cd-it8.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="colord-cd-spectrum.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
 <div class="refentry">
 <a name="colord-cd-math"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
@@ -33,62 +29,943 @@
 <h2><span class="refentrytitle"><a name="colord-cd-math.top_of_page"></a>cd-math</span></h2>
 <p>cd-math — Common maths functionality</p>
 </td>
-<td valign="top" align="right"></td>
+<td class="gallery_image" valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv">
-<a name="colord-cd-math.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">                    <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3">CdMat3x3</a>;
-                    <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3">CdVec3</a>;
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-clear" title="cd_vec3_clear ()">cd_vec3_clear</a>                       (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-add" title="cd_vec3_add ()">cd_vec3_add</a>                         (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-subtract" title="cd_vec3_subtract ()">cd_vec3_subtract</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-scalar-multiply" title="cd_vec3_scalar_multiply ()">cd_vec3_scalar_multiply</a>             (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-copy" title="cd_vec3_copy ()">cd_vec3_copy</a>                        (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="colord-cd-math.html#cd-vec3-squared-error" title="cd_vec3_squared_error ()">cd_vec3_squared_error</a>               (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="colord-cd-math.html#cd-vec3-to-string" title="cd_vec3_to_string ()">cd_vec3_to_string</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *           <a class="link" href="colord-cd-math.html#cd-vec3-get-data" title="cd_vec3_get_data ()">cd_vec3_get_data</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-vec3-init" title="cd_vec3_init ()">cd_vec3_init</a>                        (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v0</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v1</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v2</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-clear" title="cd_mat33_clear ()">cd_mat33_clear</a>                      (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="colord-cd-math.html#cd-mat33-to-string" title="cd_mat33_to_string ()">cd_mat33_to_string</a>                  (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *           <a class="link" href="colord-cd-math.html#cd-mat33-get-data" title="cd_mat33_get_data ()">cd_mat33_get_data</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-set-identity" title="cd_mat33_set_identity ()">cd_mat33_set_identity</a>               (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-scalar-multiply" title="cd_mat33_scalar_multiply ()">cd_mat33_scalar_multiply</a>            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-vector-multiply" title="cd_mat33_vector_multiply ()">cd_mat33_vector_multiply</a>            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-matrix-multiply" title="cd_mat33_matrix_multiply ()">cd_mat33_matrix_multiply</a>            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-math.html#cd-mat33-reciprocal" title="cd_mat33_reciprocal ()">cd_mat33_reciprocal</a>                 (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="colord-cd-math.html#cd-mat33-determinant" title="cd_mat33_determinant ()">cd_mat33_determinant</a>                (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-normalize" title="cd_mat33_normalize ()">cd_mat33_normalize</a>                  (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="colord-cd-math.html#cd-mat33-copy" title="cd_mat33_copy ()">cd_mat33_copy</a>                       (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);
-</pre>
+<div class="refsect1">
+<a name="colord-cd-math.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-clear" title="cd_vec3_clear ()">cd_vec3_clear</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-add" title="cd_vec3_add ()">cd_vec3_add</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-subtract" title="cd_vec3_subtract ()">cd_vec3_subtract</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-scalar-multiply" title="cd_vec3_scalar_multiply ()">cd_vec3_scalar_multiply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-copy" title="cd_vec3_copy ()">cd_vec3_copy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-squared-error" title="cd_vec3_squared_error ()">cd_vec3_squared_error</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-to-string" title="cd_vec3_to_string ()">cd_vec3_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-get-data" title="cd_vec3_get_data ()">cd_vec3_get_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-vec3-init" title="cd_vec3_init ()">cd_vec3_init</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-init" title="cd_mat33_init ()">cd_mat33_init</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-clear" title="cd_mat33_clear ()">cd_mat33_clear</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-to-string" title="cd_mat33_to_string ()">cd_mat33_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-get-data" title="cd_mat33_get_data ()">cd_mat33_get_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-set-identity" title="cd_mat33_set_identity ()">cd_mat33_set_identity</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-scalar-multiply" title="cd_mat33_scalar_multiply ()">cd_mat33_scalar_multiply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-vector-multiply" title="cd_mat33_vector_multiply ()">cd_mat33_vector_multiply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-matrix-multiply" title="cd_mat33_matrix_multiply ()">cd_mat33_matrix_multiply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-reciprocal" title="cd_mat33_reciprocal ()">cd_mat33_reciprocal</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-determinant" title="cd_mat33_determinant ()">cd_mat33_determinant</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-normalize" title="cd_mat33_normalize ()">cd_mat33_normalize</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="colord-cd-math.html#cd-mat33-copy" title="cd_mat33_copy ()">cd_mat33_copy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="colord-cd-math.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3">CdMat3x3</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3">CdVec3</a></td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <div class="refsect1">
 <a name="colord-cd-math.description"></a><h2>Description</h2>
-<p>
-A GObject to use for common maths functionality like vectors and matrices.
-</p>
+<p>A GObject to use for common maths functionality like vectors and matrices.</p>
 </div>
 <div class="refsect1">
-<a name="colord-cd-math.details"></a><h2>Details</h2>
+<a name="colord-cd-math.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="cd-vec3-clear"></a><h3>cd_vec3_clear ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_clear (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
+<p>Clears a vector, setting all it's values to zero.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.2.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source vector</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-add"></a><h3>cd_vec3_add ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_add (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
+             <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
+             <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
+<p>Adds two vector quantaties
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ can be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.3.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src1</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>src2</p></td>
+<td class="parameter_description"><p>the other source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-subtract"></a><h3>cd_vec3_subtract ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_subtract (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
+                  <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
+                  <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
+<p>Subtracts one vector quantaty from another
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ can be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.4.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src1</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>src2</p></td>
+<td class="parameter_description"><p>the other source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-scalar-multiply"></a><h3>cd_vec3_scalar_multiply ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_scalar_multiply (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
+                         <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
+<p>Multiplies a vector with a scalar.
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ can be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.5.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the scalar multiplier</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-copy"></a><h3>cd_vec3_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_copy (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
+              <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
+<p>Copies the vector into another vector.
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ cannot be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.6.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-squared-error"></a><h3>cd_vec3_squared_error ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_vec3_squared_error (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
+                       <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>);</pre>
+<p>Gets the mean squared error for a pair of vectors</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.7.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src1</p></td>
+<td class="parameter_description"><p>the vector source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>src2</p></td>
+<td class="parameter_description"><p>another vector source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.7.6"></a><h4>Returns</h4>
+<p> the floating point MSE.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-to-string"></a><h3>cd_vec3_to_string ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_vec3_to_string (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
+<p>Obtains a string representaton of a vector.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.8.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.8.6"></a><h4>Returns</h4>
+<p> the string. Free with <a href="https://developer.gnome.org/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a></p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-get-data"></a><h3>cd_vec3_get_data ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *
+cd_vec3_get_data (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
+<p>Gets the raw data for the vector.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.9.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the vector source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.9.6"></a><h4>Returns</h4>
+<p> the pointer to the data segment.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-vec3-init"></a><h3>cd_vec3_init ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_vec3_init (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>,
+              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v0</code></em>,
+              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v1</code></em>,
+              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v2</code></em>);</pre>
+<p>Initialises a vector.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.10.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination vector</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>v0</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>v1</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>v2</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-init"></a><h3>cd_mat33_init ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_init (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m00</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m01</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m02</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m10</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m11</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m12</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m20</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m21</code></em>,
+               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> m22</code></em>);</pre>
+<p>Initialises a matrix.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.11.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination matrix</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m00</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m01</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m02</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m10</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m11</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m12</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m20</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m21</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>m22</p></td>
+<td class="parameter_description"><p>component value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-clear"></a><h3>cd_mat33_clear ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_clear (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
+<p>Clears a matrix value, setting all it's values to zero.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.12.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-to-string"></a><h3>cd_mat33_to_string ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+cd_mat33_to_string (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
+<p>Obtains a string representaton of a matrix.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.13.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.13.6"></a><h4>Returns</h4>
+<p> the string. Free with <a href="https://developer.gnome.org/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a></p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-get-data"></a><h3>cd_mat33_get_data ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *
+cd_mat33_get_data (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
+<p>Gets the raw data for the matrix.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.14.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the matrix source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.14.6"></a><h4>Returns</h4>
+<p> the pointer to the data segment.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-set-identity"></a><h3>cd_mat33_set_identity ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_set_identity (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
+<p>Sets the matrix to an identity value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.15.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-scalar-multiply"></a><h3>cd_mat33_scalar_multiply ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_scalar_multiply (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
+                          <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                          <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);</pre>
+<p>Multiplies a matrix with a scalar.
+The arguments <em class="parameter"><code>vec_src</code></em>
+ and <em class="parameter"><code>vec_dest</code></em>
+ can be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.16.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>mat_src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the scalar</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mat_dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-vector-multiply"></a><h3>cd_mat33_vector_multiply ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_vector_multiply (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
+                          <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_src</code></em>,
+                          <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_dest</code></em>);</pre>
+<p>Multiplies a matrix with a vector.
+The arguments <em class="parameter"><code>vec_src</code></em>
+ and <em class="parameter"><code>vec_dest</code></em>
+ cannot be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.17.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>mat_src</p></td>
+<td class="parameter_description"><p>the matrix source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>vec_src</p></td>
+<td class="parameter_description"><p>the vector source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>vec_dest</p></td>
+<td class="parameter_description"><p>the destination vector</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-matrix-multiply"></a><h3>cd_mat33_matrix_multiply ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_matrix_multiply (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src1</code></em>,
+                          <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src2</code></em>,
+                          <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);</pre>
+<p>Multiply (convolve) one matrix with another.
+The arguments <em class="parameter"><code>mat_src1</code></em>
+ cannot be the same as <em class="parameter"><code>mat_dest</code></em>
+, and
+<em class="parameter"><code>mat_src2</code></em>
+ cannot be the same as <em class="parameter"><code>mat_dest</code></em>
+.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.18.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>mat_src1</p></td>
+<td class="parameter_description"><p>the matrix source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mat_src2</p></td>
+<td class="parameter_description"><p>the other matrix source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mat_dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-reciprocal"></a><h3>cd_mat33_reciprocal ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+cd_mat33_reciprocal (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
+                     <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
+<p>Inverts the matrix.
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ cannot be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.19.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.19.6"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if det is zero (singular).</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-determinant"></a><h3>cd_mat33_determinant ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>
+cd_mat33_determinant (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
+<p>Gets the determinant of the matrix.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.20.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.3.15.6.20.6"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-normalize"></a><h3>cd_mat33_normalize ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_normalize (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
+                    <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
+<p>Normalizes a matrix</p>
+<p>The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ can be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.21.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source matrix</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination matrix</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-mat33-copy"></a><h3>cd_mat33_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+cd_mat33_copy (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
+               <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
+<p>Copies the matrix.
+The arguments <em class="parameter"><code>src</code></em>
+ and <em class="parameter"><code>dest</code></em>
+ cannot be the same value.</p>
+<div class="refsect3">
+<a name="id-1.3.15.6.22.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>src</p></td>
+<td class="parameter_description"><p>the source</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest</p></td>
+<td class="parameter_description"><p>the destination</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="colord-cd-math.other_details"></a><h2>Types and Values</h2>
 <div class="refsect2">
 <a name="CdMat3x3"></a><h3>CdMat3x3</h3>
 <pre class="programlisting">typedef struct {
@@ -112,542 +989,10 @@ A GObject to use for common maths functionality like vectors and matrices.
 <p>
 </p>
 </div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-clear"></a><h3>cd_vec3_clear ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_clear                       (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
-<p>
-Clears a vector, setting all it's values to zero.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source vector</td>
-</tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-add"></a><h3>cd_vec3_add ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_add                         (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
-<p>
-Adds two vector quantaties
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> can be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
-<td>the other source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-subtract"></a><h3>cd_vec3_subtract ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_subtract                    (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
-<p>
-Subtracts one vector quantaty from another
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> can be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
-<td>the other source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-scalar-multiply"></a><h3>cd_vec3_scalar_multiply ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_scalar_multiply             (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
-<p>
-Multiplies a vector with a scalar.
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> can be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the scalar multiplier</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-copy"></a><h3>cd_vec3_copy ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_copy                        (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>);</pre>
-<p>
-Copies the vector into another vector.
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> cannot be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-squared-error"></a><h3>cd_vec3_squared_error ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             cd_vec3_squared_error               (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src2</code></em>);</pre>
-<p>
-Gets the mean squared error for a pair of vectors
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
-<td>the vector source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
-<td>another vector source</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the floating point MSE.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-to-string"></a><h3>cd_vec3_to_string ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             cd_vec3_to_string                   (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
-<p>
-Obtains a string representaton of a vector.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the string. Free with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-get-data"></a><h3>cd_vec3_get_data ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *           cd_vec3_get_data                    (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *src</code></em>);</pre>
-<p>
-Gets the raw data for the vector.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the vector source</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the pointer to the data segment.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-vec3-init"></a><h3>cd_vec3_init ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_vec3_init                        (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *dest</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v0</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v1</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v2</code></em>);</pre>
-<p>
-Initialises a vector.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination vector</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>v0</code></em> :</span></p></td>
-<td>component value</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>v1</code></em> :</span></p></td>
-<td>component value</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>v2</code></em> :</span></p></td>
-<td>component value</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-clear"></a><h3>cd_mat33_clear ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_clear                      (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
-<p>
-Clears a matrix value, setting all it's values to zero.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-to-string"></a><h3>cd_mat33_to_string ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             cd_mat33_to_string                  (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
-<p>
-Obtains a string representaton of a matrix.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the string. Free with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-get-data"></a><h3>cd_mat33_get_data ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a> *           cd_mat33_get_data                   (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
-<p>
-Gets the raw data for the matrix.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the matrix source</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the pointer to the data segment.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-set-identity"></a><h3>cd_mat33_set_identity ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_set_identity               (<em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
-<p>
-Sets the matrix to an identity value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-scalar-multiply"></a><h3>cd_mat33_scalar_multiply ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_scalar_multiply            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);</pre>
-<p>
-Multiplies a matrix with a scalar.
-The arguments <em class="parameter"><code>vec_src</code></em> and <em class="parameter"><code>vec_dest</code></em> can be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the scalar</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-vector-multiply"></a><h3>cd_mat33_vector_multiply ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_vector_multiply            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdVec3" title="CdVec3"><span class="type">CdVec3</span></a> *vec_dest</code></em>);</pre>
-<p>
-Multiplies a matrix with a vector.
-The arguments <em class="parameter"><code>vec_src</code></em> and <em class="parameter"><code>vec_dest</code></em> cannot be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_src</code></em> :</span></p></td>
-<td>the matrix source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>vec_src</code></em> :</span></p></td>
-<td>the vector source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>vec_dest</code></em> :</span></p></td>
-<td>the destination vector</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-matrix-multiply"></a><h3>cd_mat33_matrix_multiply ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_matrix_multiply            (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src1</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_src2</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *mat_dest</code></em>);</pre>
-<p>
-Multiply (convolve) one matrix with another.
-The arguments <em class="parameter"><code>mat_src1</code></em> cannot be the same as <em class="parameter"><code>mat_dest</code></em>, and
-<em class="parameter"><code>mat_src2</code></em> cannot be the same as <em class="parameter"><code>mat_dest</code></em>.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_src1</code></em> :</span></p></td>
-<td>the matrix source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_src2</code></em> :</span></p></td>
-<td>the other matrix source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mat_dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-reciprocal"></a><h3>cd_mat33_reciprocal ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_mat33_reciprocal                 (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
-<p>
-Inverts the matrix.
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> cannot be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if det is zero (singular).</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-determinant"></a><h3>cd_mat33_determinant ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             cd_mat33_determinant                (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>);</pre>
-<p>
-Gets the determinant of the matrix.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-normalize"></a><h3>cd_mat33_normalize ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_normalize                  (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
-<p>
-Normalizes a matrix
-</p>
-<p>
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> can be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source matrix</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination matrix</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="cd-mat33-copy"></a><h3>cd_mat33_copy ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                cd_mat33_copy                       (<em class="parameter"><code>const <a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="colord-cd-math.html#CdMat3x3" title="CdMat3x3"><span class="type">CdMat3x3</span></a> *dest</code></em>);</pre>
-<p>
-Copies the matrix.
-The arguments <em class="parameter"><code>src</code></em> and <em class="parameter"><code>dest</code></em> cannot be the same value.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the source</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
-<td>the destination</td>
-</tr>
-</tbody>
-</table></div>
-</div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.19</div>
+          Generated by GTK-Doc V1.21</div>
 </body>
 </html>

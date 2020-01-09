@@ -28,6 +28,8 @@
 #include <stdlib.h>
 #include <colord/colord.h>
 
+#include "cd-cleanup.h"
+
 #define CD_PROFILE_DEFAULT_COPYRIGHT_STRING	"This profile is free of known copyright restrictions."
 
 typedef struct {
@@ -36,6 +38,7 @@ typedef struct {
 	CdClient		*client;
 	CdIcc			*icc;
 	gchar			*locale;
+	gboolean		 rewrite_file;
 } CdUtilPrivate;
 
 typedef gboolean (*CdUtilPrivateCb)	(CdUtilPrivate	*util,
@@ -75,8 +78,8 @@ static void
 cd_util_add (GPtrArray *array, const gchar *name, const gchar *description, CdUtilPrivateCb callback)
 {
 	CdUtilItem *item;
-	gchar **names;
 	guint i;
+	_cleanup_strv_free_ gchar **names = NULL;
 
 	/* add each one */
 	names = g_strsplit (name, ",", -1);
@@ -93,7 +96,6 @@ cd_util_add (GPtrArray *array, const gchar *name, const gchar *description, CdUt
 		item->callback = callback;
 		g_ptr_array_add (array, item);
 	}
-	g_strfreev (names);
 }
 
 /**
@@ -148,17 +150,14 @@ static gboolean
 cd_util_run (CdUtilPrivate *priv, const gchar *command, gchar **values, GError **error)
 {
 	CdUtilItem *item;
-	gboolean ret = FALSE;
-	GString *string;
 	guint i;
+	_cleanup_string_free_ GString *string = NULL;
 
 	/* find command */
 	for (i = 0; i < priv->cmd_array->len; i++) {
 		item = g_ptr_array_index (priv->cmd_array, i);
-		if (g_strcmp0 (item->name, command) == 0) {
-			ret = item->callback (priv, values, error);
-			goto out;
-		}
+		if (g_strcmp0 (item->name, command) == 0)
+			return item->callback (priv, values, error);
 	}
 
 	/* not found */
@@ -171,9 +170,7 @@ cd_util_run (CdUtilPrivate *priv, const gchar *command, gchar **values, GError *
 		g_string_append_printf (string, " * %s\n", item->name);
 	}
 	g_set_error_literal (error, 1, 0, string->str);
-	g_string_free (string, TRUE);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -182,14 +179,10 @@ out:
 static gboolean
 cd_util_set_copyright (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
-	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'value'");
-		goto out;
+		return FALSE;
 	}
 
 	/* set new value */
@@ -202,8 +195,7 @@ cd_util_set_copyright (CdUtilPrivate *priv, gchar **values, GError **error)
 				      priv->locale,
 				      values[1]);
 	}
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -212,20 +204,16 @@ out:
 static gboolean
 cd_util_set_description (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'value'");
-		goto out;
+		return FALSE;
 	}
 
 	/* set new value */
 	cd_icc_set_description (priv->icc, priv->locale, values[1]);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -234,20 +222,16 @@ out:
 static gboolean
 cd_util_set_manufacturer (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'value'");
-		goto out;
+		return FALSE;
 	}
 
 	/* set new value */
 	cd_icc_set_manufacturer (priv->icc, priv->locale, values[1]);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -256,20 +240,16 @@ out:
 static gboolean
 cd_util_set_model (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'value'");
-		goto out;
+		return FALSE;
 	}
 
 	/* set new value */
 	cd_icc_set_model (priv->icc, priv->locale, values[1]);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -278,13 +258,11 @@ out:
 static gboolean
 cd_util_clear_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	GHashTable *md;
+	_cleanup_hashtable_unref_ GHashTable *md = NULL;
 	md = cd_icc_get_metadata (priv->icc);
 	if (md == NULL)
-		goto out;
+		return TRUE;
 	g_hash_table_remove_all (md);
-	g_hash_table_unref (md);
-out:
 	return TRUE;
 }
 
@@ -296,50 +274,24 @@ cd_util_get_standard_space_filename (CdUtilPrivate *priv,
 				     CdStandardSpace standard_space,
 				     GError **error)
 {
-	CdProfile *profile_tmp = NULL;
-	gboolean ret;
 	gchar *filename = NULL;
+	_cleanup_object_unref_ CdProfile *profile_tmp = NULL;
 
 	/* try to find */
-	ret = cd_client_connect_sync (priv->client, NULL, error);
-	if (!ret)
-		goto out;
+	if (!cd_client_connect_sync (priv->client, NULL, error))
+		return NULL;
 	profile_tmp = cd_client_get_standard_space_sync (priv->client,
 							 standard_space,
 							 NULL,
 							 error);
 	if (profile_tmp == NULL)
-		goto out;
+		return NULL;
 
 	/* get filename */
-	ret = cd_profile_connect_sync (profile_tmp, NULL, error);
-	if (!ret)
-		goto out;
+	if (!cd_profile_connect_sync (profile_tmp, NULL, error))
+		return NULL;
 	filename = g_strdup (cd_profile_get_filename (profile_tmp));
-out:
-	if (profile_tmp != NULL)
-		g_object_unref (profile_tmp);
 	return filename;
-}
-
-typedef struct {
-	guint			 idx;
-	cmsFloat32Number	*data;
-} CdUtilGamutCdeckHelper;
-
-/**
- * cd_util_get_coverage_sample_cb:
- **/
-static cmsInt32Number
-cd_util_get_coverage_sample_cb (const cmsFloat32Number in[],
-				cmsFloat32Number out[],
-				void *user_data)
-{
-	CdUtilGamutCdeckHelper *helper = (CdUtilGamutCdeckHelper *) user_data;
-	helper->data[helper->idx++] = in[0];
-	helper->data[helper->idx++] = in[1];
-	helper->data[helper->idx++] = in[2];
-	return 1;
 }
 
 /**
@@ -357,83 +309,37 @@ cd_util_get_coverage (cmsHPROFILE profile_proof,
 		      const gchar *filename_in,
 		      GError **error)
 {
-	const guint cube_size = 33;
-	cmsFloat32Number *data = NULL;
-	cmsHPROFILE profile_in = NULL;
-	cmsHPROFILE profile_null = NULL;
-	cmsHTRANSFORM transform = NULL;
-	cmsUInt16Number *alarm_codes = NULL;
-	cmsUInt32Number dimensions[] = { cube_size, cube_size, cube_size };
-	CdUtilGamutCdeckHelper helper;
-	gboolean ret;
 	gdouble coverage = -1.0;
-	guint cnt = 0;
-	guint data_len = cube_size * cube_size * cube_size;
-	guint i;
+	gboolean ret;
+	GFile *file = NULL;
+	CdIcc *icc = NULL;
+	CdIcc *icc_ref;
 
-	/* load profiles into lcms */
-	profile_null = cmsCreateNULLProfile ();
-	profile_in = cmsOpenProfileFromFile (filename_in, "r");
-	if (profile_in == NULL) {
-		g_set_error (error, 1, 0, "Failed to open %s", filename_in);
+	/* load proofing profile */
+	icc_ref = cd_icc_new ();
+	ret = cd_icc_load_handle (icc_ref, profile_proof,
+				  CD_ICC_LOAD_FLAGS_NONE, error);
+	if (!ret)
 		goto out;
-	}
 
-	/* create a proofing transform with gamut check */
-	transform = cmsCreateProofingTransform (profile_in,
-						TYPE_RGB_FLT,
-						profile_null,
-						TYPE_GRAY_FLT,
-						profile_proof,
-						INTENT_ABSOLUTE_COLORIMETRIC,
-						INTENT_ABSOLUTE_COLORIMETRIC,
-						cmsFLAGS_GAMUTCHECK |
-						cmsFLAGS_SOFTPROOFING);
-	if (transform == NULL) {
-		g_set_error (error, 1, 0,
-			     "Failed to setup transform for %s",
-			     filename_in);
+	/* load target profile */
+	icc = cd_icc_new ();
+	file = g_file_new_for_path (filename_in);
+	ret = cd_icc_load_file (icc, file, CD_ICC_LOAD_FLAGS_NONE, NULL, error);
+	if (!ret)
 		goto out;
-	}
 
-	/* set gamut alarm to 0xffff */
-	alarm_codes = g_new0 (cmsUInt16Number, cmsMAXCHANNELS);
-	alarm_codes[0] = 0xffff;
-	cmsSetAlarmCodes (alarm_codes);
-
-	/* slice profile in regular intevals */
-	data = g_new0 (cmsFloat32Number, data_len * 3);
-	helper.data = data;
-	helper.idx = 0;
-	ret = cmsSliceSpaceFloat (3, dimensions,
-				  cd_util_get_coverage_sample_cb,
-				  &helper);
-	if (!ret) {
-		g_set_error_literal (error, 1, 0, "Failed to slice data");
-		goto out;
-	}
-
-	/* transform each one of those nodes across the proofing transform */
-	cmsDoTransform (transform, helper.data, helper.data, data_len);
-
-	/* count the nodes that gives you zero and divide by total number */
-	for (i = 0; i < data_len; i++) {
-		if (helper.data[i] == 0.0)
-			cnt++;
-	}
-
-	/* success */
-	coverage = (gdouble) cnt / (gdouble) data_len;
-	g_assert (coverage >= 0.0);
+	/* get coverage */
+	ret = cd_icc_utils_get_coverage (icc, icc_ref, &coverage, error);
+	if (!ret)
+		return FALSE;
 out:
-	g_free (data);
-	if (transform != NULL)
-		cmsDeleteTransform (transform);
-	if (profile_null != NULL)
-		cmsCloseProfile (profile_null);
-	if (profile_in != NULL)
-		cmsCloseProfile (profile_in);
-	return coverage;
+	if (file != NULL)
+		g_object_unref (file);
+	if (icc != NULL)
+		g_object_unref (icc);
+	g_object_unref (icc_ref);
+	return ret;
 }
 
 /**
@@ -471,38 +377,68 @@ out:
 static gboolean
 cd_util_set_version (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
 	gchar *endptr = NULL;
 	gdouble version;
 
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'version'");
-		goto out;
+		return FALSE;
 	}
 
 	/* get version */
 	version = g_ascii_strtod (values[1], &endptr);
 	if (endptr != NULL && endptr[0] != '\0') {
-		ret = FALSE;
 		g_set_error (error, 1, 0,
 			     "failed to parse version: '%s'",
 			     values[1]);
-		goto out;
+		return FALSE;
 	}
 	if (version < 1.0 || version > 6.0) {
-		ret = FALSE;
 		g_set_error (error, 1, 0,
 			     "invalid version %f", version);
-		goto out;
+		return FALSE;
 	}
 
 	/* set version */
 	cd_icc_set_version (priv->icc, version);
-out:
-	return ret;
+	return TRUE;
+}
+
+/**
+ * cd_util_export_tag_data:
+ **/
+static gboolean
+cd_util_export_tag_data (CdUtilPrivate *priv, gchar **values, GError **error)
+{
+	gboolean ret;
+	_cleanup_bytes_unref_ GBytes *data = NULL;
+	_cleanup_free_ gchar *out_fn = NULL;
+
+	/* check arguments */
+	if (g_strv_length (values) != 2) {
+		g_set_error_literal (error, 1, 0,
+				     "invalid input, expect 'filename' 'tag'");
+		return FALSE;
+	}
+
+	/* get data */
+	data = cd_icc_get_tag_data (priv->icc, values[1], error);
+	if (data == NULL)
+		return FALSE;
+
+	/* save to file */
+	out_fn = g_strdup_printf ("./%s.bin", values[1]);
+	ret = g_file_set_contents (out_fn,
+				   g_bytes_get_data (data, NULL),
+				   g_bytes_get_size (data),
+				   error);
+	if (!ret)
+		return FALSE;
+	g_print ("Wrote %s\n", out_fn);
+	priv->rewrite_file = FALSE;
+	return TRUE;
 }
 
 /**
@@ -511,16 +447,14 @@ out:
 static gboolean
 cd_util_set_fix_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
 	gchar *coverage_tmp;
 	gdouble coverage;
 
 	/* check arguments */
 	if (g_strv_length (values) != 1) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename'");
-		goto out;
+		return FALSE;
 	}
 
 	/* get coverages of common spaces */
@@ -530,10 +464,8 @@ cd_util_set_fix_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 		coverage = cd_util_get_profile_coverage (priv,
 							 CD_STANDARD_SPACE_ADOBE_RGB,
 							 error);
-		if (coverage < 0.0) {
-			ret = FALSE;
-			goto out;
-		}
+		if (coverage < 0.0)
+			return FALSE;
 		coverage_tmp = g_strdup_printf ("%f", coverage);
 		cd_icc_add_metadata (priv->icc,
 				     "GAMUT_coverage(adobe-rgb)",
@@ -545,11 +477,9 @@ cd_util_set_fix_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 		coverage = cd_util_get_profile_coverage (priv,
 							 CD_STANDARD_SPACE_SRGB,
 							 error);
-		if (coverage < 0.0) {
-			ret = FALSE;
-			goto out;
-		}
-		coverage_tmp = g_strdup_printf ("%f", coverage);
+		if (coverage < 0.0)
+			return FALSE;
+		coverage_tmp = g_strdup_printf ("%.2f", coverage);
 		cd_icc_add_metadata (priv->icc,
 				     "GAMUT_coverage(srgb)",
 				     coverage_tmp);
@@ -561,8 +491,7 @@ cd_util_set_fix_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 	cd_icc_add_metadata (priv->icc,
 			     CD_PROFILE_METADATA_CMF_VERSION,
 			     PACKAGE_VERSION);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -571,14 +500,11 @@ out:
 static gboolean
 cd_util_init_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 1) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename'");
-		goto out;
+		return FALSE;
 	}
 
 	/* add CMS defines */
@@ -591,8 +517,7 @@ cd_util_init_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 	cd_icc_add_metadata (priv->icc,
 			     CD_PROFILE_METADATA_CMF_VERSION,
 			     PACKAGE_VERSION);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -601,20 +526,16 @@ out:
 static gboolean
 cd_util_remove_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'key'");
-		goto out;
+		return FALSE;
 	}
 
 	/* remove entry */
 	cd_icc_remove_metadata (priv->icc, values[1]);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
@@ -623,60 +544,52 @@ out:
 static gboolean
 cd_util_add_metadata (CdUtilPrivate *priv, gchar **values, GError **error)
 {
-	gboolean ret = TRUE;
-
 	/* check arguments */
 	if (g_strv_length (values) != 3) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' 'key' 'value'");
-		goto out;
+		return FALSE;
 	}
 
 	/* add new entry */
 	cd_icc_add_metadata (priv->icc, values[1], values[2]);
-out:
-	return ret;
+	return TRUE;
 }
 
 /**
- * cd_util_generate_vcgt:
+ * cd_util_extract_vcgt:
  **/
 static gboolean
-cd_util_generate_vcgt (CdUtilPrivate *priv, gchar **values, GError **error)
+cd_util_extract_vcgt (CdUtilPrivate *priv, gchar **values, GError **error)
 {
 	cmsFloat32Number in;
 	cmsHPROFILE lcms_profile;
 	const cmsToneCurve **vcgt;
-	gboolean ret = TRUE;
 	guint i;
 	guint size;
 
 	/* check arguments */
 	if (g_strv_length (values) != 2) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid input, expect 'filename' size'");
-		goto out;
+		return FALSE;
 	}
 
 	/* invalid size */
 	size = atoi (values[1]);
 	if (size <= 1 || size > 1024) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "invalid size,expected 2-1024");
-		goto out;
+		return FALSE;
 	}
 
 	/* does profile have VCGT */
 	lcms_profile = cd_icc_get_handle (priv->icc);
 	vcgt = cmsReadTag (lcms_profile, cmsSigVcgtTag);
 	if (vcgt == NULL || vcgt[0] == NULL) {
-		ret = FALSE;
 		g_set_error_literal (error, 1, 0,
 				     "profile does not have any VCGT data");
-		goto out;
+		return FALSE;
 	}
 
 	/* output data */
@@ -690,9 +603,8 @@ cd_util_generate_vcgt (CdUtilPrivate *priv, gchar **values, GError **error)
 	}
 
 	/* success */
-	ret = TRUE;
-out:
-	return ret;
+	priv->rewrite_file = FALSE;
+	return TRUE;
 }
 
 /**
@@ -724,11 +636,11 @@ main (int argc, char *argv[])
 	CdUtilPrivate *priv;
 	gboolean ret = TRUE;
 	gboolean verbose = FALSE;
-	gchar *cmd_descriptions = NULL;
-	gchar *locale = NULL;
-	GError *error = NULL;
-	GFile *file = NULL;
 	guint retval = 1;
+	_cleanup_error_free_ GError *error = NULL;
+	_cleanup_free_ gchar *cmd_descriptions = NULL;
+	_cleanup_free_ gchar *locale = NULL;
+	_cleanup_object_unref_ GFile *file = NULL;
 	const GOptionEntry options[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
 			/* TRANSLATORS: command line option */
@@ -746,10 +658,9 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 	cmsSetLogErrorHandler (cd_util_lcms_error_cb);
 
-	g_type_init ();
-
 	/* create helper object */
 	priv = g_new0 (CdUtilPrivate, 1);
+	priv->rewrite_file = TRUE;
 	priv->client = cd_client_new ();
 
 	/* add commands */
@@ -758,7 +669,7 @@ main (int argc, char *argv[])
 		     "extract-vcgt",
 		     /* TRANSLATORS: command description */
 		     _("Generate the VCGT calibration of a given size"),
-		     cd_util_generate_vcgt);
+		     cd_util_extract_vcgt);
 	cd_util_add (priv->cmd_array,
 		     "md-clear",
 		     /* TRANSLATORS: command description */
@@ -809,6 +720,11 @@ main (int argc, char *argv[])
 		     /* TRANSLATORS: command description */
 		     _("Set the ICC profile version"),
 		     cd_util_set_version);
+	cd_util_add (priv->cmd_array,
+		     "export-tag-data",
+		     /* TRANSLATORS: command description */
+		     _("Export the tag data"),
+		     cd_util_export_tag_data);
 
 	/* sort by command name */
 	g_ptr_array_sort (priv->cmd_array,
@@ -825,10 +741,8 @@ main (int argc, char *argv[])
 	ret = g_option_context_parse (priv->context, &argc, &argv, &error);
 	if (!ret) {
 		/* TRANSLATORS: the user didn't read the man page */
-		g_print ("%s: %s\n",
-			 _("Failed to parse arguments"),
+		g_print ("%s: %s\n", _("Failed to parse arguments"),
 			 error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -859,7 +773,6 @@ main (int argc, char *argv[])
 				&error);
 	if (!ret) {
 		g_print ("%s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
@@ -867,20 +780,20 @@ main (int argc, char *argv[])
 	ret = cd_util_run (priv, argv[2], (gchar**) &argv[2], &error);
 	if (!ret) {
 		g_print ("%s\n", error->message);
-		g_error_free (error);
 		goto out;
 	}
 
 	/* save file */
-	ret = cd_icc_save_file (priv->icc,
-				file,
-				CD_ICC_SAVE_FLAGS_NONE,
-				NULL,
-				&error);
-	if (!ret) {
-		g_print ("%s\n", error->message);
-		g_error_free (error);
-		goto out;
+	if (priv->rewrite_file) {
+		ret = cd_icc_save_file (priv->icc,
+					file,
+					CD_ICC_SAVE_FLAGS_NONE,
+					NULL,
+					&error);
+		if (!ret) {
+			g_print ("%s\n", error->message);
+			goto out;
+		}
 	}
 
 	/* success */
@@ -896,10 +809,6 @@ out:
 		g_free (priv->locale);
 		g_free (priv);
 	}
-	if (file != NULL)
-		g_object_unref (file);
-	g_free (locale);
-	g_free (cmd_descriptions);
 	return retval;
 }
 

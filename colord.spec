@@ -1,25 +1,7 @@
-
-# Building the extra print profiles requires colprof, +4Gb of RAM and
-# quite a lot of time. Don't enable this for test builds.
-%define enable_print_profiles 1
-
-# SANE is pretty insane when it comes to handling devices, and we get AVCs
-# popping up all over the place.
-%define enable_sane 0
-
-# Don't build the print profiles for secondary architectures on the
-# logic that these are probably not doing press proofing or editing
-# in different CMYK spaces
-%ifarch %{ix86} x86_64
- %if !0%{?rhel}
-  %define build_print_profiles %{?enable_print_profiles}
- %endif
-%endif
-
 Summary:   Color daemon
 Name:      colord
-Version:   1.0.4
-Release:   3%{?dist}
+Version:   1.2.7
+Release:   2%{?dist}
 License:   GPLv2+ and LGPLv2+
 URL:       http://www.freedesktop.org/software/colord/
 Source0:   http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
@@ -30,7 +12,7 @@ BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: intltool
 BuildRequires: systemd-devel
-BuildRequires: lcms2-devel >= 2.2
+BuildRequires: lcms2-devel >= 2.6
 BuildRequires: libgudev1-devel
 BuildRequires: polkit-devel >= 0.103
 BuildRequires: sqlite-devel
@@ -39,12 +21,6 @@ BuildRequires: vala-tools
 BuildRequires: libgusb-devel
 BuildRequires: gtk-doc
 BuildRequires: color-filesystem
-%if !0%{?rhel}
-BuildRequires: bash-completion
-%endif
-%if 0%{?build_print_profiles}
-BuildRequires: argyllcms
-%endif
 
 # for SANE support
 %if 0%{?enable_sane}
@@ -109,25 +85,14 @@ This may be useful for CMYK soft-proofing or for extra device support.
 %setup -q
 
 %build
-# Set ~2 GiB limit so that colprof is forced to work in chunks when
-# generating the print profile rather than trying to allocate a 3.1 GiB
-# chunk of RAM to put the entire B-to-A tables in.
-ulimit -Sv 2000000
+export CFLAGS='-fno-strict-aliasing %optflags'
 %configure \
         --with-daemon-user=colord \
         --enable-gtk-doc \
         --enable-vala \
-%if 0%{?build_print_profiles}
-        --enable-print-profiles \
-%else
         --disable-print-profiles \
-%endif
-%if 0%{?enable_sane}
-        --enable-sane \
-%endif
-%if 0%{?rhel}
         --disable-bash-completion \
-%endif
+        --disable-argyllcms-sensor \
         --disable-static \
         --disable-rpath \
         --disable-examples \
@@ -157,7 +122,6 @@ getent passwd colord >/dev/null || \
 exit 0
 
 %post
-/sbin/ldconfig
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %systemd_post colord.service
 
@@ -165,12 +129,14 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %systemd_preun colord.service
 
 %postun
-/sbin/ldconfig
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %systemd_postun colord.service
 
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
 %files -f %{name}.lang
-%doc README AUTHORS NEWS COPYING
+%doc README.md AUTHORS NEWS COPYING
 %{_libexecdir}/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
@@ -182,10 +148,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
 %{_datadir}/man/man1/*.1.gz
 %{_datadir}/colord
-%if !0%{?rhel}
-%{_datadir}/bash-completion/completions/colormgr
-%endif
-%config %{_sysconfdir}/colord.conf
 /usr/lib/udev/rules.d/*.rules
 %{_libdir}/colord-sensors
 %{_libdir}/colord-plugins
@@ -196,11 +158,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_libexecdir}/colord-session
 %{_datadir}/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
 %{_datadir}/dbus-1/services/org.freedesktop.ColorHelper.service
-
-# sane helper
-%if 0%{?enable_sane}
-%{_libexecdir}/colord-sane
-%endif
 
 # common colorspaces
 %dir %{_icccolordir}/colord
@@ -226,20 +183,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_libdir}/girepository-1.0/*.typelib
 
 %files extra-profiles
-%if 0%{?build_print_profiles}
-%{_icccolordir}/colord/FOGRA27L_coated.icc
-%{_icccolordir}/colord/FOGRA28L_webcoated.icc
-%{_icccolordir}/colord/FOGRA29L_uncoated.icc
-%{_icccolordir}/colord/FOGRA30L_uncoated_yellowish.icc
-%{_icccolordir}/colord/FOGRA40L_SC_paper.icc
-%{_icccolordir}/colord/FOGRA45L_lwc.icc
-%{_icccolordir}/colord/FOGRA47L_uncoated.icc
-%{_icccolordir}/colord/GRACoL*.icc
-%{_icccolordir}/colord/IFRA26S_2004_newsprint.icc
-%{_icccolordir}/colord/SNAP*.icc
-%{_icccolordir}/colord/SWOP*.icc
-%endif
-
 # other colorspaces not often used
 %{_icccolordir}/colord/AppleRGB.icc
 %{_icccolordir}/colord/BestRGB.icc
@@ -272,6 +215,14 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gtk-doc/html/colord/*
 
 %changelog
+* Tue May 26 2015 Matthias Clasen <mclasen@redhat.com> 1.2.7-2
+- Build with -fno-strict-aliasing
+Related: #1220479
+
+* Tue May 12 2015 Richard Hughes <richard@hughsie.com> 1.2.7-1
+- New upstream version
+- Resolves: #1220479
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.0.4-3
 - Mass rebuild 2014-01-24
 

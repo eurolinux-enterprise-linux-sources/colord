@@ -31,30 +31,6 @@ cd-color
 @G: 
 @B: 
 
-<!-- ##### STRUCT CdColorLab ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### STRUCT CdColorYxy ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### STRUCT CdColorXYZ ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### STRUCT CdColorRGB ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION cd_color_swatch_get_name ##### -->
 <para>
 
@@ -109,6 +85,15 @@ cd-color
 @Returns: 
 
 
+<!-- ##### FUNCTION cd_color_uvw_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_color_swatch_new ##### -->
 <para>
 
@@ -143,6 +128,14 @@ cd-color
 
 
 <!-- ##### FUNCTION cd_color_yxy_free ##### -->
+<para>
+
+</para>
+
+@src: 
+
+
+<!-- ##### FUNCTION cd_color_uvw_free ##### -->
 <para>
 
 </para>
@@ -186,6 +179,15 @@ cd-color
 
 
 <!-- ##### FUNCTION cd_color_yxy_dup ##### -->
+<para>
+
+</para>
+
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_color_uvw_dup ##### -->
 <para>
 
 </para>
@@ -247,6 +249,17 @@ cd-color
 @y: 
 
 
+<!-- ##### FUNCTION cd_color_uvw_set ##### -->
+<para>
+
+</para>
+
+@dest: 
+@U: 
+@V: 
+@W: 
+
+
 <!-- ##### FUNCTION cd_color_swatch_set_name ##### -->
 <para>
 
@@ -283,6 +296,15 @@ cd-color
 @dest: 
 
 
+<!-- ##### FUNCTION cd_color_uvw_copy ##### -->
+<para>
+
+</para>
+
+@src: 
+@dest: 
+
+
 <!-- ##### FUNCTION cd_color_lab_copy ##### -->
 <para>
 
@@ -290,6 +312,16 @@ cd-color
 
 @src: 
 @dest: 
+
+
+<!-- ##### FUNCTION cd_color_lab_delta_e76 ##### -->
+<para>
+
+</para>
+
+@p1: 
+@p2: 
+@Returns: 
 
 
 <!-- ##### FUNCTION cd_color_xyz_clear ##### -->
@@ -345,6 +377,44 @@ cd-color
 @dest: 
 
 
+<!-- ##### FUNCTION cd_color_xyz_to_uvw ##### -->
+<para>
+
+</para>
+
+@src: 
+@whitepoint: 
+@dest: 
+
+
+<!-- ##### FUNCTION cd_color_yxy_to_uvw ##### -->
+<para>
+
+</para>
+
+@src: 
+@dest: 
+
+
+<!-- ##### FUNCTION cd_color_uvw_set_planckian_locus ##### -->
+<para>
+
+</para>
+
+@dest: 
+@temp: 
+
+
+<!-- ##### FUNCTION cd_color_uvw_get_chroma_difference ##### -->
+<para>
+
+</para>
+
+@p1: 
+@p2: 
+@Returns: 
+
+
 <!-- ##### FUNCTION cd_color_get_blackbody_rgb ##### -->
 <para>
 
@@ -352,6 +422,7 @@ cd-color
 
 @temp: 
 @result: 
+@Returns: 
 
 
 <!-- ##### FUNCTION cd_color_rgb_interpolate ##### -->
@@ -363,6 +434,25 @@ cd-color
 @p2: 
 @index: 
 @result: 
+
+
+<!-- ##### FUNCTION cd_color_xyz_to_cct ##### -->
+<para>
+
+</para>
+
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_color_xyz_normalize ##### -->
+<para>
+
+</para>
+
+@src: 
+@max: 
+@dest: 
 
 
 <!-- ##### FUNCTION cd_color_rgb_array_new ##### -->
@@ -391,11 +481,5 @@ cd-color
 @array: 
 @new_length: 
 @Returns: 
-
-
-<!-- ##### STRUCT CdColorSwatch ##### -->
-<para>
-
-</para>
 
 

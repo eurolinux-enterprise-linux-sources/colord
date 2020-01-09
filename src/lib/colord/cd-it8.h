@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2012 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2012-2014 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -31,6 +31,7 @@
 
 #include "cd-color.h"
 #include "cd-math.h"
+#include "cd-spectrum.h"
 
 G_BEGIN_DECLS
 
@@ -74,7 +75,10 @@ typedef struct
  */
 typedef enum
 {
-	CD_IT8_ERROR_FAILED,
+	CD_IT8_ERROR_FAILED,				/* Since: 0.1.20 */
+	CD_IT8_ERROR_INVALID_FORMAT,			/* Since: 1.1.6 */
+	CD_IT8_ERROR_UNKNOWN_KIND,			/* Since: 1.1.6 */
+	/*< private >*/
 	CD_IT8_ERROR_LAST
 } CdIt8Error;
 
@@ -84,11 +88,15 @@ typedef enum
  * The kind of IT8 file.
  **/
 typedef enum {
-	CD_IT8_KIND_UNKNOWN,
-	CD_IT8_KIND_TI1,
-	CD_IT8_KIND_TI3,
-	CD_IT8_KIND_CCMX,
-	CD_IT8_KIND_CAL,
+	CD_IT8_KIND_UNKNOWN,				/* Since: 0.1.20 */
+	CD_IT8_KIND_TI1,				/* Since: 0.1.20 */
+	CD_IT8_KIND_TI3,				/* Since: 0.1.20 */
+	CD_IT8_KIND_CCMX,				/* Since: 0.1.20 */
+	CD_IT8_KIND_CAL,				/* Since: 0.1.26 */
+	CD_IT8_KIND_CCSS,				/* Since: 1.1.6 */
+	CD_IT8_KIND_SPECT,				/* Since: 1.1.6 */
+	CD_IT8_KIND_CMF,				/* Since: 1.1.6 */
+	/*< private >*/
 	CD_IT8_KIND_LAST
 } CdIt8Kind;
 
@@ -141,6 +149,10 @@ void		 cd_it8_add_option		(CdIt8		*it8,
 						 const gchar	*option);
 void		 cd_it8_set_matrix		(CdIt8		*it8,
 						 const CdMat3x3 *matrix);
+void		 cd_it8_set_spectrum_array	(CdIt8		*it8,
+						 GPtrArray	*data);
+void		 cd_it8_add_spectrum		(CdIt8		*it8,
+						 CdSpectrum	*spectrum);
 
 /* getters */
 const CdMat3x3	*cd_it8_get_matrix		(CdIt8		*it8);
@@ -157,8 +169,16 @@ gboolean	 cd_it8_get_data_item		(CdIt8		*it8,
 						 guint		 idx,
 						 CdColorRGB	*rgb,
 						 CdColorXYZ	*xyz);
+GPtrArray	*cd_it8_get_spectrum_array	(CdIt8		*it8);
+CdSpectrum	*cd_it8_get_spectrum_by_id	(CdIt8		*it8,
+						 const gchar	*id);
 gboolean	 cd_it8_has_option		(CdIt8		*it8,
 						 const gchar	*option);
+CdColorXYZ	*cd_it8_get_xyz_for_rgb		(CdIt8		*it8,
+						 gdouble	 R,
+						 gdouble	 G,
+						 gdouble	 B,
+						 gdouble	 delta);
 
 G_END_DECLS
 

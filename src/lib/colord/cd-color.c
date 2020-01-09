@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010-2014 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -30,6 +30,7 @@
 
 #include <math.h>
 #include <glib-object.h>
+#include <lcms2.h>
 
 #include "cd-color.h"
 #include "cd-interp.h"
@@ -107,6 +108,23 @@ cd_color_yxy_dup (const CdColorYxy *src)
 	dest->Y = src->Y;
 	dest->x = src->x;
 	dest->y = src->y;
+	return dest;
+}
+
+/**
+ * cd_color_uvw_dup:
+ *
+ * Since: 1.1.6
+ **/
+CdColorUVW *
+cd_color_uvw_dup (const CdColorUVW *src)
+{
+	CdColorUVW *dest;
+	g_return_val_if_fail (src != NULL, NULL);
+	dest = cd_color_uvw_new ();
+	dest->U = src->U;
+	dest->V = src->V;
+	dest->W = src->W;
 	return dest;
 }
 
@@ -231,6 +249,26 @@ cd_color_yxy_get_type (void)
 }
 
 /**
+ * cd_color_uvw_get_type:
+ *
+ * Gets a specific type.
+ *
+ * Return value: a #GType
+ *
+ * Since: 1.1.6
+ **/
+GType
+cd_color_uvw_get_type (void)
+{
+	static GType type_id = 0;
+	if (!type_id)
+		type_id = g_boxed_type_register_static ("CdColorUVW",
+							(GBoxedCopyFunc) cd_color_uvw_dup,
+							(GBoxedFreeFunc) cd_color_uvw_free);
+	return type_id;
+}
+
+/**
  * cd_color_swatch_get_type:
  *
  * Gets a specific type.
@@ -262,11 +300,7 @@ cd_color_swatch_get_type (void)
 CdColorXYZ *
 cd_color_xyz_new (void)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	return g_slice_new0 (CdColorXYZ);
-#else
-	return g_new0 (CdColorXYZ, 1);
-#endif
 }
 
 /**
@@ -281,11 +315,7 @@ cd_color_xyz_new (void)
 CdColorRGB *
 cd_color_rgb_new (void)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	return g_slice_new0 (CdColorRGB);
-#else
-	return g_new0 (CdColorRGB, 1);
-#endif
 }
 
 /**
@@ -315,11 +345,22 @@ cd_color_lab_new (void)
 CdColorYxy *
 cd_color_yxy_new (void)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	return g_slice_new0 (CdColorYxy);
-#else
-	return g_new0 (CdColorYxy, 1);
-#endif
+}
+
+/**
+ * cd_color_uvw_new:
+ *
+ * Allocates a color value.
+ *
+ * Return value: A newly allocated #CdColorUVW object
+ *
+ * Since: 1.1.6
+ **/
+CdColorUVW *
+cd_color_uvw_new (void)
+{
+	return g_slice_new0 (CdColorUVW);
 }
 
 /**
@@ -327,7 +368,7 @@ cd_color_yxy_new (void)
  *
  * Allocates a color value.
  *
- * Return value: A newly allocated #CdColorYxy object
+ * Return value: A newly allocated #CdColorSwatch object
  *
  * Since: 0.1.32
  **/
@@ -348,11 +389,7 @@ cd_color_swatch_new (void)
 void
 cd_color_xyz_free (CdColorXYZ *src)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	g_slice_free (CdColorXYZ, src);
-#else
-	g_free (src);
-#endif
 }
 
 /**
@@ -366,11 +403,7 @@ cd_color_xyz_free (CdColorXYZ *src)
 void
 cd_color_rgb_free (CdColorRGB *src)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	g_slice_free (CdColorRGB, src);
-#else
-	g_free (src);
-#endif
 }
 
 /**
@@ -398,11 +431,21 @@ cd_color_lab_free (CdColorLab *src)
 void
 cd_color_yxy_free (CdColorYxy *src)
 {
-#ifdef CD_USE_ALLOC_GSLICE
 	g_slice_free (CdColorYxy, src);
-#else
-	g_free (src);
-#endif
+}
+
+/**
+ * cd_color_uvw_free:
+ * @src: the color object
+ *
+ * Deallocates a color value.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_uvw_free (CdColorUVW *src)
+{
+	g_slice_free (CdColorUVW, src);
 }
 
 /**
@@ -502,6 +545,25 @@ cd_color_lab_set (CdColorLab *dest, gdouble L, gdouble a, gdouble b)
 }
 
 /**
+ * cd_color_lab_delta_e76:
+ * @p1: Lab value 1
+ * @p2: Lab value 2
+ *
+ * Calculates the ΔE of two colors using the 1976 formula.
+ *
+ * Return value: distance metric, where JND ΔE ≈ 2.3
+ *
+ * Since: 0.1.32
+ **/
+gdouble
+cd_color_lab_delta_e76 (const CdColorLab *p1, const CdColorLab *p2)
+{
+	return sqrt (pow (p2->L - p1->L, 2) +
+		     pow (p2->a - p1->a, 2) +
+		     pow (p2->b - p1->b, 2));
+}
+
+/**
  * cd_color_yxy_set:
  * @dest: the destination color
  * @Y: component value
@@ -520,6 +582,27 @@ cd_color_yxy_set (CdColorYxy *dest, gdouble Y, gdouble x, gdouble y)
 	dest->Y = Y;
 	dest->x = x;
 	dest->y = y;
+}
+
+/**
+ * cd_color_uvw_set:
+ * @dest: the destination color
+ * @U: component value
+ * @V: component value
+ * @W: component value
+ *
+ * Initialises a color value.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_uvw_set (CdColorUVW *dest, gdouble U, gdouble V, gdouble W)
+{
+	g_return_if_fail (dest != NULL);
+
+	dest->U = U;
+	dest->V = V;
+	dest->W = W;
 }
 
 /**
@@ -595,6 +678,26 @@ cd_color_yxy_copy (const CdColorYxy *src, CdColorYxy *dest)
 	dest->Y = src->Y;
 	dest->x = src->x;
 	dest->y = src->y;
+}
+
+/**
+ * cd_color_uvw_copy:
+ * @src: the source color
+ * @dest: the destination color
+ *
+ * Deep copies a color value.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_uvw_copy (const CdColorUVW *src, CdColorUVW *dest)
+{
+	g_return_if_fail (src != NULL);
+	g_return_if_fail (dest != NULL);
+
+	dest->U = src->U;
+	dest->V = src->V;
+	dest->W = src->W;
 }
 
 /**
@@ -727,6 +830,94 @@ cd_color_yxy_to_xyz (const CdColorYxy *src, CdColorXYZ *dest)
 }
 
 /**
+ * cd_color_xyz_normalize:
+ * @src: the source color
+ * @dest: the destination color
+ *
+ * Normalizes @src to y=1.0
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_xyz_normalize (const CdColorXYZ *src, gdouble max, CdColorXYZ *dest)
+{
+	dest->X = max * src->X / src->Y;
+	dest->Z = max * src->Z / src->Y;
+	dest->Y = max;
+}
+
+/**
+ * cd_color_xyz_to_cct:
+ * @src: the source color
+ *
+ * Gets the correlated color temperature for the XYZ value.
+ *
+ * Since: 1.1.6
+ **/
+gdouble
+cd_color_xyz_to_cct (const CdColorXYZ *src)
+{
+	cmsCIExyY tmp;
+	cmsCIEXYZ src_lcms;
+	gboolean ret;
+	gdouble value;
+
+	/* in case cmsFloat64Number != gdouble */
+	src_lcms.X = src->X;
+	src_lcms.Y = src->Y;
+	src_lcms.Z = src->Z;
+	cmsXYZ2xyY (&tmp, &src_lcms);
+	ret = cmsTempFromWhitePoint (&value, &tmp);
+	if (!ret)
+		return -1.f;
+	return value;
+}
+
+/**
+ * cd_color_uvw_get_chroma_difference:
+ * @p1: color
+ * @p2: color
+ *
+ * Gets the chromaticity distance in the CIE 1960 UCS.
+ *
+ * Return value: The Euclidean distance
+ *
+ * Since: 1.1.6
+ **/
+gdouble
+cd_color_uvw_get_chroma_difference (const CdColorUVW *p1, const CdColorUVW *p2)
+{
+	return sqrt (pow ((p1->U - p2->U), 2) + pow ((p1->V - p2->V), 2));
+}
+
+/**
+ * cd_color_uvw_set_planckian_locus:
+ * @dest: destination color
+ * @temp: temperature in Kelvin
+ *
+ * Sets the CIEUVW color from a Planckian locus of specific temperature.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_uvw_set_planckian_locus (CdColorUVW *dest, gdouble temp)
+{
+	dest->W = 1.0;
+	dest->U = (0.860117757 +
+		   (1.54118254 * temp * 1e-4) +
+		   (1.28641212 * pow (temp, 2) * 1e-7)) /
+		  (1.0 +
+		   (8.42420235 * temp * 1e-4) +
+		   (7.08145163 * pow (temp, 2) * 1e-7));
+	dest->V = (0.317398726 +
+		   (4.22806245 * temp * 1e-5) +
+		   (4.20481691 * pow (temp, 2) * 1e-8)) /
+		  (1.0 -
+		   (2.89741816 * temp * 1e-5) +
+		   (1.61456053 * pow (temp, 2) * 1e-7));
+}
+
+/**
  * cd_color_xyz_to_yxy:
  * @src: the source color
  * @dest: the destination color
@@ -746,15 +937,72 @@ cd_color_xyz_to_yxy (const CdColorXYZ *src, CdColorYxy *dest)
 	/* prevent division by zero */
 	sum = src->X + src->Y + src->Z;
 	if (fabs (sum) < 1e-6) {
-		dest->Y = 0.0f;
-		dest->x = 0.0f;
-		dest->y = 0.0f;
+		cd_color_yxy_set (dest, 0.f, 0.f, 0.f);
 		return;
 	}
 
 	dest->Y = src->Y;
 	dest->x = src->X / sum;
 	dest->y = src->Y / sum;
+}
+
+typedef struct {
+	gdouble	 Y;
+	gdouble	 u;
+	gdouble	 v;
+} CdColorYuv;
+
+static void
+cd_color_xyz_to_yuv (const CdColorXYZ *src, CdColorYuv *dest)
+{
+	gdouble sum = src->X + 15 * src->Y + 3 * src->Z;
+	dest->Y = src->Y;
+	dest->u = 4 * src->X / sum;
+	dest->v = 6 * src->Y / sum;
+}
+
+/**
+ * cd_color_xyz_to_uvw:
+ * @src: the source color
+ * @whitepoint: the whitepoint
+ * @dest: the destination color
+ *
+ * Convert from one color format to another.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_xyz_to_uvw (const CdColorXYZ *src,
+		     const CdColorXYZ *whitepoint,
+		     CdColorUVW *dest)
+{
+	CdColorYuv wp;
+	CdColorYuv tmp;
+
+	cd_color_xyz_to_yuv (whitepoint, &wp);
+	cd_color_xyz_to_yuv (src, &tmp);
+
+	dest->W = 25 * pow (src->Y * 100.f / wp.Y, 1.f/3.f) - 17.f;
+	dest->U = 13 * dest->W * (tmp.u - wp.u);
+	dest->V = 13 * dest->W * (tmp.v - wp.v);
+}
+
+/**
+ * cd_color_yxy_to_uvw:
+ * @src: the source color
+ * @dest: the destination color
+ *
+ * Convert from one color format to another.
+ *
+ * Since: 1.1.6
+ **/
+void
+cd_color_yxy_to_uvw (const CdColorYxy *src, CdColorUVW *dest)
+{
+	gdouble sum = (-2 * src->x) + (12 * src->y) + (3 * src->Y);
+	dest->U = (4 * src->x) / sum;
+	dest->V = (6 * src->y) / sum;
+	dest->W = src->Y;
 }
 
 /* source: http://www.vendian.org/mncharity/dir3/blackbody/
@@ -892,6 +1140,8 @@ cd_color_rgb_array_is_monotonic (const GPtrArray *array)
 	CdColorRGB *rgb;
 	guint i;
 
+	g_return_val_if_fail (array != NULL, FALSE);
+
 	/* check if monotonic */
 	cd_color_rgb_set (&last_rgb, 0.0, 0.0, 0.0);
 	for (i = 0; i < array->len; i++) {
@@ -946,6 +1196,9 @@ cd_color_rgb_array_interpolate (const GPtrArray *array, guint new_length)
 	guint i;
 	guint j;
 	guint m;
+
+	g_return_val_if_fail (array != NULL, NULL);
+	g_return_val_if_fail (new_length > 0, NULL);
 
 	/* check if monotonic */
 	ret = cd_color_rgb_array_is_monotonic (array);
@@ -1013,21 +1266,38 @@ out:
  * @temp: the temperature in Kelvin
  * @result: the destination color
  *
- * Get the blackbody color for a specific temperature.
+ * Get the blackbody color for a specific temperature. If the temperature
+ * range is outside 1000K to 10000K then the result is clipped.
+ *
+ * Return value: TRUE if @temp was in range and the result accurate
  *
  * Since: 0.1.26
  **/
-void
+gboolean
 cd_color_get_blackbody_rgb (guint temp, CdColorRGB *result)
 {
+	gboolean ret = TRUE;
 	gdouble alpha;
 	gint temp_index;
+
+	/* check lower bound */
+	if (temp < 1000) {
+		ret = FALSE;
+		temp = 1000;
+	}
+
+	/* check upper bound */
+	if (temp > 10000) {
+		ret = FALSE;
+		temp = 10000;
+	}
 
 	/* bilinear interpolate the blackbody data */
 	alpha = (temp % 100) / 100.0;
 	temp_index = (temp - 1000) / 100;
 	cd_color_rgb_interpolate (&blackbody_data[temp_index],
-				       &blackbody_data[temp_index + 1],
-				       alpha,
-				       result);
+				  &blackbody_data[temp_index + 1],
+				  alpha,
+				  result);
+	return ret;
 }

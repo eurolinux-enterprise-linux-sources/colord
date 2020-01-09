@@ -208,8 +208,6 @@ out'o'object_path)</programlisting></refsect2>
             Gets a profile path for a defined profile space.
             The defined space is set from the profile metadata,
             specifically in the <literal>STANDARD_space</literal> entry.
-            The <literal>colord.conf</literal> file allows an
-            administrator to manually override profiles if required.
           </para>
           <para>
             NOTE: only system wide profiles are able to define
@@ -482,12 +480,12 @@ out'o'object_path)</programlisting></refsect2>
         <variablelist role="params"/><refsect2><title><anchor role="function" id="ColorManager:SystemVendor"/>The "SystemVendor" property</title><indexterm><primary>SystemVendor</primary><secondary>ColorManager</secondary></indexterm><programlisting>'SystemVendor'read's'
 </programlisting></refsect2>
           <para>
-              The system vendor, e.g. <literal>Lenovo</literal>.
+            The system vendor.
           </para>
         <variablelist role="params"/><refsect2><title><anchor role="function" id="ColorManager:SystemModel"/>The "SystemModel" property</title><indexterm><primary>SystemModel</primary><secondary>ColorManager</secondary></indexterm><programlisting>'SystemModel'read's'
 </programlisting></refsect2>
           <para>
-              The system model, e.g. <literal>T61</literal>.
+            The system model.
           </para>
         <variablelist role="params"/></refsect1>
 </refentry>

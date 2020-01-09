@@ -70,12 +70,16 @@ const gchar	*cd_profile_get_filename		(CdProfile	*profile);
 void		 cd_profile_set_is_system_wide		(CdProfile	*profile,
 							 gboolean	 is_system_wide);
 gboolean	 cd_profile_get_is_system_wide		(CdProfile	*profile);
-gboolean	 cd_profile_set_filename		(CdProfile	*profile,
-							 const gchar	*filename,
+gboolean	 cd_profile_load_from_icc		(CdProfile	*profile,
+							 CdIcc		*icc,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
-gboolean	 cd_profile_set_fd			(CdProfile	*profile,
+gboolean	 cd_profile_load_from_fd		(CdProfile	*profile,
 							 gint		 fd,
+							 GError		**error)
+							 G_GNUC_WARN_UNUSED_RESULT;
+gboolean	 cd_profile_load_from_filename		(CdProfile	*profile,
+							 const gchar	*filename,
 							 GError		**error)
 							 G_GNUC_WARN_UNUSED_RESULT;
 gboolean	 cd_profile_register_object		(CdProfile	*profile,
@@ -103,6 +107,7 @@ void		 cd_profile_watch_sender		(CdProfile	*profile,
 gboolean	 cd_profile_set_property_internal	(CdProfile	*profile,
 							 const gchar	*property,
 							 const gchar	*value,
+							 guint		 sender_uid,
 							 GError		**error);
 const gchar	**cd_profile_get_warnings		(CdProfile	*profile);
 
