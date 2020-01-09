@@ -19,7 +19,7 @@
 Summary:   Color daemon
 Name:      colord
 Version:   1.0.4
-Release:   1%{?dist}
+Release:   3%{?dist}
 License:   GPLv2+ and LGPLv2+
 URL:       http://www.freedesktop.org/software/colord/
 Source0:   http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
@@ -272,6 +272,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gtk-doc/html/colord/*
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.0.4-3
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.0.4-2
+- Mass rebuild 2013-12-27
+
 * Wed Oct 30 2013 Richard Hughes <richard@hughsie.com> 1.0.4-1
 - Rebase to a new upstream version to fix small security bug
 - Use %ghost in the to avoid removing databases on upgrades
