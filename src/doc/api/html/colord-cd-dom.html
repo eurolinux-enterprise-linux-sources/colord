@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cd-dom</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-color.html" title="cd-color">
+<link rel="next" href="colord-cd-icc.html" title="cd-icc">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="colord-cd-color.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="colord-cd-icc.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#colord-cd-dom.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#colord-cd-dom.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="colord-cd-dom"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-dom.top_of_page"></a>cd-dom</span></h2>
+<p>cd-dom — A XML parser that exposes a DOM tree</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="colord-cd-dom.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">#define             <a class="link" href="colord-cd-dom.html#CD-DOM-ERROR:CAPS" title="CD_DOM_ERROR">CD_DOM_ERROR</a>
+#define             <a class="link" href="colord-cd-dom.html#CD-DOM-TYPE-ERROR:CAPS" title="CD_DOM_TYPE_ERROR">CD_DOM_TYPE_ERROR</a>
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved1" title="_cd_dom_reserved1 ()">*_cd_dom_reserved1</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved2" title="_cd_dom_reserved2 ()">*_cd_dom_reserved2</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved3" title="_cd_dom_reserved3 ()">*_cd_dom_reserved3</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved4" title="_cd_dom_reserved4 ()">*_cd_dom_reserved4</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved5" title="_cd_dom_reserved5 ()">*_cd_dom_reserved5</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved6" title="_cd_dom_reserved6 ()">*_cd_dom_reserved6</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved7" title="_cd_dom_reserved7 ()">*_cd_dom_reserved7</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-dom.html#cd-dom-reserved8" title="_cd_dom_reserved8 ()">*_cd_dom_reserved8</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              <a class="link" href="colord-cd-dom.html#cd-dom-error-quark" title="cd_dom_error_quark ()">cd_dom_error_quark</a>                  (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">CdDom</span> *             <a class="link" href="colord-cd-dom.html#cd-dom-new" title="cd_dom_new ()">cd_dom_new</a>                          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="colord-cd-dom.html#cd-dom-to-string" title="cd_dom_to_string ()">cd_dom_to_string</a>                    (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-dom.html#cd-dom-parse-xml-data" title="cd_dom_parse_xml_data ()">cd_dom_parse_xml_data</a>               (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> data_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="returnvalue">GNode</span></a> *       <a class="link" href="colord-cd-dom.html#cd-dom-get-node" title="cd_dom_get_node ()">cd_dom_get_node</a>                     (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *root</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-dom.html#cd-dom-get-node-name" title="cd_dom_get_node_name ()">cd_dom_get_node_name</a>                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-dom.html#cd-dom-get-node-data" title="cd_dom_get_node_data ()">cd_dom_get_node_data</a>                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="colord-cd-dom.html#cd-dom-get-node-data-as-int" title="cd_dom_get_node_data_as_int ()">cd_dom_get_node_data_as_int</a>         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="colord-cd-dom.html#cd-dom-get-node-data-as-double" title="cd_dom_get_node_data_as_double ()">cd_dom_get_node_data_as_double</a>      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-dom.html#cd-dom-get-node-attribute" title="cd_dom_get_node_attribute ()">cd_dom_get_node_attribute</a>           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-dom.html#cd-dom-get-node-rgb" title="cd_dom_get_node_rgb ()">cd_dom_get_node_rgb</a>                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *rgb</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-dom.html#cd-dom-get-node-yxy" title="cd_dom_get_node_yxy ()">cd_dom_get_node_yxy</a>                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *yxy</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-dom.html#cd-dom-get-node-lab" title="cd_dom_get_node_lab ()">cd_dom_get_node_lab</a>                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *lab</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="colord-cd-dom.html#cd-dom-get-node-localized" title="cd_dom_get_node_localized ()">cd_dom_get_node_localized</a>           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-dom.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1">
+<a name="colord-cd-dom.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CD-DOM-ERROR:CAPS"></a><h3>CD_DOM_ERROR</h3>
+<pre class="programlisting">#define CD_DOM_ERROR		(cd_dom_error_quark ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-DOM-TYPE-ERROR:CAPS"></a><h3>CD_DOM_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_DOM_TYPE_ERROR (cd_dom_error_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved1"></a><h3>_cd_dom_reserved1 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved1)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved2"></a><h3>_cd_dom_reserved2 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved2)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved3"></a><h3>_cd_dom_reserved3 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved3)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved4"></a><h3>_cd_dom_reserved4 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved4)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved5"></a><h3>_cd_dom_reserved5 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved5)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved6"></a><h3>_cd_dom_reserved6 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved6)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved7"></a><h3>_cd_dom_reserved7 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved7)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-reserved8"></a><h3>_cd_dom_reserved8 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_dom_reserved8)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-error-quark"></a><h3>cd_dom_error_quark ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              cd_dom_error_quark                  (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An error quark.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-new"></a><h3>cd_dom_new ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdDom</span> *             cd_dom_new                          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <span class="type">CdDom</span> object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new CdDom object.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-to-string"></a><h3>cd_dom_to_string ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             cd_dom_to_string                    (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>);</pre>
+<p>
+Returns a string representation of the DOM tree.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dom</code></em> :</span></p></td>
+<td>a <span class="type">CdDom</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>an allocated string</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-parse-xml-data"></a><h3>cd_dom_parse_xml_data ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_dom_parse_xml_data               (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> data_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Parses data into a DOM tree.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dom</code></em> :</span></p></td>
+<td>a <span class="type">CdDom</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>XML data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_len</code></em> :</span></p></td>
+<td>Length of <em class="parameter"><code>data</code></em>, or -1 if NULL terminated</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node"></a><h3>cd_dom_get_node ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="returnvalue">GNode</span></a> *       cd_dom_get_node                     (<em class="parameter"><code><span class="type">CdDom</span> *dom</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *root</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);</pre>
+<p>
+Gets a node from the DOM tree.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dom</code></em> :</span></p></td>
+<td>a <span class="type">CdDom</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>root</code></em> :</span></p></td>
+<td>a root node, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a path in the DOM, e.g. "html/body"</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if not found</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-name"></a><h3>cd_dom_get_node_name ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_dom_get_node_name                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);</pre>
+<p>
+Gets the node name, e.g. "body"
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-data"></a><h3>cd_dom_get_node_data ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_dom_get_node_data                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);</pre>
+<p>
+Gets the node data, e.g. "paragraph text"
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-data-as-int"></a><h3>cd_dom_get_node_data_as_int ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                cd_dom_get_node_data_as_int         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);</pre>
+<p>
+Gets the node data, e.g. 128
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>signed integer value, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#G-MAXINT:CAPS"><code class="literal">G_MAXINT</code></a> for error</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-data-as-double"></a><h3>cd_dom_get_node_data_as_double ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             cd_dom_get_node_data_as_double      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>);</pre>
+<p>
+Gets the node data, e.g. 7.4
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>floating point value, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#G-MAXDOUBLE:CAPS"><code class="literal">G_MAXDOUBLE</code></a> for error</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-attribute"></a><h3>cd_dom_get_node_attribute ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_dom_get_node_attribute           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>
+Gets a node attribute, e.g. "false"
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-rgb"></a><h3>cd_dom_get_node_rgb ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_dom_get_node_rgb                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *rgb</code></em>);</pre>
+<p>
+Extracts a RGB color value from the DOM tree
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rgb</code></em> :</span></p></td>
+<td>a <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the color was parsed successfully</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-yxy"></a><h3>cd_dom_get_node_yxy ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_dom_get_node_yxy                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *yxy</code></em>);</pre>
+<p>
+Extracts a Yxy color value from the DOM tree
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>yxy</code></em> :</span></p></td>
+<td>a <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the color was parsed successfully</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-lab"></a><h3>cd_dom_get_node_lab ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_dom_get_node_lab                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *lab</code></em>);</pre>
+<p>
+Extracts a Lab color value from the DOM tree
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>lab</code></em> :</span></p></td>
+<td>a <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the color was parsed successfully</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-dom-get-node-localized"></a><h3>cd_dom_get_node_localized ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        cd_dom_get_node_localized           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a> *node</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>
+Extracts localized values from the DOM tree
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-N-ary-Trees.html#GNode"><span class="type">GNode</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>the key to use, e.g. "copyright"</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A hash table with the locale (e.g. en_GB) as the key. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

@@ -1,0 +1,1948 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cd-icc</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-dom.html" title="cd-dom">
+<link rel="next" href="CdIccStore.html" title="CdIccStore">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="colord-cd-dom.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="CdIccStore.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#colord-cd-icc.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#colord-cd-icc.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="colord-cd-icc"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-icc.top_of_page"></a>cd-icc</span></h2>
+<p>cd-icc — An object to read and write a binary ICC profile</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="colord-cd-icc.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">#define             <a class="link" href="colord-cd-icc.html#CD-ICC-ERROR:CAPS" title="CD_ICC_ERROR">CD_ICC_ERROR</a>
+#define             <a class="link" href="colord-cd-icc.html#CD-ICC-TYPE-ERROR:CAPS" title="CD_ICC_TYPE_ERROR">CD_ICC_TYPE_ERROR</a>
+enum                <a class="link" href="colord-cd-icc.html#CdIccError" title="enum CdIccError">CdIccError</a>;
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved1" title="_cd_icc_reserved1 ()">*_cd_icc_reserved1</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved2" title="_cd_icc_reserved2 ()">*_cd_icc_reserved2</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved3" title="_cd_icc_reserved3 ()">*_cd_icc_reserved3</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved4" title="_cd_icc_reserved4 ()">*_cd_icc_reserved4</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved5" title="_cd_icc_reserved5 ()">*_cd_icc_reserved5</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved6" title="_cd_icc_reserved6 ()">*_cd_icc_reserved6</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved7" title="_cd_icc_reserved7 ()">*_cd_icc_reserved7</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-icc.html#cd-icc-reserved8" title="_cd_icc_reserved8 ()">*_cd_icc_reserved8</a>)                (<em class="parameter"><code><span class="type">void</span></code></em>);
+enum                <a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags">CdIccLoadFlags</a>;
+enum                <a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags">CdIccSaveFlags</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              <a class="link" href="colord-cd-icc.html#cd-icc-error-quark" title="cd_icc_error_quark ()">cd_icc_error_quark</a>                  (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="colord-cd-icc.html#cd-icc-new" title="cd_icc_new ()">cd_icc_new</a>                          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-load-data" title="cd_icc_load_data ()">cd_icc_load_data</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="type">guint8</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> data_len</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-load-file" title="cd_icc_load_file ()">cd_icc_load_file</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a> *file</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-load-fd" title="cd_icc_load_fd ()">cd_icc_load_fd</a>                      (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> fd</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-load-handle" title="cd_icc_load_handle ()">cd_icc_load_handle</a>                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> handle</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GBytes"><span class="returnvalue">GBytes</span></a> *            <a class="link" href="colord-cd-icc.html#cd-icc-save-data" title="cd_icc_save_data ()">cd_icc_save_data</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-save-file" title="cd_icc_save_file ()">cd_icc_save_file</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a> *file</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="colord-cd-icc.html#cd-icc-to-string" title="cd_icc_to_string ()">cd_icc_to_string</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-get-handle" title="cd_icc_get_handle ()">cd_icc_get_handle</a>                   (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>             <a class="link" href="colord-cd-icc.html#cd-icc-get-size" title="cd_icc_get_size ()">cd_icc_get_size</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-filename" title="cd_icc_get_filename ()">cd_icc_get_filename</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-filename" title="cd_icc_set_filename ()">cd_icc_set_filename</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="colord-cd-icc.html#cd-icc-get-version" title="cd_icc_get_version ()">cd_icc_get_version</a>                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-version" title="cd_icc_set_version ()">cd_icc_set_version</a>                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> version</code></em>);
+<span class="returnvalue">CdProfileKind</span>       <a class="link" href="colord-cd-icc.html#cd-icc-get-kind" title="cd_icc_get_kind ()">cd_icc_get_kind</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-kind" title="cd_icc_set_kind ()">cd_icc_set_kind</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdProfileKind</span> kind</code></em>);
+<span class="returnvalue">CdColorspace</span>        <a class="link" href="colord-cd-icc.html#cd-icc-get-colorspace" title="cd_icc_get_colorspace ()">cd_icc_get_colorspace</a>               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-colorspace" title="cd_icc_set_colorspace ()">cd_icc_set_colorspace</a>               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdColorspace</span> colorspace</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="colord-cd-icc.html#cd-icc-get-metadata" title="cd_icc_get_metadata ()">cd_icc_get_metadata</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-metadata-item" title="cd_icc_get_metadata_item ()">cd_icc_get_metadata_item</a>            (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-add-metadata" title="cd_icc_add_metadata ()">cd_icc_add_metadata</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-remove-metadata" title="cd_icc_remove_metadata ()">cd_icc_remove_metadata</a>              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="colord-cd-icc.html#cd-icc-get-named-colors" title="cd_icc_get_named_colors ()">cd_icc_get_named_colors</a>             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-get-can-delete" title="cd_icc_get_can_delete ()">cd_icc_get_can_delete</a>               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-GDateTime.html#GDateTime"><span class="returnvalue">GDateTime</span></a> *         <a class="link" href="colord-cd-icc.html#cd-icc-get-created" title="cd_icc_get_created ()">cd_icc_get_created</a>                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-checksum" title="cd_icc_get_checksum ()">cd_icc_get_checksum</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-description" title="cd_icc_get_description ()">cd_icc_get_description</a>              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-copyright" title="cd_icc_get_copyright ()">cd_icc_get_copyright</a>                (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-manufacturer" title="cd_icc_get_manufacturer ()">cd_icc_get_manufacturer</a>             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-icc.html#cd-icc-get-model" title="cd_icc_get_model ()">cd_icc_get_model</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-description" title="cd_icc_set_description ()">cd_icc_set_description</a>              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-description-items" title="cd_icc_set_description_items ()">cd_icc_set_description_items</a>        (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-copyright" title="cd_icc_set_copyright ()">cd_icc_set_copyright</a>                (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-copyright-items" title="cd_icc_set_copyright_items ()">cd_icc_set_copyright_items</a>          (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-manufacturer" title="cd_icc_set_manufacturer ()">cd_icc_set_manufacturer</a>             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-manufacturer-items" title="cd_icc_set_manufacturer_items ()">cd_icc_set_manufacturer_items</a>       (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-model" title="cd_icc_set_model ()">cd_icc_set_model</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-icc.html#cd-icc-set-model-items" title="cd_icc_set_model_items ()">cd_icc_set_model_items</a>              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);
+const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  <a class="link" href="colord-cd-icc.html#cd-icc-get-red" title="cd_icc_get_red ()">cd_icc_get_red</a>                      (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  <a class="link" href="colord-cd-icc.html#cd-icc-get-green" title="cd_icc_get_green ()">cd_icc_get_green</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  <a class="link" href="colord-cd-icc.html#cd-icc-get-blue" title="cd_icc_get_blue ()">cd_icc_get_blue</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  <a class="link" href="colord-cd-icc.html#cd-icc-get-white" title="cd_icc_get_white ()">cd_icc_get_white</a>                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="colord-cd-icc.html#cd-icc-get-temperature" title="cd_icc_get_temperature ()">cd_icc_get_temperature</a>              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            <a class="link" href="colord-cd-icc.html#cd-icc-get-warnings" title="cd_icc_get_warnings ()">cd_icc_get_warnings</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-create-from-edid" title="cd_icc_create_from_edid ()">cd_icc_create_from_edid</a>             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> gamma_value</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *red</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *green</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *blue</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *white</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="colord-cd-icc.html#cd-icc-get-vcgt" title="cd_icc_get_vcgt ()">cd_icc_get_vcgt</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-icc.html#cd-icc-set-vcgt" title="cd_icc_set_vcgt ()">cd_icc_set_vcgt</a>                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *vcgt</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="colord-cd-icc.html#cd-icc-get-response" title="cd_icc_get_response ()">cd_icc_get_response</a>                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-icc.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1">
+<a name="colord-cd-icc.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CD-ICC-ERROR:CAPS"></a><h3>CD_ICC_ERROR</h3>
+<pre class="programlisting">#define CD_ICC_ERROR		(cd_icc_error_quark ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-ICC-TYPE-ERROR:CAPS"></a><h3>CD_ICC_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_ICC_TYPE_ERROR (cd_icc_error_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccError"></a><h3>enum CdIccError</h3>
+<pre class="programlisting">typedef enum {
+	CD_ICC_ERROR_FAILED_TO_OPEN,
+	CD_ICC_ERROR_FAILED_TO_PARSE,
+	CD_ICC_ERROR_INVALID_LOCALE,
+	CD_ICC_ERROR_NO_DATA,
+	CD_ICC_ERROR_FAILED_TO_SAVE,
+	CD_ICC_ERROR_FAILED_TO_CREATE,
+	CD_ICC_ERROR_INVALID_COLORSPACE,
+	CD_ICC_ERROR_LAST
+} CdIccError;
+</pre>
+<p>
+The ICC error code.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-ICC-ERROR-FAILED-TO-OPEN:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_FAILED_TO_OPEN</code></span></p></td>
+<td>Failed to open file
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-FAILED-TO-PARSE:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_FAILED_TO_PARSE</code></span></p></td>
+<td>Failed to parse data
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-INVALID-LOCALE:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_INVALID_LOCALE</code></span></p></td>
+<td>Locale was invalid
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-NO-DATA:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_NO_DATA</code></span></p></td>
+<td>No data to read
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-FAILED-TO-SAVE:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_FAILED_TO_SAVE</code></span></p></td>
+<td>Failed to save file
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-FAILED-TO-CREATE:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_FAILED_TO_CREATE</code></span></p></td>
+<td>Failed to create file
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-INVALID-COLORSPACE:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_INVALID_COLORSPACE</code></span></p></td>
+<td>Invalid colorspace
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-ERROR-LAST:CAPS"></a><span class="term"><code class="literal">CD_ICC_ERROR_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved1"></a><h3>_cd_icc_reserved1 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved1)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved2"></a><h3>_cd_icc_reserved2 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved2)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved3"></a><h3>_cd_icc_reserved3 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved3)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved4"></a><h3>_cd_icc_reserved4 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved4)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved5"></a><h3>_cd_icc_reserved5 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved5)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved6"></a><h3>_cd_icc_reserved6 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved6)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved7"></a><h3>_cd_icc_reserved7 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved7)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-reserved8"></a><h3>_cd_icc_reserved8 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_icc_reserved8)                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccLoadFlags"></a><h3>enum CdIccLoadFlags</h3>
+<pre class="programlisting">typedef enum {
+	CD_ICC_LOAD_FLAGS_NONE		= 0,
+	CD_ICC_LOAD_FLAGS_NAMED_COLORS = (1 &lt;&lt; 0),
+	CD_ICC_LOAD_FLAGS_TRANSLATIONS = (1 &lt;&lt; 1),
+	CD_ICC_LOAD_FLAGS_METADATA = (1 &lt;&lt; 2),
+	CD_ICC_LOAD_FLAGS_FALLBACK_MD5 = (1 &lt;&lt; 3),
+	CD_ICC_LOAD_FLAGS_PRIMARIES = (1 &lt;&lt; 4),
+	/* new entries go here: */
+	CD_ICC_LOAD_FLAGS_ALL		= 0xff,
+	CD_ICC_LOAD_FLAGS_LAST
+} CdIccLoadFlags;
+</pre>
+<p>
+Flags used when loading an ICC profile.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-NONE:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_NONE</code></span></p></td>
+<td>No flags set.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-NAMED-COLORS:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_NAMED_COLORS</code></span></p></td>
+<td>Parse any named colors in the profile.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-TRANSLATIONS:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_TRANSLATIONS</code></span></p></td>
+<td>Parse all translations in the profile.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-METADATA:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_METADATA</code></span></p></td>
+<td>Parse the metadata in the profile.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-FALLBACK-MD5:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_FALLBACK_MD5</code></span></p></td>
+<td>Calculate the profile MD5 if a profile
+					ID was not supplied in the profile.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></span></p></td>
+<td>Parse the primaries in the profile.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-ALL:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_ALL</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-LOAD-FLAGS-LAST:CAPS"></a><span class="term"><code class="literal">CD_ICC_LOAD_FLAGS_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccSaveFlags"></a><h3>enum CdIccSaveFlags</h3>
+<pre class="programlisting">typedef enum {
+	CD_ICC_SAVE_FLAGS_NONE		= 0,
+	CD_ICC_SAVE_FLAGS_LAST
+} CdIccSaveFlags;
+</pre>
+<p>
+Flags used when saving an ICC profile.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-ICC-SAVE-FLAGS-NONE:CAPS"></a><span class="term"><code class="literal">CD_ICC_SAVE_FLAGS_NONE</code></span></p></td>
+<td>No flags set.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-SAVE-FLAGS-LAST:CAPS"></a><span class="term"><code class="literal">CD_ICC_SAVE_FLAGS_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-error-quark"></a><h3>cd_icc_error_quark ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              cd_icc_error_quark                  (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An error quark.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-new"></a><h3>cd_icc_new ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_icc_new                          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <span class="type">CdIcc</span> object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new CdIcc object.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-load-data"></a><h3>cd_icc_load_data ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_load_data                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="type">guint8</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> data_len</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Loads an ICC profile from raw byte data.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>binary data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_len</code></em> :</span></p></td>
+<td>Length of <em class="parameter"><code>data</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-load-file"></a><h3>cd_icc_load_file ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_load_file                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a> *file</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Loads an ICC profile from a local or remote file.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>file</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-load-fd"></a><h3>cd_icc_load_fd ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_load_fd                      (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> fd</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Loads an ICC profile from an open file descriptor.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td>a file descriptor</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-load-handle"></a><h3>cd_icc_load_handle ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_load_handle                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> handle</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Set the internal cmsHPROFILE instance. This may be required if you create
+the profile using <code class="function">cmsCreateRGBProfile()</code> and then want to use the
+functionality in <span class="type">CdIcc</span>.
+</p>
+<p>
+Do not call <code class="function">cmsCloseProfile()</code> on <em class="parameter"><code>handle</code></em> in the caller, this will be done
+when the <em class="parameter"><code>icc</code></em> object is finalized. Treat the profile like it's been adopted
+by this module.
+</p>
+<p>
+Additionally, this function cannot be called more than once, and also can't
+be called if <a class="link" href="colord-cd-icc.html#cd-icc-load-file" title="cd_icc_load_file ()"><code class="function">cd_icc_load_file()</code></a> has previously been used on the <em class="parameter"><code>icc</code></em> object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handle</code></em> :</span></p></td>
+<td>a cmsHPROFILE instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.33</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-save-data"></a><h3>cd_icc_save_data ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GBytes"><span class="returnvalue">GBytes</span></a> *            cd_icc_save_data                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Saves an ICC profile to an allocated memory location.
+</p>
+<p>
+Return vale: A <a href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GBytes"><span class="type">GBytes</span></a> structure, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for error
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-save-file"></a><h3>cd_icc_save_file ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_save_file                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a> *file</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Saves an ICC profile to a local or remote file.
+</p>
+<p>
+Return vale: <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>file</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gio/unstable/GFile.html"><span class="type">GFile</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>a set of <a class="link" href="colord-cd-icc.html#CdIccSaveFlags" title="enum CdIccSaveFlags"><span class="type">CdIccSaveFlags</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-to-string"></a><h3>cd_icc_to_string ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             cd_icc_to_string                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Returns a string representation of the ICC profile.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>an allocated string</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-handle"></a><h3>cd_icc_get_handle ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            cd_icc_get_handle                   (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Return the cmsHPROFILE instance used locally. This may be required if you
+are using the profile in a transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>Do not call <code class="function">cmsCloseProfile()</code> on this value!. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-size"></a><h3>cd_icc_get_size ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>             cd_icc_get_size                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the ICC profile file size
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The size in bytes, or 0 for unknown.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-filename"></a><h3>cd_icc_get_filename ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_filename                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the filename of the ICC data, if one exists.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A filename, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-filename"></a><h3>cd_icc_set_filename ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_filename                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);</pre>
+<p>
+Sets the filename, which may be required if the ICC profile has been loaded
+using <a class="link" href="colord-cd-icc.html#cd-icc-load-fd" title="cd_icc_load_fd ()"><code class="function">cd_icc_load_fd()</code></a> from a disk cache.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>a filename, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-version"></a><h3>cd_icc_get_version ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             cd_icc_get_version                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the ICC profile version, typically 2.1 or 4.2
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A floating point version number, or 0.0 for unknown</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-version"></a><h3>cd_icc_set_version ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_version                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> version</code></em>);</pre>
+<p>
+Sets the profile version.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>version</code></em> :</span></p></td>
+<td>the profile version, e.g. 2.1 or 4.0</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-kind"></a><h3>cd_icc_get_kind ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdProfileKind</span>       cd_icc_get_kind                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile kind.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The kind, e.g. <code class="literal">CD_PROFILE_KIND_INPUT</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-kind"></a><h3>cd_icc_set_kind ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_kind                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdProfileKind</span> kind</code></em>);</pre>
+<p>
+Sets the profile kind.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>kind</code></em> :</span></p></td>
+<td>the profile kind, e.g. <code class="literal">CD_PROFILE_KIND_DISPLAY_DEVICE</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-colorspace"></a><h3>cd_icc_get_colorspace ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdColorspace</span>        cd_icc_get_colorspace               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile colorspace
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The profile colorspace, e.g. <code class="literal">CD_COLORSPACE_RGB</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-colorspace"></a><h3>cd_icc_set_colorspace ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_colorspace               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdColorspace</span> colorspace</code></em>);</pre>
+<p>
+Sets the colorspace kind.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>colorspace</code></em> :</span></p></td>
+<td>the profile colorspace, e.g. <code class="literal">CD_COLORSPACE_RGB</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-metadata"></a><h3>cd_icc_get_metadata ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        cd_icc_get_metadata                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets all the metadata from the ICC profile.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The profile metadata. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-metadata-item"></a><h3>cd_icc_get_metadata_item ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_metadata_item            (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>
+Gets an item of data from the ICC metadata store.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>the dictionary key</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The dictionary data, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if the key does not exist.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-add-metadata"></a><h3>cd_icc_add_metadata ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_add_metadata                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets an item of data to the profile metadata, overwriting it if
+it already exists.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>the metadata key</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>the metadata value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-remove-metadata"></a><h3>cd_icc_remove_metadata ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_remove_metadata              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
+<p>
+Removes an item of metadata.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>the metadata key</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-named-colors"></a><h3>cd_icc_get_named_colors ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_icc_get_named_colors             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets any named colors in the profile.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-NAMED-COLORS:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_NAMED_COLORS</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An array of color swatches. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorSwatch]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-can-delete"></a><h3>cd_icc_get_can_delete ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_get_can_delete               (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Finds out if the profile could be deleted.
+This is only applicable for profiles loaded with <a class="link" href="colord-cd-icc.html#cd-icc-load-file" title="cd_icc_load_file ()"><code class="function">cd_icc_load_file()</code></a> as
+obviously data and fd's cannot be sanely unlinked.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <a href="http://library.gnome.org/devel/gio/unstable/GFile.html#g-file-delete"><code class="function">g_file_delete()</code></a> would likely work</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-created"></a><h3>cd_icc_get_created ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-GDateTime.html#GDateTime"><span class="returnvalue">GDateTime</span></a> *         cd_icc_get_created                  (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the ICC creation date and time.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-GDateTime.html#GDateTime"><span class="type">GDateTime</span></a> object, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for not set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-checksum"></a><h3>cd_icc_get_checksum ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_checksum                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile checksum if one exists.
+This will either be the embedded profile ID, or the file checksum if
+the <span class="type">CdIcc</span> object was loaded using <a class="link" href="colord-cd-icc.html#cd-icc-load-data" title="cd_icc_load_data ()"><code class="function">cd_icc_load_data()</code></a> or <a class="link" href="colord-cd-icc.html#cd-icc-load-file" title="cd_icc_load_file ()"><code class="function">cd_icc_load_file()</code></a>
+and the <a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-FALLBACK-MD5:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_FALLBACK_MD5</code></a> flag is used.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An embedded MD5 checksum, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for not set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-description"></a><h3>cd_icc_get_description ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_description              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the profile description.
+If the translated text is not available in the selected locale then the
+default untranslated (en_US) text is returned.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The text as a UTF-8 string, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> of the locale is invalid
+or the tag does not exist.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-copyright"></a><h3>cd_icc_get_copyright ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_copyright                (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the profile copyright.
+If the translated text is not available in the selected locale then the
+default untranslated (en_US) text is returned.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The text as a UTF-8 string, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> of the locale is invalid
+or the tag does not exist.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-manufacturer"></a><h3>cd_icc_get_manufacturer ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_manufacturer             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the profile manufacturer.
+If the translated text is not available in the selected locale then the
+default untranslated (en_US) text is returned.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The text as a UTF-8 string, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> of the locale is invalid
+or the tag does not exist.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-model"></a><h3>cd_icc_get_model ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_icc_get_model                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the profile model.
+If the translated text is not available in the selected locale then the
+default untranslated (en_US) text is returned.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The text as a UTF-8 string, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> of the locale is invalid
+or the tag does not exist.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-description"></a><h3>cd_icc_set_description ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_description              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets the profile description for a specific locale.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>New string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-description-items"></a><h3>cd_icc_set_description_items ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_description_items        (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);</pre>
+<p>
+Sets the profile descriptions for specific locales.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>values</code></em> :</span></p></td>
+<td>New translated values, with the key being the locale.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-copyright"></a><h3>cd_icc_set_copyright ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_copyright                (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets the profile _copyright for a specific locale.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>New string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-copyright-items"></a><h3>cd_icc_set_copyright_items ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_copyright_items          (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);</pre>
+<p>
+Sets the profile copyrights for specific locales.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>values</code></em> :</span></p></td>
+<td>New translated values, with the key being the locale.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-manufacturer"></a><h3>cd_icc_set_manufacturer ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_manufacturer             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets the profile manufacturer for a specific locale.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>New string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-manufacturer-items"></a><h3>cd_icc_set_manufacturer_items ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_manufacturer_items       (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);</pre>
+<p>
+Sets the profile manufacturers for specific locales.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>values</code></em> :</span></p></td>
+<td>New translated values, with the key being the locale.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-model"></a><h3>cd_icc_set_model ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_model                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *locale</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets the profile model for a specific locale.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>locale</code></em> :</span></p></td>
+<td>A locale, e.g. "en_GB.UTF-8" or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the profile default</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>New string value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-model-items"></a><h3>cd_icc_set_model_items ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_set_model_items              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *values</code></em>);</pre>
+<p>
+Sets the profile models for specific locales.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>values</code></em> :</span></p></td>
+<td>New translated values, with the key being the locale.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-red"></a><h3>cd_icc_get_red ()</h3>
+<pre class="programlisting">const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  cd_icc_get_red                      (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile red chromaticity value.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a valid <span class="type">CdIcc</span> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-green"></a><h3>cd_icc_get_green ()</h3>
+<pre class="programlisting">const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  cd_icc_get_green                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile green chromaticity value.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a valid <span class="type">CdIcc</span> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-blue"></a><h3>cd_icc_get_blue ()</h3>
+<pre class="programlisting">const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  cd_icc_get_blue                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile red chromaticity value.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a valid <span class="type">CdIcc</span> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-white"></a><h3>cd_icc_get_white ()</h3>
+<pre class="programlisting">const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *  cd_icc_get_white                    (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the profile white point.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a valid <span class="type">CdIcc</span> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-temperature"></a><h3>cd_icc_get_temperature ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               cd_icc_get_temperature              (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Gets the ICC color temperature, rounded to the nearest 100K.
+This function will only return results if the profile was loaded with the
+<a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-PRIMARIES:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_PRIMARIES</code></a> flag.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The color temperature in Kelvin, or 0 for error.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-warnings"></a><h3>cd_icc_get_warnings ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            cd_icc_get_warnings                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Returns any warnings with profiles
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An array of warning values. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdProfileWarning]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-create-from-edid"></a><h3>cd_icc_create_from_edid ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_create_from_edid             (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> gamma_value</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *red</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *green</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *blue</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *white</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Creates an ICC profile from EDID data.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gamma_value</code></em> :</span></p></td>
+<td>approximate device gamma</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>red</code></em> :</span></p></td>
+<td>primary color value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>green</code></em> :</span></p></td>
+<td>primary color value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>blue</code></em> :</span></p></td>
+<td>primary color value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>white</code></em> :</span></p></td>
+<td>whitepoint value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-vcgt"></a><h3>cd_icc_get_vcgt ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_icc_get_vcgt                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the video card calibration data from the profile.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td>the desired size of the table data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>VCGT data, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for error. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-set-vcgt"></a><h3>cd_icc_set_vcgt ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_set_vcgt                     (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *vcgt</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Sets the Video Card Gamma Table from the profile.
+</p>
+<p>
+Return vale: <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>vcgt</code></em> :</span></p></td>
+<td>video card calibration data. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-get-response"></a><h3>cd_icc_get_response ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_icc_get_response                 (<em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Generates a response curve of a specified size.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>A valid <span class="type">CdIcc</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td>the size of the curve to generate</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>a valid <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>response data, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for error. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

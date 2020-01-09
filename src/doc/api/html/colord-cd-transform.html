@@ -1,0 +1,686 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cd-transform</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="CdIccStore.html" title="CdIccStore">
+<link rel="next" href="colord-cd-interp-akima.html" title="cd-interp-akima">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="CdIccStore.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="colord-cd-interp-akima.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#colord-cd-transform.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#colord-cd-transform.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="colord-cd-transform"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-transform.top_of_page"></a>cd-transform</span></h2>
+<p>cd-transform — An ICC transform</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="colord-cd-transform.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">#define             <a class="link" href="colord-cd-transform.html#CD-TRANSFORM-ERROR:CAPS" title="CD_TRANSFORM_ERROR">CD_TRANSFORM_ERROR</a>
+#define             <a class="link" href="colord-cd-transform.html#CD-TRANSFORM-TYPE-ERROR:CAPS" title="CD_TRANSFORM_TYPE_ERROR">CD_TRANSFORM_TYPE_ERROR</a>
+enum                <a class="link" href="colord-cd-transform.html#CdTransformError" title="enum CdTransformError">CdTransformError</a>;
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved1" title="_cd_transform_reserved1 ()">*_cd_transform_reserved1</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved2" title="_cd_transform_reserved2 ()">*_cd_transform_reserved2</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved3" title="_cd_transform_reserved3 ()">*_cd_transform_reserved3</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved4" title="_cd_transform_reserved4 ()">*_cd_transform_reserved4</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved5" title="_cd_transform_reserved5 ()">*_cd_transform_reserved5</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved6" title="_cd_transform_reserved6 ()">*_cd_transform_reserved6</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved7" title="_cd_transform_reserved7 ()">*_cd_transform_reserved7</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-transform.html#cd-transform-reserved8" title="_cd_transform_reserved8 ()">*_cd_transform_reserved8</a>)          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              <a class="link" href="colord-cd-transform.html#cd-transform-error-quark" title="cd_transform_error_quark ()">cd_transform_error_quark</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">CdTransform</span> *       <a class="link" href="colord-cd-transform.html#cd-transform-new" title="cd_transform_new ()">cd_transform_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-input-icc" title="cd_transform_set_input_icc ()">cd_transform_set_input_icc</a>          (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-input-pixel-format" title="cd_transform_set_input_pixel_format ()">cd_transform_set_input_pixel_format</a> (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="colord-cd-transform.html#cd-transform-get-input-icc" title="cd_transform_get_input_icc ()">cd_transform_get_input_icc</a>          (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">CdPixelFormat</span>       <a class="link" href="colord-cd-transform.html#cd-transform-get-input-pixel-format" title="cd_transform_get_input_pixel_format ()">cd_transform_get_input_pixel_format</a> (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-output-icc" title="cd_transform_set_output_icc ()">cd_transform_set_output_icc</a>         (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-output-pixel-format" title="cd_transform_set_output_pixel_format ()">cd_transform_set_output_pixel_format</a>
+                                                        (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="colord-cd-transform.html#cd-transform-get-output-icc" title="cd_transform_get_output_icc ()">cd_transform_get_output_icc</a>         (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">CdPixelFormat</span>       <a class="link" href="colord-cd-transform.html#cd-transform-get-output-pixel-format" title="cd_transform_get_output_pixel_format ()">cd_transform_get_output_pixel_format</a>
+                                                        (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-abstract-icc" title="cd_transform_set_abstract_icc ()">cd_transform_set_abstract_icc</a>       (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="colord-cd-transform.html#cd-transform-get-abstract-icc" title="cd_transform_get_abstract_icc ()">cd_transform_get_abstract_icc</a>       (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-rendering-intent" title="cd_transform_set_rendering_intent ()">cd_transform_set_rendering_intent</a>   (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdRenderingIntent</span> rendering_intent</code></em>);
+<span class="returnvalue">CdRenderingIntent</span>   <a class="link" href="colord-cd-transform.html#cd-transform-get-rendering-intent" title="cd_transform_get_rendering_intent ()">cd_transform_get_rendering_intent</a>   (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-transform.html#cd-transform-set-bpc" title="cd_transform_set_bpc ()">cd_transform_set_bpc</a>                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> bpc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-transform.html#cd-transform-get-bpc" title="cd_transform_get_bpc ()">cd_transform_get_bpc</a>                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-transform.html#cd-transform-process" title="cd_transform_process ()">cd_transform_process</a>                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_in</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_out</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> rowstride</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-transform.description"></a><h2>Description</h2>
+<p>
+This object is a simple ICC transform that allows mapping of simple RGB
+spaces to other simple RGB spaces using one, two or three ICC profiles.
+</p>
+<p>
+This object is not supposed to re-implement LCMS, and if you need anything more
+complicated then you are better off using lcms2 directly.
+</p>
+</div>
+<div class="refsect1">
+<a name="colord-cd-transform.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CD-TRANSFORM-ERROR:CAPS"></a><h3>CD_TRANSFORM_ERROR</h3>
+<pre class="programlisting">#define CD_TRANSFORM_ERROR		(cd_transform_error_quark ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-TRANSFORM-TYPE-ERROR:CAPS"></a><h3>CD_TRANSFORM_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_TRANSFORM_TYPE_ERROR		(cd_transform_error_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdTransformError"></a><h3>enum CdTransformError</h3>
+<pre class="programlisting">typedef enum {
+	CD_TRANSFORM_ERROR_FAILED_TO_SETUP_TRANSFORM,
+	CD_TRANSFORM_ERROR_INVALID_COLORSPACE,
+	CD_TRANSFORM_ERROR_LAST
+} CdTransformError;
+</pre>
+<p>
+The transform error code.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-TRANSFORM-ERROR-FAILED-TO-SETUP-TRANSFORM:CAPS"></a><span class="term"><code class="literal">CD_TRANSFORM_ERROR_FAILED_TO_SETUP_TRANSFORM</code></span></p></td>
+<td>Failed to setup transform
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-TRANSFORM-ERROR-INVALID-COLORSPACE:CAPS"></a><span class="term"><code class="literal">CD_TRANSFORM_ERROR_INVALID_COLORSPACE</code></span></p></td>
+<td>Invalid colorspace
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-TRANSFORM-ERROR-LAST:CAPS"></a><span class="term"><code class="literal">CD_TRANSFORM_ERROR_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved1"></a><h3>_cd_transform_reserved1 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved1)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved2"></a><h3>_cd_transform_reserved2 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved2)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved3"></a><h3>_cd_transform_reserved3 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved3)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved4"></a><h3>_cd_transform_reserved4 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved4)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved5"></a><h3>_cd_transform_reserved5 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved5)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved6"></a><h3>_cd_transform_reserved6 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved6)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved7"></a><h3>_cd_transform_reserved7 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved7)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-reserved8"></a><h3>_cd_transform_reserved8 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_transform_reserved8)          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-error-quark"></a><h3>cd_transform_error_quark ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              cd_transform_error_quark            (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An error quark.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-new"></a><h3>cd_transform_new ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdTransform</span> *       cd_transform_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <span class="type">CdTransform</span> object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new CdTransform object.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-input-icc"></a><h3>cd_transform_set_input_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_input_icc          (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Sets the input profile to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-input-pixel-format"></a><h3>cd_transform_set_input_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_input_pixel_format (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);</pre>
+<p>
+Sets the pixel format to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixel_format</code></em> :</span></p></td>
+<td>The pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-input-icc"></a><h3>cd_transform_get_input_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_transform_get_input_icc          (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the input profile to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The input profile. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-input-pixel-format"></a><h3>cd_transform_get_input_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdPixelFormat</span>       cd_transform_get_input_pixel_format (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the pixel format to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-output-icc"></a><h3>cd_transform_set_output_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_output_icc         (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Sets the output profile to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-output-pixel-format"></a><h3>cd_transform_set_output_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_output_pixel_format
+                                                        (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdPixelFormat</span> pixel_format</code></em>);</pre>
+<p>
+Sets the pixel format to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixel_format</code></em> :</span></p></td>
+<td>The pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-output-icc"></a><h3>cd_transform_get_output_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_transform_get_output_icc         (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the input profile to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The output profile. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-output-pixel-format"></a><h3>cd_transform_get_output_pixel_format ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdPixelFormat</span>       cd_transform_get_output_pixel_format
+                                                        (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the pixel format to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the pixel format, e.g. <code class="literal">CD_PIXEL_FORMAT_RGBA_8</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-abstract-icc"></a><h3>cd_transform_set_abstract_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_abstract_icc       (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdIcc</span> *icc</code></em>);</pre>
+<p>
+Sets the abstract profile to use for the transform.
+This is typically only needed for soft-proofing.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>a <span class="type">CdIcc</span> instance or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-abstract-icc"></a><h3>cd_transform_get_abstract_icc ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_transform_get_abstract_icc       (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the abstract profile to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The abstract profile. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-rendering-intent"></a><h3>cd_transform_set_rendering_intent ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_rendering_intent   (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><span class="type">CdRenderingIntent</span> rendering_intent</code></em>);</pre>
+<p>
+Sets the rendering intent to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rendering_intent</code></em> :</span></p></td>
+<td>the rendering intent, e.g. <code class="literal">CD_RENDERING_INTENT_PERCEPTUAL</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-rendering-intent"></a><h3>cd_transform_get_rendering_intent ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdRenderingIntent</span>   cd_transform_get_rendering_intent   (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the rendering intent to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The rendering intent, e.g. <code class="literal">CD_RENDERING_INTENT_PERCEPTUAL</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-set-bpc"></a><h3>cd_transform_set_bpc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_transform_set_bpc                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> bpc</code></em>);</pre>
+<p>
+Sets if black point compensation should be used for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>bpc</code></em> :</span></p></td>
+<td>black point compensation</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-get-bpc"></a><h3>cd_transform_get_bpc ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_transform_get_bpc                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>);</pre>
+<p>
+Gets the rendering bpc to use for the transform.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>If black point compensation should be used for the transform.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-transform-process"></a><h3>cd_transform_process ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_transform_process                (<em class="parameter"><code><span class="type">CdTransform</span> *transform</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_in</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data_out</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> rowstride</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Processes a block of data through the transform.
+Once the transform has been setup it is cached and only re-created if any
+of the formats, input, output or abstract profiles are changed.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transform</code></em> :</span></p></td>
+<td>a <span class="type">CdTransform</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_in</code></em> :</span></p></td>
+<td>the data buffer to convert</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_out</code></em> :</span></p></td>
+<td>the data buffer to return, which can be the same as <em class="parameter"><code>data_in</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>the width of <em class="parameter"><code>data_in</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>the height of <em class="parameter"><code>data_in</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rowstride</code></em> :</span></p></td>
+<td>the rowstride of <em class="parameter"><code>data_in</code></em>, typically the same as <em class="parameter"><code>width</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><code class="literal">GError</code></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><code class="literal">GCancellable</code></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the pixels were successfully transformed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.34</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

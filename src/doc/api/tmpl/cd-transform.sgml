@@ -1,0 +1,271 @@
+<!-- ##### SECTION Title ##### -->
+cd-transform
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO CD_TRANSFORM_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CD_TRANSFORM_TYPE_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM CdTransformError ##### -->
+<para>
+
+</para>
+
+@CD_TRANSFORM_ERROR_FAILED_TO_SETUP_TRANSFORM: 
+@CD_TRANSFORM_ERROR_INVALID_COLORSPACE: 
+@CD_TRANSFORM_ERROR_LAST: 
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved1 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved2 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved3 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved4 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved5 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved6 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved7 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_transform_reserved8 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### FUNCTION cd_transform_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_set_input_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@icc: 
+
+
+<!-- ##### FUNCTION cd_transform_set_input_pixel_format ##### -->
+<para>
+
+</para>
+
+@transform: 
+@pixel_format: 
+
+
+<!-- ##### FUNCTION cd_transform_get_input_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_get_input_pixel_format ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_set_output_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@icc: 
+
+
+<!-- ##### FUNCTION cd_transform_set_output_pixel_format ##### -->
+<para>
+
+</para>
+
+@transform: 
+@pixel_format: 
+
+
+<!-- ##### FUNCTION cd_transform_get_output_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_get_output_pixel_format ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_set_abstract_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@icc: 
+
+
+<!-- ##### FUNCTION cd_transform_get_abstract_icc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_set_rendering_intent ##### -->
+<para>
+
+</para>
+
+@transform: 
+@rendering_intent: 
+
+
+<!-- ##### FUNCTION cd_transform_get_rendering_intent ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_set_bpc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@bpc: 
+
+
+<!-- ##### FUNCTION cd_transform_get_bpc ##### -->
+<para>
+
+</para>
+
+@transform: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_transform_process ##### -->
+<para>
+
+</para>
+
+@transform: 
+@data_in: 
+@data_out: 
+@width: 
+@height: 
+@rowstride: 
+@cancellable: 
+@error: 
+@Returns: 
+
+

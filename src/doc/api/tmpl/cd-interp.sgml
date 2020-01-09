@@ -1,0 +1,225 @@
+<!-- ##### SECTION Title ##### -->
+cd-interp
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO CD_INTERP_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CD_INTERP_TYPE_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION prepare ##### -->
+<para>
+
+</para>
+
+@interp: 
+@error: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION eval ##### -->
+<para>
+
+</para>
+
+@interp: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved1 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved2 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved3 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved4 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved5 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved6 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved7 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_interp_reserved8 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### ENUM CdInterpError ##### -->
+<para>
+
+</para>
+
+@CD_INTERP_ERROR_FAILED: 
+@CD_INTERP_ERROR_LAST: 
+
+<!-- ##### ENUM CdInterpKind ##### -->
+<para>
+
+</para>
+
+@CD_INTERP_KIND_LINEAR: 
+@CD_INTERP_KIND_AKIMA: 
+@CD_INTERP_KIND_LAST: 
+
+<!-- ##### FUNCTION cd_interp_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_get_kind ##### -->
+<para>
+
+</para>
+
+@interp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_get_x ##### -->
+<para>
+
+</para>
+
+@interp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_get_y ##### -->
+<para>
+
+</para>
+
+@interp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_get_size ##### -->
+<para>
+
+</para>
+
+@interp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_insert ##### -->
+<para>
+
+</para>
+
+@interp: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION cd_interp_prepare ##### -->
+<para>
+
+</para>
+
+@interp: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_eval ##### -->
+<para>
+
+</para>
+
+@interp: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_interp_kind_to_string ##### -->
+<para>
+
+</para>
+
+@kind: 
+@Returns: 
+
+

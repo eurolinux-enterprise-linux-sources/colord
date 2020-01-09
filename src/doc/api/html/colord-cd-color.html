@@ -1,0 +1,988 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cd-color</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="next" href="colord-cd-dom.html" title="cd-dom">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="libcolordprivate.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="colord-cd-dom.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#colord-cd-color.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#colord-cd-color.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#colord-cd-color.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="colord-cd-color"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-color.top_of_page"></a>cd-color</span></h2>
+<p>cd-color — Color object data functionality</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="colord-cd-color.synopsis"></a><h2>Synopsis</h2>
+<a name="CdColorLab"></a><a name="CdColorYxy"></a><a name="CdColorXYZ"></a><a name="CdColorRGB"></a><a name="CdColorSwatch"></a><pre class="synopsis">                    <a class="link" href="colord-cd-color.html#CdColorRGB8" title="CdColorRGB8">CdColorRGB8</a>;
+                    <a class="link" href="colord-cd-color.html#CdColorLab-struct" title="CdColorLab">CdColorLab</a>;
+                    <a class="link" href="colord-cd-color.html#CdColorYxy-struct" title="CdColorYxy">CdColorYxy</a>;
+                    <a class="link" href="colord-cd-color.html#CdColorXYZ-struct" title="CdColorXYZ">CdColorXYZ</a>;
+                    <a class="link" href="colord-cd-color.html#CdColorRGB-struct" title="CdColorRGB">CdColorRGB</a>;
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-color.html#cd-color-swatch-get-name" title="cd_color_swatch_get_name ()">cd_color_swatch_get_name</a>            (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *swatch</code></em>);
+const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *  <a class="link" href="colord-cd-color.html#cd-color-swatch-get-value" title="cd_color_swatch_get_value ()">cd_color_swatch_get_value</a>           (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *swatch</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-xyz-new" title="cd_color_xyz_new ()">cd_color_xyz_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-lab-new" title="cd_color_lab_new ()">cd_color_lab_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="colord-cd-color.html#CdColorRGB"><span class="returnvalue">CdColorRGB</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-rgb-new" title="cd_color_rgb_new ()">cd_color_rgb_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="colord-cd-color.html#CdColorYxy"><span class="returnvalue">CdColorYxy</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-yxy-new" title="cd_color_yxy_new ()">cd_color_yxy_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="returnvalue">CdColorSwatch</span></a> *     <a class="link" href="colord-cd-color.html#cd-color-swatch-new" title="cd_color_swatch_new ()">cd_color_swatch_new</a>                 (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-xyz-free" title="cd_color_xyz_free ()">cd_color_xyz_free</a>                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb-free" title="cd_color_rgb_free ()">cd_color_rgb_free</a>                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-lab-free" title="cd_color_lab_free ()">cd_color_lab_free</a>                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-yxy-free" title="cd_color_yxy_free ()">cd_color_yxy_free</a>                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-swatch-free" title="cd_color_swatch_free ()">cd_color_swatch_free</a>                (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *src</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-xyz-dup" title="cd_color_xyz_dup ()">cd_color_xyz_dup</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-lab-dup" title="cd_color_lab_dup ()">cd_color_lab_dup</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorRGB"><span class="returnvalue">CdColorRGB</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-rgb-dup" title="cd_color_rgb_dup ()">cd_color_rgb_dup</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorYxy"><span class="returnvalue">CdColorYxy</span></a> *        <a class="link" href="colord-cd-color.html#cd-color-yxy-dup" title="cd_color_yxy_dup ()">cd_color_yxy_dup</a>                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>);
+<a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="returnvalue">CdColorSwatch</span></a> *     <a class="link" href="colord-cd-color.html#cd-color-swatch-dup" title="cd_color_swatch_dup ()">cd_color_swatch_dup</a>                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *src</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-xyz-set" title="cd_color_xyz_set ()">cd_color_xyz_set</a>                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> X</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Y</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Z</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb-set" title="cd_color_rgb_set ()">cd_color_rgb_set</a>                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> R</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> G</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> B</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-lab-set" title="cd_color_lab_set ()">cd_color_lab_set</a>                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> L</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> a</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> b</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-yxy-set" title="cd_color_yxy_set ()">cd_color_yxy_set</a>                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Y</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-swatch-set-name" title="cd_color_swatch_set_name ()">cd_color_swatch_set_name</a>            (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-swatch-set-value" title="cd_color_swatch_set_value ()">cd_color_swatch_set_value</a>           (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-xyz-copy" title="cd_color_xyz_copy ()">cd_color_xyz_copy</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-yxy-copy" title="cd_color_yxy_copy ()">cd_color_yxy_copy</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-lab-copy" title="cd_color_lab_copy ()">cd_color_lab_copy</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-xyz-clear" title="cd_color_xyz_clear ()">cd_color_xyz_clear</a>                  (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb-copy" title="cd_color_rgb_copy ()">cd_color_rgb_copy</a>                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb8-to-rgb" title="cd_color_rgb8_to_rgb ()">cd_color_rgb8_to_rgb</a>                (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB8" title="CdColorRGB8"><span class="type">CdColorRGB8</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb-to-rgb8" title="cd_color_rgb_to_rgb8 ()">cd_color_rgb_to_rgb8</a>                (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB8" title="CdColorRGB8"><span class="type">CdColorRGB8</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-yxy-to-xyz" title="cd_color_yxy_to_xyz ()">cd_color_yxy_to_xyz</a>                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-xyz-to-yxy" title="cd_color_xyz_to_yxy ()">cd_color_xyz_to_yxy</a>                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-get-blackbody-rgb" title="cd_color_get_blackbody_rgb ()">cd_color_get_blackbody_rgb</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> temp</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *result</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-color.html#cd-color-rgb-interpolate" title="cd_color_rgb_interpolate ()">cd_color_rgb_interpolate</a>            (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *p1</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *p2</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> index</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *result</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="colord-cd-color.html#cd-color-rgb-array-new" title="cd_color_rgb_array_new ()">cd_color_rgb_array_new</a>              (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-color.html#cd-color-rgb-array-is-monotonic" title="cd_color_rgb_array_is_monotonic ()">cd_color_rgb_array_is_monotonic</a>     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *array</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="colord-cd-color.html#cd-color-rgb-array-interpolate" title="cd_color_rgb_array_interpolate ()">cd_color_rgb_array_interpolate</a>      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *array</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> new_length</code></em>);
+                    <a class="link" href="colord-cd-color.html#CdColorSwatch-struct" title="CdColorSwatch">CdColorSwatch</a>;
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-color.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GBoxed
+   +----CdColorLab
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----CdColorYxy
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----CdColorXYZ
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----CdColorRGB
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----CdColorSwatch
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-color.description"></a><h2>Description</h2>
+<p>
+Functions to manipulate color values.
+</p>
+</div>
+<div class="refsect1">
+<a name="colord-cd-color.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CdColorRGB8"></a><h3>CdColorRGB8</h3>
+<pre class="programlisting">typedef struct {
+	guint8	 R;
+	guint8	 G;
+	guint8	 B;
+} CdColorRGB8;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdColorLab-struct"></a><h3>CdColorLab</h3>
+<pre class="programlisting">typedef struct {
+	gdouble	 L;
+	gdouble	 a;
+	gdouble	 b;
+} CdColorLab;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdColorYxy-struct"></a><h3>CdColorYxy</h3>
+<pre class="programlisting">typedef struct {
+	gdouble	 Y;
+	gdouble	 x;
+	gdouble	 y;
+} CdColorYxy;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdColorXYZ-struct"></a><h3>CdColorXYZ</h3>
+<pre class="programlisting">typedef struct {
+	gdouble	 X;
+	gdouble	 Y;
+	gdouble	 Z;
+} CdColorXYZ;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdColorRGB-struct"></a><h3>CdColorRGB</h3>
+<pre class="programlisting">typedef struct {
+	gdouble	 R;
+	gdouble	 G;
+	gdouble	 B;
+} CdColorRGB;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-get-name"></a><h3>cd_color_swatch_get_name ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_color_swatch_get_name            (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *swatch</code></em>);</pre>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-get-value"></a><h3>cd_color_swatch_get_value ()</h3>
+<pre class="programlisting">const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *  cd_color_swatch_get_value           (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *swatch</code></em>);</pre>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-new"></a><h3>cd_color_xyz_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *        cd_color_xyz_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Allocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-lab-new"></a><h3>cd_color_lab_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *        cd_color_lab_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Allocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-new"></a><h3>cd_color_rgb_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="returnvalue">CdColorRGB</span></a> *        cd_color_rgb_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Allocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-new"></a><h3>cd_color_yxy_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="returnvalue">CdColorYxy</span></a> *        cd_color_yxy_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Allocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-new"></a><h3>cd_color_swatch_new ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="returnvalue">CdColorSwatch</span></a> *     cd_color_swatch_new                 (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Allocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-free"></a><h3>cd_color_xyz_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_xyz_free                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>);</pre>
+<p>
+Deallocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the color object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-free"></a><h3>cd_color_rgb_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb_free                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>);</pre>
+<p>
+Deallocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the color object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-lab-free"></a><h3>cd_color_lab_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_lab_free                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>);</pre>
+<p>
+Deallocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the color object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-free"></a><h3>cd_color_yxy_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_yxy_free                   (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>);</pre>
+<p>
+Deallocates a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the color object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-free"></a><h3>cd_color_swatch_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_swatch_free                (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *src</code></em>);</pre>
+<p>
+Deallocates a color swatch.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the color object</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-dup"></a><h3>cd_color_xyz_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="returnvalue">CdColorXYZ</span></a> *        cd_color_xyz_dup                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>);</pre>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-lab-dup"></a><h3>cd_color_lab_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorLab"><span class="returnvalue">CdColorLab</span></a> *        cd_color_lab_dup                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>);</pre>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-dup"></a><h3>cd_color_rgb_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="returnvalue">CdColorRGB</span></a> *        cd_color_rgb_dup                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>);</pre>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-dup"></a><h3>cd_color_yxy_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="returnvalue">CdColorYxy</span></a> *        cd_color_yxy_dup                    (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>);</pre>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-dup"></a><h3>cd_color_swatch_dup ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="returnvalue">CdColorSwatch</span></a> *     cd_color_swatch_dup                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *src</code></em>);</pre>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-set"></a><h3>cd_color_xyz_set ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_xyz_set                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> X</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Y</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Z</code></em>);</pre>
+<p>
+Initialises a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>X</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Y</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Z</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-set"></a><h3>cd_color_rgb_set ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb_set                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> R</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> G</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> B</code></em>);</pre>
+<p>
+Initialises a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>R</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>G</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>B</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-lab-set"></a><h3>cd_color_lab_set ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_lab_set                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> L</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> a</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> b</code></em>);</pre>
+<p>
+Initialises a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>L</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-set"></a><h3>cd_color_yxy_set ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_yxy_set                    (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> Y</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> y</code></em>);</pre>
+<p>
+Initialises a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Y</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-set-name"></a><h3>cd_color_swatch_set_name ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_swatch_set_name            (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
+<p>
+Initialises a swatch name.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination swatch</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>component name</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-swatch-set-value"></a><h3>cd_color_swatch_set_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_swatch_set_value           (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorSwatch"><span class="type">CdColorSwatch</span></a> *dest</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *value</code></em>);</pre>
+<p>
+Initialises a swatch value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination swatch</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>component value</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-copy"></a><h3>cd_color_xyz_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_xyz_copy                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);</pre>
+<p>
+Deep copies a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-copy"></a><h3>cd_color_yxy_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_yxy_copy                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>);</pre>
+<p>
+Deep copies a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-lab-copy"></a><h3>cd_color_lab_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_lab_copy                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorLab"><span class="type">CdColorLab</span></a> *dest</code></em>);</pre>
+<p>
+Deep copies a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-clear"></a><h3>cd_color_xyz_clear ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_xyz_clear                  (<em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);</pre>
+<p>
+Initialises a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-copy"></a><h3>cd_color_rgb_copy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb_copy                   (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>);</pre>
+<p>
+Deep copies a color value.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb8-to-rgb"></a><h3>cd_color_rgb8_to_rgb ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb8_to_rgb                (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB8" title="CdColorRGB8"><span class="type">CdColorRGB8</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *dest</code></em>);</pre>
+<p>
+Convert from one color format to another.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-to-rgb8"></a><h3>cd_color_rgb_to_rgb8 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb_to_rgb8                (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB8" title="CdColorRGB8"><span class="type">CdColorRGB8</span></a> *dest</code></em>);</pre>
+<p>
+Convert from one color format to another.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-yxy-to-xyz"></a><h3>cd_color_yxy_to_xyz ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_yxy_to_xyz                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *dest</code></em>);</pre>
+<p>
+Convert from one color format to another.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-xyz-to-yxy"></a><h3>cd_color_xyz_to_yxy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_xyz_to_yxy                 (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorXYZ"><span class="type">CdColorXYZ</span></a> *src</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorYxy"><span class="type">CdColorYxy</span></a> *dest</code></em>);</pre>
+<p>
+Convert from one color format to another.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>the source color</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.27</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-get-blackbody-rgb"></a><h3>cd_color_get_blackbody_rgb ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_get_blackbody_rgb          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> temp</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *result</code></em>);</pre>
+<p>
+Get the blackbody color for a specific temperature.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>temp</code></em> :</span></p></td>
+<td>the temperature in Kelvin</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
+<td>the destination color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-interpolate"></a><h3>cd_color_rgb_interpolate ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_color_rgb_interpolate            (<em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *p1</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *p2</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> index</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-color.html#CdColorRGB"><span class="type">CdColorRGB</span></a> *result</code></em>);</pre>
+<p class="since">Since 0.1.26</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-array-new"></a><h3>cd_color_rgb_array_new ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_color_rgb_array_new              (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new RGB array.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>New array. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-array-is-monotonic"></a><h3>cd_color_rgb_array_is_monotonic ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_color_rgb_array_is_monotonic     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *array</code></em>);</pre>
+<p>
+Checks the array for monotonicity.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td>Input array. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the array is monotonic</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-color-rgb-array-interpolate"></a><h3>cd_color_rgb_array_interpolate ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_color_rgb_array_interpolate      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> *array</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> new_length</code></em>);</pre>
+<p>
+Interpolate the RGB array to a different size.
+This uses the Akima interpolation algorithm unless the array would become
+non-monotonic, in which case it falls back to linear interpolation.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td>Input array. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_length</code></em> :</span></p></td>
+<td>the target length of the return array</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An array of size <em class="parameter"><code>new_length</code></em> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdColorRGB][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdColorSwatch-struct"></a><h3>CdColorSwatch</h3>
+<pre class="programlisting">typedef struct _CdColorSwatch CdColorSwatch;</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

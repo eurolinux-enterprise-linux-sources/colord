@@ -1,0 +1,625 @@
+<!-- ##### SECTION Title ##### -->
+cd-icc
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO CD_ICC_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CD_ICC_TYPE_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM CdIccError ##### -->
+<para>
+
+</para>
+
+@CD_ICC_ERROR_FAILED_TO_OPEN: 
+@CD_ICC_ERROR_FAILED_TO_PARSE: 
+@CD_ICC_ERROR_INVALID_LOCALE: 
+@CD_ICC_ERROR_NO_DATA: 
+@CD_ICC_ERROR_FAILED_TO_SAVE: 
+@CD_ICC_ERROR_FAILED_TO_CREATE: 
+@CD_ICC_ERROR_INVALID_COLORSPACE: 
+@CD_ICC_ERROR_LAST: 
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved1 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved2 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved3 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved4 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved5 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved6 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved7 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_icc_reserved8 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### ENUM CdIccLoadFlags ##### -->
+<para>
+
+</para>
+
+@CD_ICC_LOAD_FLAGS_NONE: 
+@CD_ICC_LOAD_FLAGS_NAMED_COLORS: 
+@CD_ICC_LOAD_FLAGS_TRANSLATIONS: 
+@CD_ICC_LOAD_FLAGS_METADATA: 
+@CD_ICC_LOAD_FLAGS_FALLBACK_MD5: 
+@CD_ICC_LOAD_FLAGS_PRIMARIES: 
+@CD_ICC_LOAD_FLAGS_ALL: 
+@CD_ICC_LOAD_FLAGS_LAST: 
+
+<!-- ##### ENUM CdIccSaveFlags ##### -->
+<para>
+
+</para>
+
+@CD_ICC_SAVE_FLAGS_NONE: 
+@CD_ICC_SAVE_FLAGS_LAST: 
+
+<!-- ##### FUNCTION cd_icc_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_load_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@data: 
+@data_len: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_load_file ##### -->
+<para>
+
+</para>
+
+@icc: 
+@file: 
+@flags: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_load_fd ##### -->
+<para>
+
+</para>
+
+@icc: 
+@fd: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_load_handle ##### -->
+<para>
+
+</para>
+
+@icc: 
+@handle: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_save_data ##### -->
+<para>
+
+</para>
+
+@icc: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_save_file ##### -->
+<para>
+
+</para>
+
+@icc: 
+@file: 
+@flags: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_to_string ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_handle ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_size ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_filename ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_filename ##### -->
+<para>
+
+</para>
+
+@icc: 
+@filename: 
+
+
+<!-- ##### FUNCTION cd_icc_get_version ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_version ##### -->
+<para>
+
+</para>
+
+@icc: 
+@version: 
+
+
+<!-- ##### FUNCTION cd_icc_get_kind ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_kind ##### -->
+<para>
+
+</para>
+
+@icc: 
+@kind: 
+
+
+<!-- ##### FUNCTION cd_icc_get_colorspace ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_colorspace ##### -->
+<para>
+
+</para>
+
+@icc: 
+@colorspace: 
+
+
+<!-- ##### FUNCTION cd_icc_get_metadata ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_metadata_item ##### -->
+<para>
+
+</para>
+
+@icc: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_add_metadata ##### -->
+<para>
+
+</para>
+
+@icc: 
+@key: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_icc_remove_metadata ##### -->
+<para>
+
+</para>
+
+@icc: 
+@key: 
+
+
+<!-- ##### FUNCTION cd_icc_get_named_colors ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_can_delete ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_created ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_checksum ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_description ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_copyright ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_manufacturer ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_model ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_description ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_icc_set_description_items ##### -->
+<para>
+
+</para>
+
+@icc: 
+@values: 
+
+
+<!-- ##### FUNCTION cd_icc_set_copyright ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_icc_set_copyright_items ##### -->
+<para>
+
+</para>
+
+@icc: 
+@values: 
+
+
+<!-- ##### FUNCTION cd_icc_set_manufacturer ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_icc_set_manufacturer_items ##### -->
+<para>
+
+</para>
+
+@icc: 
+@values: 
+
+
+<!-- ##### FUNCTION cd_icc_set_model ##### -->
+<para>
+
+</para>
+
+@icc: 
+@locale: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_icc_set_model_items ##### -->
+<para>
+
+</para>
+
+@icc: 
+@values: 
+
+
+<!-- ##### FUNCTION cd_icc_get_red ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_green ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_blue ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_white ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_temperature ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_warnings ##### -->
+<para>
+
+</para>
+
+@icc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_create_from_edid ##### -->
+<para>
+
+</para>
+
+@icc: 
+@gamma_value: 
+@red: 
+@green: 
+@blue: 
+@white: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_vcgt ##### -->
+<para>
+
+</para>
+
+@icc: 
+@size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_set_vcgt ##### -->
+<para>
+
+</para>
+
+@icc: 
+@vcgt: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_get_response ##### -->
+<para>
+
+</para>
+
+@icc: 
+@size: 
+@error: 
+@Returns: 
+
+

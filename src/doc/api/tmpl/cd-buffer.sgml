@@ -1,0 +1,115 @@
+<!-- ##### SECTION Title ##### -->
+cd-buffer
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### ENUM CdBufferKind ##### -->
+<para>
+
+</para>
+
+@CD_BUFFER_KIND_REQUEST: 
+@CD_BUFFER_KIND_RESPONSE: 
+@CD_BUFFER_KIND_UNKNOWN: 
+
+<!-- ##### FUNCTION cd_buffer_debug ##### -->
+<para>
+
+</para>
+
+@buffer_kind: 
+@data: 
+@length: 
+
+
+<!-- ##### FUNCTION cd_buffer_read_uint16_be ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_buffer_read_uint16_le ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_buffer_write_uint16_be ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_buffer_write_uint16_le ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_buffer_read_uint32_be ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_buffer_read_uint32_le ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_buffer_write_uint32_be ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@value: 
+
+
+<!-- ##### FUNCTION cd_buffer_write_uint32_le ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@value: 
+
+

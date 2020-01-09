@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CdIccStore</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-icc.html" title="cd-icc">
+<link rel="next" href="colord-cd-transform.html" title="cd-transform">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="colord-cd-icc.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="colord-cd-transform.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#CdIccStore.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#CdIccStore.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#CdIccStore.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#CdIccStore.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="CdIccStore"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="CdIccStore.top_of_page"></a>CdIccStore</span></h2>
+<p>CdIccStore — An object to monitor a directory full of ICC profiles</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="CdIccStore.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="CdIccStore.html#CdIccStore-struct" title="struct CdIccStore">CdIccStore</a>;
+struct              <a class="link" href="CdIccStore.html#CdIccStoreClass" title="struct CdIccStoreClass">CdIccStoreClass</a>;
+enum                <a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags">CdIccStoreSearchFlags</a>;
+enum                <a class="link" href="CdIccStore.html#CdIccStoreSearchKind" title="enum CdIccStoreSearchKind">CdIccStoreSearchKind</a>;
+<a class="link" href="CdIccStore.html" title="CdIccStore"><span class="returnvalue">CdIccStore</span></a> *        <a class="link" href="CdIccStore.html#cd-icc-store-new" title="cd_icc_store_new ()">cd_icc_store_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="CdIccStore.html#cd-icc-store-search-location" title="cd_icc_store_search_location ()">cd_icc_store_search_location</a>        (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *location</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a> search_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="CdIccStore.html#cd-icc-store-search-kind" title="cd_icc_store_search_kind ()">cd_icc_store_search_kind</a>            (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchKind" title="enum CdIccStoreSearchKind"><span class="type">CdIccStoreSearchKind</span></a> search_kind</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a> search_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="CdIccStore.html#cd-icc-store-set-load-flags" title="cd_icc_store_set_load_flags ()">cd_icc_store_set_load_flags</a>         (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> load_flags</code></em>);
+<a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="returnvalue">CdIccLoadFlags</span></a>      <a class="link" href="CdIccStore.html#cd-icc-store-get-load-flags" title="cd_icc_store_get_load_flags ()">cd_icc_store_get_load_flags</a>         (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="CdIccStore.html#cd-icc-store-set-cache" title="cd_icc_store_set_cache ()">cd_icc_store_set_cache</a>              (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/gio-GResource.html#GResource"><span class="type">GResource</span></a> *cache</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         <a class="link" href="CdIccStore.html#cd-icc-store-get-all" title="cd_icc_store_get_all ()">cd_icc_store_get_all</a>                (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="CdIccStore.html#cd-icc-store-find-by-filename" title="cd_icc_store_find_by_filename ()">cd_icc_store_find_by_filename</a>       (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);
+<span class="returnvalue">CdIcc</span> *             <a class="link" href="CdIccStore.html#cd-icc-store-find-by-checksum" title="cd_icc_store_find_by_checksum ()">cd_icc_store_find_by_checksum</a>       (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *checksum</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdIccStore.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----CdIccStore
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdIccStore.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="CdIccStore.html#CdIccStore-added" title='The "added" signal'>added</a>"                                          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="CdIccStore.html#CdIccStore-removed" title='The "removed" signal'>removed</a>"                                        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="CdIccStore.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1">
+<a name="CdIccStore.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CdIccStore-struct"></a><h3>struct CdIccStore</h3>
+<pre class="programlisting">struct CdIccStore;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccStoreClass"></a><h3>struct CdIccStoreClass</h3>
+<pre class="programlisting">struct CdIccStoreClass {
+	GObjectClass parent_class;
+	void		(* added)		(CdIcc		*icc);
+	void		(* removed)		(CdIcc		*icc);
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccStoreSearchFlags"></a><h3>enum CdIccStoreSearchFlags</h3>
+<pre class="programlisting">typedef enum {
+	CD_ICC_STORE_SEARCH_FLAGS_NONE			= 0,
+	CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION = 1,
+} CdIccStoreSearchFlags;
+</pre>
+<p>
+Flags used when adding scan locations.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-ICC-STORE-SEARCH-FLAGS-NONE:CAPS"></a><span class="term"><code class="literal">CD_ICC_STORE_SEARCH_FLAGS_NONE</code></span></p></td>
+<td>No flags set.
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-STORE-SEARCH-FLAGS-CREATE-LOCATION:CAPS"></a><span class="term"><code class="literal">CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION</code></span></p></td>
+<td>Create the location if it does not exist
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccStoreSearchKind"></a><h3>enum CdIccStoreSearchKind</h3>
+<pre class="programlisting">typedef enum {
+	CD_ICC_STORE_SEARCH_KIND_SYSTEM,
+	CD_ICC_STORE_SEARCH_KIND_MACHINE,
+	CD_ICC_STORE_SEARCH_KIND_USER,
+} CdIccStoreSearchKind;
+</pre>
+<p>
+The kind of profiles locations to search.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-ICC-STORE-SEARCH-KIND-SYSTEM:CAPS"></a><span class="term"><code class="literal">CD_ICC_STORE_SEARCH_KIND_SYSTEM</code></span></p></td>
+<td>Per-system locations
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-STORE-SEARCH-KIND-MACHINE:CAPS"></a><span class="term"><code class="literal">CD_ICC_STORE_SEARCH_KIND_MACHINE</code></span></p></td>
+<td>Per-machine locations
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-ICC-STORE-SEARCH-KIND-USER:CAPS"></a><span class="term"><code class="literal">CD_ICC_STORE_SEARCH_KIND_USER</code></span></p></td>
+<td>Per-user locations
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-new"></a><h3>cd_icc_store_new ()</h3>
+<pre class="programlisting"><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="returnvalue">CdIccStore</span></a> *        cd_icc_store_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new CdIccStore object.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-search-location"></a><h3>cd_icc_store_search_location ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_store_search_location        (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *location</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a> search_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Adds a location to be watched for ICC profiles
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>location</code></em> :</span></p></td>
+<td>a fully qualified path</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>search_flags</code></em> :</span></p></td>
+<td>
+<a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a>, e.g. <a class="link" href="CdIccStore.html#CD-ICC-STORE-SEARCH-FLAGS-CREATE-LOCATION:CAPS"><code class="literal">CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-search-kind"></a><h3>cd_icc_store_search_kind ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_icc_store_search_kind            (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchKind" title="enum CdIccStoreSearchKind"><span class="type">CdIccStoreSearchKind</span></a> search_kind</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a> search_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Adds a location to be watched for ICC profiles
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>search_kind</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html#CdIccStoreSearchKind" title="enum CdIccStoreSearchKind"><span class="type">CdIccStoreSearchKind</span></a>, e.g. <a class="link" href="CdIccStore.html#CD-ICC-STORE-SEARCH-KIND-USER:CAPS"><code class="literal">CD_ICC_STORE_SEARCH_KIND_USER</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>search_flags</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html#CdIccStoreSearchFlags" title="enum CdIccStoreSearchFlags"><span class="type">CdIccStoreSearchFlags</span></a>, e.g. <a class="link" href="CdIccStore.html#CD-ICC-STORE-SEARCH-FLAGS-CREATE-LOCATION:CAPS"><code class="literal">CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-set-load-flags"></a><h3>cd_icc_store_set_load_flags ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_store_set_load_flags         (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a> load_flags</code></em>);</pre>
+<p>
+Sets the load flags to use when loading newly added profiles
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>load_flags</code></em> :</span></p></td>
+<td>
+<a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="type">CdIccLoadFlags</span></a>, e.g. <a class="link" href="colord-cd-icc.html#CD-ICC-LOAD-FLAGS-TRANSLATIONS:CAPS"><code class="literal">CD_ICC_LOAD_FLAGS_TRANSLATIONS</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-get-load-flags"></a><h3>cd_icc_store_get_load_flags ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-icc.html#CdIccLoadFlags" title="enum CdIccLoadFlags"><span class="returnvalue">CdIccLoadFlags</span></a>      cd_icc_store_get_load_flags         (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>);</pre>
+<p>
+Gets the load flags to use when loading newly added profiles
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the load flags to use</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-set-cache"></a><h3>cd_icc_store_set_cache ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_icc_store_set_cache              (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/gio-GResource.html#GResource"><span class="type">GResource</span></a> *cache</code></em>);</pre>
+<p>
+Sets an optional cache to use when reading profiles. This is probably
+only useful to the colord daemon. This function can only be called once.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cache</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gio/unstable/gio-GResource.html#GResource"><span class="type">GResource</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-get-all"></a><h3>cd_icc_store_get_all ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *         cd_icc_store_get_all                (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>);</pre>
+<p>
+Gets the list of <span class="type">CdIcc</span> objects in the store
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>store</code></em> :</span></p></td>
+<td>a <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>ICC profile objects. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdIcc]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-find-by-filename"></a><h3>cd_icc_store_find_by_filename ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_icc_store_find_by_filename       (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);</pre>
+<p>
+Finds a ICC object in the store by filename.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>a fully qualified filename</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>an ICC profile object or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdIcc]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-icc-store-find-by-checksum"></a><h3>cd_icc_store_find_by_checksum ()</h3>
+<pre class="programlisting"><span class="returnvalue">CdIcc</span> *             cd_icc_store_find_by_checksum       (<em class="parameter"><code><a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *store</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *checksum</code></em>);</pre>
+<p>
+Finds a ICC object in the store by checksum.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>checksum</code></em> :</span></p></td>
+<td>a checksum value</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>an ICC profile object or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> CdIcc]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="CdIccStore.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="CdIccStore-added"></a><h3>The <code class="literal">"added"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *profile,
+                                                        <span class="type">CdIcc</span>      *icc,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::added signal is emitted when an ICC profile has been added.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
+<td>the <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance that emitted the signal</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>the <span class="type">CdIcc</span> that was added</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdIccStore-removed"></a><h3>The <code class="literal">"removed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> *profile,
+                                                        <span class="type">CdIcc</span>      *icc,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::removed signal is emitted when an ICC profile has been removed.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
+<td>the <a class="link" href="CdIccStore.html" title="CdIccStore"><span class="type">CdIccStore</span></a> instance that emitted the signal</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icc</code></em> :</span></p></td>
+<td>the <span class="type">CdIcc</span> that was removed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.0.2</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

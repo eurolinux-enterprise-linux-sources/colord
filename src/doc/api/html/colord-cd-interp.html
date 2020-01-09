@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cd-interp</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="colord Reference Manual">
+<link rel="up" href="libcolordprivate.html" title="libcolord GObjects">
+<link rel="prev" href="colord-cd-interp-linear.html" title="cd-interp-linear">
+<link rel="next" href="colord-cd-it8-utils.html" title="cd-it8-utils">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="colord-cd-interp-linear.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libcolordprivate.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">colord Reference Manual</th>
+<td><a accesskey="n" href="colord-cd-it8-utils.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#colord-cd-interp.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#colord-cd-interp.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="colord-cd-interp"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="colord-cd-interp.top_of_page"></a>cd-interp</span></h2>
+<p>cd-interp — Interpolate 2D data using a variety of methods</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="colord-cd-interp.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">#define             <a class="link" href="colord-cd-interp.html#CD-INTERP-ERROR:CAPS" title="CD_INTERP_ERROR">CD_INTERP_ERROR</a>
+#define             <a class="link" href="colord-cd-interp.html#CD-INTERP-TYPE-ERROR:CAPS" title="CD_INTERP_TYPE_ERROR">CD_INTERP_TYPE_ERROR</a>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="colord-cd-interp.html#prepare" title="prepare ()">*prepare</a>)                          (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             (<a class="link" href="colord-cd-interp.html#eval" title="eval ()">*eval</a>)                             (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved1" title="_cd_interp_reserved1 ()">*_cd_interp_reserved1</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved2" title="_cd_interp_reserved2 ()">*_cd_interp_reserved2</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved3" title="_cd_interp_reserved3 ()">*_cd_interp_reserved3</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved4" title="_cd_interp_reserved4 ()">*_cd_interp_reserved4</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved5" title="_cd_interp_reserved5 ()">*_cd_interp_reserved5</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved6" title="_cd_interp_reserved6 ()">*_cd_interp_reserved6</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved7" title="_cd_interp_reserved7 ()">*_cd_interp_reserved7</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="colord-cd-interp.html#cd-interp-reserved8" title="_cd_interp_reserved8 ()">*_cd_interp_reserved8</a>)             (<em class="parameter"><code><span class="type">void</span></code></em>);
+enum                <a class="link" href="colord-cd-interp.html#CdInterpError" title="enum CdInterpError">CdInterpError</a>;
+enum                <a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind">CdInterpKind</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              <a class="link" href="colord-cd-interp.html#cd-interp-error-quark" title="cd_interp_error_quark ()">cd_interp_error_quark</a>               (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind"><span class="returnvalue">CdInterpKind</span></a>        <a class="link" href="colord-cd-interp.html#cd-interp-get-kind" title="cd_interp_get_kind ()">cd_interp_get_kind</a>                  (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            <a class="link" href="colord-cd-interp.html#cd-interp-get-x" title="cd_interp_get_x ()">cd_interp_get_x</a>                     (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            <a class="link" href="colord-cd-interp.html#cd-interp-get-y" title="cd_interp_get_y ()">cd_interp_get_y</a>                     (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="colord-cd-interp.html#cd-interp-get-size" title="cd_interp_get_size ()">cd_interp_get_size</a>                  (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="colord-cd-interp.html#cd-interp-insert" title="cd_interp_insert ()">cd_interp_insert</a>                    (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> y</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="colord-cd-interp.html#cd-interp-prepare" title="cd_interp_prepare ()">cd_interp_prepare</a>                   (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="colord-cd-interp.html#cd-interp-eval" title="cd_interp_eval ()">cd_interp_eval</a>                      (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="colord-cd-interp.html#cd-interp-kind-to-string" title="cd_interp_kind_to_string ()">cd_interp_kind_to_string</a>            (<em class="parameter"><code><a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind"><span class="type">CdInterpKind</span></a> kind</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="colord-cd-interp.description"></a><h2>Description</h2>
+<p>
+This object is a superclass of different interpolation methods.
+</p>
+</div>
+<div class="refsect1">
+<a name="colord-cd-interp.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CD-INTERP-ERROR:CAPS"></a><h3>CD_INTERP_ERROR</h3>
+<pre class="programlisting">#define CD_INTERP_ERROR		(cd_interp_error_quark ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CD-INTERP-TYPE-ERROR:CAPS"></a><h3>CD_INTERP_TYPE_ERROR</h3>
+<pre class="programlisting">#define CD_INTERP_TYPE_ERROR (cd_interp_error_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="prepare"></a><h3>prepare ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*prepare)                          (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="eval"></a><h3>eval ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             (*eval)                             (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved1"></a><h3>_cd_interp_reserved1 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved1)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved2"></a><h3>_cd_interp_reserved2 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved2)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved3"></a><h3>_cd_interp_reserved3 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved3)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved4"></a><h3>_cd_interp_reserved4 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved4)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved5"></a><h3>_cd_interp_reserved5 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved5)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved6"></a><h3>_cd_interp_reserved6 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved6)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved7"></a><h3>_cd_interp_reserved7 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved7)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-reserved8"></a><h3>_cd_interp_reserved8 ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*_cd_interp_reserved8)             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterpError"></a><h3>enum CdInterpError</h3>
+<pre class="programlisting">typedef enum {
+	CD_INTERP_ERROR_FAILED,
+	CD_INTERP_ERROR_LAST
+} CdInterpError;
+</pre>
+<p>
+Errors that can be thrown
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-INTERP-ERROR-FAILED:CAPS"></a><span class="term"><code class="literal">CD_INTERP_ERROR_FAILED</code></span></p></td>
+<td>the method failed for an unknown reason
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-INTERP-ERROR-LAST:CAPS"></a><span class="term"><code class="literal">CD_INTERP_ERROR_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="CdInterpKind"></a><h3>enum CdInterpKind</h3>
+<pre class="programlisting">typedef enum {
+	CD_INTERP_KIND_LINEAR,
+	CD_INTERP_KIND_AKIMA,
+	CD_INTERP_KIND_LAST
+} CdInterpKind;
+</pre>
+<p>
+The kind of interpolation.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="CD-INTERP-KIND-LINEAR:CAPS"></a><span class="term"><code class="literal">CD_INTERP_KIND_LINEAR</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-INTERP-KIND-AKIMA:CAPS"></a><span class="term"><code class="literal">CD_INTERP_KIND_AKIMA</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="CD-INTERP-KIND-LAST:CAPS"></a><span class="term"><code class="literal">CD_INTERP_KIND_LAST</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-error-quark"></a><h3>cd_interp_error_quark ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              cd_interp_error_quark               (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>An error quark.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-kind"></a><h3>cd_interp_get_kind ()</h3>
+<pre class="programlisting"><a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind"><span class="returnvalue">CdInterpKind</span></a>        cd_interp_get_kind                  (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);</pre>
+<p>
+Gets the kind of INTERP file.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind"><span class="type">CdInterpKind</span></a>, e.g <a class="link" href="colord-cd-interp.html#CD-INTERP-KIND-AKIMA:CAPS"><code class="literal">CD_INTERP_KIND_AKIMA</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-x"></a><h3>cd_interp_get_x ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            cd_interp_get_x                     (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);</pre>
+<p>
+Gets the X data used the interpolation.
+</p>
+<p>
+NOTE: this is only guaranteed to return the data inserted by
+<a class="link" href="colord-cd-interp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> *BEFORE* calling <a class="link" href="colord-cd-interp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a>.
+</p>
+<p>
+After prepating the <span class="type">CdInterp</span> this data should be considered an
+implementation detail.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The X co-ordinate data. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-y"></a><h3>cd_interp_get_y ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="returnvalue">GArray</span></a> *            cd_interp_get_y                     (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);</pre>
+<p>
+Gets the Y data used the interpolation.
+</p>
+<p>
+NOTE: this is only guaranteed to return the data inserted by
+<a class="link" href="colord-cd-interp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> *BEFORE* calling <a class="link" href="colord-cd-interp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a>.
+</p>
+<p>
+After prepating the <span class="type">CdInterp</span> this data should be considered an
+implementation detail.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The Y co-ordinate data. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> gdouble]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-get-size"></a><h3>cd_interp_get_size ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               cd_interp_get_size                  (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>);</pre>
+<p>
+Gets the number of items of data added with <a class="link" href="colord-cd-interp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a>.
+</p>
+<p>
+NOTE: This method has to be called after <a class="link" href="colord-cd-interp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a> and it returns
+the number of items originally in the array.
+If you need the updated private size then just use <a class="link" href="colord-cd-interp.html#cd-interp-get-x" title="cd_interp_get_x ()"><code class="function">cd_interp_get_x()</code></a> and
+read the size from that.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The original array size</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-insert"></a><h3>cd_interp_insert ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cd_interp_insert                    (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> y</code></em>);</pre>
+<p>
+Inserts data to be interpolated.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y data</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-prepare"></a><h3>cd_interp_prepare ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            cd_interp_prepare                   (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Prepares the data set so that <a class="link" href="colord-cd-interp.html#cd-interp-eval" title="cd_interp_eval ()"><code class="function">cd_interp_eval()</code></a> can be used.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-eval"></a><h3>cd_interp_eval ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             cd_interp_eval                      (<em class="parameter"><code><span class="type">CdInterp</span> *interp</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Evaluate the interpolation function at a specific point.
+You must have called <a class="link" href="colord-cd-interp.html#cd-interp-insert" title="cd_interp_insert ()"><code class="function">cd_interp_insert()</code></a> and <a class="link" href="colord-cd-interp.html#cd-interp-prepare" title="cd_interp_prepare ()"><code class="function">cd_interp_prepare()</code></a> before
+calling this method.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interp</code></em> :</span></p></td>
+<td>a <span class="type">CdInterp</span> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The X co-ordinate</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The Y co-ordinate, or -1 for error</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 0.1.31</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cd-interp-kind-to-string"></a><h3>cd_interp_kind_to_string ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       cd_interp_kind_to_string            (<em class="parameter"><code><a class="link" href="colord-cd-interp.html#CdInterpKind" title="enum CdInterpKind"><span class="type">CdInterpKind</span></a> kind</code></em>);</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.19</div>
+</body>
+</html>

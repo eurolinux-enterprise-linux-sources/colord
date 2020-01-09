@@ -1,0 +1,163 @@
+<!-- ##### SECTION Title ##### -->
+CdIccStore
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT CdIccStore ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CdIccStore::added ##### -->
+<para>
+
+</para>
+
+@cdiccstore: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL CdIccStore::removed ##### -->
+<para>
+
+</para>
+
+@cdiccstore: the object which received the signal.
+@arg1: 
+
+<!-- ##### STRUCT CdIccStoreClass ##### -->
+<para>
+
+</para>
+
+@parent_class: 
+@added: 
+@removed: 
+
+<!-- ##### ENUM CdIccStoreSearchFlags ##### -->
+<para>
+
+</para>
+
+@CD_ICC_STORE_SEARCH_FLAGS_NONE: 
+@CD_ICC_STORE_SEARCH_FLAGS_CREATE_LOCATION: 
+
+<!-- ##### ENUM CdIccStoreSearchKind ##### -->
+<para>
+
+</para>
+
+@CD_ICC_STORE_SEARCH_KIND_SYSTEM: 
+@CD_ICC_STORE_SEARCH_KIND_MACHINE: 
+@CD_ICC_STORE_SEARCH_KIND_USER: 
+
+<!-- ##### FUNCTION cd_icc_store_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_search_location ##### -->
+<para>
+
+</para>
+
+@store: 
+@location: 
+@search_flags: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_search_kind ##### -->
+<para>
+
+</para>
+
+@store: 
+@search_kind: 
+@search_flags: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_set_load_flags ##### -->
+<para>
+
+</para>
+
+@store: 
+@load_flags: 
+
+
+<!-- ##### FUNCTION cd_icc_store_get_load_flags ##### -->
+<para>
+
+</para>
+
+@store: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_set_cache ##### -->
+<para>
+
+</para>
+
+@store: 
+@cache: 
+
+
+<!-- ##### FUNCTION cd_icc_store_get_all ##### -->
+<para>
+
+</para>
+
+@store: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_find_by_filename ##### -->
+<para>
+
+</para>
+
+@store: 
+@filename: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_icc_store_find_by_checksum ##### -->
+<para>
+
+</para>
+
+@store: 
+@checksum: 
+@Returns: 
+
+

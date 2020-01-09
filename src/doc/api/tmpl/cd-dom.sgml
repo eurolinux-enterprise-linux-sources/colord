@@ -1,0 +1,238 @@
+<!-- ##### SECTION Title ##### -->
+cd-dom
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO CD_DOM_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CD_DOM_TYPE_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved1 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved2 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved3 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved4 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved5 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved6 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved7 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION _cd_dom_reserved8 ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### FUNCTION cd_dom_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_to_string ##### -->
+<para>
+
+</para>
+
+@dom: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_parse_xml_data ##### -->
+<para>
+
+</para>
+
+@dom: 
+@data: 
+@data_len: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node ##### -->
+<para>
+
+</para>
+
+@dom: 
+@root: 
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_name ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_data ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_data_as_int ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_data_as_double ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_attribute ##### -->
+<para>
+
+</para>
+
+@node: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_rgb ##### -->
+<para>
+
+</para>
+
+@node: 
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_yxy ##### -->
+<para>
+
+</para>
+
+@node: 
+@yxy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_lab ##### -->
+<para>
+
+</para>
+
+@node: 
+@lab: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cd_dom_get_node_localized ##### -->
+<para>
+
+</para>
+
+@node: 
+@key: 
+@Returns: 
+
+
